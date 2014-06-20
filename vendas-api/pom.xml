@@ -117,7 +117,7 @@
 		</dependency>
 		<dependency>
 			<groupId>br.com.vendas</groupId>
-			<artifactId>vendas-persistence</artifactId>
+			<artifactId>vendas-services</artifactId>
 			<version>${vendas.persistence.version}</version>
 			<type>war</type>
 		</dependency>
@@ -125,7 +125,7 @@
 		<!-- Faz referencia ao jar para fazer os imports. Para gerar o jar, é necessario dar um Maven Install no projeto vendas-persistence -->
 		<dependency>
 			<groupId>br.com.vendas</groupId>
-			<artifactId>vendas-persistence</artifactId>
+			<artifactId>vendas-services</artifactId>
 			<version>${vendas.persistence.version}</version>
 			<classifier>class</classifier>
 		</dependency>
