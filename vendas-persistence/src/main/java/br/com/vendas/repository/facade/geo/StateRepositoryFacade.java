@@ -1,10 +1,10 @@
-package br.com.vendas.persistence.repository.geo;
+package br.com.vendas.repository.facade.geo;
 
 import java.util.List;
 
 import br.com.vendas.domain.state.State;
 
-public interface StateRepository {
+public interface StateRepositoryFacade {
 
 	/**
 	 * Retorna uma lista dos estados.

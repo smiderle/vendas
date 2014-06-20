@@ -1,10 +1,10 @@
-package br.com.vendas.persistence.repository;
+package br.com.vendas.repository.facade.user;
 
 import java.util.List;
 
 import br.com.vendas.domain.user.User;
 
-public interface UserRepository {
+public interface UserRepositoryFacade {
 
 	/**
 	 * Retorna uma lista dos usuarios.

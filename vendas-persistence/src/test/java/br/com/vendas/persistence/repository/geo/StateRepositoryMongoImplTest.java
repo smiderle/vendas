@@ -9,22 +9,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import br.com.vendas.domain.state.State;
-import br.com.vendas.persistence.repository.mongo.impl.geo.StateRepositoryMongoImpl;
+import br.com.vendas.repository.impl.geo.StateRepositoryImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:spring/spring-data-mongo.xml")
 public class StateRepositoryMongoImplTest {
 
 	@Autowired
-	private StateRepositoryMongoImpl repoImpl;
-
-	@Autowired
-	private MongoTemplate template2;
+	private StateRepositoryImpl repoImpl;
 
 	@Ignore
 	public void save(){
@@ -33,6 +29,7 @@ public class StateRepositoryMongoImplTest {
 		states.add(new State("AL", "Alagoas"));
 		states.add(new State("SP", "São Paulo"));
 		repoImpl.save(new State("SP", "São Paulo"));
+		repoImpl.save(new State("AL", "Alagoas"));
 	}
 
 	@Test

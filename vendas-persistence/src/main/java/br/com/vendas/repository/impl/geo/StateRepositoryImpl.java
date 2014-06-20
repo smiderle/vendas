@@ -1,4 +1,4 @@
-package br.com.vendas.persistence.repository.mongo.impl.geo;
+package br.com.vendas.repository.impl.geo;
 
 import java.util.List;
 
@@ -7,13 +7,13 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
 import br.com.vendas.domain.state.State;
-import br.com.vendas.persistence.repository.geo.StateRepository;
+import br.com.vendas.repository.facade.geo.StateRepositoryFacade;
 
 @Repository
-public class StateRepositoryMongoImpl implements StateRepository{
+public class StateRepositoryImpl implements StateRepositoryFacade{
 	
 	@Autowired
-	MongoOperations mongoOperation;
+	private MongoOperations mongoOperation;
 
 	public List<State> findAll() {
 		return mongoOperation.findAll(State.class);

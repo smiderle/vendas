@@ -1,4 +1,4 @@
-package br.com.vendas.persistence.repository.mongo.impl;
+package br.com.vendas.repository.impl.user;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
 import br.com.vendas.domain.user.User;
-import br.com.vendas.persistence.repository.UserRepository;
+import br.com.vendas.repository.facade.user.UserRepositoryFacade;
 
 @Repository
-public class UserRepositoryMongoImpl implements UserRepository {
+public class UserRepositoryImpl implements UserRepositoryFacade {
 	
 	@Autowired
 	MongoOperations mongoOperation;

@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import br.com.vendas.domain.user.User;
-import br.com.vendas.persistence.repository.mongo.impl.UserRepositoryMongoImpl;
+import br.com.vendas.repository.impl.user.UserRepositoryImpl;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -22,7 +22,7 @@ public class UserRepositoryTest {
 	private static final String DB_NAME = "testa";
 	private static final int MONGO_TEST_PORT = 27017;
 
-	private UserRepositoryMongoImpl repoImpl;
+	private UserRepositoryImpl repoImpl;
 
 	private static Mongo mongo;
 
@@ -38,7 +38,7 @@ public class UserRepositoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		repoImpl = new UserRepositoryMongoImpl();
+		repoImpl = new UserRepositoryImpl();
 		template = new MongoTemplate(mongo, DB_NAME);
 		repoImpl.setMongoOps(template);
 	}
