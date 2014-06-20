@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.state.State;
-import br.com.vendas.persistence.repository.geo.StateRepository;
+import br.com.vendas.services.impl.geo.StateServiceImpl;
 
 @RequestMapping(value="/states")
 @Controller
@@ -19,18 +19,13 @@ public class StateController {
 
 	
 	@Autowired
-	private StateRepository stateRepository;
+	private StateServiceImpl stateServiceImpl;
 
 	@RequestMapping(value="getStates.json", method = RequestMethod.GET)
 	public @ResponseBody Map<String,? extends Object> loadStates() {
 
 		HashMap<String, List<State>> modelMap = new HashMap<String,List<State>>();
-		modelMap.put("states", stateRepository.findAll());
+		modelMap.put("states", stateServiceImpl.findAll());
 		return modelMap;
 	}
-
-/*	@Autowired
-	public void setStateService(StateService stateService) {
-		this.stateService = stateService;
-	}*/
 }
