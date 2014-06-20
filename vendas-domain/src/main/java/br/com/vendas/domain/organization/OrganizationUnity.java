@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="organization")
 public class OrganizationUnity {
 	
+	//teste
 	private String name;
 	private String address;	
 	private List<User> users;
