@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.vendas.domain.state.State;
 
 public interface StateRepositoryFacade {
+	//teste
 
 	/**
 	 * Retorna uma lista dos estados.
