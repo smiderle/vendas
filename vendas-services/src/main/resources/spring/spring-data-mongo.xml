@@ -11,7 +11,8 @@
 	<context:annotation-config />
 
 	<!-- packages que serão escaneados  -->
-	<context:component-scan base-package="br.com.vendas.persistence.repository" />
+	<context:component-scan base-package="br.com.vendas.repository" />
+	<context:component-scan base-package="br.com.vendas.services" />
  	
 	<!-- host Mongo DB -->
 	<mongo:mongo host="127.0.0.1" port="27017" />

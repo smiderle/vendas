@@ -1,17 +1,17 @@
-package br.com.vendas.repository.facade.geo;
+package br.com.vendas.repository.location;
 
 import java.util.List;
 
-import br.com.vendas.domain.state.State;
+import br.com.vendas.domain.location.State;
+import br.com.vendas.repository.support.ServiceResponse;
 
 public interface StateRepositoryFacade {
-	//teste
 
 	/**
 	 * Retorna uma lista dos estados.
 	 * @return
 	 */	
-	public List<State> findAll();
+	public ServiceResponse<List<State>> findAll();
 	
 	/**
 	 * Salva o estado.

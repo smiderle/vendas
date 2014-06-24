@@ -1,4 +1,4 @@
-package br.com.vendas.repository.impl.geo;
+package br.com.vendas.repository.location;
 
 import java.util.List;
 
@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Repository;
 
-import br.com.vendas.domain.state.State;
-import br.com.vendas.repository.facade.geo.StateRepositoryFacade;
+import br.com.vendas.domain.location.State;
+import br.com.vendas.repository.support.ServiceResponse;
+import br.com.vendas.repository.support.ServiceResponseFactory;
 
 @Repository
 public class StateRepositoryImpl implements StateRepositoryFacade{
@@ -15,8 +16,8 @@ public class StateRepositoryImpl implements StateRepositoryFacade{
 	@Autowired
 	private MongoOperations mongoOperation;
 
-	public List<State> findAll() {
-		return mongoOperation.findAll(State.class);
+	public ServiceResponse<List<State>> findAll() {
+		return ServiceResponseFactory.create(mongoOperation.findAll(State.class));
 	}
 
 	public void save(State state) {

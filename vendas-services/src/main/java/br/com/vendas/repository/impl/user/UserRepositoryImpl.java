@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.user.User;
 import br.com.vendas.repository.facade.user.UserRepositoryFacade;
 
@@ -15,24 +18,28 @@ public class UserRepositoryImpl implements UserRepositoryFacade {
 	@Autowired
 	MongoOperations mongoOperation;
 	
-	public List<User> findAll(){
-		return mongoOperation.findAll(User.class);
+	public List<User> findByBranchOffice(BranchOffice branchOffice){
+		Query query = new Query().addCriteria(Criteria.where("branchOffice").is(branchOffice));
+		return mongoOperation.find(query ,User.class);
+		
 	}
-	
-
-	 /**
-	  * Salva o usuario.
-	  */
+		
 	public void save(User user) {
 		this.mongoOperation.save(user);
 	}
-	
-	/**
-	 * Seta o mongoOperations para teste.
-	 * @param mongoOps
-	 */
-	 public void setMongoOps(MongoOperations mongoOps) {
-	        this.mongoOperation = mongoOps;
-	 }
+
+	@Override
+	public User findByEmail(String email) {
+		Query query = new Query()
+			.addCriteria(Criteria.where("email").is(email));
+		return mongoOperation.findOne(query, User.class);
+	}
+
+	@Override
+	public User findByEmailAndPassword(String email, String password) {
+		Query query = new Query()
+			.addCriteria(Criteria.where("email").is(email).and("password").is(password));
+		return mongoOperation.findOne(query, User.class);
+	}
 
 }
