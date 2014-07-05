@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-us" data-ng-app="vendasApp">
+	<head>
+		<meta charset="utf-8">
+		
+
+		<title> Vendas</title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+	
+		<!-- Angular Related CSS -->
+		<link rel="stylesheet" type="text/css" media="screen" href="css/ng.min.css">
+	</head>
+	<body>
+	
+	
+	<div ng-controller="RegistrationController">
+		Nome Empresa
+		<input type="text" ng-model="fields.organizationName">
+		Nome Usuario 
+		<input type="text" ng-model="fields.userName">
+		Email
+		<input type="text" ng-model="fields.email">
+		Senha
+		<input type="text" ng-model="fields.password">		
+		<button ng-click="registeringNewUser()">Registrar</button>
+	</div>
+		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script>
+			if (!window.jQuery) {
+				document.write('<script src="js/libs/jquery-2.0.2.min.js"><\/script>');
+			}
+		</script>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script>
+			if (!window.jQuery.ui) {
+				document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+			}
+		</script>
+
+		<!-- AngularJS -->
+		<script src="js/libs/angular/angular.js"></script>
+	  	<script src="js/libs/angular/angular-route.js"></script>
+	  	<script src="js/libs/angular/angular-animate.js"></script>
+	  	<script src="js/libs/angular/ui-bootstrap-custom-tpls-0.11.0.js"></script>
+	  	<!-- REST Angular  -->
+	  	<script src="js/libs/angular/restangular.js"></script>
+	  	<script src="js/libs/lodash/lodash.compat.min.js"></script>
+
+		<!-- MAIN ANGULAR JS FILE -->
+	  	<script src="js/ng/ng.app.js"></script>
+	  	<script src="js/ng/ng.controllers.js"></script>
+	  	<script src="js/ng/ng.directives.js"></script>
+	  	
+	  
+		<script src="js/ng/controllers/RegistrationController.js"></script>
+		<script src="js/ng/services/RegistrationService.js"></script>
+
+	  	<!-- PLUNKER -->
+	  	<script src="js/ng/plunker.js"></script>
+
+		
+	</body>
+
+</html>
