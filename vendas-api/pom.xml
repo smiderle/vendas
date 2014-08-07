@@ -8,9 +8,16 @@
 		<groupId>br.com.vendas</groupId>
 		<artifactId>vendas-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../</relativePath>
 	</parent>
 
 	<dependencies>
+	    <dependency>
+			<groupId>br.com.vendas</groupId>
+			<artifactId>vendas-services</artifactId>
+			<version>${project.version}</version>			
+		</dependency>
+	    
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -51,14 +58,14 @@
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
-			<version>1.4.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.4.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -71,19 +78,19 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
+			<version>${spring.framework.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
+			<version>${spring.framework.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
+			<version>${spring.framework.version}</version>
 		</dependency>
 
 		<dependency>
@@ -109,26 +116,14 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.api.version}</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.com.vendas</groupId>
-			<artifactId>vendas-domain</artifactId>
-			<version>${vendas.domain.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>br.com.vendas</groupId>
-			<artifactId>vendas-services</artifactId>
-			<version>${vendas.persistence.version}</version>
-			<type>war</type>
-		</dependency>
+		</dependency>	
 		
-		<!-- Faz referencia ao jar para fazer os imports. Para gerar o jar, é necessario dar um Maven Install no projeto vendas-persistence -->
+		
 		<dependency>
-			<groupId>br.com.vendas</groupId>
-			<artifactId>vendas-services</artifactId>
-			<version>${vendas.persistence.version}</version>
-			<classifier>class</classifier>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.framework.version}</version>
+			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 </project>
