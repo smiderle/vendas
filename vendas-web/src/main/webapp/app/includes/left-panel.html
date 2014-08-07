@@ -4,8 +4,8 @@
 					
 					<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
 						<img src="img/avatars/sunny.png" alt="me" class="online" /> 
-						<span data-localize="john.doe">
-							john.doe 
+						<span ng-bind="user.name">
+							
 						</span>
 						<i class="fa fa-angle-down"></i>
 					</a> 
@@ -21,7 +21,13 @@
 			will not initialize.
 			-->
 
-			<navigation>
+			<menu-component></menu-component>
+
+			<!-- <navigation ng-repeat="menu in menus">
+					<nav:item data-view={{menu.url}} data-icon="{{menu.icon}}" title="{{menu.label}}" />
+			</navigation> -->
+
+			<!-- <navigation>
 				<nav:item data-view="/dashboard" data-icon="fa fa-lg fa-fw fa-home" title="Dashboard" />
 				<nav:item data-view="/empresa" data-icon="fa fa-lg fa-fw fa-home" title="Empresa" />
 				<nav:group data-icon="fa fa-lg fa-fw fa-code" title="Angular Stuff" >
@@ -114,5 +120,5 @@
 					<nav:item href="http://bootstraphunter.com/smartadmin/BUGTRACK/track_/documentation/index" target="_blank" data-icon="fa fa-lg fa-fw fa-book" title="Documentation" />
 					<nav:item href="http://bootstraphunter.com/smartadmin/BUGTRACK/track_/" target="_blank" data-icon="fa fa-lg fa-fw fa-bug" title="Bug Tracker" />
 				</nav:group>
-			</navigation>
+			</navigation> -->
 			<span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>

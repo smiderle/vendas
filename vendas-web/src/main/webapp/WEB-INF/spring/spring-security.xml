@@ -11,10 +11,11 @@
 
         <!-- <security:intercept-url pattern="/" access="permitAll" /> -->
         <security:intercept-url pattern="/app/index.html" access="isAuthenticated()" />
+        <security:intercept-url pattern="/app/load.html" access="isAuthenticated()" />
         <security:intercept-url pattern="/app/views/**" access="isAuthenticated()" />
         <security:intercept-url pattern="/app/includes/**" access="isAuthenticated()" />
 
-        <security:form-login login-page="/app/login.html" authentication-failure-url="/app/login.html?error=403" default-target-url="/app/index.html" />
+        <security:form-login login-page="/app/login.html" authentication-failure-url="/app/login.html?error=403" default-target-url="/app/load.html" />
 		<!-- <security:logout/> -->
         <!-- <security:logout delete-cookies="JSESSIONID" logout-success-url="/app/login.html" logout-url="/j_spring_security_logout" /> -->
         <security:logout  delete-cookies="JSESSIONID" logout-success-url="/app/login.html" />

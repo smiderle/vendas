@@ -67,10 +67,6 @@ angular.module('app.controllers', [])
 		});*/
 	}])
 
-	.controller('SmartAppController', ['$scope', function($scope) {
-		// your main controller
-	}])
-
 	.controller('LangController', ['$scope', 'settings', 'localize', function($scope, settings, localize) {
 		$scope.languages = settings.languages;
 		$scope.currentLang = settings.currentLang;

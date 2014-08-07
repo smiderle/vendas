@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" data-ng-app="vendasApp">
+<html lang="en-us" data-ng-app="vendasApp">
 	<head>
 		<meta charset="utf-8">
 		<!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
@@ -22,8 +22,8 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/smartadmin-rtl.min.css">
 
 		<!-- We recommend you use "your_style.css" to override SmartAdmin
-		     specific styles this will also ensure you retrain your customization with each SmartAdmin update. -->
-		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> 
+		     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
+		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
 
 		<!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">
@@ -33,9 +33,6 @@
 
 		<!-- Angular Related CSS -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ng.min.css">
-		
-		<!-- Loading bar -->
-		<link rel="stylesheet" type="text/css" media="screen" href="css/loading-bar.css">
 
 		<!-- FAVICONS -->
 		<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
@@ -59,53 +56,14 @@
 		<link rel="apple-touch-startup-image" href="img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
 		<link rel="apple-touch-startup-image" href="img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
 		<link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
-		
+
 	</head>
-	<body class="" data-ng-controller="AppController" data-ng-init="init()">	
-		
-		<!-- POSSIBLE CLASSES: minified, fixed-ribbon, fixed-header, fixed-width, top-menu
-			 You can also add different skin classes such as "smart-skin-0", "smart-skin-1" etc...-->
-
-		<!-- HEADER -->
-		<header id="header" data-ng-include="'includes/header.html'"></header>
-		<!-- END HEADER -->
-
-		<!-- Left panel : Navigation area -->
-		<!-- Note: This width of the aside area can be adjusted through LESS variables -->
-		<aside id="left-panel"><span data-ng-include="'includes/left-panel.html'"></span></aside>
-		<!-- END NAVIGATION -->
-
-		<!-- MAIN PANEL -->
-		<div id="main" role="main">
-
-			<!-- RIBBON -->
-			<div id="ribbon" data-ng-include="'includes/ribbon.html'" data-ribbon=""></div>
-			<!-- END RIBBON -->
-
-			<!-- MAIN CONTENT -->
-			<div id="content" data-ng-view="" class="view-animate"></div>
-			<!-- END MAIN CONTENT -->
-
+	<body class="" data-ng-controller="InitLoadController" data-ng-init="initLoginUser()">	
+	
+		<div ng-show="loading" style="background-color: #0DCECB; width: 100%; height: 800px; z-index: 1;">
+			<div class="loader" ng-show="loading">Carregando...</div>
 		</div>
-		<!-- END MAIN PANEL -->
 
-		<!-- PAGE FOOTER -->
-		<!-- <div class="page-footer"><span data-ng-include="'includes/footer.html'"></span></div> -->
-		<!-- END FOOTER -->
-
-		<!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
-		Note: These tiles are completely responsive,
-		you can add as many as you like
-		-->
-		<div id="shortcut"><span data-ng-include="'includes/shortcut.html'"></span></div>
-		<!-- END SHORTCUT AREA -->
-
-		<!--================================================== -->
-
-		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
-		<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
-
-		<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script>
 			if (!window.jQuery) {
@@ -155,9 +113,6 @@
 
 		<!-- FastClick: For mobile devices: you can disable this in app.js -->
 		<script src="js/plugin/fastclick/fastclick.min.js"></script>
-		
-		<!-- Loading Bar -->						
-		<script src="js/plugin/loadingbar/loading-bar.js"></script>
 
 		<!--[if IE 8]>
 			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -171,7 +126,10 @@
 	  	<!-- REST Angular  -->
 	  	<script src="js/libs/angular/restangular.js"></script>
 	  	<script src="js/libs/lodash/lodash.compat.min.js"></script>
-			  	  	  	
+	  	
+	  	<!-- Plugins Angular -->
+	  	<!-- <script src="js/libs/angular/angular-local-storage.js"></script> -->
+	  	
 
 		<!-- Demo purpose only 
 		ANGULAR: Handled via "ribbon" directive
@@ -186,31 +144,27 @@
 	  	<script src="js/ng/ng.directives.js"></script>
 	  	
 	  	<!-- Controllers -->
-	  	<script src="js/ng/controllers/AppController.js"></script>
-	  	<script src="js/ng/controllers/StateController.js"></script>	  	
-	  	<script src="js/ng/controllers/OrganizationController.js"></script>
-	  	<script src="js/ng/controllers/UserController.js"></script>
+	  	<script src="js/ng/controllers/InitLoadController.js"></script>
+	  	<!-- <script src="js/ng/controllers/StateController.js"></script>	  	
+	  	<script src="js/ng/controllers/OrganizationController.js"></script> -->
 	  	
 	  	<!-- Services -->
-	  	<script src="js/ng/services/StateService.js"></script>
 	  	<script src="js/ng/services/UserService.js"></script>
 	  	<script src="js/ng/services/UtilityService.js"></script>
 	  	<script src="js/ng/services/LocalStorageService.js"></script>
-	  	<script src="js/ng/services/ContextService.js"></script>
-	  	
-	  	
-	  		  	
-	  	<!-- Directives -->
-	  	<script src="js/ng/directives/MenuComponent.js"></script>
-	  	<script src="js/ng/directives/CustomDataTable.js"></script>
 	  	
 	  	<!-- Constantes utilizadas no sistema  -->
 	  	<script src="js/ng/Constants.js"></script>
+	  	
+	  	<!-- <script src="js/ng/services/StateService.js"></script>
+	  	<script src="js/ng/services/UserService.js"></script>
+	  	<script src="js/ng/services/UtilityService.js"></script> -->
+	  	
+	  	<!-- Directives -->
+	  	<!-- <script src="js/ng/directives/MenuComponent.js"></script> -->
 
 	  	<!-- PLUNKER -->
 	  	<script src="js/ng/plunker.js"></script>
-	  	
-  		
 
 		<!-- Your GOOGLE ANALYTICS CODE Below -->
 		<!-- <script type="text/javascript">
@@ -226,7 +180,7 @@
 		  })();
 
 		</script> -->
-				
+
 	</body>
 
 </html>

@@ -3,21 +3,23 @@
 vendasApp
 .controller(
 		'RegistrationController',
-		function RegistrationController($scope, RegistrationService, $routeParams, $window) {
+		function RegistrationController($scope, UserService,UtilityService, $routeParams, $window) {
 
 			/**
 			 * Registra um novo usuario.
 			 */
 			$scope.registeringNewUser = function(){
 
-				var aUser = RegistrationService.registeringNewUser($scope.fields);
+				var aUser = UserService.registeringNewUser($scope.fields);
 				
 				aUser.then(function(newUser){
 					
 					/**
-					 * Redireciona para a pagina o portal, após o cadastro
+					 * Seta o email do usuairo no cookie e redireciona para a pagina o portal, após o cadastro
 					 */					
-					RegistrationService.redirectNewUser(newUser.email, newUser.password).then(function(){
+					UserService.redirectNewUser(newUser.email, newUser.password).then(function(){
+						
+						UtilityService.setCookie("usernamevendaslim",$scope.fields.email);
 						$window.location.href = 'http://localhost:8080/vendas-web';
 					});
             	}, function errorCallback(error) {

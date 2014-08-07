@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" id="extr-page" data-ng-app="vendasApp">
+<html lang="pt-br"  id="extr-page" data-ng-app="vendasApp">
 	<head>
 		<meta charset="utf-8">
 		<!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
@@ -121,7 +121,7 @@
 									<section>
 										<label class="label">E-mail</label>
 										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input type="email" name="j_username">
+											<input type="email" name="j_username" id="username">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b></label>
 									</section>
 
@@ -142,7 +142,7 @@
 									</section>
 								</fieldset>
 								<footer>
-									<button type="submit" class="btn btn-primary">
+									<button id="btnLogin" type="submit" class="btn btn-primary">
 										Sign in
 									</button>
 								</footer>
@@ -206,6 +206,26 @@
 		<![endif]-->
 
 		<script type="text/javascript">
+
+
+		$('#btnLogin').click(function(){
+			var username = $('#username').val();
+			setCookie('usernamevendaslim',username);			
+		});
+
+		
+		/*
+		*Seta cookie
+		*/		
+		function setCookie(cname, cvalue){
+			//Define que o cookie expirara daqui 50 segundos.
+			var d = new Date();
+		    d.setTime(d.getTime() + (50*1000));		    
+		    var expires = "expires=" + d.toGMTString();
+		    
+		    document.cookie = cname+"="+cvalue+"; "+expires;
+		}
+		
 	
 
 			$(function() {
