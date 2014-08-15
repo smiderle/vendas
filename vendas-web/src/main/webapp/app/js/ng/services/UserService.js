@@ -56,22 +56,14 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 		 */
 		findUserByEmail : function(){	
 			var email = UtilityService.getCookie(Constants.COOKIE_USER_EMAIL);
-			return Restangular.all("user").all("findUserByEmail").getList({"email":email}).then(function(result){
+			return Restangular.all("user").all("getUserByEmail").getList({"email":email}).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;				
 				return p;
 			});
         }, 
-        
-        /**
-         * Retorna o usuario logado salvo no localStorage
-         * @returns
-         */
-        getUser: function(){
-        	return LocalStorageService.getFromLocalStorage(Constants.LOCAL_STORAGE_USER_LOGGED_KEY);
-        },
-        
+
         /**
          * Retorna todos os usuario de determinada empresa.
          * @returns
@@ -84,7 +76,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 					};
         	
         	
-        	return Restangular.all("user").all("getAllByOrganizationID").getList(parameters).then(function(result){
+        	return Restangular.all("user").all("getUsersByOrganizationID").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			
@@ -103,7 +95,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 					};
 	    	
 	    	
-	    	return Restangular.all("user").all("findUsersByUserIDOrNameOrEmail").getList(parameters).then(function(result){
+	    	return Restangular.all("user").all("getUsersByUserIDOrNameOrEmail").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;
@@ -118,5 +110,9 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
         getUserEdition: function(){
         	return userEdition;
         },
+        
+        addUserAccess: function(userID){
+        	Restangular.all('user').all('addUserAccess').post(userID);
+        }
 	};	
 });

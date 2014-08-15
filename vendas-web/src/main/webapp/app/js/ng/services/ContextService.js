@@ -2,8 +2,10 @@
 
 vendasApp.factory('ContextService',function($rootScope, Restangular,UtilityService, VendasWebRestangular, LocalStorageService, Constants){
 
-    
-    function getUser (){
+	/**
+	 * Retorna o usuario logado salvo no objeto $rootScope.user, caso não o encontre, busca no localStorage
+	 */
+    function getUserLogged (){
     	if($rootScope.user){
     		return $rootScope.user;
     	} else {
@@ -14,19 +16,20 @@ vendasApp.factory('ContextService',function($rootScope, Restangular,UtilityServi
     };
     
     function getOrganizationID(){
-    	var _user = getUser();    	
+    	var _user = getUserLogged();    	
     	return _user.organizationID;
     };
     
      function getBranchOfficeID(){
-    	var _user = getUser();
+    	var _user = getUserLogged();
     	return _user.branchOfficeID ;
     };
 
 	
 	
 	return {
-		getOrganizationID : getOrganizationID
+		getOrganizationID : getOrganizationID,
+		getUserLogged : getUserLogged
 		
 	};	
 });

@@ -20,7 +20,7 @@ vendasApp
 					UserService.redirectNewUser(newUser.email, newUser.password).then(function(){
 						
 						UtilityService.setCookie("usernamevendaslim",$scope.fields.email);
-						$window.location.href = 'http://localhost:8080/vendas-web';
+						$window.location.href = 'http://localhost/vendas-web';
 					});
             	}, function errorCallback(error) {
             		new alert(error);

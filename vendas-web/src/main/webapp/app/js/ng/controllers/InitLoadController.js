@@ -14,8 +14,8 @@ vendasApp
 
 		returnUser(aUser, function(){
 			$scope.loading = false;
-			//$window.location.href = 'http://www.vendaslim.com.br:8080/vendas-web/app/index.html';
-			$window.location.href = 'http://localhost:8080/vendas-web/app/index.html';
+			//$window.location.href = 'http://www.vendaslim.com.br/vendas-web/app/index.html';
+			$window.location.href = 'http://localhost/vendas-web/app/index.html';
 		});
 	};
 
@@ -23,6 +23,7 @@ vendasApp
 	function returnUser(base, callback) {
 		if (callback && typeof (callback) === "function") {
 			base.then(function(toReturn){
+				UserService.addUserAccess(toReturn.value.userID);
 				LocalStorageService.addToLocalStorage(Constants.LOCAL_STORAGE_USER_LOGGED_KEY,toReturn.value);
 				callback();
 			});

@@ -70,15 +70,35 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		},
 		controller : 'UserController'		
 	})
-	.when("/register/list_user",{
+	.when("/register/list_users",{
 		templateUrl : function($routeParams) {
 			if(false){
 				return  'views/accessdenied.html';
 			} else {
-				return  'views/register/list_user.html';
+				return  'views/register/list_users.html';
 			}
 		},
 		controller : 'UserController'		
+	})
+	.when("/register/list_organizations",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/register/organization/list_organizations.html';
+			}
+		},
+		controller : 'OrganizationController'		
+	})
+	.when("/register/organization",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/register/organization/organization.html';
+			}
+		},
+		controller : 'OrganizationController'		
 	})
 	
 	.otherwise({

@@ -52,7 +52,7 @@ vendasApp.factory('UtilityService',function(){
 				content : content,
 				color : "#C46A69",
 				iconSmall : "fa fa-times fa-2x fadeInRight animated",
-				timeout : 7000
+				timeout : 12000
 			});
 		}
 	};	
