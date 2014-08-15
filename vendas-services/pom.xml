@@ -157,6 +157,12 @@
 		    <artifactId>commons-pool</artifactId>
 		    <version>${commons.pool.version}</version>
 		</dependency>				
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+		</dependency>
+		
 	</dependencies>
   
   

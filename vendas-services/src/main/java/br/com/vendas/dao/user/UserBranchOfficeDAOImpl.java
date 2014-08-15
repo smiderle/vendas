@@ -20,6 +20,12 @@ public class UserBranchOfficeDAOImpl  extends ResourceDAO<UserBranchOffice> impl
 				Restrictions.eq("branchOfficeID", branchOfficeID));
 		return findByCriteria(criterion);
 	}
-	
 
+	@Override
+	public List<UserBranchOffice> findAllByUserID(Long userID) {
+
+		Criterion criterion = Restrictions.eq("userID", userID);
+				
+		return findByCriteria(criterion);
+	}
 }

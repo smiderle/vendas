@@ -22,7 +22,7 @@ public class UserBranchOfficeServiceImpl implements UserBranchOfficeService{
 	private UserBranchOfficeDAO dao;
 	
 	@Override
-	public ServiceResponse<List<UserBranchOffice>> findAllByBranchOffice(
+	public ServiceResponse<List<UserBranchOffice>> findAllByBranch(
 			Integer organizationID, Integer branchOfficeID) {
 		List<UserBranchOffice> users = dao.findAllByBranchOffice(organizationID, branchOfficeID);
 		return ServiceResponseFactory.create(users);
@@ -34,6 +34,13 @@ public class UserBranchOfficeServiceImpl implements UserBranchOfficeService{
 			UserBranchOffice userBranchOffice) {
 		userBranchOffice.setChangeTime(new GregorianCalendar());
 		return ServiceResponseFactory.create(dao.save(userBranchOffice));
+	}
+
+	@Override
+	public ServiceResponse<List<UserBranchOffice>> findAllByUserID(Long userID) {		
+				
+		List<UserBranchOffice> usersBranches = dao.findAllByUserID(userID);
+		return ServiceResponseFactory.create(usersBranches);
 	}
 
 }

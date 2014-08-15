@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.user.User;
+import br.com.vendas.exception.RegistrationException;
 import br.com.vendas.services.support.ServiceResponse;
 
 public interface UserService {
@@ -25,8 +26,9 @@ public interface UserService {
 	 * Salva ou Atualiza o usuario
 	 * @param user
 	 * @return
+	 * @throws RegistrationException 
 	 */
-	ServiceResponse<User> saveOrUpdate(User user);
+	ServiceResponse<User> saveOrUpdate(User user) throws RegistrationException;
 	
 	
 

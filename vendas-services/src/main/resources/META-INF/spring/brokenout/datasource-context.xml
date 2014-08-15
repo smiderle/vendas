@@ -61,7 +61,7 @@
         <property name="jpaVendorAdapter" ref="hibernateAdapter" />
     </bean>	
     <bean id="hibernateAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="showSql" value="true"/>
+        <property name="showSql" value="${resource.hibernate.showsql}"/>
         <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect"/>
         <property name="generateDdl" value="false"/>
     </bean>    

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vendas.dao.organization.BranchOfficeDAO;
 import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.organization.Organization;
+import br.com.vendas.exception.RegistrationException;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.support.ServiceResponseFactory;
 
@@ -38,9 +39,21 @@ public class BranchOfficeServiceImpl implements BranchOfficeService{
 
 	@Transactional(readOnly=false)
 	@Override
-	public ServiceResponse<BranchOffice> save(BranchOffice branchOffice) {
+	public ServiceResponse<BranchOffice> save(BranchOffice branchOffice) throws RegistrationException {
+		ServiceResponse<BranchOffice> branchOfficeSaved = findByOrganizationIDAndBranchOfficeID(branchOffice.getOrganization().getOrganizationID(), branchOffice.getBranchOfficeID());
+		if(branchOfficeSaved.getRowCount() > 0){
+			throw new RegistrationException("81","O código "+ branchOfficeSaved.getValue().getBranchOfficeID() +" já esta cadastrado para a empresa " + branchOfficeSaved.getValue().getFancyName());
+		}
+		
 		branchOffice.setChangeTime(new GregorianCalendar());
 		return ServiceResponseFactory.create(branchOfficeDAO.save(branchOffice));
+	}
+	
+	@Transactional(readOnly=false)
+	@Override
+	public ServiceResponse<BranchOffice> saveOrUpdate(BranchOffice branchOffice) {
+		branchOffice.setChangeTime(new GregorianCalendar());
+		return ServiceResponseFactory.create(branchOfficeDAO.saveOrUpdate(branchOffice));
 	}
 
 	@Override

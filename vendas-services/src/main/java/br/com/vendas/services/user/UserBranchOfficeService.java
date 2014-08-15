@@ -12,7 +12,7 @@ public interface UserBranchOfficeService {
 	 * Busca todos os usuarios de determinada filial
 	 * @return List<UserBranchOffice>
 	 */
-	ServiceResponse<List<UserBranchOffice>> findAllByBranchOffice(Integer organizationID, Integer branchOfficeID);
+	ServiceResponse<List<UserBranchOffice>> findAllByBranch(Integer organizationID, Integer branchOfficeID);
 	
 	
 	/**
@@ -20,4 +20,13 @@ public interface UserBranchOfficeService {
 	 * @return
 	 */
 	ServiceResponse<UserBranchOffice> save(UserBranchOffice userBranchOffice);
+	
+	/**
+	 * Retorna todas as empresas do usuario.
+	 * @param organizationID
+	 * @param branchOfficeID
+	 * @param userID
+	 * @return
+	 */
+	ServiceResponse<List<UserBranchOffice>> findAllByUserID(Long userID);
 }

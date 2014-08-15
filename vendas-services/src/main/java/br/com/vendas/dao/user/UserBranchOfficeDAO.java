@@ -12,5 +12,13 @@ public interface UserBranchOfficeDAO  extends GenericDAO<UserBranchOffice>{
 	 * @return List<UserBranchOffice>
 	 */
 	List<UserBranchOffice> findAllByBranchOffice(Integer organizationID, Integer branchOfficeID);
+	
+	/**
+	 * Retorna as filiais do usuário	
+	 * @param userBranchOffice
+	 * @return
+	 */
+	List<UserBranchOffice> findAllByUserID(Long userID);
+	
 
 }
