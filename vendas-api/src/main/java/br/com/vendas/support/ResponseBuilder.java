@@ -21,7 +21,7 @@ public class ResponseBuilder {
 		apiResponse.setPayload(e);
 		apiResponse.setStatus(HTTPStatusCode.SERVER_ERROR_500.getCode());
 		apiResponse.setCode(ApiResponse.STATUS_FAILURE);
-		apiResponse.setMessage("Ocorreu algum problema");
+		apiResponse.setMessage(e.getMessage());
 		return apiResponse;
 	}
 

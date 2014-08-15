@@ -1,7 +1,6 @@
 package br.com.vendas.api.user;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -12,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.vendas.domain.application.MenuApplication;
 import br.com.vendas.domain.user.User;
-import br.com.vendas.domain.user.UserTest;
+import br.com.vendas.exception.ApplicationException;
 import br.com.vendas.services.support.ServiceResponse;
-import br.com.vendas.services.user.UserRoleService;
+import br.com.vendas.services.user.UserAccessService;
 import br.com.vendas.services.user.UserService;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
@@ -31,22 +29,23 @@ public class UserController {
 	@Inject
 	private UserService service;
 	
+	
 	@Inject
-	private UserRoleService userRoleService;
-
+	private UserAccessService userAccessService;
+	
 	/**
 	 * Retorna todos os usarios de determinada empresa.
 	 * @param organizationID
 	 * @return
 	 */
-	@RequestMapping(value="getAllByOrganizationID", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getAllByOrganizationID(Long organizationID, Integer offset){
+	@RequestMapping(value="getUsersByOrganizationID", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getUsersByOrganizationID(Long organizationID, Integer offset){
 		try {
 			ServiceResponse<List<User>> payload =  service.findAllByOrganizationID(organizationID, offset);
 			LOG.debug("List<User> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
@@ -56,14 +55,14 @@ public class UserController {
 	 * @param email
 	 * @return
 	 */
-	@RequestMapping(value="findUserByEmail", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse findUserByEmail(String email){
+	@RequestMapping(value="getUserByEmail", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getUserByEmail(String email){
 		try{
 			ServiceResponse<User> payload =  service.findUserByEmail(email);
-						
-			LOG.debug("User : "+payload.getRowCount());
+			LOG.debug("getUserByEmail Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
+			LOG.error(e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
@@ -78,9 +77,10 @@ public class UserController {
 	public @ResponseBody ApiResponse isAvailableEmail(String email){
 		try{
 			ServiceResponse<Boolean> payload =  service.isAvailableEmail(email);
-			LOG.debug("User : "+payload.getRowCount());
+			LOG.debug("isAvailableEmail Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
+			LOG.error(e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
@@ -95,11 +95,11 @@ public class UserController {
 	@RequestMapping(value="saveUser", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse saveUser(@RequestBody User user){
 		try{			
-			ServiceResponse<User> payload =  service.save(user);		
-			userRoleService.saveDefaultRoles(payload.getValue());
-			LOG.debug("User : "+payload.getRowCount());
+			ServiceResponse<User> payload =  service.saveOrUpdate(user);			
+			LOG.debug("saveUser Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
-		} catch (Exception e) {
+		} catch (ApplicationException e) {
+			LOG.error(e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}	
@@ -112,15 +112,30 @@ public class UserController {
 	 * @param offset
 	 * @return
 	 */
-	@RequestMapping(value="findUsersByUserIDOrNameOrEmail", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse findUsersByUserIDOrNameOrEmail(Long organizationID, String filter, Integer offset){
+	@RequestMapping(value="getUsersByUserIDOrNameOrEmail", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getUsersByUserIDOrNameOrEmail(Long organizationID, String filter, Integer offset){
 		try {
 			ServiceResponse<List<User>> payload =  service.findUsersByUserIDOrNameOrEmail(filter, organizationID, offset);
-			LOG.debug("List<User> Size: "+payload.getRowCount());
+			LOG.debug("getUsersByUserIDOrNameOrEmail Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error(e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+		}
+	}
+	
+	
+	/**
+	 * Salva a hora de acesso do usuario
+	 * @param userAcess
+	 */
+	@RequestMapping(value="addUserAccess", method = RequestMethod.POST)
+	public void addUserAccess(@RequestBody Long userID){
+		try {
+			userAccessService.save(userID);
+			LOG.debug("addUserAccess userID: "+userID);
+		} catch (Exception e) {
+			LOG.error(e);						
 		}
 	}
 }

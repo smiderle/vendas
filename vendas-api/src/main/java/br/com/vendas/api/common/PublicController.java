@@ -87,15 +87,15 @@ public class PublicController {
 			User newUser = userService.save(user).getValue();
 			
 			//Cria o usuario-filial
-			UserBranchOffice userBranchOffice = new UserBranchOffice(newOrganization.getOrganizationID(),newBranchOffice.getBranchOfficeID(),
-					newUser.getUserID(),INITIAL_MAXIMUM_DISCOUNT,INITIAL_VIEW_ALL_CUSTOMER,INITIAL_MINIMUM_VALUE_SALES);
+			UserBranchOffice userBranchOffice = new UserBranchOffice(newBranchOffice,
+					newUser.getUserID(),INITIAL_MAXIMUM_DISCOUNT,INITIAL_VIEW_ALL_CUSTOMER,INITIAL_MINIMUM_VALUE_SALES, true);
 			userBranchOfficeService.save(userBranchOffice);
 			
 			//Cria roles para o usuario
-			List<UserRole> userRoles= new ArrayList<>();
+			/*List<UserRole> userRoles= new ArrayList<>();
 			userRoles.add(new UserRole(newUser.getUserID(), Role.ROLE_USER));
 			userRoles.add(new UserRole(newUser.getUserID(), Role.ROLE_ADMIN));
-			userRoleService.save(userRoles);
+			userRoleService.save(userRoles);*/
 			
 			//Cria o perfil do usuario
 			UserProfile userProfile = new UserProfile();
