@@ -42,6 +42,7 @@
 		<commons.dbcp.version>1.4</commons.dbcp.version>        
 		<jackson.core.version>2.2.1</jackson.core.version>
 		<pmd.version>4.2.4</pmd.version>			
+		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 
 	</properties>
 
