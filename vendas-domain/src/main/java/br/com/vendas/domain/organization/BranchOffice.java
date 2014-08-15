@@ -101,11 +101,24 @@ public class BranchOffice extends Domain{
 	@Column(name="dthralteracao")
 	private Calendar changeTime;
 	
+	
+	@Column(name="email")
+	private String email;
+	
+	@Column(name="website")
+	private String website;
+	
 	/**
 	 * Data de cadastro
 	 */
 	@Column(name="dthrcadastro", insertable=false)
 	private Date registrationDate;
+	
+	@Column(name="gerente")
+	private String manager;
+	
+	@Column(name="cnpj")
+	private String cnpj;
 			
 	public Organization getOrganization() {
 		return organization;
@@ -212,4 +225,41 @@ public class BranchOffice extends Domain{
 	public void setChangeTime(Calendar changeTime) {
 		this.changeTime = changeTime;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public String getManager() {
+		return manager;
+	}
+
+	public void setManager(String manager) {
+		this.manager = manager;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+	
+	
+	
+	
+	
 }

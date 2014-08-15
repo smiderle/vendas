@@ -3,6 +3,12 @@ package br.com.vendas.domain.user;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+
+import br.com.vendas.domain.organization.BranchOffice;
 
 public class UserBranchOfficePK implements Serializable{
 	
@@ -11,31 +17,21 @@ public class UserBranchOfficePK implements Serializable{
 	 */
 	private static final long serialVersionUID = -550870406575279282L;
 
-	@Column(name="IDEMPRESA")
-	private Long organizationID;
 	
-	@Column(name="IDFILIAL")
-	private Long branchOfficeID;
+	@ManyToOne(fetch = FetchType.EAGER)	
+	@JoinColumns(
+			{
+				@JoinColumn(name="IDEMPRESA",referencedColumnName="IDEMPRESA"),
+				@JoinColumn(name="IDFILIAL", referencedColumnName="IDFILIAL")
+			}
+			)
+	private BranchOffice branchOffice;
+	
 	
 	@Column(name="IDUSUARIO")
 	private Long userID;
 
-	public Long getOrganizationID() {
-		return organizationID;
-	}
-
-	public void setOrganizationID(Long organizationID) {
-		this.organizationID = organizationID;
-	}
-
-	public Long getBranchOfficeID() {
-		return branchOfficeID;
-	}
-
-	public void setBranchOfficeID(Long branchOfficeID) {
-		this.branchOfficeID = branchOfficeID;
-	}
-
+	
 	public Long getUserID() {
 		return userID;
 	}
@@ -43,4 +39,14 @@ public class UserBranchOfficePK implements Serializable{
 	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
+
+	public BranchOffice getBranchOffice() {
+		return branchOffice;
+	}
+
+	public void setBranchOffice(BranchOffice branchOffice) {
+		this.branchOffice = branchOffice;
+	}
+	
+	
 }

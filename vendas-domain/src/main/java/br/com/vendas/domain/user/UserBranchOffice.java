@@ -9,6 +9,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import br.com.vendas.domain.Domain;
+import br.com.vendas.domain.organization.BranchOffice;
 
 /**
  * Usuario Filial.
@@ -23,27 +24,28 @@ import br.com.vendas.domain.Domain;
 @IdClass(value=UserBranchOfficePK.class)
 public class UserBranchOffice extends Domain {
 	
+	public UserBranchOffice() {
 	
-	public UserBranchOffice(Long organizationID, Long branchOfficeID,
+	}
+	
+	
+	public UserBranchOffice(BranchOffice branchOffice,
 			Long userID, Double maximumDiscount, boolean viewAllCustomers,
-			Double minimumValueSales) {
-		super();
-		this.organizationID = organizationID;
-		this.branchOfficeID = branchOfficeID;
+			Double minimumValueSales, boolean active) {
+		super();		
 		this.userID = userID;
 		this.maximumDiscount = maximumDiscount;
 		this.viewAllCustomers = viewAllCustomers;
 		this.minimumValueSales = minimumValueSales;
+		this.active = active; 
+		this.branchOffice = branchOffice;
 	}
 
 	private static final long serialVersionUID = 1327645454492832287L;
 
 	@Id
-	private Long organizationID;
-	
-	@Id
-	private Long branchOfficeID;
-	
+	private BranchOffice branchOffice;	
+		
 	@Id
 	private Long userID;
 
@@ -71,22 +73,11 @@ public class UserBranchOffice extends Domain {
 	 */
 	@Column(name="dthralteracao")
 	private Calendar changeTime;
+	
 
-	public Long getOrganizationID() {
-		return organizationID;
-	}
-
-	public void setOrganizationID(Long organizationID) {
-		this.organizationID = organizationID;
-	}
-
-	public Long getBranchOfficeID() {
-		return branchOfficeID;
-	}
-
-	public void setBranchOfficeID(Long branchOfficeID) {
-		this.branchOfficeID = branchOfficeID;
-	}
+	@Column(name="ATIVO")
+	private boolean active;
+	
 
 	public Long getUserID() {
 		return userID;
@@ -127,4 +118,22 @@ public class UserBranchOffice extends Domain {
 	public void setChangeTime(Calendar changeTime) {
 		this.changeTime = changeTime;
 	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public BranchOffice getBranchOffice() {
+		return branchOffice;
+	}
+
+	public void setBranchOffice(BranchOffice branchOffice) {
+		this.branchOffice = branchOffice;
+	}
+	
+	
 }

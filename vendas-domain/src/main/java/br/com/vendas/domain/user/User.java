@@ -3,6 +3,7 @@ package br.com.vendas.domain.user;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -82,10 +83,10 @@ public class User extends Domain{
 	private boolean portalAccess;
 	
 	@OrderBy("order")
-	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.MERGE)
     @JoinTable(name="usuario_menu", joinColumns={@JoinColumn(name="idusuario")}
                                         , inverseJoinColumns={@JoinColumn(name="idmenu")})  
-	private Set<MenuApplication> menusApplication = new HashSet<>(0);
+	private Set<MenuApplication> menusApplication = new LinkedHashSet<>(0);
 	
 	public Long getUserID() {
 		return userID;

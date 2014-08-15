@@ -19,6 +19,14 @@ import br.com.vendas.domain.Domain;
 public class Organization extends Domain {
 		
 	private static final long serialVersionUID = -1759848649572554649L;
+
+	public Organization() {	
+	}
+	
+	public Organization(Long organizationID) {
+		super();
+		this.organizationID = organizationID;
+	}
 	
 	
 	
