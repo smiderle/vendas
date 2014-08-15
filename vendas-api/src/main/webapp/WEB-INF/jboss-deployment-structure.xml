@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+	
+	<!-- Foi preciso incluir isso porque no jboss esta dando problema com o jackson, e as anotações jacson não estão tendo efeito
+		 Fonte https://community.jboss.org/thread/243144?_sscc=t
+	 -->
+	<deployment>
+		<exclusions>
+			<module name="org.jboss.resteasy.resteasy-jackson2-provider" />
+		</exclusions>
+
+		<dependencies>
+			<module name="org.jboss.resteasy.resteasy-jackson-provider"
+				services="import" />
+		</dependencies>
+	</deployment>
+</jboss-deployment-structure> 
