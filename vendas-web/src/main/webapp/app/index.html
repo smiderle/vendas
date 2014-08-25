@@ -33,9 +33,6 @@
 
 		<!-- Angular Related CSS -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ng.min.css">
-		
-		<!-- Loading bar -->
-		<link rel="stylesheet" type="text/css" media="screen" href="css/loading-bar.css">
 
 		<!-- FAVICONS -->
 		<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
@@ -102,8 +99,8 @@
 
 		<!--================================================== -->
 
-		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
-		<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
+		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+		<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>
 
 		<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
@@ -156,8 +153,6 @@
 		<!-- FastClick: For mobile devices: you can disable this in app.js -->
 		<script src="js/plugin/fastclick/fastclick.min.js"></script>
 		
-		<!-- Loading Bar -->						
-		<script src="js/plugin/loadingbar/loading-bar.js"></script>
 
 		<!--[if IE 8]>
 			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -188,13 +183,18 @@
 	  	<!-- Controllers -->
 	  	<script src="js/ng/controllers/AppController.js"></script>
 	  	<script src="js/ng/controllers/StateController.js"></script>	  	
-	  	<script src="js/ng/controllers/OrganizationController.js"></script>
-	  	<script src="js/ng/controllers/UserController.js"></script>
+	  	<script src="js/ng/controllers/branch/BranchFormController.js"></script>
+	  	<script src="js/ng/controllers/branch/BranchListController.js"></script>
+	  		  		  	
+	  	<!-- <script src="js/ng/controllers/UserController.js"></script> -->
+	  	<script src="js/ng/controllers/user/UserFormController.js"></script>
+	  	<script src="js/ng/controllers/user/UserListController.js"></script>
 	  	
 	  	<!-- Services -->
 	  	<script src="js/ng/services/ContextService.js"></script>
 	  	<script src="js/ng/services/LocalStorageService.js"></script>
-	  	<script src="js/ng/services/OrganizationService.js"></script>
+	  	<script src="js/ng/services/LocationService.js"></script>
+	  	<script src="js/ng/services/BranchService.js"></script>
 	  	<script src="js/ng/services/StateService.js"></script>
 	  	<script src="js/ng/services/UserService.js"></script>
 	  	<script src="js/ng/services/UserBranchService.js"></script>

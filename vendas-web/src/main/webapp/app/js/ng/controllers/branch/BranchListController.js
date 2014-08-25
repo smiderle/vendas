@@ -1,8 +1,8 @@
 'use strict';
 
 vendasApp
-.controller('OrganizationController',
-		function OrganizationController($scope,$location, OrganizationService, ContextService, UtilityService) {
+.controller('BranchListController',
+		function BranchtionController($scope,$location, BranchService, ContextService) {
 	
 	/**
 	 * Lista de filiais carregados
@@ -20,12 +20,34 @@ vendasApp
 	 */
 	$scope.listBranches = function(){
 		var organizationID = ContextService.getOrganizationID();
-		var cBranches = OrganizationService.getAllBranchesByOrganizationID(organizationID);
+		var cBranches = BranchService.getAllBranchesByOrganizationID(organizationID);
 		cBranches.then(function(toReturn){
 			$scope.branches = toReturn.value;
 			buildBranchOfficeDataTable(toReturn.value);
 		});
 	};	
+	
+	$scope.newBranch = function(){
+		//Remove qualquer filial que estava na edição
+		BranchService.setBranchEdition({});
+		
+		$location.path('/branch/branch-form');
+	};
+	
+	$scope.editBranch = function(){
+		var branchSelectedID = $( "input:checked" ).val();
+		var branches = $scope.branches;
+		
+		var i;
+		for(i in branches){
+			var branche = branches[i];			
+			if(branche && branche.branchOfficeID == branchSelectedID){
+				BranchService.setBranchEdition(branche);
+				$location.path('/branch/branch-form');
+				break;
+			}
+		}
+	};
 	
 
 	/**
@@ -41,9 +63,9 @@ vendasApp
 				branchOfficeRows.push([
 	                       '<label class="checkbox"><input type="radio" name="checkbox-inline" value="'+branchOffice.branchOfficeID+'"><i></i></label>',
 	                       index+1,				               
-	                       branchOffice.branchOfficeID, 
-	                       branchOffice.realName,
+	                       branchOffice.branchOfficeID,
 	                       branchOffice.fancyName,
+	                       branchOffice.realName,	                       
 	                       branchOffice.phoneNumber
 	                       ]);
 			}
@@ -52,46 +74,5 @@ vendasApp
 		//Seta os usuarios 
 		$scope.rowsDataTable = branchOfficeRows;
 	};
-	
-	/**
-	 * Função que inicializa os dados no form da empresa.
-	 */
-	$scope.initBranchOfficeForm = function(){
-		
-	};
-	
-	$scope.newBranchOffice = function(){
-		$location.path('/register/organization');
-	};
-	
-	/**
-	 * Salva a filial
-	 */
-	$scope.save = function(branchOffice){
-		
-		if($('#branchOffice-registration-form').valid()){
-			//Esconde a mensagem de erro caso esteja visivel
-			$('#alertOrganizationInputsInvalids').hide();
-			branchOffice.organization = {
-					organizationID: ContextService.getOrganizationID()
-			};
-			console.log(branchOffice);
-			
-			var cBranchOffice = OrganizationService.save(branchOffice);
-			cBranchOffice.then(function(toReturn){
-				if(toReturn.code == '200'){
-					UtilityService.showAlertSucess('Sucesso.', 'Empresa salva com sucesso!!');
-				} else {
-					UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
-				}
-			});
-		} else {
-			//Mostra a mensagem de erro caso algo algum campo esteja invalido.
-			$('#alertOrganizationInputsInvalids').show();			
-		}
-	};
-	
-	
-	
 	
 });

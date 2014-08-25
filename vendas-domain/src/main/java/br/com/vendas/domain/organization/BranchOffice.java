@@ -2,15 +2,17 @@ package br.com.vendas.domain.organization;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.vendas.domain.Domain;
+import br.com.vendas.domain.location.City;
 
 /**
  * Filial
@@ -119,7 +121,57 @@ public class BranchOffice extends Domain{
 	
 	@Column(name="cnpj")
 	private String cnpj;
-			
+	
+	@Column(name="complemento")
+	private String addressComplement;
+	
+	@ManyToOne
+	@JoinColumn(name="CIDADE")
+	private City city;
+	
+	
+	@Column(name="descmax")
+	private Double maximumDiscount;
+	
+	@Column(name="email_notificacoes")
+	private String emailNotification;
+	
+	/**
+	 * Mostrar quantidade em estoque do produto
+	 */
+	@Column(name="exibir_estoque")
+	private boolean showStockProduct;
+	
+	/**
+	 * Permite venda para produtos com estoque negativo
+	 */
+	@Column(name="estoque_negativo")
+	private boolean negativeStockProduct;
+	
+	/**
+	 * Vendedor pode cadastrar cliente.
+	 */
+	@Column(name="vendedor_cadastra_cliente")
+	private boolean sellerRegisterCustomer;
+	
+	/**
+	 * Enviar email para o cliente quando efetivar uma venda.
+	 */
+	@Column(name="enviar_email_cliente")
+	private boolean sendEmailCustomer;
+	
+	/**
+	 * Ação ao evetuar venda para clientes com titulos vencidos, inadimplentes
+	 */
+	@Column(name="acao_titulo_vencido")
+	private String actionOverdue;
+		
+	/**
+	 * Ação ao evetuar venda para clientes com titulos vencidos, inadimplentes
+	 */
+	@Column(name="acao_limite_credito")
+	private String actionCreditLimit;
+				
 	public Organization getOrganization() {
 		return organization;
 	}
@@ -210,14 +262,7 @@ public class BranchOffice extends Domain{
 		this.branchOfficeID = branchOfficeID;
 	}
 
-	/*public City getCity() {
-		return city;
-	}
 
-	public void setCity(City city) {
-		this.city = city;
-	}
-*/
 	public Calendar getChangeTime() {
 		return changeTime;
 	}
@@ -257,7 +302,87 @@ public class BranchOffice extends Domain{
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
+
+	public String getAddressComplement() {
+		return addressComplement;
+	}
+
+	public void setAddressComplement(String addressComplement) {
+		this.addressComplement = addressComplement;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public Double getMaximumDiscount() {
+		return maximumDiscount;
+	}
+
+	public void setMaximumDiscount(Double maximumDiscount) {
+		this.maximumDiscount = maximumDiscount;
+	}
+
 	
+	public boolean isShowStockProduct() {
+		return showStockProduct;
+	}
+
+	public void setShowStockProduct(boolean showStockProduct) {
+		this.showStockProduct = showStockProduct;
+	}
+
+	public boolean isNegativeStockProduct() {
+		return negativeStockProduct;
+	}
+
+	public void setNegativeStockProduct(boolean negativeStockProduct) {
+		this.negativeStockProduct = negativeStockProduct;
+	}
+
+	public boolean isSellerRegisterCustomer() {
+		return sellerRegisterCustomer;
+	}
+
+	public void setSellerRegisterCustomer(boolean sellerRegisterCustomer) {
+		this.sellerRegisterCustomer = sellerRegisterCustomer;
+	}
+
+	public boolean isSendEmailCustomer() {
+		return sendEmailCustomer;
+	}
+
+	public void setSendEmailCustomer(boolean sendEmailCustomer) {
+		this.sendEmailCustomer = sendEmailCustomer;
+	}
+
+	public String getActionOverdue() {
+		return actionOverdue;
+	}
+
+	public void setActionOverdue(String actionOverdue) {
+		this.actionOverdue = actionOverdue;
+	}
+
+	public String getActionCreditLimit() {
+		return actionCreditLimit;
+	}
+
+	public void setActionCreditLimit(String actionCreditLimit) {
+		this.actionCreditLimit = actionCreditLimit;
+	}
+
+	public String getEmailNotification() {
+		return emailNotification;
+	}
+
+	public void setEmailNotification(String emailNotification) {
+		this.emailNotification = emailNotification;
+	}
 	
 	
 	

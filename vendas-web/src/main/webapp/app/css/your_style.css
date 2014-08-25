@@ -25,3 +25,9 @@
 input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 1000px white inset;
 } 
+
+
+/* Cor background das tabs. */
+/* .nav-tabs.bordered{
+	background: #4C4F53 !important;
+} */

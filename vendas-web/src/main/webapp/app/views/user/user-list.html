@@ -1,0 +1,81 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="well">
+				<form ng-submit="findUsersByFilter(filter)">
+					<div class="input-group">			
+						<input class="form-control" type="text" placeholder="Código ou Nome." ng-model="filter">
+							<div class="input-group-btn">
+								<button class="btn btn-default btn-primary" type="button" ng-click="findUsersByFilter(filter)">
+									<i class="fa fa-search"></i> Pesquisar
+								</button>
+							</div>				
+					</div>
+				</form>
+			</div>
+			
+			<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Usuários </h2>
+
+				</header>
+
+				<div>
+					<div class="widget-body no-padding">
+						<div class="dt-toolbar">
+							<div class="col-xs-12">
+									<a class="btn btn-primary" ng-click="newUser()"> <i class="fa fa-plus-square-o"></i>  Novo</a>
+									<a id="btnUserEdit" class="btn btn-primary  required-selected" href="javascript:void(0);" ng-click="editUser()" ><i class="fa fa-edit"></i>  Editar</a>
+									<!-- <a id="btnRemoveUser" class="btn btn-primary  required-selected" href="javascript:void(0);"><i class="fa fa-trash-o"></i>  Excluir</a> -->										
+							</div>
+							<br>
+						</div>
+
+						<table id="datatable_users" custom-data-table aa-data="rowsDataTable" ng-init="listUsers()" class="table table-hover table-striped smart-form has-tickbox dataTable" width="100%" >
+							<thead>
+									<tr role="row">
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 23px;"></th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 59px;">Sequencia</th>										
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 450px;">Nome</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 400px;">Email</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 150px;">Ativo</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 150px;">Acesso Web</th>
+									</tr>
+								</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	pageSetUp();
+
+	$('#btnUserEdit').attr("disabled","disabled");
+	$('#btnRemoveUser').attr("disabled","disabled");
+
+</script>
+
+
+
+
+
+
+
+
+		

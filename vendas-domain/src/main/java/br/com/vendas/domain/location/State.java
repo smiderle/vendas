@@ -1,20 +1,31 @@
 package br.com.vendas.domain.location;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import br.com.vendas.domain.Domain;
 
+@Table(name="ESTADO")
+@Entity
 public class State extends Domain{
 	
 	/**
 	 * Código interno do estado.
 	 */
+	@Id
+	@Column(name="IDESTADO")
 	private Long stateID;	
 	/**
 	 * UF do estado.
 	 */
+	@Column
 	private String uf;	
 	/**
 	 * Nome do estado.
 	 */
+	@Column(name="NOME")
 	private String name;
 		
 	public Long getStateID() {

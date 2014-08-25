@@ -10,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 public abstract class DefaultGenericDAO<DOMAINTYPE> implements
 		GenericDAO<DOMAINTYPE> {
@@ -119,6 +120,18 @@ public abstract class DefaultGenericDAO<DOMAINTYPE> implements
 		Criteria crit = getSession().createCriteria(entityType);  
         for (Criterion c : criterion) {
             crit.add(c);
+        }
+        return crit.list();
+    }
+	
+	@SuppressWarnings("unchecked")
+    public List<DOMAINTYPE> findByCriteria(Order order,Criterion... criterion) {
+		Criteria crit = getSession().createCriteria(entityType);  
+        for (Criterion c : criterion) {
+            crit.add(c);
+        }
+        if(order != null){
+        	crit.addOrder(order);
         }
         return crit.list();
     }

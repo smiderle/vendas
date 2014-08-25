@@ -65,8 +65,8 @@ public class BranchOfficeController {
 	}
 	
 	
-	@RequestMapping(value="saveOrUpdate", method = RequestMethod.POST)
-	public @ResponseBody ApiResponse saveOrUpdate(@RequestBody BranchOffice branchOffice){
+	@RequestMapping(value="update", method = RequestMethod.POST)
+	public @ResponseBody ApiResponse update(@RequestBody BranchOffice branchOffice){
 		try {
 			ServiceResponse<BranchOffice> payload =  service.saveOrUpdate(branchOffice);
 			LOG.debug("BranchOffice saveOrUpdate Size: "+payload.getRowCount());

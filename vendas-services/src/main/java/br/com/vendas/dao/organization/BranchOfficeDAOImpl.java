@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.AggregateProjection;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,7 @@ public class BranchOfficeDAOImpl extends ResourceDAO<BranchOffice> implements Br
 	@Override
 	public List<BranchOffice> findAllByOrganizationID(Long organizationID) {
 		Criterion criterion = Restrictions.eq("organization.organizationID", organizationID);
-		return findByCriteria(criterion);
+		return findByCriteria(Order.asc("fancyName"), criterion);
 	}
 
 	@Override

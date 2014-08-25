@@ -50,59 +50,53 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		redirectTo: '/dashboard'
 	})
 
-	.when("/empresa",{
-		templateUrl : function($routeParams) {
-			if(true){
-				return  'views/accessdenied.html';
-			} else {
-				return  'views/empresa.html';
-			}
-		},
-		controller : 'OrganizationController'		
-	})
-	.when("/register/user",{
+	.when("/user/user-form",{
 		templateUrl : function($routeParams) {
 			if(false){
 				return  'views/accessdenied.html';
 			} else {
-				return  'views/register/user.html';
+				return  'views/user/user-form.html';
 			}
 		},
-		controller : 'UserController'		
+		controller : 'UserFormController'		
 	})
-	.when("/register/list_users",{
+	.when("/user/user-list",{
 		templateUrl : function($routeParams) {
 			if(false){
 				return  'views/accessdenied.html';
 			} else {
-				return  'views/register/list_users.html';
+				return  'views/user/user-list.html';
 			}
 		},
-		controller : 'UserController'		
+		controller : 'UserListController'		
 	})
-	.when("/register/list_organizations",{
+	.when("/branch/branch-list",{
 		templateUrl : function($routeParams) {
 			if(false){
 				return  'views/accessdenied.html';
 			} else {
-				return  'views/register/organization/list_organizations.html';
+				return  'views/branch/branch-list.html';
 			}
 		},
-		controller : 'OrganizationController'		
+		controller : 'BranchListController'		
 	})
-	.when("/register/organization",{
+	.when("/branch/branch-form",{
 		templateUrl : function($routeParams) {
 			if(false){
 				return  'views/accessdenied.html';
 			} else {
-				return  'views/register/organization/organization.html';
+				return  'views/branch/branch-form.html';
 			}
 		},
-		controller : 'OrganizationController'		
+		controller : 'BranchFormController'		
+	})
+	
+	.when("/error404",{
+		templateUrl : 'views/misc/error404.html'	
 	})
 	
 	.otherwise({
-		redirectTo: '/dashboard'
+		redirectTo: '/error404'
 	})
 	;
 

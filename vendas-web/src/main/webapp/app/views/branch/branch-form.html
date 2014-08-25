@@ -1,0 +1,362 @@
+<div class="alert alert-warning fade in" style="display:none" id="alertOrganizationInputsInvalids">
+	<button class="close" data-dismiss="alert">
+		×
+	</button>
+	<i class="fa-fw fa fa-warning"></i>
+	<strong>Opss!</strong> Alguns campos estão incorretos. Por favor, verifique antes de continuar. 
+</div>
+
+
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+		
+			
+			<div  ng-init="initBranchForm()" class="jarviswidget jarviswidget-sortable"				
+				role="widget" 
+				style="position: relative; opacity: 1;">
+				<header role="heading"><div class="jarviswidget-ctrls" role="menu">   <a href="#" class="button-icon jarviswidget-toggle-btn " rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse" style="display: block;"><i class="fa fa-minus "></i></a> <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand"></i></a></div>
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Empresa</h2>				
+						
+					<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
+	
+					<!-- widget div-->
+					<div role="content" style="">
+												
+						<div class="widget-body no-padding">
+								
+							<form autocomplete="off" id="branchOffice-registration-form" class="smart-form" novalidate="novalidate" ng-submit="save(branchOffice)" >
+																			
+								<div class="md-header btn-toolbar">
+								<br>
+									<button type="button" class="btn btn-sm btn-default" onclick="window.history.back();">
+									<i class="fa fa-reply"></i>
+												Voltar
+									</button>
+									<button type="submit" class="btn btn-sm  btn-success" id="btnUserSave">
+										<i class="fa fa-save"></i>
+											Salvar
+									</button>								
+									<br>
+								</div>
+								<br>
+								<hr>
+								
+								<ul id="myTab1" class="nav nav-tabs bordered">
+									<li class="active">
+										<a href="#tabGeneralData" data-toggle="tab"><i class="fa fa-fw fa-lg fa-briefcase"></i>Dados Da Empresa</a>
+									</li>
+									<li>
+										<a href="#tabOrganizationContact" data-toggle="tab"><i class="fa fa-fw fa-lg fa-phone"></i>Contato</a>
+									</li>
+									<li>
+										<a href="#tabOrganizationAddress" data-toggle="tab"><i class="fa fa-fw fa-lg fa-home"></i>Endereço</a>
+									</li>
+									
+									<li>
+										<a href="#tabOrganizationConfigurations" data-toggle="tab"><i class="fa fa-fw fa-lg  fa-gears"></i>Configurações</a>
+									</li>									
+									
+								</ul>
+								
+								<div id="tabContentOrganization" class="tab-content padding-10">
+									<div class="tab-pane fade in active" id="tabGeneralData">
+										
+											<div class="row">
+												<section class="col col-2">											
+														<label class="label">Código</label>
+														<label class="input">												
+															<input type="text" ng-disabled="isEdition" name="branchOfficeID" placeholder="Código da Empresa" maxlength="10"  ng-model="branchOffice.branchOfficeID"  class="form-control">
+														</label>
+												</section>
+											</div>
+											<div class="row">
+												<section class="col col-6">											
+													<label class="label">Razão Social</label>
+													<label class="input">												
+														<input type="text" name="realName" placeholder="Razão Social" maxlength="250" ng-model="branchOffice.realName">
+													</label>
+												</section>	
+												<section class="col col-2">													
+													<label class="label">CNPJ</label>
+													<label class="input">
+														<input type="text" name="cnpj" placeholder="CNPJ" maxlength="20" data-mask="99.999.999/9999-99" ng-model="branchOffice.cnpj">
+													</label>
+												</section>										
+											</div>
+											<div class="row">
+												<section class="col col-6">													
+													<label class="label">Nome Fantasia</label>
+													<label class="input">
+														<input type="text" name="fancyName" placeholder="Nome Fantasia" maxlength="250" ng-model="branchOffice.fancyName">
+													</label>
+												</section>
+											</div>
+											
+											<div class="row">
+												<section class="col col-6">													
+													<label class="label">Gerente</label>
+													<label class="input">
+														<input type="text" name="manager" placeholder="Gerente" maxlength="20" ng-model="branchOffice.manager">
+													</label>
+												</section>
+											</div>
+										
+									</div>
+									<div class="tab-pane fade" id="tabOrganizationContact">											
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Telefone</label>
+												<label class="input">
+													<input type="tel" name="phoneNumber" placeholder="Telefone" maxlength="15" ng-model="branchOffice.phoneNumber" >
+												</label>
+											</section>
+											<section class="col col-3">
+												<label class="label">Fax</label>
+												<label class="input">
+													<input type="tel" name="fax" placeholder="Fax" maxlength="15" ng-model="branchOffice.faxNumber">
+												</label>
+											</section>											
+										</div>
+										<div class="row">
+											<section  class="col col-3">
+												<label class="label">Email</label>
+												<input name="email" style="display:none"> <!-- Incluido essa linha para o chrome ignorar o autocomplete  -->
+												<label class="input">												
+													<input type="email" name="email" placeholder="E-mail" maxlength="60" ng-model="branchOffice.email">
+												</label>
+											</section>
+											<section  class="col col-3">
+													<label class="label">Site</label>													
+													<input name="email" style="display:none"> <!-- Incluido essa linha para o chrome ignorar o autocomplete  -->
+													<label class="input">												
+														<input type="text" name="website" placeholder="Web Site" maxlength="60" ng-model="branchOffice.website">
+													</label>
+											</section>
+										</div>										
+									</div>
+									<div class="tab-pane fade" id="tabOrganizationAddress">										
+										
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">CEP</label>												
+													<div class="input-group">
+														<label class="input">															
+															<input type="text" class="form-control input" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="postalCode" placeholder="CEP" data-mask="99999-999" ng-model="branchOffice.postalCode">
+														</label>
+														<div class="input-group-btn">
+															<button type="button" class="btn btn-sm  btn-primary" ng-click="findPostalCode()">
+																<i class="fa fa-search"></i>
+																	Buscar
+															</button>																	
+														</div>
+													</div>
+											</section>									
+										</div>	
+										
+										<div class="row">
+											<section class="col col-2">
+												<label class="label">Cidade</label>												
+												<label class="input">
+													<!-- <input type="text" name="city" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Cidade" ng-model="branchOffice.city.name" list="list" ng-change="findCities()"> -->
+													<input type="text" id="txtCity" name="city" ng-change="onChangeCities()" ng-model="selectedCity" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
+															placeholder="Cidade" typeahead="c as c.name for c in cities | filter:$viewValue | limitTo:10" typeahead-min-length='1' 
+															typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">
+													<!-- <datalist id="list">
+														<select id="_select" name="name" ng-model='selectedCity' value="Pato Branco" ng-options='k.name as x.cityID for (k,x) in cities'></select> -->
+													    <!-- http://codepen.io/jjperezaguinaga/pen/Dmspr -->
+														<!-- <option ng-repeat="city in cities" value="{{city.name}}">{{city.state.uf}}</option> -->
+														<!-- <option style="display: none;" id="_select" name="_select" ng-model='selectedCity' ng-options='city.name as city.cityID for city in cities'></option> -->
+														<!-- <select style="display: none;" id="_select" name="_select" ng-model='selectedCountry' ng-options='k as v for (k,v) in countries'></select> -->
+													<!-- </datalist> -->														
+												</label>
+											</section>
+											<section class="col col-1">
+												<label class="label">Estado</label>
+												<label class="input">
+													<input type="text" disabled="disabled" class="form-control" name="state" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Estado" ng-model="selectedCity.state.uf">
+												</label>
+											</section>	
+											<section class="col col-3">
+												<label class="label">Bairro</label>
+												<label class="input">
+													<input type="text" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="district" placeholder="Bairro" ng-model="branchOffice.district" >
+												</label>
+											</section>									
+																			
+										</div>
+										
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Rua</label>
+												<label class="input">
+													<input type="text" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="street" placeholder="Rua" ng-model="branchOffice.street" >
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="label">Numero</label>
+												<label class="input">
+													<input type="text" name="number" placeholder="Numero" maxlength="8" ng-model="branchOffice.number">
+												</label>
+											</section>
+										</div>
+										
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Complemento</label>
+												<label class="input">
+													<input type="text" name="addressComplement" placeholder="Complemento" ng-model="branchOffice.addressComplement" >
+												</label>
+											</section>
+											
+										</div>
+											
+									</div>
+									<div class="tab-pane fade" id="tabOrganizationConfigurations">
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Desconto Máximo</label>
+												<label class="input">
+													<input type="text" name="descMax" placeholder="Desconto Máximo" ng-model="branchOffice.maximumDiscount">
+												</label>
+											</section>											
+										</div>
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">E-mail pedidos</label>
+												<label class="input">
+													<input type="text" name="emailOrder" placeholder="e-mails que serão enviados os pedidos" ng-model="branchOffice.emailNotification">
+												</label>
+											</section>											
+										</div>
+										<label class="checkbox"><input type="checkbox" name="chkShowStockProduct" id="chkShowStockProduct" ng-model="branchOffice.showStockProduct"><i></i>Exibir Estoque</label>
+										<label class="checkbox"><input type="checkbox" name="chkNegativeStockProduct" id="chkNegativeStockProduct" ng-model="branchOffice.negativeStockProduct"><i></i>Permite Vender Com Estoque Negativo</label>
+										<label class="checkbox"><input type="checkbox" name="chkSellerRegisterCustomer" id="chkSellerRegisterCustomer" ng-model="branchOffice.sellerRegisterCustomer"><i></i>O Vendedor Pode Cadastrar Clientes</label>
+										<label class="checkbox"><input type="checkbox" name="chkSendEmailCustomer" id="chkSendEmailCustomer" ng-model="branchOffice.sendEmailCustomer"><i></i>Enviar Email Para o Cliente ao Efetivar o Pedido</label>
+																				
+										<label class="label">Ação Quando Realizar Venda Para Cliente com Titulos Vencidos</label>
+										<select ng-options="actionOverdue.code as actionOverdue.label for actionOverdue in actions" ng-model="branchOffice.actionOverdue">
+									    	<option style="display:none" value="">Selecione a ação</option>
+									    </select>
+										
+										
+										<label class="label">Ação Quando Realizar Venda Para Cliente com Sem Limite de Crédito</label>
+										<select ng-options="actionCreditLimit.code as actionCreditLimit.label for actionCreditLimit in actions" ng-model="branchOffice.actionCreditLimit">
+									    	<option style="display:none" value="">Selecione a ação</option>
+									    </select>										
+									</div>
+									
+								</div>	
+									
+							</form>
+	
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+					
+				</div>			
+			
+		</article>
+	</div>
+</section>
+
+		<!-- Utilizado no autocomplete da cidade -->
+		<script type="text/ng-template" id="customTemplate.html">
+	 		 <a>
+      			<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+      				<i>({{match.model.state.uf}})</i>
+  			</a>
+		</script>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		/**
+		* Faz com que o jquery validate, valide os campos que que não estão visiveis também.
+		* Fonte http://stackoverflow.com/questions/10145131/how-to-properly-validate-twitters-bootstrap-form-placed-on-several-tabs-with-jq
+		**/
+		$.validator.setDefaults({
+		    ignore: ""
+		});
+		
+		pageSetUp();
+
+		var $checkoutForm = $('#branchOffice-registration-form').validate({
+		// Rules for form validation
+			rules : {
+				branchOfficeID : {
+					required : true,
+					digits: true
+				},	
+				fancyName: {
+					required : true
+				},
+				
+				realName: {
+					required : true
+				},
+				
+				cnpj: {
+					required : true
+				},
+				
+				manager : {
+					required : true
+				},
+			},
+	
+			// Messages for form validation
+			messages : {				
+				address : {
+					required : 'Por favor, informe um endereço'
+				},							
+				branchOfficeID : {
+					required : 'Por favor, informe um código',
+					digits: 'Por favor, informe somente numeros'
+				},				
+				fancyName: {
+					required : 'Por favor, informe o nome fantasia'
+				},
+				realName: {
+					required : 'Por favor, informe a razão social'
+				},
+				email : {
+					required : 'Por favor, informe um email',
+					email : 'Por favor, informe um email válido'
+				},
+				
+				manager: {
+					required : 'Por favor, informe o nome do gerente'
+				},
+				
+				cnpj: {
+					required : 'Por favor, informe o CNPJ da empresa'
+				},
+			},
+						
+
+			// Do not change code below
+			errorPlacement : function(error, element) {
+				error.insertAfter(element.parent());
+			}
+		});
+	
+
+	})	
+
+</script>
+
+

@@ -1,6 +1,6 @@
 'use strict';
 
-vendasApp.factory('OrganizationService',
+vendasApp.factory('BranchService',
 		function(Restangular){
 	
 	var branchEdit;
@@ -29,8 +29,8 @@ vendasApp.factory('OrganizationService',
 		 * @returns
 		 */
 		save : function(branchOffice){
-			var user = Restangular.all('branchOffice').all('save').post(branchOffice);
-			return user;
+			var branch = Restangular.all('branchOffice').all('save').post(branchOffice);
+			return branch;
         },
         
         /**
@@ -38,9 +38,9 @@ vendasApp.factory('OrganizationService',
 		 * @param fields
 		 * @returns
 		 */
-		saveOrUpadate : function(branchOffice){
-			var user = Restangular.all('user').all('saveOrUpdate').post(branchOffice);
-			return user;
+        update : function(branchOffice){
+			var branch = Restangular.all('branchOffice').all('update').post(branchOffice);
+			return branch;
         },
         
         /**

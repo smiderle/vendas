@@ -1,22 +1,11 @@
 'use strict';
 
-vendasApp.controller('UserController',
-		['$scope','$location','UserService','UserBranchService' ,'ContextService','UtilityService','Constants', 
-        function UserController($scope, $location, UserService,UserBranchService, ContextService, UtilityService,Constants) {
+vendasApp.controller('UserFormController',
+		['$scope','UserService','UserBranchService' ,'ContextService','UtilityService','Constants', 
+        function UserController($scope, UserService,UserBranchService, ContextService, UtilityService,Constants) {
 
 	$scope.userAccount;
 	
-	/**
-	 * Lista de usuários carregados
-	 */
-	$scope.users = [];
-	
-	/**
-	 * Linhas que irão popular a datatable dos Usuários.
-	 * Contém um array de usuários, com array de colunas como name, email...
-	 */
-	$scope.rowsDataTable = [];
-
 	/**
 	 * Model com as permições de acesso ao sistema
 	 */
@@ -28,11 +17,13 @@ vendasApp.controller('UserController',
 			order: true,
 			organization: true,
 	};
-	
+
 	/**
 	 * Lista de empresas do usuário
 	 */
 	$scope.userBranches = [];
+
+	
 	
 	/**
 	 * Função que inicializa os dados no form do usuario.
@@ -94,34 +85,10 @@ vendasApp.controller('UserController',
 				}				
 			});			
 			$scope.menusApplication = menuTmp;			
-		}
-		
-		
+		}	
 	};
 	
 	
-
-	/**
-	 * Chamado quando clicado no botão Editar.
-	 * Percorre os usuarios que foram armazenados no $scope.users, e compara o userID, para encontrar o usuario selecionado. 
-	 */
-	$scope.editUser = function(){
-		
-		//Recupera o usuario selecionado no datatable.
-		var userSelectedID = $( "input:checked" ).val();
-		var users = $scope.users;
-		
-		var i;
-		for(i in users){
-			var user = users[i];			
-			if(user && user.userID == userSelectedID){				
-				UserService.setUserEdition(user);
-				$location.path('/register/user');
-				break;
-			}
-		}
-	};
-
 	/**
 	 * Chamado quando clicado no botão Salvar
 	 */
@@ -177,63 +144,5 @@ vendasApp.controller('UserController',
 	};
 
 
-	/**
-	 * Lista os usuarios da empresa.
-	 */
-	$scope.listUsers = function(){
-		var organizationID = ContextService.getOrganizationID();
-		var offset = 0;
-		var cUsers_ = UserService.getAllByOrganization(organizationID, offset);
-		cUsers_.then(function(toReturn){
-			$scope.users = toReturn.value;
-			buildUserDataTable(toReturn.value);
-		});
-	};
-	
-	/**
-	 * Busca os usuarios por nome ou código, informados no filtro de pesquisa no list_user.html
-	 */
-	$scope.findUsersByFilter = function(filter){
-		var organizationID = ContextService.getOrganizationID();
-		var offset = 0;
-		var cUsers = UserService.findUsersByFilter(organizationID,filter, offset);
-		cUsers.then(function(toReturn){
-			$scope.users = toReturn.value;
-			buildUserDataTable(toReturn.value);
-		});
-	};
-	
-	
-	$scope.newUser = function(){
-		var userAccount ={email: '', name: ' ', password: ''};
-		UserService.setUserEdition(userAccount);
-		$location.path('/register/user');
-	};	
-
-	
-	/**
-	 * Cria um array de usuarios, contendo um array das colunas do dataTable, e seta no objeto de escopo rowsDataTable, que esta 
-	 * sendo "ouvido" na directive CustomDataTable
-	 */
-	function buildUserDataTable(users){
-		var userRows = [];
-		
-		users.forEach(function(element, index){
-			var user = element;
-			if(user && user.userID){
-				//Adiciona um array com as colunas que irão ser apresentadas no dataTable
-				userRows.push([
-				              '<label class="checkbox"><input type="radio" name="checkbox-inline" value="'+user.userID+'"><i></i></label>',
-				              index+1,				               
-				              user.name, 
-				              user.email,
-				              user.active ? 'Sim' : 'Não',
-				              user.portalAccess  ? 'Sim' : 'Não']);
-			}
-		});
-		
-		//Seta os usuarios 
-		$scope.rowsDataTable = userRows;
-	};
 	
 }]);
