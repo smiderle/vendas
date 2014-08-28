@@ -1,148 +1,240 @@
 'use strict';
 
 vendasApp.controller('UserFormController',
-		['$scope','UserService','UserBranchService' ,'ContextService','UtilityService','Constants', 
-        function UserController($scope, UserService,UserBranchService, ContextService, UtilityService,Constants) {
+		['$scope','UserService' ,'BranchService', 'ContextService','UtilityService','Constants', 
+		 function UserController($scope, UserService,BranchService, ContextService, UtilityService,Constants) {
 
-	$scope.userAccount;
-	
-	/**
-	 * Model com as permições de acesso ao sistema
-	 */
-	$scope.menusApplication = {
-			user: true,
-			product : true,
-			priceTable: true,
-			installment: true,
-			order: true,
-			organization: true,
-	};
+			$scope.userAccount;
 
-	/**
-	 * Lista de empresas do usuário
-	 */
-	$scope.userBranches = [];
+			$scope.isEdition = false;
 
-	
-	
-	/**
-	 * Função que inicializa os dados no form do usuario.
-	 */
-	$scope.initUserForm = function(){
-		/**
-		 * Quando for uma edição de usuario, a pagina list_users.html seta no UserService 
-		 * o usuario a ser editado, e a pagina user.html recupera esse usuario 
-		 */
-		$scope.userAccount = UserService.getUserEdition();
-		var userEdition = $scope.userAccount;
-		if(userEdition){
-			$scope.passwordConfirm = $scope.userAccount.password;
-			
 			/**
-			 * Carrega as empresas do usuario
+			 * Model com as permições de acesso ao sistema
 			 */
-			var cUserBranch = UserBranchService.getAllByUserID(userEdition.userID);
-			
-			cUserBranch.then(function(toReturn){
-				if(toReturn.code == '200'){
-					$scope.userBranches = toReturn.value;
-					console.log(toReturn.value);
+			$scope.menusApplication = {
+					user: true,
+					product : true,
+					priceTable: true,
+					installment: true,
+					order: true,
+					organization: true,
+			};
+
+			/**
+			 * Lista de empresas do usuário
+			 */
+			$scope.userBranches = [];
+
+			/**
+			 * Empresas que irão popular o datatable de empresas do usuario
+			 */
+			$scope.userBranchesDataTable = [];
+
+
+
+			/**
+			 * Função que inicializa os dados no form do usuario.
+			 */
+			$scope.initUserForm = function(){
+				/**
+				 * Quando for uma edição de usuario, a pagina list_users.html seta no UserService 
+				 * o usuario a ser editado, e a pagina user.html recupera esse usuario 
+				 */
+				$scope.userAccount = UserService.getUserEdition();
+				var userEdition = $scope.userAccount;
+				if(userEdition && userEdition.userID){
+					$scope.passwordConfirm = $scope.userAccount.password;
+					$scope.isEdition = true;
+					$scope.userIsSeller = false;
+					$scope.userIsAdministrator = false;
+					
+					//Verifica  as permissões do usuario, e seta o objeto de escopo que controla os checkbox
+					if(userEdition.userRoles){
+						userEdition.userRoles.forEach(function(userRole){
+							if(userRole.role == 'ROLE_USER'){
+								$scope.userIsSeller = true;
+							} else if(userRole.role == 'ROLE_ADMIN'){
+								$scope.userIsAdministrator = true;
+							}
+						});
+					}					
+				}
+
+				/**
+				 * Verifica os menus que o 
+				 * usuario tem acesso, e seta no objeto de escopo $scope.menusApplication
+				 */
+				var menuTmp = {};
+				if(userEdition && userEdition.menusApplication){
+					var menus = userEdition.menusApplication;
+					menus.forEach(function(element){
+						switch (element.menuID) {
+						case Constants.MENUID_PRODUCT:
+							menuTmp.product = true;
+							break;
+						case Constants.MENUID_ORDER:
+							menuTmp.order= true;
+							break;
+						case Constants.MENUID_USER:
+							menuTmp.user= true;
+							break;
+						case Constants.MENUID_PRICE_TABLE:
+							menuTmp.priceTable = true;
+							break;
+						case Constants.MENUID_INSTALLMENT:
+							menuTmp.installment= true;
+							break;
+						case Constants.MENUID_ORGANIZATION:
+							menuTmp.organization= true;
+							break;					
+						default:
+							break;
+						}				
+					});			
+					$scope.menusApplication = menuTmp;			
+				}	
+
+				//Busca as empresas salvas no sistema
+				var organizationID = ContextService.getOrganizationID();
+				var cBranches = BranchService.getAllBranchesByOrganizationID(organizationID);
+				cBranches.then(function(toReturn){
+					$scope.branches = toReturn.value;
+					buildBranchOfficeDataTable($scope.branches, userEdition);
+				});
+			};
+
+
+			/**
+			 * Chamado quando clicado no botão Salvar
+			 */
+			$scope.saveUser = function(user){
+
+				/**
+				 * Não permite editar o próprio cadastro.
+				 */
+				if(user.userID == ContextService.getUserLogged().userID){
+					UtilityService.showAlertError('Desculpe, operção não permitida.', 'Não é permitido atualizar o próprio usuário.');
 				} else {
-					console.log('erro');
-				}
-			});
-		}
+					/**
+					 * Continua somente se o formulario foi validade com sucesso pelo jquery validate
+					 */
+					if($('#user-registration-form').valid()){
+						user.organizationID = ContextService.getOrganizationID();
+						user.menusApplication = [];
 
-		/**
-		 * Verifica os menus que o 
-		 * usuario tem acesso, e seta no objeto de escopo $scope.menusApplication
-		 */
-		var menuTmp = {};
-		if(userEdition && userEdition.menusApplication){
-			var menus = userEdition.menusApplication;
-			menus.forEach(function(element){
-				switch (element.menuID) {
-				case Constants.MENUID_PRODUCT:
-					menuTmp.product = true;
-					break;
-				case Constants.MENUID_ORDER:
-					menuTmp.order= true;
-					break;
-				case Constants.MENUID_USER:
-					menuTmp.user= true;
-					break;
-				case Constants.MENUID_PRICE_TABLE:
-					menuTmp.priceTable = true;
-					break;
-				case Constants.MENUID_INSTALLMENT:
-					menuTmp.installment= true;
-					break;
-				case Constants.MENUID_ORGANIZATION:
-					menuTmp.organization= true;
-					break;					
-				default:
-					break;
-				}				
-			});			
-			$scope.menusApplication = menuTmp;			
-		}	
-	};
-	
-	
-	/**
-	 * Chamado quando clicado no botão Salvar
-	 */
-	$scope.saveUser = function(user){
-		
-		/**
-		 * Não permiete editar o próprio cadastro.
-		 */
-		if(user.userID == ContextService.getUserLogged().userID){
-			UtilityService.showAlertError('Desculpe, operção não permitida.', 'Não é permitido atualizar o próprio usuário.');
-		} else {
+						//Verifica as opções que estão selecionadas, e adiciona ao menu do usuario			
+						if($scope.menusApplication.product){
+							user.menusApplication.push({"menuID": Constants.MENUID_PRODUCT});
+							user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
+						}
+						if($scope.menusApplication.order){
+							user.menusApplication.push({"menuID": Constants.MENUID_ORDER});
+						}
+						if($scope.menusApplication.user){
+							user.menusApplication.push({"menuID": Constants.MENUID_USER});
+							user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
+						}
+						if($scope.menusApplication.priceTable){
+							user.menusApplication.push({"menuID": Constants.MENUID_PRICE_TABLE});
+							user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
+						}
+						if($scope.menusApplication.installment){
+							user.menusApplication.push({"menuID": Constants.MENUID_INSTALLMENT});
+							user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
+						} if($scope.menusApplication.organization){
+							user.menusApplication.push({"menuID": Constants.MENUID_ORGANIZATION});
+							user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
+						}
+						
+						
+						user.userBranches = [];
+
+						//Verifica se as empresas estão selecionadas ou não
+						var oTable = $('#datatable_branches').dataTable();
+						$("input:checkbox", oTable.fnGetNodes()).each(function(){							
+							//Adiciona a empresa na variavel userBranch para posteriormente ser adicionada ao array de empresas do usuario
+							var userBranch = {
+									'userID': user.userID,
+									'enable': $(this).prop('checked'),
+									'branchOffice': {
+			                    		'branchOfficeID': $(this).val(),
+			                    		'organization':{
+			                    			'organizationID': user.organizationID
+			                    		}
+			                    	}
+									
+							};
+							
+							user.userBranches.push(userBranch);
+						});
+						
+						
+						
+						user.userRoles = [];
+						if($scope.userIsSeller){
+							user.userRoles.push({'userID': user.userID,role: 'ROLE_USER'});
+						}
+						
+						if($scope.userIsAdministrator){
+							user.userRoles.push({'userID': user.userID,role: 'ROLE_ADMIN'});
+						}						
+						
+						//Salva o usuario
+						var cUser = UserService.saveUser(user);
+						cUser.then(function(toReturn){
+							if(toReturn.code == '200'){
+								UtilityService.showAlertSucess('Sucesso.', 'Usuário salvo com sucesso!!');
+							} else {
+								UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
+							}
+						});
+					}
+				}		
+			};
+
+
 			/**
-			 * Continua somente se o formulario foi validade com sucesso pelo jquery validate
+			 * Cria um array de filiais, contendo um array das colunas do dataTable, e seta no objeto de escopo userBranchesDataTable, que esta 
+			 * sendo "ouvido" na directive CustomDataTable
 			 */
-			if($('#user-registration-form').valid()){
-				user.organizationID = ContextService.getOrganizationID();
-				user.menusApplication = [];
+			function buildBranchOfficeDataTable(branches, userEdition){
+				var branchOfficeRows = [];
 
-				//Verifica as opções que estão selecionadas, e adiciona ao menu do usuario			
-				if($scope.menusApplication.product){
-					user.menusApplication.push({"menuID": Constants.MENUID_PRODUCT});
-					user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
-				}
-				if($scope.menusApplication.order){
-					user.menusApplication.push({"menuID": Constants.MENUID_ORDER});
-				}
-				if($scope.menusApplication.user){
-					user.menusApplication.push({"menuID": Constants.MENUID_USER});
-					user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
-				}
-				if($scope.menusApplication.priceTable){
-					user.menusApplication.push({"menuID": Constants.MENUID_PRICE_TABLE});
-					user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
-				}
-				if($scope.menusApplication.installment){
-					user.menusApplication.push({"menuID": Constants.MENUID_INSTALLMENT});
-					user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
-				} if($scope.menusApplication.organization){
-					user.menusApplication.push({"menuID": Constants.MENUID_ORGANIZATION});
-					user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
-				}
-				
-				var cUser = UserService.saveUser(user);
-				cUser.then(function(toReturn){
-					if(toReturn.code == '200'){
-						UtilityService.showAlertSucess('Sucesso.', 'Usuário salvo com sucesso!!');
-					} else {
-						UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
+				branches.forEach(function(branchOffice, index){			
+					if(branchOffice && branchOffice.branchOfficeID){
+						
+						//Verifica se o usuarioFilial estas abilitado, se tiver, o checka o checkbox
+						var checked = '';
+						
+						if(userEdition && userEdition.userBranches){
+							var i;
+							for(i in userEdition.userBranches){
+								var userBranch = userEdition.userBranches[i];
+								if(branchOffice.branchOfficeID == userBranch.branchOffice.branchOfficeID){
+									checked = userBranch.enable == true ? 'checked' : '';
+									break;
+								}
+							}
+						} else {
+							checked = 'checked';
+						}
+
+						//Adiciona um array com as colunas que irão ser apresentadas no dataTable
+						branchOfficeRows.push([
+						                       '<label class="checkbox"><input type="checkbox" name="checkbox-inline" '+checked+' value="'+branchOffice.branchOfficeID+'"><i></i></label>',	                       				               
+						                       	branchOffice.branchOfficeID,
+						                       	branchOffice.fancyName,
+						                       	branchOffice.maximumDiscount || '0,00',
+						                       	branchOffice.showStockProduct ? 'Sim' : 'Não',
+						                    	branchOffice.negativeStockProduct ? 'Sim' : 'Não',
+						                    	branchOffice.sellerRegisterCustomer ? 'Sim' : 'Não',
+						                    	branchOffice.actionOverdue == 'B' ? 'Bloquear' : branchOffice.actionOverdue == 'N' ? 'Nada' : 'Não Fazer Nada' ,
+						                    	branchOffice.actionCreditLimit == 'B' ? 'Bloquear' : branchOffice.actionCreditLimit == 'N' ? 'Nada' : 'Avisar' 
+						                    	]);
 					}
 				});
-			}
-		}		
-	};
 
-
-	
-}]);
+				//Seta os usuarios 
+				$scope.userBranchesDataTable = branchOfficeRows;
+			};
+		}]);

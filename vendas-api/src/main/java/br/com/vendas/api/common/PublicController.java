@@ -36,10 +36,7 @@ import br.com.vendas.support.VendasExceptionWapper;
 @RequestMapping(value="/public")
 @Controller
 public class PublicController {
-	
-	private final static Double INITIAL_MAXIMUM_DISCOUNT = 100.0;
-	private final static boolean INITIAL_VIEW_ALL_CUSTOMER = true;
-	private final static Double INITIAL_MINIMUM_VALUE_SALES = 0.0;
+		
 	private final static Long INITIAL_BRANCH_OFFICE_ID = 1L;
 	@Inject
 	private OrganizationService organizationService;
@@ -80,6 +77,7 @@ public class PublicController {
 			
 			//Cria um usuario
 			User user = new User(newOrganization.getOrganizationID(),email,password,userName,true,true);
+					
 
 			//Seta todos os menus para o usuario.
 			Set<MenuApplication> menusApplication = new HashSet<>(menuApplicationService.findAll().getValue());
@@ -87,15 +85,17 @@ public class PublicController {
 			User newUser = userService.save(user).getValue();
 			
 			//Cria o usuario-filial
-			UserBranchOffice userBranchOffice = new UserBranchOffice(newBranchOffice,
-					newUser.getUserID(),INITIAL_MAXIMUM_DISCOUNT,INITIAL_VIEW_ALL_CUSTOMER,INITIAL_MINIMUM_VALUE_SALES, true);
+			UserBranchOffice userBranchOffice = new UserBranchOffice(newBranchOffice,newUser.getUserID(), true);
 			userBranchOfficeService.save(userBranchOffice);
 			
+			
 			//Cria roles para o usuario
-			/*List<UserRole> userRoles= new ArrayList<>();
+			Set<UserRole> userRoles= new HashSet();
 			userRoles.add(new UserRole(newUser.getUserID(), Role.ROLE_USER));
 			userRoles.add(new UserRole(newUser.getUserID(), Role.ROLE_ADMIN));
-			userRoleService.save(userRoles);*/
+			user.setUserRoles(userRoles);
+
+			
 			
 			//Cria o perfil do usuario
 			UserProfile userProfile = new UserProfile();

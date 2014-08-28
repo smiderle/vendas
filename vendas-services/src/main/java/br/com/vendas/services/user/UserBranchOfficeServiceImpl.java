@@ -1,6 +1,5 @@
 package br.com.vendas.services.user;
 
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,7 +31,6 @@ public class UserBranchOfficeServiceImpl implements UserBranchOfficeService{
 	@Override
 	public ServiceResponse<UserBranchOffice> save(
 			UserBranchOffice userBranchOffice) {
-		userBranchOffice.setChangeTime(new GregorianCalendar());
 		return ServiceResponseFactory.create(dao.save(userBranchOffice));
 	}
 
@@ -40,6 +38,13 @@ public class UserBranchOfficeServiceImpl implements UserBranchOfficeService{
 	public ServiceResponse<List<UserBranchOffice>> findAllByUserID(Long userID) {		
 				
 		List<UserBranchOffice> usersBranches = dao.findAllByUserID(userID);
+		return ServiceResponseFactory.create(usersBranches);
+	}
+
+	@Override
+	public ServiceResponse<List<UserBranchOffice>> saveOrUpdate(
+			List<UserBranchOffice> usersBranch) {
+		List<UserBranchOffice> usersBranches = dao.saveOrUpdate(usersBranch);
 		return ServiceResponseFactory.create(usersBranches);
 	}
 

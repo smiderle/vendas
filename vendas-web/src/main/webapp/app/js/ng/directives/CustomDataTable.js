@@ -61,10 +61,51 @@ vendasApp.directive('customDataTable',function () {
 		});
         
         
-        /**
+        var element = attrs.radio == 'true' ? 'radio' : 'checkbox' ;
+        
+
+    	/**
          * Registra um evento no clique da linha do datatable, que ira ativar ou desativar o checkbox da linha 
          */
         $('#'+attrs.id).delegate('tbody tr ', 'click', function (event) {
+
+    		if (event.target.type !== element) {
+    			var unchecked = $(':'+element, this).prop('checked');					    
+    		    $(':'+element, this).prop('checked', !unchecked);
+    		    
+    		    if($( "input:checked" ).val()){
+    		    	$('.required-selected').removeAttr("disabled")    		    								
+    		    } else {						    
+    		    	$('.required-selected').attr("disabled","disabled")    		    	
+    			}
+    		    
+    		    
+    		} else {
+    			var unchecked = $(':'+element, this).prop('checked');
+    			
+    			if(unchecked){							
+    				//$(':radio', this).prop('checked', false);
+    			} else {
+    				$(':'+element, this).prop('checked', true);
+    			}
+    			
+    			
+    			if($( "input:checked" ).val()){
+    		    	$('.required-selected').removeAttr("disabled");
+    		    } else {
+    		    	$('.required-selected').attr("disabled","disabled");
+    			}
+    		}    		
+    	});
+    
+        
+        
+        
+        
+        /**
+         * Registra um evento no clique da linha do datatable, que ira ativar ou desativar o checkbox da linha 
+         */
+        /*$('#'+attrs.id).delegate('tbody tr ', 'click', function (event) {
 
     		if (event.target.type !== 'radio') {
     			var unchecked = $(':radio', this).prop('checked');					    
@@ -93,7 +134,11 @@ vendasApp.directive('customDataTable',function () {
     		    	$('.required-selected').attr("disabled","disabled");
     			}
     		}    		
-    	});
+    	});*/
+        
+        
+        
+        
 	};
 });
 

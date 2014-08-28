@@ -1,12 +1,15 @@
 package br.com.vendas.domain.user;
 
-import java.util.Calendar;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import br.com.vendas.domain.Domain;
 import br.com.vendas.domain.organization.BranchOffice;
@@ -30,14 +33,10 @@ public class UserBranchOffice extends Domain {
 	
 	
 	public UserBranchOffice(BranchOffice branchOffice,
-			Long userID, Double maximumDiscount, boolean viewAllCustomers,
-			Double minimumValueSales, boolean active) {
+			Long userID, boolean enable) {
 		super();		
-		this.userID = userID;
-		this.maximumDiscount = maximumDiscount;
-		this.viewAllCustomers = viewAllCustomers;
-		this.minimumValueSales = minimumValueSales;
-		this.active = active; 
+		this.userID = userID;		
+		this.enable = enable; 
 		this.branchOffice = branchOffice;
 	}
 
@@ -48,92 +47,52 @@ public class UserBranchOffice extends Domain {
 		
 	@Id
 	private Long userID;
-
-	
-	/**
-	 * Desconto Máximo
-	 */
-	@Column(name="descmax")
-	private Double maximumDiscount;
-	
-	/**
-	 * Visualiza todos os clientes
-	 */
-	@Column(name="todosclientes")
-	private boolean viewAllCustomers;
-	
-	/**
-	 * Valor Minimo de Venda.
-	 */
-	@Column(name="minvenda")
-	private Double minimumValueSales;
-	
-	/**
-	 * Data e Hora de Alteração
-	 */
-	@Column(name="dthralteracao")
-	private Calendar changeTime;
 	
 
-	@Column(name="ATIVO")
-	private boolean active;
+	@Column(name="ABILITADO")
+	private boolean enable;
+
 	
-
-	public Long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Long userID) {
-		this.userID = userID;
-	}
-
-	public Double getMaximumDiscount() {
-		return maximumDiscount;
-	}
-
-	public void setMaximumDiscount(Double maximumDiscount) {
-		this.maximumDiscount = maximumDiscount;
-	}
-
-	public boolean isViewAllCustomers() {
-		return viewAllCustomers;
-	}
-
-	public void setViewAllCustomers(boolean viewAllCustomers) {
-		this.viewAllCustomers = viewAllCustomers;
-	}
-
-	public Double getMinimumValueSales() {
-		return minimumValueSales;
-	}
-
-	public void setMinimumValueSales(Double minimumValueSales) {
-		this.minimumValueSales = minimumValueSales;
-	}
-
-	public Calendar getChangeTime() {
-		return changeTime;
-	}
-
-	public void setChangeTime(Calendar changeTime) {
-		this.changeTime = changeTime;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDUSUARIO", insertable=false, updatable=false)
+	@JsonIgnore
+	private User user;
 
 	public BranchOffice getBranchOffice() {
 		return branchOffice;
 	}
 
+
 	public void setBranchOffice(BranchOffice branchOffice) {
 		this.branchOffice = branchOffice;
 	}
-	
-	
+
+
+	public Long getUserID() {
+		return userID;
+	}
+
+
+	public void setUserID(Long userID) {
+		this.userID = userID;
+	}
+
+	public boolean isEnable() {
+		return enable;
+	}
+
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

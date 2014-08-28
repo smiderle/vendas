@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.user.User;
+import br.com.vendas.domain.user.UserBranchOffice;
 import br.com.vendas.exception.ApplicationException;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.user.UserAccessService;

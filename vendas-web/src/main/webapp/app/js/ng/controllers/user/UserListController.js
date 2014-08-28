@@ -60,13 +60,14 @@ vendasApp.controller('UserListController',
 		var cUsers = UserService.findUsersByFilter(organizationID,filter, offset);
 		cUsers.then(function(toReturn){
 			$scope.users = toReturn.value;
+			console.log($scope.users);
 			buildUserDataTable(toReturn.value);
 		});
 	};
 	
 	
 	$scope.newUser = function(){
-		var userAccount ={email: '', name: ' ', password: ''};
+		var userAccount ={email: '', name: '', password: ''};
 		UserService.setUserEdition(userAccount);
 		$location.path('/user/user-form');
 	};	

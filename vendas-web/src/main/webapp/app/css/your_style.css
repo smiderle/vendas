@@ -27,7 +27,6 @@ input:-webkit-autofill:focus {
 } 
 
 
-/* Cor background das tabs. */
-/* .nav-tabs.bordered{
-	background: #4C4F53 !important;
-} */
+.jarviswidget-color-greenDark .nav-tabs li:not(.active) a , .jarviswidget-color-green .nav-tabs li:not(.active) a, .jarviswidget-color-greenLight .nav-tabs li:not(.active) a , .jarviswidget-color-purple .nav-tabs li:not(.active) a , .jarviswidget-color-magenta .nav-tabs li:not(.active) a, .jarviswidget-color-pink .nav-tabs li:not(.active) a , .jarviswidget-color-pinkDark .nav-tabs li:not(.active) a , .jarviswidget-color-blueLight .nav-tabs li:not(.active) a , .jarviswidget-color-blueDark .nav-tabs li:not(.active) a, .jarviswidget-color-darken .nav-tabs li:not(.active) a , .jarviswidget-color-yellow .nav-tabs li:not(.active) a , .jarviswidget-color-orange .nav-tabs li:not(.active) a, .jarviswidget-color-orangeDark .nav-tabs li:not(.active) a  , .jarviswidget-color-red .nav-tabs li:not(.active) a , .jarviswidget-color-redLight .nav-tabs li:not(.active) a {
+	color: #030303 !important;
+}

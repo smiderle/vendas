@@ -6,8 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="USUARIO_PERMISSAO")
@@ -33,6 +38,12 @@ public class UserRole implements Serializable{
 	@Enumerated(EnumType.STRING)
 	@Column(name="PERMISSAO")
 	private Role role;
+	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="IDUSUARIO", insertable=false, updatable=false)
+	@JsonIgnore
+	private User user;
 
 
 	public Long getUserID() {
@@ -49,5 +60,15 @@ public class UserRole implements Serializable{
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}	
+	
+	
 }

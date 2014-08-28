@@ -13,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vendas.dao.user.UserDAO;
 import br.com.vendas.dao.user.UserRoleDAO;
-import br.com.vendas.domain.application.MenuApplication;
 import br.com.vendas.domain.user.User;
+import br.com.vendas.domain.user.UserBranchOffice;
+import br.com.vendas.domain.user.UserRole;
 import br.com.vendas.exception.RegistrationException;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.support.ServiceResponseFactory;
@@ -35,6 +36,9 @@ public class UserServiceImpl implements UserService{
 
 	@Inject
 	private UserDAO userDAO;
+	
+	@Inject
+	private UserRoleDAO userRoleDAO;
 	
 	@Inject
 	private UserRoleService userRoleService;
@@ -63,18 +67,41 @@ public class UserServiceImpl implements UserService{
 	public ServiceResponse<User> saveOrUpdate(User user) throws RegistrationException {
 		boolean isNewUser = user.getUserID() == null;
 		
+		List<UserBranchOffice> userBranches = null;
+		Set<UserRole> userRoles = null;
+		
 		//Se for um novo usuario e o email já estiver cadastrado
-		if(isNewUser){
+		if(isNewUser){			
 			if(!isAvailableEmail(user.getEmail()).getValue()){
 				throw new RegistrationException("80","Esse email já esta sendo utilizado por outro usuário");
 			}
+			//Seta null nas filiais se o usuario for novo, pois o usuario ainda não tem um ID. Posteriormente, após salvar é setado o userID que foi gerado,e é feito o update/insert das filiais. 
+			userBranches = user.getUserBranches();
+			userRoles = user.getUserRoles();
+			user.setUserBranches(null);
+			user.setUserRoles(null);			
+		} else {
+			//Remove as permissões de acesso do usuario para inserir posteriormente, pois no update não estava removendo da tabela USUARIO_PERMISSAO
+			userRoleDAO.deleteByUserID(user.getUserID());
 		}
+		
+
 		
 		user.setChangeTime(new GregorianCalendar());
 		ServiceResponse<User> newUser = ServiceResponseFactory.create(userDAO.saveOrUpdate(user));
-		
+				
 		if(isNewUser){
-			userRoleService.saveDefaultRoles(newUser.getValue());
+			Long userID = newUser.getValue().getUserID();
+			for (UserBranchOffice userBranchOffice : userBranches) {
+				userBranchOffice.setUserID(userID);
+			}
+
+
+			for (UserRole userRole : userRoles) {
+				userRole.setUserID(userID);
+			}
+			user.setUserBranches(userBranches);		
+			user.setUserRoles(userRoles);
 		}
 		return newUser;	
 	}

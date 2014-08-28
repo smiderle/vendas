@@ -44,6 +44,12 @@ public class UserRoleServiceImpl implements UserRoleService{
 		//userRoles.add(new UserRole(user.getUserID(), Role.ROLE_ADMIN));
 		return save(userRoles);		
 	}
-	
+
+	@Override
+	public void deleteByUser(User user) {
+		if(user != null && user.getUserID() != null)		{
+			dao.deleteByUserID(user.getUserID());
+		}
+	}
 
 }

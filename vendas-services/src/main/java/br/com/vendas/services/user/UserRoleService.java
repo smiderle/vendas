@@ -17,5 +17,7 @@ public interface UserRoleService {
 	 * @return
 	 */
 	ServiceResponse<List<UserRole>> saveDefaultRoles(User user);
+	
+	void deleteByUser(User user);
 
 }

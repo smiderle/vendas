@@ -2,8 +2,8 @@ package br.com.vendas.domain.user;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -87,6 +88,13 @@ public class User extends Domain{
     @JoinTable(name="usuario_menu", joinColumns={@JoinColumn(name="idusuario")}
                                         , inverseJoinColumns={@JoinColumn(name="idmenu")})  
 	private Set<MenuApplication> menusApplication = new LinkedHashSet<>(0);
+		
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<UserBranchOffice> userBranches;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private Set<UserRole> userRoles;
 	
 	public Long getUserID() {
 		return userID;
@@ -167,6 +175,22 @@ public class User extends Domain{
 
 	public void setMenusApplication(Set<MenuApplication> menusApplication) {
 		this.menusApplication = menusApplication;
+	}
+
+	public List<UserBranchOffice> getUserBranches() {
+		return userBranches;
+	}
+
+	public void setUserBranches(List<UserBranchOffice> userBranches) {
+		this.userBranches = userBranches;
+	}
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}	
 	
 	
