@@ -60,7 +60,6 @@ vendasApp.controller('UserListController',
 		var cUsers = UserService.findUsersByFilter(organizationID,filter, offset);
 		cUsers.then(function(toReturn){
 			$scope.users = toReturn.value;
-			console.log($scope.users);
 			buildUserDataTable(toReturn.value);
 		});
 	};

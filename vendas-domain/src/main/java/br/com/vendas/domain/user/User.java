@@ -21,6 +21,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.NaturalId;
 
 import br.com.vendas.domain.Domain;
@@ -88,12 +89,11 @@ public class User extends Domain{
     @JoinTable(name="usuario_menu", joinColumns={@JoinColumn(name="idusuario")}
                                         , inverseJoinColumns={@JoinColumn(name="idmenu")})  
 	private Set<MenuApplication> menusApplication = new LinkedHashSet<>(0);
-		
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<UserBranchOffice> userBranches;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private Set<UserRole> userRoles;
 	
 	public Long getUserID() {

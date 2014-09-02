@@ -1,5 +1,6 @@
 package br.com.vendas.services.user;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,7 @@ import br.com.vendas.domain.user.User;
 import br.com.vendas.domain.user.UserBranchOffice;
 import br.com.vendas.domain.user.UserRole;
 import br.com.vendas.exception.RegistrationException;
+import br.com.vendas.pojo.user.UserPojo;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.support.ServiceResponseFactory;
 /**
@@ -45,12 +47,17 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public ServiceResponse<List<User>> findAllByOrganizationID(Long organizationID, Integer offset) {
+	public ServiceResponse<List<UserPojo>> findAllByOrganizationID(Long organizationID, Integer offset) {
 		List<User> users = userDAO.findAllByOrganizationID(organizationID, offset, LIMIT_USER);
+		List<UserPojo> usersPojo = new ArrayList<>();
 		for (User user : users) {
-			Hibernate.initialize(user.getMenusApplication());
+			/*Hibernate.initialize(user.getMenusApplication());
+			Hibernate.initialize(user.getUserBranches());
+			Hibernate.initialize(user.getUserRoles());*/
+			UserPojo userPojo = new UserPojo(user, null, null, null);
+			usersPojo.add(userPojo);
 		}
-		return ServiceResponseFactory.create(users);
+		return ServiceResponseFactory.create(usersPojo);
 	}
 
 	@Transactional(readOnly=false)
@@ -106,13 +113,20 @@ public class UserServiceImpl implements UserService{
 		return newUser;	
 	}
 
+	/**
+	 * Retorna o usuario por email. Carrega todos os objetos lazy e seta no pojo.
+	 */
 	@Override
-	public ServiceResponse<User> findUserByEmail(String email) {
+	public ServiceResponse<UserPojo> findUserByEmail(String email) {
 		User user = userDAO.findUserByEmail(email);
+		UserPojo userPojo = null;
 		if(user != null){
 			Hibernate.initialize(user.getMenusApplication());
+			Hibernate.initialize(user.getUserBranches());
+			Hibernate.initialize(user.getUserRoles());
+			userPojo = new UserPojo(user, user.getMenusApplication(), user.getUserBranches(), user.getUserRoles());
 		}
-		return ServiceResponseFactory.create(user);
+		return ServiceResponseFactory.create(userPojo);
 	}
 
 	@Override
@@ -124,7 +138,7 @@ public class UserServiceImpl implements UserService{
 	 * Converte o filtro para um long para setar no usuarioID, pois pode ser que no filtro tenha sido digitado o código do usuario.
 	 */
 	@Override
-	public ServiceResponse<List<User>> findUsersByUserIDOrNameOrEmail(
+	public ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(
 			String filter, Long organizationID, Integer offset) {
 		Long userID = 0L;
 		try{
@@ -132,10 +146,13 @@ public class UserServiceImpl implements UserService{
 		} catch(NumberFormatException  e){}
 
 		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LIMIT_USER);
+		List<UserPojo> usersPojo = new ArrayList<>();
 		for (User user : users) {
-			Hibernate.initialize(user.getMenusApplication());
+			UserPojo userPojo = new UserPojo(user, null, null, null);
+			usersPojo.add(userPojo);
+			//Hibernate.initialize(user.getMenusApplication());
 		}
-		return ServiceResponseFactory.create(users);
+		return ServiceResponseFactory.create(usersPojo);
 	}
 
 }

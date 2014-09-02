@@ -1,0 +1,143 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+			
+			<div  ng-init="initPriceTableForm()" class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-user-form"  data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+				<header >
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Tabela de Preço</h2>				
+				</header>
+	
+					<!-- widget div-->
+					<div role="content" style="">
+												
+						<div class="widget-body no-padding">
+								
+							<form autocomplete="off" id="pricetable-form" class="smart-form" novalidate="novalidate" ng-submit="save(priceTable)" >
+																			
+								<div class="md-header btn-toolbar">
+								<br>
+									<button type="button" class="btn btn-sm btn-default" onclick="window.history.back();">
+									<i class="fa fa-reply"></i>
+												Voltar
+									</button>
+									<button type="submit" class="btn btn-sm  btn-success" id="btnTableSave">
+										<i class="fa fa-save"></i>
+											Salvar
+									</button>								
+									<br>
+								</div>
+								<br>
+								<hr>							
+								
+								<fieldset>
+									<div class="row">
+										<section class="col col-2">
+											<label class="label">Código</label>																					
+											<label class="input">												
+												<input type="text" name="priceTableID" placeholder="Código" maxlength="9" ng-model="priceTable.priceTableID" class="form-control">
+											</label>											
+										</section>
+									</div>
+									
+									<div class="row">
+										<section class="col col-6">
+											<label class="label">Descrição</label>
+											<label class="input">
+												<input type="text" name="description" placeholder="Descrição" id="tableDescription" ng-model="priceTable.description" >
+											</label>
+										</section>										
+									</div>	
+										
+									<div class="row">
+										<section class="col col-3">											
+											<label class="label">Tipo</label>
+											<select ng-options="type.value as type.label for type in typesIncrease" ng-model="priceTable.increase">
+										    	<option style="display:none" value="">Selecione o tipo</option>
+										    </select>											
+										</section>										
+									</div>
+									<div class="row">
+										<section class="col col-3">
+											<label class="label">Percentual de {{priceTable.increase ? 'Acréscimo' : 'Desconto'}}</label>
+											<label class="input">
+												<input type="text" name="percentage" placeholder="Percentual" ng-model="priceTable.percentage">
+											</label>
+										</section>
+									</div>
+									<section>
+										<label class="checkbox"><input type="checkbox" name="chkActiveTable" id="chkActiveTable" ng-model="priceTable.active"><i></i>Tabela de Preço ativa</label>										  
+									</section>
+										
+								</fieldset>							
+									
+							</form>
+	
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+					
+				</div>			
+			
+		</article>
+	</div>
+</section>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		pageSetUp();
+
+		var $checkoutForm = $('#pricetable-form').validate({
+			// Rules for form validation
+				rules : {
+					priceTableID : {
+						required : true,
+						digits: true
+					},	
+					description: {
+						required : true
+					},
+					
+					percentage: {
+						required : true,
+						number : true
+					},					
+				},
+		
+				// Messages for form validation
+				messages : {				
+					address : {
+						required : 'Por favor, informe um código'
+					},							
+					description : {
+						required : 'Por favor, informe uma descrição',						
+					},				
+					percentage: {
+						required : 'Por favor, informe um percentual',
+						number: 'Por favor, informe um numero válido. Ex: 10.5'
+					}					
+				},
+							
+
+				// Do not change code below
+				errorPlacement : function(error, element) {
+					error.insertAfter(element.parent());
+				}
+			});
+	})	
+
+</script>
+
+

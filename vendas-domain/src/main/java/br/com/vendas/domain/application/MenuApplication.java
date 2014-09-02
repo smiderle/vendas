@@ -137,6 +137,33 @@ public class MenuApplication extends Domain{
 	public void setSubmenu(Boolean isSubmenu) {
 		this.isSubmenu = isSubmenu;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((menuID == null) ? 0 : menuID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MenuApplication other = (MenuApplication) obj;
+		if (menuID == null) {
+			if (other.menuID != null)
+				return false;
+		} else if (!menuID.equals(other.menuID))
+			return false;
+		return true;
+	}
+	
+
 	
 	
 }

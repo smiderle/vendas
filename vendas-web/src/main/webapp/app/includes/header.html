@@ -136,6 +136,21 @@
 					<span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
 				</div>
 				<!-- end fullscreen button -->
+				
+				<!-- dropdown empresa-->
+				<ul data-lang-menu="" class="header-dropdown-list hidden-xs" data-ng-controller="ContextController">
+					<li>
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" class="flag flag-{{ currentBranche.fancyName}}" src="img/blank.gif"> <span> {{ currentBranche.fancyName}} </span> <i class="fa fa-angle-down"></i> 
+						</a>
+						<ul class="dropdown-menu pull-right">
+							<li data-ng-class="{active: branche == currentBranche}" data-ng-repeat="branche in userBranches">
+								<a href="" data-ng-click="setBranche(branche)" > {{ branche.fancyName }} </a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<!-- fim dropdown empresa-->
 
 				<!-- multiple lang dropdown : find all flags in the image folder -->
 				<ul data-lang-menu="" class="header-dropdown-list hidden-xs" data-ng-controller="LangController">

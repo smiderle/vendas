@@ -70,7 +70,7 @@
 												<section class="col col-2">											
 														<label class="label">Código</label>
 														<label class="input">												
-															<input type="text" ng-disabled="isEdition" name="branchOfficeID" placeholder="Código da Empresa" maxlength="10"  ng-model="branchOffice.branchOfficeID"  class="form-control">
+															<input type="text" ng-disabled="isEdition" name="branchOfficeID" placeholder="Código da Empresa" maxlength="9"  ng-model="branchOffice.branchOfficeID"  class="form-control">
 														</label>
 												</section>
 											</div>
@@ -165,14 +165,7 @@
 													<!-- <input type="text" name="city" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Cidade" ng-model="branchOffice.city.name" list="list" ng-change="findCities()"> -->
 													<input type="text" id="txtCity" name="city" ng-change="onChangeCities()" ng-model="selectedCity" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
 															placeholder="Cidade" typeahead="c as c.name for c in cities | filter:$viewValue | limitTo:10" typeahead-min-length='1' 
-															typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">
-													<!-- <datalist id="list">
-														<select id="_select" name="name" ng-model='selectedCity' value="Pato Branco" ng-options='k.name as x.cityID for (k,x) in cities'></select> -->
-													    <!-- http://codepen.io/jjperezaguinaga/pen/Dmspr -->
-														<!-- <option ng-repeat="city in cities" value="{{city.name}}">{{city.state.uf}}</option> -->
-														<!-- <option style="display: none;" id="_select" name="_select" ng-model='selectedCity' ng-options='city.name as city.cityID for city in cities'></option> -->
-														<!-- <select style="display: none;" id="_select" name="_select" ng-model='selectedCountry' ng-options='k as v for (k,v) in countries'></select> -->
-													<!-- </datalist> -->														
+															typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">													
 												</label>
 											</section>
 											<section class="col col-1">

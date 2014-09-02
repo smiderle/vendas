@@ -1,8 +1,10 @@
 package br.com.vendas.api.user;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.xml.ws.Response;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.user.User;
-import br.com.vendas.domain.user.UserBranchOffice;
 import br.com.vendas.exception.ApplicationException;
+import br.com.vendas.pojo.user.UserPojo;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.user.UserAccessService;
 import br.com.vendas.services.user.UserService;
@@ -42,7 +44,7 @@ public class UserController {
 	@RequestMapping(value="getUsersByOrganizationID", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getUsersByOrganizationID(Long organizationID, Integer offset){
 		try {
-			ServiceResponse<List<User>> payload =  service.findAllByOrganizationID(organizationID, offset);
+			ServiceResponse<List<UserPojo>> payload =  service.findAllByOrganizationID(organizationID, offset);
 			LOG.debug("List<User> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -59,7 +61,7 @@ public class UserController {
 	@RequestMapping(value="getUserByEmail", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getUserByEmail(String email){
 		try{
-			ServiceResponse<User> payload =  service.findUserByEmail(email);
+			ServiceResponse<UserPojo> payload =  service.findUserByEmail(email);
 			LOG.debug("getUserByEmail Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -89,7 +91,7 @@ public class UserController {
 	
 	
 	/**
-	 * Retorna o usuario por email.
+	 * Salva o usuario.
 	 * @param email
 	 * @return
 	 */
@@ -116,7 +118,7 @@ public class UserController {
 	@RequestMapping(value="getUsersByUserIDOrNameOrEmail", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getUsersByUserIDOrNameOrEmail(Long organizationID, String filter, Integer offset){
 		try {
-			ServiceResponse<List<User>> payload =  service.findUsersByUserIDOrNameOrEmail(filter, organizationID, offset);
+			ServiceResponse<List<UserPojo>> payload =  service.findUsersByUserIDOrNameOrEmail(filter, organizationID, offset);
 			LOG.debug("getUsersByUserIDOrNameOrEmail Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -139,4 +141,6 @@ public class UserController {
 			LOG.error(e);						
 		}
 	}
+	
+	
 }

@@ -54,11 +54,27 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 		 * @param fields
 		 * @returns
 		 */
-		findUserByEmail : function(){	
-			var email = UtilityService.getCookie(Constants.COOKIE_USER_EMAIL);
+		findUserByEmail : function(email){
+			
 			return Restangular.all("user").all("getUserByEmail").getList({"email":email}).then(function(result){
 				var p = {};
-				p.value = result.value;
+				var value = {};
+				//Remove outros objetos que vem junto com o request
+				if(result.value){
+					value.userID = result.value.userID;
+					value.organizationID = result.value.organizationID;
+					value.email= result.value.email;
+					value.password = result.value.password;
+					value.name = result.value.name;
+					value.changeTime = result.value.changeTime;
+					value.registrationDate = result.value.registrationDate;
+					value.active = result.value.active;
+					value.portalAccess = result.value.portalAccess;
+					value.menusApplication = result.value.menusApplication;
+					value.userBranches = result.value.userBranches;
+					value.userRoles = result.value.userRoles;
+				}
+				p.value = value;
 				p.rowCount = result.rowCount;				
 				return p;
 			});

@@ -81,6 +81,20 @@ angular.module('app.controllers', [])
 
 	}])
 	
+	
+	.controller('ContextController', ['$scope', 'settings', 'localize', 'ContextService','BranchService', function($scope, settings, localize, ContextService,BranchService) {
+		var organizationID = ContextService.getOrganizationID();
+		var cBranches = BranchService.getAllBranchesByOrganizationID(organizationID);
+		cBranches.then(function(toReturn){
+			$scope.userBranches = toReturn.value;
+			$scope.currentBranche = toReturn.value[0];
+		});
+		$scope.currentBranche;
+		$scope.setBranche = function(branche){
+			$scope.currentBranche = branche;
+		}
+	}])
+	
 ;
 
 angular.module('app.demoControllers', [])

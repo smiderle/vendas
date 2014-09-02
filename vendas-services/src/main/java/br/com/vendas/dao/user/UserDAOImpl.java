@@ -66,5 +66,4 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 
 		return criteria.list();
 	}
-
 }

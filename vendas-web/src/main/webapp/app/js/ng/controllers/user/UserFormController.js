@@ -7,18 +7,7 @@ vendasApp.controller('UserFormController',
 			$scope.userAccount;
 
 			$scope.isEdition = false;
-
-			/**
-			 * Model com as permições de acesso ao sistema
-			 */
-			$scope.menusApplication = {
-					user: true,
-					product : true,
-					priceTable: true,
-					installment: true,
-					order: true,
-					organization: true,
-			};
+		
 
 			/**
 			 * Lista de empresas do usuário
@@ -33,74 +22,100 @@ vendasApp.controller('UserFormController',
 
 
 			/**
-			 * Função que inicializa os dados no form do usuario.
+			 * Função que inicializa os dados no form do usuario.			
+			 * Quando for uma edição de usuario, a pagina list_users.html seta no UserService 
+			 * o usuario, com as informações basicas a ser editado, e a pagina user.html recupera esse usuario, 
+			 * e busca no server as informações completa dele
 			 */
 			$scope.initUserForm = function(){
-				/**
-				 * Quando for uma edição de usuario, a pagina list_users.html seta no UserService 
-				 * o usuario a ser editado, e a pagina user.html recupera esse usuario 
-				 */
-				$scope.userAccount = UserService.getUserEdition();
-				var userEdition = $scope.userAccount;
+				
+				//Usuario com as informações basicas
+				var userEdition = UserService.getUserEdition();
+				
+				
+				//Se for uma edição de usuario
 				if(userEdition && userEdition.userID){
-					$scope.passwordConfirm = $scope.userAccount.password;
 					$scope.isEdition = true;
 					$scope.userIsSeller = false;
 					$scope.userIsAdministrator = false;
 					
-					//Verifica  as permissões do usuario, e seta o objeto de escopo que controla os checkbox
-					if(userEdition.userRoles){
-						userEdition.userRoles.forEach(function(userRole){
-							if(userRole.role == 'ROLE_USER'){
-								$scope.userIsSeller = true;
-							} else if(userRole.role == 'ROLE_ADMIN'){
-								$scope.userIsAdministrator = true;
-							}
+					
+					//Busca as informações detalhadas do usuario, como menus, empresas, permissões...
+					var cUser = UserService.findUserByEmail(userEdition.email);
+					cUser.then(function(toReturn){
+						//Usuario com as informações completas.
+						userEdition = toReturn.value;						
+						
+						$scope.passwordConfirm = userEdition.password;							
+							
+						//Verifica  as permissões do usuario, e seta o objeto de escopo que controla os checkbox
+						if(userEdition.userRoles){
+							userEdition.userRoles.forEach(function(userRole){
+								if(userRole.role == 'ROLE_USER'){
+									$scope.userIsSeller = true;
+								} else if(userRole.role == 'ROLE_ADMIN'){
+									$scope.userIsAdministrator = true;
+								}
+							});
+						}					
+						
+						var menuTmp = {};
+						if(userEdition && userEdition.menusApplication){
+							var menus = userEdition.menusApplication;
+							menus.forEach(function(element){
+								switch (element.menuID) {
+								case Constants.MENUID_PRODUCT:
+									menuTmp.product = true;
+									break;
+								case Constants.MENUID_ORDER:
+									menuTmp.order= true;
+									break;
+								case Constants.MENUID_USER:
+									menuTmp.user= true;
+									break;
+								case Constants.MENUID_PRICE_TABLE:
+									menuTmp.priceTable = true;
+									break;
+								case Constants.MENUID_INSTALLMENT:
+									menuTmp.installment= true;
+									break;
+								case Constants.MENUID_ORGANIZATION:
+									menuTmp.organization= true;
+									break;					
+								default:
+									break;
+								}				
+							});			
+							$scope.menusApplication = menuTmp;			
+						}					
+						
+						
+						//Busca as empresas salvas no sistema						
+						var cBranches = BranchService.getAllBranchesByOrganizationID(ContextService.getOrganizationID());
+						cBranches.then(function(toReturn){
+							$scope.branches = toReturn.value;
+							buildBranchOfficeDataTable($scope.branches, userEdition);
 						});
-					}					
-				}
-
-				/**
-				 * Verifica os menus que o 
-				 * usuario tem acesso, e seta no objeto de escopo $scope.menusApplication
-				 */
-				var menuTmp = {};
-				if(userEdition && userEdition.menusApplication){
-					var menus = userEdition.menusApplication;
-					menus.forEach(function(element){
-						switch (element.menuID) {
-						case Constants.MENUID_PRODUCT:
-							menuTmp.product = true;
-							break;
-						case Constants.MENUID_ORDER:
-							menuTmp.order= true;
-							break;
-						case Constants.MENUID_USER:
-							menuTmp.user= true;
-							break;
-						case Constants.MENUID_PRICE_TABLE:
-							menuTmp.priceTable = true;
-							break;
-						case Constants.MENUID_INSTALLMENT:
-							menuTmp.installment= true;
-							break;
-						case Constants.MENUID_ORGANIZATION:
-							menuTmp.organization= true;
-							break;					
-						default:
-							break;
-						}				
-					});			
-					$scope.menusApplication = menuTmp;			
-				}	
-
-				//Busca as empresas salvas no sistema
-				var organizationID = ContextService.getOrganizationID();
-				var cBranches = BranchService.getAllBranchesByOrganizationID(organizationID);
-				cBranches.then(function(toReturn){
-					$scope.branches = toReturn.value;
-					buildBranchOfficeDataTable($scope.branches, userEdition);
-				});
+						
+						$scope.userAccount = userEdition;						
+					});
+				} else {
+					$scope.menusApplication = {
+							user: true,
+							product : true,
+							priceTable: true,
+							installment: true,
+							order: true,
+							organization: true,
+					};
+					
+					//Busca as empresas salvas no sistema					
+					var cBranches = BranchService.getAllBranchesByOrganizationID(ContextService.getOrganizationID());
+					cBranches.then(function(toReturn){
+						$scope.branches = toReturn.value;
+						buildBranchOfficeDataTable($scope.branches, undefined);
+					});
+				}				
 			};
 
 
@@ -206,13 +221,15 @@ vendasApp.controller('UserFormController',
 						//Verifica se o usuarioFilial estas abilitado, se tiver, o checka o checkbox
 						var checked = '';
 						
-						if(userEdition && userEdition.userBranches){
-							var i;
-							for(i in userEdition.userBranches){
-								var userBranch = userEdition.userBranches[i];
-								if(branchOffice.branchOfficeID == userBranch.branchOffice.branchOfficeID){
-									checked = userBranch.enable == true ? 'checked' : '';
-									break;
+						if(userEdition){
+							if(userEdition.userBranches){
+								var i;
+								for(i in userEdition.userBranches){
+									var userBranch = userEdition.userBranches[i];
+									if(branchOffice.branchOfficeID == userBranch.branchOffice.branchOfficeID){
+										checked = userBranch.enable == true ? 'checked' : '';
+										break;
+									}
 								}
 							}
 						} else {

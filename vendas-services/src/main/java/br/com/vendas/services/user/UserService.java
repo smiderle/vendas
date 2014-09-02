@@ -2,9 +2,9 @@ package br.com.vendas.services.user;
 
 import java.util.List;
 
-import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.user.User;
 import br.com.vendas.exception.RegistrationException;
+import br.com.vendas.pojo.user.UserPojo;
 import br.com.vendas.services.support.ServiceResponse;
 
 public interface UserService {
@@ -14,7 +14,7 @@ public interface UserService {
 	 * @param organizationID
 	 * @return
 	 */
-	ServiceResponse<List<User>> findAllByOrganizationID(Long organizationID, Integer offset);
+	ServiceResponse<List<UserPojo>> findAllByOrganizationID(Long organizationID, Integer offset);
 	/**
 	 * Salva o usuario
 	 * @param user
@@ -37,7 +37,7 @@ public interface UserService {
 	 * @param email
 	 * @return
 	 */
-	ServiceResponse<User> findUserByEmail(String email);
+	ServiceResponse<UserPojo> findUserByEmail(String email);
 	
 	
 	/**
@@ -57,6 +57,6 @@ public interface UserService {
 	 * @param limit
 	 * @return
 	 */
-	ServiceResponse<List<User>> findUsersByUserIDOrNameOrEmail(String filter,Long organizationID, Integer offset);
+	ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(String filter,Long organizationID, Integer offset);	
 
 }

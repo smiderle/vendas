@@ -47,7 +47,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 
 	$routeProvider
 	.when('/', {
-		redirectTo: '/dashboard'
+		redirectTo: '/user/user-list'
 	})
 
 	.when("/user/user-form",{
@@ -91,13 +91,36 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		controller : 'BranchFormController'		
 	})
 	
+	.when("/pedido/lista-tabela-de-preco",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/order/pricetable-list.html';
+			}
+		},
+		controller : 'PriceTableListController'		
+	})
+	
+	.when("/pedido/cadastro-tabela-de-preco",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/order/pricetable-form.html';
+			}
+		},
+		controller : 'PriceTableFormController'		
+	})
+	
+	
 	.when("/error404",{
 		templateUrl : 'views/misc/error404.html'	
 	})
 	
-	.otherwise({
+	/*.otherwise({
 		redirectTo: '/error404'
-	})
+	})*/
 	;
 
 	// with this, you can use $log('Message') same as $log.info('Message');

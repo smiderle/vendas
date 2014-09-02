@@ -29,5 +29,6 @@ public interface UserDAO extends GenericDAO<User> {
 	 * @return
 	 */
 	List<User> findUsersByUserIDOrNameOrEmail(String filter, Long organizationID, Long userID, Integer offset, Integer limit);
+
 	
 }

@@ -8,6 +8,6 @@ vendasApp
 	 */
 	$scope.init = function(){
 		//Seta o usuario no $rootScope
-		$rootScope.user = ContextService.getUserLogged();
+		$rootScope.user = ContextService.getUserLogged();		
 	};
 });
