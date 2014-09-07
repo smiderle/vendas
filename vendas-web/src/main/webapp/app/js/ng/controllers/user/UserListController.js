@@ -55,6 +55,10 @@ vendasApp.controller('UserListController',
 	 * Busca os usuarios por nome ou código, informados no filtro de pesquisa no list_user.html
 	 */
 	$scope.findUsersByFilter = function(filter){
+		
+		$('#btnUserEdit').attr("disabled","disabled");
+		$('#btnRemoveUser').attr("disabled","disabled");
+		
 		var organizationID = ContextService.getOrganizationID();
 		var offset = 0;
 		var cUsers = UserService.findUsersByFilter(organizationID,filter, offset);

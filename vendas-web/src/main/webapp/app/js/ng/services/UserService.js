@@ -1,6 +1,6 @@
 'use strict';
 
-vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRestangular, LocalStorageService, Constants){
+vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRestangular, LocalStorageService){
 	var _user;
 	//Usuario que sera editado
 	var userEdition;
@@ -128,6 +128,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
         },
         
         addUserAccess: function(userID){
+        	console.log(userID);
         	Restangular.all('user').all('addUserAccess').post(userID);
         }
 	};	

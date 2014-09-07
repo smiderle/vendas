@@ -77,5 +77,6 @@
     "Maps": "Maps",
     "My Profile": "My Profile",
     "Page Header": "Page Header",
-    "Subtitle": "Subtitle"
+    "Subtitle": "Subtitle",
+    "Empresa Selecionada": "Selected Company"    
 }

@@ -77,5 +77,12 @@
     "Maps": "Mapas",
     "My Profile": "EDITAR MEU PERFIL",
     "Page Header": "Cabeçalho da Página",
-    "Subtitle": "Subtítulo"
+    "Subtitle": "Subtítulo",
+    "Empresa Selecionada": "Empresa Selecionada",
+    "Cadastros": "Cadastros",
+    "Tabela de Preço": "Tabela de Preço",
+    "Usuários": "Usuários",
+    "Produtos": "Produtos",
+    "Empresas": "Empresas",
+    "Parcelamento": "Parcelamento"
 }

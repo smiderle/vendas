@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vendas.dao.user.UserDAO;
 import br.com.vendas.dao.user.UserRoleDAO;
+import br.com.vendas.domain.LimitQuery;
 import br.com.vendas.domain.user.User;
 import br.com.vendas.domain.user.UserBranchOffice;
 import br.com.vendas.domain.user.UserRole;
@@ -34,7 +35,6 @@ import br.com.vendas.services.support.ServiceResponseFactory;
 @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 public class UserServiceImpl implements UserService{
 	
-	private static final Integer LIMIT_USER = 100;
 
 	@Inject
 	private UserDAO userDAO;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ServiceResponse<List<UserPojo>> findAllByOrganizationID(Long organizationID, Integer offset) {
-		List<User> users = userDAO.findAllByOrganizationID(organizationID, offset, LIMIT_USER);
+		List<User> users = userDAO.findAllByOrganizationID(organizationID, offset, LimitQuery.LIMIT_USER.getLimit());
 		List<UserPojo> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			/*Hibernate.initialize(user.getMenusApplication());
@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService{
 			userID = Long.parseLong(filter);
 		} catch(NumberFormatException  e){}
 
-		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LIMIT_USER);
+		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LimitQuery.LIMIT_USER.getLimit());
 		List<UserPojo> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			UserPojo userPojo = new UserPojo(user, null, null, null);

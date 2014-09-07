@@ -81,13 +81,8 @@
 						</ul>
 					</li>
 				</ul>
-
-				<!-- logout button -->
+								
 				<div id="logout" class="btn-header transparent pull-right">
-					<span> <a href="http://localhost/vendas-web/j_spring_security_logout" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out"></i></a> </span>
-				</div>
-				
-				<div id="logout2" class="btn-header transparent pull-right">
 					<span> <a href="/vendas-web/j_spring_security_logout" title="Logout 2"><i class="fa fa-sign-out"></i></a> </span>
 				</div>
 				
@@ -98,60 +93,14 @@
 					<span> <a href="javascript:void(0)" title="Search"><i class="fa fa-search"></i></a> </span>
 				</div>
 				<!-- end search mobile button -->
-
-				<!-- input: search field -->
-				<form action="#/misc/search" class="header-search pull-right">
-					<input id="search-fld"  type="text" name="param" data-localize="Find reports and more" placeholder="Find reports and more" data-autocomplete='[
-					"ActionScript",
-					"AppleScript",
-					"Asp",
-					"BASIC",
-					"C",
-					"C++",
-					"Clojure",
-					"COBOL",
-					"ColdFusion",
-					"Erlang",
-					"Fortran",
-					"Groovy",
-					"Haskell",
-					"Java",
-					"JavaScript",
-					"Lisp",
-					"Perl",
-					"PHP",
-					"Python",
-					"Ruby",
-					"Scala",
-					"Scheme"]'>
-					<button type="submit">
-						<i class="fa fa-search"></i>
-					</button>
-					<a href="javascript:void(0);" id="cancel-search-js" title="Cancel Search"><i class="fa fa-times"></i></a>
-				</form>
-				<!-- end input: search field -->
-
+				
 				<!-- fullscreen button -->
 				<div id="fullscreen" class="btn-header transparent pull-right">
 					<span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
 				</div>
 				<!-- end fullscreen button -->
 				
-				<!-- dropdown empresa-->
-				<ul data-lang-menu="" class="header-dropdown-list hidden-xs" data-ng-controller="ContextController">
-					<li>
-						<a href="" class="dropdown-toggle" data-toggle="dropdown">
-							<img alt="" class="flag flag-{{ currentBranche.fancyName}}" src="img/blank.gif"> <span> {{ currentBranche.fancyName}} </span> <i class="fa fa-angle-down"></i> 
-						</a>
-						<ul class="dropdown-menu pull-right">
-							<li data-ng-class="{active: branche == currentBranche}" data-ng-repeat="branche in userBranches">
-								<a href="" data-ng-click="setBranche(branche)" > {{ branche.fancyName }} </a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<!-- fim dropdown empresa-->
-
+				
 				<!-- multiple lang dropdown : find all flags in the image folder -->
 				<ul data-lang-menu="" class="header-dropdown-list hidden-xs" data-ng-controller="LangController">
 					<li>
@@ -166,6 +115,49 @@
 					</li>
 				</ul>
 				<!-- end multiple lang -->
+				<div class="project-context hidden-xs" data-ng-controller="ContextController">
+
+					<span class="label"><span data-localize="Empresa Selecionada">Empresa Selecionada</span>:</span>
+					<span class="project-selector" class="popover-trigger-element dropdown-toggle" data-toggle="dropdown"><span data-localize="{currentBranch.fancyName} ">{{ currentBranch.branchOfficeID}} - {{ currentBranch.fancyName}} </span> <i class="fa fa-angle-down"></i></span>
+															
+					<ul class="dropdown-menu pull-right">
+						<li data-ng-class="{active: branch == currentBranch}" data-ng-repeat="branch in userBranches">
+							<a href="" data-ng-click="setBranch(branch)" > {{ branch.branchOfficeID }} - {{ branch.fancyName }} </a>
+						</li>
+					</ul>
+				</div>
+				
+				
+				
+				<!-- dropdown empresa-->
+				<!-- <ul data-lang-menu="" class="header-dropdown-list hidden-xs" data-ng-controller="ContextController">
+					<li>
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" class="flag flag-{{ currentBranch.fancyName}}" src="img/blank.gif"> <span> {{ currentBranch.fancyName}} </span> <i class="fa fa-angle-down"></i> 
+						</a>
+						<ul class="dropdown-menu pull-right">
+							<li data-ng-class="{active: branch == currentBranch}" data-ng-repeat="branch in userBranches">
+								<a href="" data-ng-click="setBranch(branch)" > {{ branch.branchOfficeID }} - {{ branch.fancyName }} </a>
+							</li>
+						</ul>
+					</li>
+				</ul> -->
+				<!-- fim dropdown empresa-->
+<!-- 
+				multiple lang dropdown : find all flags in the image folder
+				<ul data-lang-menu="" class="header-dropdown-list hidden-xs" data-ng-controller="LangController">
+					<li>
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">
+							<img alt="" class="flag flag-{{ currentLang.flagCode }}" src="img/blank.gif"> <span> {{ currentLang.translation }} </span> <i class="fa fa-angle-down"></i> 
+						</a>
+						<ul class="dropdown-menu pull-right">
+							<li data-ng-class="{active: lang == currentLang}" data-ng-repeat="lang in languages">
+								<a href="" data-ng-click="setLang(lang)" ><img class="flag flag-{{ lang.flagCode }}" src="img/blank.gif" /> {{ lang.language }} ({{ lang.translation }}) </a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				end multiple lang -->
 
 			</div>
 			<!-- end pulled right: nav area -->

@@ -1,0 +1,69 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">			
+			<div class="jarviswidget jarviswidget-color-greenDark" id="wid-branch-list" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Parcelamentos</h2>
+
+				</header>
+
+				<div>
+					<div class="widget-body no-padding">
+						<div class="dt-toolbar">
+							<div class="col-xs-12">
+									<a class="btn btn-primary"  ng-click="newInstallment()"> <i class="fa fa-plus-square-o"></i>  Novo</a>
+									<a id="btnInstallmentEdit" class="btn btn-primary  required-selected" href="javascript:void(0);" ng-click="editInstallment()" ><i class="fa fa-edit"></i>  Editar</a>
+									<a id="btnInstallmentDelete" class="btn  txt-color-white bg-color-redLight required-selected" href="javascript:void(0);" ng-click="deleteInstallment()" ><i class="fa fa-times"></i>  Remover</a>
+																		
+							</div>
+							<br>
+						</div>
+
+						<table id="datatable_installment" custom-data-table aa-data="rowsDataTable" ng-init="listInstallments()" class="table table-hover table-striped smart-form has-tickbox dataTable" radio="true" width="100%" >
+							<thead>
+									<tr role="row">
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 23px;"></th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 30px;">Sequência</th>										
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 59px;">Código</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 200px;">Descrição</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 80px;">Pagamento em</th>										
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 80px;">Percentual de Acréscimo</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 80px;">Ativo</th>											
+									</tr>
+								</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	pageSetUp();
+	
+	$('#btnInstallmentEdit').attr("disabled","disabled");
+	$('#btnInstallmentDelete').attr("disabled","disabled");	
+</script>
+
+
+
+
+
+
+
+
+		

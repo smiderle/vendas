@@ -123,11 +123,13 @@ vendasApp.controller('UserFormController',
 			 * Chamado quando clicado no botão Salvar
 			 */
 			$scope.saveUser = function(user){
+				
+				$('#alertUserInputsInvalids').hide();
 
 				/**
 				 * Não permite editar o próprio cadastro.
 				 */
-				if(user.userID == ContextService.getUserLogged().userID){
+				if(user && user.userID == ContextService.getUserLogged().userID){
 					UtilityService.showAlertError('Desculpe, operção não permitida.', 'Não é permitido atualizar o próprio usuário.');
 				} else {
 					/**
@@ -135,6 +137,43 @@ vendasApp.controller('UserFormController',
 					 */
 					if($('#user-registration-form').valid()){
 						user.organizationID = ContextService.getOrganizationID();
+						
+						user.userBranches = [];
+						
+						var someBranchSelected = false;
+
+						//Verifica se as empresas estão selecionadas ou não
+						var oTable = $('#datatable_branches').dataTable();
+						$("input:checkbox", oTable.fnGetNodes()).each(function(){
+							var selected = $(this).prop('checked');
+							//Adiciona a empresa na variavel userBranch para posteriormente ser adicionada ao array de empresas do usuario
+							var userBranch = {
+									'userID': user.userID,
+									'enable': selected,
+									'branchOffice': {
+			                    		'branchOfficeID': $(this).val(),
+			                    		'organization':{
+			                    			'organizationID': user.organizationID
+			                    		}
+			                    	}
+									
+							};
+							
+							if(selected){
+								someBranchSelected = true;
+							}
+								
+							user.userBranches.push(userBranch);
+						});
+						
+						//Valida se pelo menos uma empresa esta selecionada.
+						if(!someBranchSelected){
+							$scope.errorMessage = "Por favor, selecione pelo menos uma empresa para o usuário ter acesso."; 
+							$('#alertUserInputsInvalids').show();
+							return;
+						} 
+																	
+						
 						user.menusApplication = [];
 
 						//Verifica as opções que estão selecionadas, e adiciona ao menu do usuario			
@@ -160,31 +199,7 @@ vendasApp.controller('UserFormController',
 							user.menusApplication.push({"menuID": Constants.MENUID_ORGANIZATION});
 							user.menusApplication.push({"menuID": Constants.MENUID_REGISTRATION});
 						}
-						
-						
-						user.userBranches = [];
-
-						//Verifica se as empresas estão selecionadas ou não
-						var oTable = $('#datatable_branches').dataTable();
-						$("input:checkbox", oTable.fnGetNodes()).each(function(){							
-							//Adiciona a empresa na variavel userBranch para posteriormente ser adicionada ao array de empresas do usuario
-							var userBranch = {
-									'userID': user.userID,
-									'enable': $(this).prop('checked'),
-									'branchOffice': {
-			                    		'branchOfficeID': $(this).val(),
-			                    		'organization':{
-			                    			'organizationID': user.organizationID
-			                    		}
-			                    	}
-									
-							};
-							
-							user.userBranches.push(userBranch);
-						});
-						
-						
-						
+					
 						user.userRoles = [];
 						if($scope.userIsSeller){
 							user.userRoles.push({'userID': user.userID,role: 'ROLE_USER'});
@@ -203,6 +218,10 @@ vendasApp.controller('UserFormController',
 								UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
 							}
 						});
+					} else {
+						//Mostra a mensagem de erro caso algo algum campo esteja invalido.
+						$scope.errorMessage = "Alguns campos estão incorretos. Por favor, verifique antes de continuar."; 
+						$('#alertUserInputsInvalids').show();			
 					}
 				}		
 			};

@@ -14,7 +14,7 @@ vendasApp
 	
 	$scope.newPriceTable = function(){		
 		//Remove qualquer tabela de preço que estava na edição
-		PriceTableService.getPriceTableEdition({});
+		PriceTableService.setPriceTableEdition({});
 		
 		$location.path('/pedido/cadastro-tabela-de-preco');
 	};
@@ -80,8 +80,7 @@ vendasApp
 	
 	
 	$scope.listTables = function(){
-		
-		var aTables = PriceTableService.getAllByBranch(ContextService.getOrganizationID(), 1); //ALTERAR
+		var aTables = PriceTableService.getAllByBranch(ContextService.getOrganizationID(), ContextService.getBranchLogged().branchOfficeID);
 		aTables.then(function(toReturn){
 			$scope.tables = toReturn.value;
 			buildPriceTableDataTable(toReturn.value);

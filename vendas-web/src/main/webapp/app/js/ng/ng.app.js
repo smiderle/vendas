@@ -47,8 +47,20 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 
 	$routeProvider
 	.when('/', {
-		redirectTo: '/user/user-list'
+		redirectTo: '/dashboard'
 	})
+		
+	.when("/dashboard",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/dashboard.html';
+			}
+		},
+		controller : 'UserFormController'		
+	})
+	
 
 	.when("/user/user-form",{
 		templateUrl : function($routeParams) {
@@ -91,6 +103,32 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		controller : 'BranchFormController'		
 	})
 	
+	
+	
+	
+	.when("/pedido/lista-parcelamento",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/order/installment-list.html';
+			}
+		},
+		controller : 'InstallmentListController'		
+	})
+	
+	
+	.when("/pedido/cadastro-parcelamento",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/order/installment-form.html';
+			}
+		},
+		controller : 'InstallmentFormController'		
+	})	
+	
 	.when("/pedido/lista-tabela-de-preco",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -113,14 +151,38 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		controller : 'PriceTableFormController'		
 	})
 	
+	.when("/produto/grupo/lista-categoria-produto",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/product/group/product-group-list.html';
+			}
+		},
+		controller : 'ProductGroupListController'		
+	})
+	
+	.when("/produto/grupo/cadastro-categoria-produto",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/product/group/product-group-form.html';
+			}
+		},
+		controller : 'ProductGroupFormController'		
+	})
+	
+	
+	
 	
 	.when("/error404",{
 		templateUrl : 'views/misc/error404.html'	
 	})
 	
-	/*.otherwise({
+	.otherwise({
 		redirectTo: '/error404'
-	})*/
+	})
 	;
 
 	// with this, you can use $log('Message') same as $log.info('Message');

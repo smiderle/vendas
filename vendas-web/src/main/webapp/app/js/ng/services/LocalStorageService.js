@@ -1,12 +1,20 @@
 'use strict';
 
-vendasApp.factory('LocalStorageService',function(){
+vendasApp.factory('LocalStorageService',function(Utility){
 	var addToLocalStorage = function (key, value) {
 		localStorage.setItem(key, JSON.stringify(value));
 	};
 	
+	var addToLocalStorageCrypt = function (key, value) {		
+		localStorage.setItem(key, Utility.encrypt(JSON.stringify(value)));
+	};
+	
 	var getFromLocalStorage = function (key) {
 		return JSON.parse(localStorage.getItem(key));
+	};
+	
+	var getFromLocalStorageDecrypt = function (key) {
+		return JSON.parse(Utility.decrypt(localStorage.getItem(key)));
 	};
 	
 	
@@ -17,7 +25,9 @@ vendasApp.factory('LocalStorageService',function(){
 
 	return {
 		addToLocalStorage : addToLocalStorage,
+		addToLocalStorageCrypt: addToLocalStorageCrypt,
 		getFromLocalStorage: getFromLocalStorage,
+		getFromLocalStorageDecrypt: getFromLocalStorageDecrypt,
 		clear : clear
 	};	
 });
