@@ -1,4 +1,4 @@
-package br.com.vendas.api.location;
+package br.com.vendas.api.v1.location;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.HTTPStatusCode;
 
-@RequestMapping(value="/states")
+@RequestMapping(value="/v1/states")
 @Controller
-public class StateController {
+public class StateRest {
 
-	private static final Logger LOG = Logger.getLogger(StateController.class);
+	private static final Logger LOG = Logger.getLogger(StateRest.class);
 	
 	@Autowired
 	private StateServiceImpl stateServiceImpl;

@@ -1,4 +1,4 @@
-package br.com.vendas.api.order;
+package br.com.vendas.api.v1.order;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
 
-@RequestMapping(value="/priceTable")
+@RequestMapping(value="/v1/priceTable")
 @Controller
 public class PriceTableRest {
 	

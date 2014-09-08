@@ -1,4 +1,4 @@
-package br.com.vendas.api.organization;
+package br.com.vendas.api.v1.organization;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value="/branchOffice")
+@RequestMapping(value="/v1/branchOffice")
 @Controller
-public class BranchOfficeController {
+public class BranchOfficeRest {
 	
-	private static final Logger LOG = Logger.getLogger(BranchOfficeController.class);
+	private static final Logger LOG = Logger.getLogger(BranchOfficeRest.class);
 	
 	@Inject
 	private BranchOfficeService service;

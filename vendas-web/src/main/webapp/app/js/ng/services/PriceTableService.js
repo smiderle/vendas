@@ -6,7 +6,7 @@ vendasApp.factory('PriceTableService',function(Restangular){
 	return {
 		
 		save : function(priceTable){
-			var priceTable_ = Restangular.all('priceTable').all('save').post(priceTable);
+			var priceTable_ = Restangular.all("v1").all('priceTable').all('save').post(priceTable);
 			return priceTable_;
         },
 		
@@ -23,7 +23,7 @@ vendasApp.factory('PriceTableService',function(Restangular){
 					};
         	
         	
-        	return Restangular.all("priceTable").all("findAllByBranche").getList(parameters).then(function(result){
+        	return Restangular.all("v1").all("priceTable").all("findAllByBranche").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			

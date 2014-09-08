@@ -13,7 +13,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 		 * @returns
 		 */
 		saveUser : function(user){
-			var user = Restangular.all('user').all('saveUser').post(user);
+			var user = Restangular.all('v1').all('user').all('saveUser').post(user);
 			return user;
         },
 
@@ -31,7 +31,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 					'password' : fields.password
 					};
 			
-			var user = Restangular.all('public').all('generateNewUser').post('parameters',parameters);
+			var user = Restangular.all('v1').all('public').all('generateNewUser').post('parameters',parameters);
 			return user;
         },
         /**
@@ -56,7 +56,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 		 */
 		findUserByEmail : function(email){
 			
-			return Restangular.all("user").all("getUserByEmail").getList({"email":email}).then(function(result){
+			return Restangular.all('v1').all("user").all("getUserByEmail").getList({"email":email}).then(function(result){
 				var p = {};
 				var value = {};
 				//Remove outros objetos que vem junto com o request
@@ -92,7 +92,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 					};
         	
         	
-        	return Restangular.all("user").all("getUsersByOrganizationID").getList(parameters).then(function(result){
+        	return Restangular.all('v1').all("user").all("getUsersByOrganizationID").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			
@@ -111,7 +111,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 					};
 	    	
 	    	
-	    	return Restangular.all("user").all("getUsersByUserIDOrNameOrEmail").getList(parameters).then(function(result){
+	    	return Restangular.all('v1').all("user").all("getUsersByUserIDOrNameOrEmail").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;
@@ -129,7 +129,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
         
         addUserAccess: function(userID){
         	console.log(userID);
-        	Restangular.all('user').all('addUserAccess').post(userID);
+        	Restangular.all('v1').all('user').all('addUserAccess').post(userID);
         }
 	};	
 });

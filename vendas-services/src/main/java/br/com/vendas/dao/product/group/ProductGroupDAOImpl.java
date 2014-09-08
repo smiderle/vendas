@@ -21,7 +21,7 @@ public class ProductGroupDAOImpl extends ResourceDAO<ProductGroup> implements Pr
 		Session session = getSession();		
 		
 		Criteria criteria = session.createCriteria(ProductGroup.class)
-
+		.add(Restrictions.eq("excluded", false))
 		.add(Restrictions.eq("organizationID", organizationID))
 		.add(Restrictions.eq("branchID", branchID))
 		.setFirstResult(offset)
@@ -35,6 +35,26 @@ public class ProductGroupDAOImpl extends ResourceDAO<ProductGroup> implements Pr
 	public List<ProductGroup> findByDescription(String description,
 			Long organizationID, Long branchID, Integer offset, Integer limit) {
 
+
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(ProductGroup.class)
+				
+		.add(Restrictions.eq("organizationID", organizationID))
+		.add(Restrictions.eq( "branchID", branchID))
+		.add(Restrictions.eq("excluded", false))
+		.add(Restrictions.like("description", description, MatchMode.START).ignoreCase())
+		.setFirstResult(offset)
+		.setMaxResults(limit)
+		.addOrder(Order.asc("groupID"));		
+		return criteria.list();	
+		
+	
+		
+		
+		
+		
+		/*
+
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(ProductGroup.class);
 				
@@ -42,12 +62,14 @@ public class ProductGroupDAOImpl extends ResourceDAO<ProductGroup> implements Pr
 									Restrictions.and(
 											Restrictions.eq("organizationID", organizationID),
 											Restrictions.eq( "branchID", branchID)), 
-									Restrictions.like("description", description, MatchMode.START).ignoreCase()))
+											Restrictions.and(
+													Restrictions.eq("excluded", false), 
+													Restrictions.like("description", description, MatchMode.START).ignoreCase())))
 				.setFirstResult(offset)
 				.setMaxResults(limit)
 				.addOrder(Order.asc("groupID"));
 		return criteria.list();	
 		
-	}
+	*/}
 
 }

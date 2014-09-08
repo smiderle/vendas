@@ -1,4 +1,4 @@
-package br.com.vendas.api.organization;
+package br.com.vendas.api.v1.organization;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ import br.com.vendas.services.organization.OrganizationService;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 
-@RequestMapping(value="/organization")
+@RequestMapping(value="/v1/organization")
 @Controller
-public class OrganizationController {
-	private static final Logger LOG = Logger.getLogger(OrganizationController.class);
+public class OrganizationRest {
+	private static final Logger LOG = Logger.getLogger(OrganizationRest.class);
 	
 	@Inject  
 	private OrganizationService organizationService;

@@ -1,4 +1,4 @@
-package br.com.vendas.api.location;
+package br.com.vendas.api.v1.location;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value = "/location")
+@RequestMapping(value = "/v1/location")
 @Controller
-public class LocationCotroller {
+public class LocationRest {
 
-	private static final Logger LOG = Logger.getLogger(LocationCotroller.class);
+	private static final Logger LOG = Logger.getLogger(LocationRest.class);
 
 	@Autowired
 	private PostalCodeService postalCodeService;

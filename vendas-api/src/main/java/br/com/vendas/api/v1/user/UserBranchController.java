@@ -1,4 +1,4 @@
-package br.com.vendas.api.user;
+package br.com.vendas.api.v1.user;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value="/userBranch")
+@RequestMapping(value="/v1/userBranch")
 @Controller
 public class UserBranchController {
 	

@@ -1,9 +1,7 @@
-package br.com.vendas.api.common;
+package br.com.vendas.api.v1.common;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -33,7 +31,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.HTTPStatusCode;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value="/public")
+@RequestMapping(value="/v1/public")
 @Controller
 public class PublicController {
 		

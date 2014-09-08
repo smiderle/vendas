@@ -5,7 +5,7 @@ vendasApp.factory('StateService',function(Restangular){
 	return {
 		findAll : function(){
 			
-			return Restangular.one("states").one("getStates");
+			return Restangular.one("v1").one("states").one("getStates");
         }
 	};	
 });

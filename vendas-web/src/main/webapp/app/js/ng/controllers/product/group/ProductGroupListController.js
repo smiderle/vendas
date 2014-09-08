@@ -1,8 +1,8 @@
 'use strict';
 
 vendasApp.controller('ProductGroupListController',
-		['$scope','$location','ProductGroupService' ,'ContextService', 
-        function ProductGroupListController($scope, $location, ProductGroupService, ContextService) {
+		['$scope','$location','ProductGroupService' ,'ContextService','UtilityService', 
+        function ProductGroupListController($scope, $location, ProductGroupService, ContextService,UtilityService) {
 	
 	/**
 	 * Lista de grupos carregados
@@ -76,9 +76,46 @@ vendasApp.controller('ProductGroupListController',
 		ProductGroupService.setProductGroupEdition({});
 		$location.path('/produto/grupo/cadastro-categoria-produto');
 	};	
+
 	
+	/**
+	 * Atualiza o grupo para excluida. Não ira mais ser listada
+	 */
 	$scope.deleteGroup = function(){
 		
+		$.SmartMessageBox({
+			title : "Exclusão",
+			content : "Deseja realmente excluir o grupo selecionado?",
+			buttons : '[Não][Sim]'
+		}, function(ButtonPressed) {
+			if (ButtonPressed === "Sim") {
+				var groupSelectedID = $( "input:checked" ).val();
+				var groups = $scope.groups;
+				var groupSelected;
+				var i;
+				for(i in groups){
+					var group = groups[i];			
+					if(group && group.id == groupSelectedID){				
+						groupSelected = group;
+						break;
+					}
+				}
+				
+				groupSelected.excluded = true;
+				
+				
+				var aGroup = ProductGroupService.save(groupSelected);
+				aGroup.then(function(toReturn){
+					if(toReturn.code == '200'){
+						$scope.listGroups();
+						UtilityService.showAlertSucess('Sucesso.', 'Categoria excluida!!');
+					} else {
+						UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
+					}					
+				});
+				
+			}
+		});
 	};
 
 	

@@ -35,6 +35,9 @@ public class ProductGroup {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date changeTime;
 
+	@Column(name="EXCLUIDO")
+	private boolean excluded;
+	
 	public Long getID() {
 		return ID;
 	}
@@ -81,5 +84,15 @@ public class ProductGroup {
 
 	public void setChangeTime(Date changeTime) {
 		this.changeTime = changeTime;
+	}
+
+	public boolean isExcluded() {
+		return excluded;
+	}
+
+	public void setExcluded(boolean excluded) {
+		this.excluded = excluded;
 	}	
+	
+	
 }
