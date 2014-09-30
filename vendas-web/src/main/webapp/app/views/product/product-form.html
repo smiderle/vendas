@@ -1,0 +1,332 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+			
+			<div  ng-init="initProductForm()" class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-user-form"  data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+				<header >
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Cadastro do Produto</h2>				
+				</header>
+	
+					<!-- widget div-->
+					<div role="content" style="">
+												
+						<div class="widget-body no-padding">
+								
+							<form autocomplete="off" id="product-form" class="smart-form" novalidate="novalidate" ng-submit="save(product)" >
+																			
+								<div class="md-header btn-toolbar">
+								<br>
+									<button type="button" class="btn btn-sm btn-default" onclick="window.history.back();">
+									<i class="fa fa-reply"></i>
+												Voltar
+									</button>
+									<button type="submit" class="btn btn-sm  btn-success" id="btnTableSave">
+										<i class="fa fa-save"></i>
+											Salvar
+									</button>								
+									<br>
+								</div>
+								<br>
+								<hr>
+								
+								<ul id="tabUser" class="nav nav-tabs bordered">
+									<li class="active">
+										<a href="#tabMainData" data-toggle="tab"><i class="fa fa-fw fa-lg fa-user"></i>Principal</a>
+									</li>
+									<li>
+										<a href="#tabPromotionAccess" data-toggle="tab"><i class="fa fa-fw fa-lg fa-reorder"></i>Promoção</a>
+									</li>																								
+									
+								</ul>
+								<div id="tabContentProduct" class="tab-content padding-10">
+									<div class="tab-pane fade in active" id="tabMainData">
+										<div class="jcrop-holder">
+											<img alt="Imagem do Produto" title="Clique para trocar a imagem" width="150" height="150" ng-src="{{product.pictureUrl}}"  dropzone="dropzoneConfig" >
+										</div>
+										<div class="padding-gutter padding-top-0 padding-bottom-0"> <!-- pull-left  -->
+											<fieldset class="padding-10">
+												<div class="row">
+													<section class="col col-2">
+														<label class="label">Código *</label>																					
+														<label class="input">												
+															<input type="text" name="prudoctID" placeholder="Código" maxlength="9" ng-model="product.productID" class="form-control">
+														</label>
+													</section>
+												</div>
+												<div class="row">
+													<section class="col col-6">
+														<label class="label">Descrição *</label>
+														<label class="input">												
+															<input type="text" name="description" placeholder="Descrição" ng-model="product.description" class="form-control">
+														</label>	
+													</section>
+												</div>
+											</fieldset>																				
+										</div>										
+										<div class="row">
+											<section class="col col-6">
+												<label class="label">Referência</label>												
+												<label class="input">												
+													<input type="text" name="reference" placeholder="Referência" ng-model="product.reference" class="form-control">
+												</label>
+											</section>
+											<section class="col col-6">
+												<label class="label">Código de Barras</label>												
+												<label class="input">												
+													<input type="text" name="barcode" placeholder="Código de Barras" ng-model="product.barcode" class="form-control">
+												</label>
+											</section>
+										</div>
+										<div class="row">
+											<section class="col col-6">
+												<label class="label">Categoria</label>
+												<label class="input">
+													<!-- <input type="text" name="city" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Cidade" ng-model="branchOffice.city.name" list="list" ng-change="findCities()"> -->
+													<input type="text" id="txtProductGroup" name="productGroup" ng-change="onChangeGroups()" ng-model="selectedGroup" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
+															placeholder="Categoria" typeahead="c as c.description for c in groups | filter:$viewValue | limitTo:10" typeahead-min-length='1' 
+															typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">													
+												</label>												
+											</section>
+										</div>
+										<div class="row">
+											<section class="col col-6">
+												<label class="label">Embalagem</label>												
+												<label class="input">												
+													<input type="text" name="packaging" placeholder="Embalagem" ng-model="product.packaging" class="form-control">
+												</label>
+											</section>
+										</div>
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Estoque *</label>												
+												<label class="input">												
+													<input type="text" name="stockAmount" placeholder="Estoque" ng-model="product.stockAmount" class="form-control">
+												</label>
+											</section>
+											<section class="col col-3">
+												<label class="label">Preço de Venda (R$) *</label>												
+												<label class="input">												
+													<input type="text" name="salesPrice" placeholder="Preço" ng-model="product.salesPrice" class="form-control">
+												</label>
+											</section>
+										</div>
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Desconto Máximo (%)</label>												
+												<label class="input">												
+													<input type="text" name="maximumDiscount" placeholder="Desconto Máximo" ng-model="product.maximumDiscount" class="form-control">
+												</label>
+											</section>
+										</div>
+										
+															
+									</div>
+									
+									
+									<div class="tab-pane fade in" id="tabPromotionAccess">
+										<div  ng-hide="product.id">
+											<br>
+											<h3 class="text-primary">É necessário salvar o produto para habilitar o preço de promoção</h3>
+										</div>
+									
+										<div ng-show="product.id">																		
+												<div class="row">										
+													<section class="col col-2">
+														<label class="label">Preço de Promoção</label>												
+														<label class="input"><i class="icon-prepend fa fa-usd"></i>												
+															<input type="text" name="promotionPrice" placeholder="Preço de Promoção" ng-model="promotion.promotionPrice">
+														</label>
+													</section>
+												</div>
+												<div class="row">
+													<section class="col col-2">
+														<label class="label">Incio da Promoção</label>
+														<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
+															<input type="text" name="startdate" id="initialDate" placeholder="Inicio da Promoção"  ng-model="auxInitDate">
+														</label>
+													</section>
+													<section class="col col-2">
+														<label class="label">Final da Promoção</label>
+														<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
+															<input type="text" name="finishdate" id="finalDate" placeholder="Fim da Promoção" ng-model="auxFinalDate">
+														</label>
+													</section>											
+												</div>
+												
+												<button type="button" class="btn btn-sm  btn-primary" ng-click="savePromotion(promotion)">
+														<i class="fa fa-thumbs-o-up"></i>
+															{{buttonPromotionDescription}}
+												</button>
+												<button type="button" class="btn btn-sm  bg-color-redLight txt-color-white" ng-click="cancelEditionPromotion()" ng-show="promotion.id">
+														<i class="fa fa-thumbs-o-up"></i>
+															Cancelar Edição
+												</button>
+												
+												<table id="datatable_promotions_price"  
+													class="table table-hover table-striped smart-form has-tickbox dataTable" radio="false" width="100%" >
+													<thead>
+														<tr role="row">
+															<th style="width: 50px;"></th>													
+															<th style="width: 100px;">Preço</th>
+															<th style="width: 100px;">Data Inicial</th>
+															<th style="width: 100px;">Data Final</th>																												
+														</tr>
+													</thead>
+													
+													<tbody>
+														<tr ng-repeat="promotion in promotions">
+															<td>
+															
+																<a class="fa fa-lg fa-pencil" href="javascript:void(0);" ng-click="editPromotion($index)"></a>
+																<a class="fa fa-lg fa-times" href="javascript:void(0);" ng-click="removePromotion($index)"></a>
+															</td>
+															<td>
+																<h5><small>R$ {{promotion.promotionPrice}}</small></h5>
+															</td>
+															<td>
+																<h5><small>{{promotion.initialDate | cmdate:'dd/MM/yyyy'}}</small></h5>
+															</td>
+															<td>
+																<h5><small>{{promotion.finalDate | cmdate:'dd/MM/yyyy'}}</small></h5>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										</form>
+									</div>																		
+								</div>	
+						</div>						
+					</div>
+					<!-- end widget div -->
+					
+				</div>			
+			
+		</article>
+	</div>
+</section>
+
+		<!-- Utilizado no autocomplete da cidade -->
+		<script type="text/ng-template" id="customTemplate.html">
+	 		 <a>
+      			<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+      				<i>({{match.model.description}})</i>
+  			</a>
+		</script>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="js/plugin/dropzone/dropzone.min.js"></script>
+
+<script type="text/javascript">
+	
+	pageSetUp();
+
+	var pagefunction = function() {
+
+		var $checkoutForm = $('#product-form').validate({
+			// Rules for form validation
+			rules : {
+				prudoctID : {
+					required : true,
+				},
+				
+				description : {
+					required : true
+				},
+				
+				maximumDiscount : {
+					number : true,
+					max : 100
+				},
+				
+				promotionPrice : {
+					number : true
+				},
+				
+				salesPrice : {
+					required : true,
+					number : true
+				},
+				
+				stockAmount : {
+					required : true,
+					number : true
+				},
+				
+				
+			},
+
+			// Messages for form validation
+			messages : {
+				prudoctID : {
+					required : 'Por favor, informe um código',
+					digits : 'Por favor, informe somente numeros'
+				},
+				
+				description : {
+					required : 'Por favor, informe uma descrição',
+				},
+				
+				maximumDiscount : {
+					max : 'Por favor, informe um numero menor ou igual a 100',
+					number : 'Por favor, informe um numero válido. Ex: 10.50'
+				},
+				
+				promotionPrice : {
+					number : 'Por favor, informe um numero válido. Ex: 10.50'
+				},
+				
+				salesPrice : {
+					required : 'Por favor, informe um preço',
+					number :  'Por favor, informe um numero válido. Ex: 10.50'
+				},
+				
+				stockAmount : {
+					required : 'Por favor, informe a quantidade de estoque',
+					number : 'Por favor, informe um numero válido. Ex: 10.50'
+				},				
+				
+			},
+
+			// Do not change code below
+			errorPlacement : function(error, element) {
+				error.insertAfter(element.parent());
+			}
+		});
+
+
+		$('#initialDate').datepicker({
+			dateFormat : 'dd/mm/yy',
+			prevText : '<i class="fa fa-chevron-left"></i>',
+			nextText : '<i class="fa fa-chevron-right"></i>',
+			onSelect : function(selectedDate) {
+				$('#finalDate').datepicker('option', 'minDate', selectedDate);
+			}
+		});
+		
+		
+
+		$('#finalDate').datepicker({
+			dateFormat : 'dd/mm/yy',
+			prevText : '<i class="fa fa-chevron-left"></i>',
+			nextText : '<i class="fa fa-chevron-right"></i>',
+			onSelect : function(selectedDate) {
+				$('#initialDate').datepicker('option', 'maxDate', selectedDate);
+			}
+		});
+	};	
+
+	loadScript("js/plugin/jquery-form/jquery-form.min.js", pagefunction);
+	
+</script>
+
+

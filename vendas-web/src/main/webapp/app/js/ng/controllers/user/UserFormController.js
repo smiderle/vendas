@@ -100,6 +100,10 @@ vendasApp.controller('UserFormController',
 						$scope.userAccount = userEdition;						
 					});
 				} else {
+					$scope.userAccount = {
+							active : true
+					};
+					
 					$scope.menusApplication = {
 							user: true,
 							product : true,

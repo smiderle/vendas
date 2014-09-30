@@ -212,7 +212,7 @@
 									<div class="tab-pane fade" id="tabOrganizationConfigurations">
 										<div class="row">
 											<section class="col col-3">
-												<label class="label">Desconto Máximo</label>
+												<label class="label">Desconto Máximo (%)</label>
 												<label class="input">
 													<input type="text" name="descMax" placeholder="Desconto Máximo" ng-model="branchOffice.maximumDiscount">
 												</label>
@@ -220,14 +220,14 @@
 										</div>
 										<div class="row">
 											<section class="col col-3">
-												<label class="label">E-mail pedidos</label>
+												<label class="label">E-mail que Recebera as Notificações de Novos Pedidos e Clientes</label>
 												<label class="input">
 													<input type="text" name="emailOrder" placeholder="e-mails que serão enviados os pedidos" ng-model="branchOffice.emailNotification">
 												</label>
 											</section>											
 										</div>
 										<label class="checkbox"><input type="checkbox" name="chkShowStockProduct" id="chkShowStockProduct" ng-model="branchOffice.showStockProduct"><i></i>Exibir Estoque</label>
-										<label class="checkbox"><input type="checkbox" name="chkNegativeStockProduct" id="chkNegativeStockProduct" ng-model="branchOffice.negativeStockProduct"><i></i>Permite Vender Com Estoque Negativo</label>
+										<label class="checkbox"><input type="checkbox" name="chkNegativeStockProduct" id="chkNegativeStockProduct" ng-model="branchOffice.negativeStockProduct"><i></i>Permite Vendas de Produtos com Estoque Negativo</label>
 										<label class="checkbox"><input type="checkbox" name="chkSellerRegisterCustomer" id="chkSellerRegisterCustomer" ng-model="branchOffice.sellerRegisterCustomer"><i></i>O Vendedor Pode Cadastrar Clientes</label>
 										<label class="checkbox"><input type="checkbox" name="chkSendEmailCustomer" id="chkSendEmailCustomer" ng-model="branchOffice.sendEmailCustomer"><i></i>Enviar Email Para o Cliente ao Efetivar o Pedido</label>
 																				
@@ -237,7 +237,7 @@
 									    </select>
 										
 										
-										<label class="label">Ação Quando Realizar Venda Para Cliente com Sem Limite de Crédito</label>
+										<label class="label">Ação Quando Realizar Venda Para Cliente Sem Limite de Crédito</label>
 										<select ng-options="actionCreditLimit.code as actionCreditLimit.label for actionCreditLimit in actions" ng-model="branchOffice.actionCreditLimit">
 									    	<option style="display:none" value="">Selecione a ação</option>
 									    </select>										

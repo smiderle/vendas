@@ -58,6 +58,8 @@ vendasApp.controller('ProductGroupListController',
 	 */
 	$scope.findGroupsByFilter = function(filter){
 		
+		clearDatateble();
+		
 		$('#btnProductGroupEdit').attr("disabled","disabled");
 		$('#btnProductGroupDelete').attr("disabled","disabled");
 		
@@ -142,5 +144,15 @@ vendasApp.controller('ProductGroupListController',
 		//Seta os usuarios 
 		$scope.rowsDataTable = groupRows;
 	};
+	
+	
+	/**
+	 * Remove todos os elementos do datatable
+	 */
+	function clearDatateble(){
+		var dataTable = $('#datatable_groupproduct').dataTable();
+		dataTable.fnClearTable(0);
+		dataTable.fnDraw();
+	}
 	
 }]);

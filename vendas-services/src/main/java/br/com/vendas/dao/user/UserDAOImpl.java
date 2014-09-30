@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.vendas.dao.ResourceDAO;
 import br.com.vendas.domain.user.User;
+import br.com.vendas.services.product.ProductService;
 
 @Repository
 public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
@@ -46,8 +47,6 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 	@Override
 	public List<User> findUsersByUserIDOrNameOrEmail(String filter,
 			Long organizationID, Long userID, Integer offset, Integer limit) {
-				
-		
 
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(User.class)

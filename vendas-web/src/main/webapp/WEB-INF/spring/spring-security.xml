@@ -30,7 +30,6 @@
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
-	
     
     <security:authentication-manager>
 	  <security:authentication-provider>

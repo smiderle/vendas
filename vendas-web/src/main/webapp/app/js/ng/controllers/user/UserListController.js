@@ -56,6 +56,8 @@ vendasApp.controller('UserListController',
 	 */
 	$scope.findUsersByFilter = function(filter){
 		
+		clearDatateble();
+		
 		$('#btnUserEdit').attr("disabled","disabled");
 		$('#btnRemoveUser').attr("disabled","disabled");
 		
@@ -100,5 +102,14 @@ vendasApp.controller('UserListController',
 		//Seta os usuarios 
 		$scope.rowsDataTable = userRows;
 	};
+	
+	/**
+	 * Remove todos os elementos do datatable
+	 */
+	function clearDatateble(){
+		var dataTable = $('#datatable_users').dataTable();
+		dataTable.fnClearTable(0);
+		dataTable.fnDraw();
+	}
 	
 }]);

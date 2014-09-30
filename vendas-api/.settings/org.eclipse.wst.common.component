@@ -10,7 +10,13 @@
         <dependent-module archiveName="vendas-domain-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vendas-domain/vendas-domain">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="vendas-aws-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vendas-aws/vendas-aws">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="byjg-cep-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/byjg-cep/byjg-cep">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="vendas-core-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vendas-core/vendas-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="vendas-api"/>

@@ -36,6 +36,14 @@ vendasApp.controller('InstallmentFormController',
 			 */
 			$scope.initInstallmentForm = function() {
 				$scope.installment = InstallmentService.getInstallmentEdition();	
+				var isEdition = $scope.installment && $scope.installment.id;
+				if(!isEdition){
+					
+					$scope.installment = {
+						active: true	
+					};
+				}
+				
 			};
 			
 			/**

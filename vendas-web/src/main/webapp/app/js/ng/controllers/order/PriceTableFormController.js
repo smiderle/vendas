@@ -27,7 +27,8 @@ vendasApp.controller('PriceTableFormController',
 
 				if(!isEdition){
 					$scope.priceTable = {
-							increase : true
+							increase : true,
+							active: true
 					};
 				}
 			};

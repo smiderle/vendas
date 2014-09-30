@@ -9,10 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import br.com.vendas.domain.Domain;
 import br.com.vendas.domain.organization.BranchOffice;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Usuario Filial.

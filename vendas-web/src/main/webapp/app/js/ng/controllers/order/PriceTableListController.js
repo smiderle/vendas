@@ -1,7 +1,12 @@
 'use strict';
 
-vendasApp
-.controller('PriceTableListController',function PriceTableListController($scope,$location, $window,ContextService , PriceTableService, UtilityService) {
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
+
+vendasApp.controller('PriceTableListController',
+		function PriceTableListController($scope,$location, $window,ContextService , PriceTableService, UtilityService) {
 	
 	
 	/**
@@ -104,7 +109,7 @@ vendasApp
 				              index+1,				               
 				              table.priceTableID, 
 				              table.description,
-				              parseFloat(table.percentage).toFixed(2) + ' %',
+				              parseFloat(table.percentage).toFixed(2).replace('.', ',') + ' %',
 				              table.increase ? 'Sim' : 'Não',
 				              table.active ? 'Sim' : 'Não',
 				              ]);

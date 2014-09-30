@@ -10,7 +10,7 @@ var vendasApp = angular.module('vendasApp', [
                                              'app.navigation',
                                              'app.localize',
                                              'app.activity',
-                                             'app.smartui'                                                                                                                                  
+                                             'app.smartui'
                                              ]);
 
 /**
@@ -173,6 +173,28 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		controller : 'ProductGroupFormController'		
 	})
 	
+	.when("/produto/lista-produto",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/product/product-list.html';
+			}
+		},
+		controller : 'ProductListController'		
+	})
+	
+	.when("/produto/cadastro-produto",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/product/product-form.html';
+			}
+		},
+		controller : 'ProductFormController'		
+	})
+	
 	
 	
 	
@@ -182,8 +204,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 	
 	.otherwise({
 		redirectTo: '/error404'
-	})
-	;
+	});
 
 	// with this, you can use $log('Message') same as $log.info('Message');
 	$provide.decorator('$log', function($delegate) {

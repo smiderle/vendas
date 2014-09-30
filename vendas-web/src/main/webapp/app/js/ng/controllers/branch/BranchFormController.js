@@ -29,9 +29,20 @@ vendasApp
 		 */
 		$scope.branchOffice = BranchService.getBranchEdition();
 		
-		//Verifica se a filial tem um já tem um id, que significa que é uma edição
+		//Verifica se a filial já tem um id, que significa que é uma edição
 		if($scope.branchOffice && $scope.branchOffice.branchOfficeID){			
 			$scope.isEdition = true;
+		} else{
+			//Inicializa alguns campos
+			$scope.branchOffice = {
+					actionOverdue : 'N',
+					actionCreditLimit : 'N',
+					maximumDiscount: 100,
+					showStockProduct : true,
+					negativeStockProduct: false,
+					sellerRegisterCustomer: true,
+					sendEmailCustomer: false
+			};
 		}
 		
 		//Seta a cidade da filial no objeto $scope

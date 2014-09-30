@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vendas.dao.user.UserDAO;
 import br.com.vendas.dao.user.UserRoleDAO;
 import br.com.vendas.domain.LimitQuery;
+import br.com.vendas.domain.converter.MenuApplicationConverter;
 import br.com.vendas.domain.user.User;
 import br.com.vendas.domain.user.UserBranchOffice;
 import br.com.vendas.domain.user.UserRole;
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ServiceResponse<List<UserPojo>> findAllByOrganizationID(Long organizationID, Integer offset) {
-		List<User> users = userDAO.findAllByOrganizationID(organizationID, offset, LimitQuery.LIMIT_USER.getLimit());
+		List<User> users = userDAO.findAllByOrganizationID(organizationID, offset, LimitQuery.LIMIT_USER.value());
 		List<UserPojo> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			/*Hibernate.initialize(user.getMenusApplication());
@@ -124,8 +125,9 @@ public class UserServiceImpl implements UserService{
 			Hibernate.initialize(user.getMenusApplication());
 			Hibernate.initialize(user.getUserBranches());
 			Hibernate.initialize(user.getUserRoles());
-			userPojo = new UserPojo(user, user.getMenusApplication(), user.getUserBranches(), user.getUserRoles());
-		}
+			userPojo = new UserPojo(user, user.getMenusApplication() , user.getUserBranches(), user.getUserRoles());
+			//userPojo = new UserPojo(user, null , null, null);
+		}		
 		return ServiceResponseFactory.create(userPojo);
 	}
 
@@ -145,7 +147,7 @@ public class UserServiceImpl implements UserService{
 			userID = Long.parseLong(filter);
 		} catch(NumberFormatException  e){}
 
-		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LimitQuery.LIMIT_USER.getLimit());
+		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LimitQuery.LIMIT_USER.value());
 		List<UserPojo> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			UserPojo userPojo = new UserPojo(user, null, null, null);

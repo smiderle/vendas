@@ -21,15 +21,20 @@ public enum LimitQuery {
 	/**
 	 * Limite de registros das consultas de usuarios
 	 */
-	LIMIT_USER(100);
+	LIMIT_USER(100),
 	
-	private Integer limit;
+	/**
+	 * Limite de registros das consultas de produto
+	 */
+	LIMIT_PRODUCT(4);
+	
+	private final Integer limit;
 	
 	private LimitQuery(Integer limit) {
 		this.limit = limit;
 	}
 
-	public Integer getLimit() {
+	public Integer value() {
 		return limit;
 	}	
 }

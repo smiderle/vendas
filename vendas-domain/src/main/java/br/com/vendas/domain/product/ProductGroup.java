@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="GRUPPROD")
+@Table(name="PRODUTO_GRUPO")
 public class ProductGroup {
 
 	@Id
@@ -37,7 +37,7 @@ public class ProductGroup {
 
 	@Column(name="EXCLUIDO")
 	private boolean excluded;
-	
+		
 	public Long getID() {
 		return ID;
 	}
