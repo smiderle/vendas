@@ -17,10 +17,10 @@ public class ProductPromotion {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	private Integer ID;
 	
 	@Column(name="IDPRODUTO")
-	private Long productID;
+	private Integer productID;
 	
 	@Column(name="PRECO_PROMOCAO")
 	private Double promotionPrice;
@@ -40,19 +40,19 @@ public class ProductPromotion {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date changeTime;
 
-	public Long getID() {
+	public Integer getID() {
 		return ID;
 	}
 
-	public void setID(Long iD) {
+	public void setID(Integer iD) {
 		ID = iD;
 	}
 
-	public Long getProductID() {
+	public Integer getProductID() {
 		return productID;
 	}
 
-	public void setProductID(Long productID) {
+	public void setProductID(Integer productID) {
 		this.productID = productID;
 	}
 

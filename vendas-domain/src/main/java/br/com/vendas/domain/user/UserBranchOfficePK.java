@@ -29,14 +29,14 @@ public class UserBranchOfficePK implements Serializable{
 	
 	
 	@Column(name="IDUSUARIO")
-	private Long userID;
+	private Integer userID;
 
 	
-	public Long getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
-	public void setUserID(Long userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
 

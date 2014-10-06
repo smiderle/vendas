@@ -53,6 +53,7 @@ vendasApp.controller('PriceTableListController',
 				var aTable = PriceTableService.save(priceTableSelected);
 				aTable.then(function(toReturn){
 					if(toReturn.code == '200'){
+						clearDatateble();
 						$scope.listTables();
 						UtilityService.showAlertSucess('Sucesso.', 'Tabela de preço excluida!!');
 					} else {
@@ -119,4 +120,15 @@ vendasApp.controller('PriceTableListController',
 		//Seta os usuarios 
 		$scope.rowsDataTable = tablesRows;
 	};
+	
+	
+	/**
+	 * Remove todos os elementos do datatable
+	 */
+	function clearDatateble(){
+		var dataTable = $('#datatable_pricetables').dataTable();
+		dataTable.fnClearTable(0);
+		dataTable.fnDraw();
+	}
+	
 });

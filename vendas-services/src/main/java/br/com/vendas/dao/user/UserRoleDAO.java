@@ -5,6 +5,6 @@ import br.com.vendas.domain.user.UserRole;
 
 public interface UserRoleDAO  extends GenericDAO<UserRole> {
 	
-	void deleteByUserID(Long userID);
+	void deleteByUserID(Integer userID);
 
 }

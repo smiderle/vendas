@@ -14,7 +14,7 @@ public interface PriceTableService {
 	 * @param filialID
 	 * @return
 	 */
-	ServiceResponse<List<PriceTable>> findAllByBranche(Long organizationID, Long branchID);
+	ServiceResponse<List<PriceTable>> findAllByBranche(Integer organizationID, Integer branchID);
 	
 	/**
 	 * Salva a tabela de preço

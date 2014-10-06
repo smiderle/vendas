@@ -1,5 +1,9 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp
 .controller('ContextController',function AppController($scope, ContextService,LocalStorageService, Constants, $location) {
 	

@@ -10,10 +10,10 @@ import br.com.vendas.domain.user.UserRole;
 public class UserRoleDAOImpl extends ResourceDAO<UserRole> implements UserRoleDAO{
 
 	@Override
-	public void deleteByUserID(Long userID) {
+	public void deleteByUserID(Integer userID) {
 		Session session = getSession();		
 		String hql = "delete from UserRole where userID= :userID";
-		session.createQuery(hql).setLong("userID", userID).executeUpdate();	
+		session.createQuery(hql).setInteger("userID", userID).executeUpdate();	
 		
 	}
 

@@ -16,7 +16,7 @@ public interface ProductDAO extends GenericDAO<Product> {
 	 * @param limit
 	 * @return
 	 */
-	List<Product> findAllByBranche(Long organizationID, Long branchID, Integer offset, Integer limit);
+	List<Product> findAllByBranche(Integer organizationID, Integer branchID, Integer offset, Integer limit);
 	
 	
 
@@ -28,6 +28,6 @@ public interface ProductDAO extends GenericDAO<Product> {
 	 * @param limit
 	 * @return
 	 */
-	List<Product> findByDescriptionOrProductIDOrBarcode(String description,String productID,String barcode, Long organizationID,Long branchID, Integer offset, Integer limit);
+	List<Product> findByDescriptionOrProductIDOrBarcode(String description,String productID,String barcode, Integer organizationID,Integer branchID, Integer offset, Integer limit);
 
 }

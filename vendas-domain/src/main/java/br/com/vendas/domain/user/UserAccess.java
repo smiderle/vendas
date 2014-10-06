@@ -22,18 +22,18 @@ public class UserAccess implements Serializable{
 
 	@Id	
 	@Column(name="IDUSUARIO")	
-	private Long userID;
+	private Integer userID;
 	
 	@Id
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DTHRACESSO")
 	private Date accessTime;
 
-	public Long getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
-	public void setUserID(Long userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
 

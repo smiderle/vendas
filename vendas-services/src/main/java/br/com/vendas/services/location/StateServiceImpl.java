@@ -18,7 +18,7 @@ public class StateServiceImpl implements StateServiceFacade{
 	public ServiceResponse<List<State>> findAll() {		
 		State s = new State();
 		s.setName("Parana");
-		s.setStateID(1L);
+		s.setStateID(1);
 		s.setUf("PR");
 		List<State> states = new ArrayList<>();
 		states.add(s);

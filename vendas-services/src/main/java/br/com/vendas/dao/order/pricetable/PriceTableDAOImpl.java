@@ -14,7 +14,7 @@ import br.com.vendas.domain.order.PriceTable;
 public class PriceTableDAOImpl  extends ResourceDAO<PriceTable> implements PriceTableDAO{
 
 	@Override
-	public List<PriceTable> findAllByBranche(Long organizationID, Long branchID) {
+	public List<PriceTable> findAllByBranche(Integer organizationID, Integer branchID) {
 		Criterion criterion =
 				Restrictions.and(
 						Restrictions.eq("excluded", false),

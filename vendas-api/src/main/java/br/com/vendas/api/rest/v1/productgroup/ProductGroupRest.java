@@ -34,7 +34,7 @@ public class ProductGroupRest {
 	 * @return
 	 */
 	@RequestMapping(value="getAllByBranch", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getAllByBranch(Long organizationID, Long branchID,Integer offset){
+	public @ResponseBody ApiResponse getAllByBranch(Integer organizationID, Integer branchID,Integer offset){
 		try {
 			ServiceResponse<List<ProductGroup>> payload =  productGroupService.findAllByBranch(organizationID, branchID, offset);
 			LOG.debug("getAllByBranch - List<ProductGroup> Size: "+payload.getRowCount());
@@ -52,7 +52,7 @@ public class ProductGroupRest {
 	 * @return
 	 */
 	@RequestMapping(value="getAllByDescription", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getAllByBranch(String description, Long organizationID, Long branchID,Integer offset){
+	public @ResponseBody ApiResponse getAllByBranch(String description, Integer organizationID, Integer branchID,Integer offset){
 		try {
 			ServiceResponse<List<ProductGroup>> payload =  productGroupService.findAllByDescription(description, organizationID, branchID, offset);
 			LOG.debug("findByDescription - List<ProductGroup> Size: "+payload.getRowCount());

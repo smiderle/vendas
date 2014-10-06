@@ -14,7 +14,7 @@ public interface BranchOfficeService {
 	 * @param organizationID
 	 * @return
 	 */
-	ServiceResponse<List<BranchOffice>> findAllByOrganizationID(Long organizationID);
+	ServiceResponse<List<BranchOffice>> findAllByOrganizationID(Integer organizationID);
 	
 	/**
 	 * Retorna a filial.
@@ -22,7 +22,7 @@ public interface BranchOfficeService {
 	 * @param branchOfficeID
 	 * @return
 	 */
-	ServiceResponse<BranchOffice> findByOrganizationIDAndBranchOfficeID(Long organizationID, Long branchOfficeID);
+	ServiceResponse<BranchOffice> findByOrganizationIDAndBranchOfficeID(Integer organizationID, Integer branchOfficeID);
 	
 	/**
 	 * Salva a filial, caso exista uma filial com o mesmo id, é lançado uma exception.

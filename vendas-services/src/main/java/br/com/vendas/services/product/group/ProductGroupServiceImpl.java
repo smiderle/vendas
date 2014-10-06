@@ -24,14 +24,14 @@ public class ProductGroupServiceImpl implements ProductGroupService{
 
 	@Override
 	public ServiceResponse<List<ProductGroup>> findAllByBranch(
-			Long organizationID, Long branchID, Integer offset) {		
+			Integer organizationID, Integer branchID, Integer offset) {		
 		return ServiceResponseFactory.create(productDAO.findAllByBranche(organizationID, branchID, offset, LimitQuery.LIMIT_PRODUCT_GROUP.value()));
 
 	}
 
 	@Override
 	public ServiceResponse<List<ProductGroup>> findAllByDescription(
-			String description, Long organizationID, Long branchID,
+			String description, Integer organizationID, Integer branchID,
 			Integer offset) {
 		return ServiceResponseFactory.create(productDAO.findByDescription(description, organizationID, branchID, offset, LimitQuery.LIMIT_PRODUCT_GROUP.value()));
 	}

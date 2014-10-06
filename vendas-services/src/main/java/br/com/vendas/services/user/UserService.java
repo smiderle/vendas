@@ -14,7 +14,7 @@ public interface UserService {
 	 * @param organizationID
 	 * @return
 	 */
-	ServiceResponse<List<UserPojo>> findAllByOrganizationID(Long organizationID, Integer offset);
+	ServiceResponse<List<UserPojo>> findAllByOrganizationID(Integer organizationID, Integer offset);
 	/**
 	 * Salva o usuario
 	 * @param user
@@ -57,6 +57,6 @@ public interface UserService {
 	 * @param limit
 	 * @return
 	 */
-	ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(String filter,Long organizationID, Integer offset);	
+	ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(String filter,Integer organizationID, Integer offset);	
 
 }

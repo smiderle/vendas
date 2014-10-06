@@ -16,8 +16,8 @@ import br.com.vendas.domain.product.ProductGroup;
 public class ProductGroupDAOImpl extends ResourceDAO<ProductGroup> implements ProductGroupDAO{
 
 	@Override
-	public List<ProductGroup> findAllByBranche(Long organizationID,
-			Long branchID, Integer offset, Integer limit) {
+	public List<ProductGroup> findAllByBranche(Integer organizationID,
+			Integer branchID, Integer offset, Integer limit) {
 		Session session = getSession();		
 
 		Criteria criteria = session.createCriteria(ProductGroup.class)
@@ -33,7 +33,7 @@ public class ProductGroupDAOImpl extends ResourceDAO<ProductGroup> implements Pr
 
 	@Override
 	public List<ProductGroup> findByDescription(String description,
-			Long organizationID, Long branchID, Integer offset, Integer limit) {
+			Integer organizationID, Integer branchID, Integer offset, Integer limit) {
 
 
 		Session session = getSession();

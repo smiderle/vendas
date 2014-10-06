@@ -20,7 +20,7 @@ public class UserAccessServiceImpl implements UserAccessService{
 
 	@Transactional(readOnly=false)
 	@Override
-	public void save(Long userID) {
+	public void save(Integer userID) {
 		UserAccess userAccess = new UserAccess();
 		userAccess.setAccessTime(new Date());
 		userAccess.setUserID(userID);

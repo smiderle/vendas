@@ -14,7 +14,7 @@ import br.com.vendas.domain.order.Installment;
 public class InstallmentDAOImpl extends ResourceDAO<Installment> implements InstallmentDAO{
 
 	@Override
-	public List<Installment> findAllByBranche(Long organizationID, Long branchID) {
+	public List<Installment> findAllByBranche(Integer organizationID, Integer branchID) {
 		Criterion criterion =
 				Restrictions.and(
 						Restrictions.eq("excluded", false),

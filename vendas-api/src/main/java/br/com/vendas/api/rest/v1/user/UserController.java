@@ -53,7 +53,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="getUsersByOrganizationID", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getUsersByOrganizationID(Long organizationID, Integer offset){
+	public @ResponseBody ApiResponse getUsersByOrganizationID(Integer organizationID, Integer offset){
 		try {
 			ServiceResponse<List<UserPojo>> payload =  service.findAllByOrganizationID(organizationID, offset);
 			LOG.debug("List<User> Size: "+payload.getRowCount());
@@ -127,7 +127,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="getUsersByUserIDOrNameOrEmail", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getUsersByUserIDOrNameOrEmail(Long organizationID, String filter, Integer offset){
+	public @ResponseBody ApiResponse getUsersByUserIDOrNameOrEmail(Integer organizationID, String filter, Integer offset){
 		try {
 			ServiceResponse<List<UserPojo>> payload =  service.findUsersByUserIDOrNameOrEmail(filter, organizationID, offset);
 			LOG.debug("getUsersByUserIDOrNameOrEmail Size: "+payload.getRowCount());
@@ -144,7 +144,7 @@ public class UserController {
 	 * @param userAcess
 	 */
 	@RequestMapping(value="addUserAccess", method = RequestMethod.POST)
-	public void addUserAccess(@RequestBody Long userID){
+	public void addUserAccess(@RequestBody Integer userID){
 		try {
 			userAccessService.save(userID);
 			LOG.debug("addUserAccess userID: "+userID);

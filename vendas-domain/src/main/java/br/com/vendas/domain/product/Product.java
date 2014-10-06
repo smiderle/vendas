@@ -22,13 +22,13 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
-	private Long ID;
+	private Integer ID;
 	
 	@Column(name="IDEMPRESA")
-	private Long organizationID;
+	private Integer organizationID;
 	
 	@Column(name="IDFILIAL")
-	private Long branchID;
+	private Integer branchID;
 	
 	@Column(name="CODIGO_PRODUTO")
 	private String productID;
@@ -74,27 +74,27 @@ public class Product {
 	@Column(name="url_imagem")
 	private String pictureUrl;
 
-	public Long getID() {
+	public Integer getID() {
 		return ID;
 	}
 
-	public void setID(Long iD) {
+	public void setID(Integer iD) {
 		ID = iD;
 	}
 
-	public Long getOrganizationID() {
+	public Integer getOrganizationID() {
 		return organizationID;
 	}
 
-	public void setOrganizationID(Long organizationID) {
+	public void setOrganizationID(Integer organizationID) {
 		this.organizationID = organizationID;
 	}
 
-	public Long getBranchID() {
+	public Integer getBranchID() {
 		return branchID;
 	}
 
-	public void setBranchID(Long branchID) {
+	public void setBranchID(Integer branchID) {
 		this.branchID = branchID;
 	}
 

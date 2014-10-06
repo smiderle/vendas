@@ -12,7 +12,7 @@ public interface UserDAO extends GenericDAO<User> {
 	 * @param organizationID
 	 * @return
 	 */
-	List<User> findAllByOrganizationID(Long organizationID, Integer offset, Integer limit);
+	List<User> findAllByOrganizationID(Integer organizationID, Integer offset, Integer limit);
 	
 	/**
 	 * Retorna o usuario por email.
@@ -28,7 +28,7 @@ public interface UserDAO extends GenericDAO<User> {
 	 * @param organizationID
 	 * @return
 	 */
-	List<User> findUsersByUserIDOrNameOrEmail(String filter, Long organizationID, Long userID, Integer offset, Integer limit);
+	List<User> findUsersByUserIDOrNameOrEmail(String filter, Integer organizationID, Integer userID, Integer offset, Integer limit);
 
 	
 }

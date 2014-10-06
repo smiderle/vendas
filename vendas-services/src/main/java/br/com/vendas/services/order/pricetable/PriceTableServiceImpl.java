@@ -23,8 +23,8 @@ public class PriceTableServiceImpl implements PriceTableService {
 	private PriceTableDAO priceTableDAO;
 	
 	@Override
-	public ServiceResponse<List<PriceTable>> findAllByBranche(Long organizationID,
-			Long branchID) {
+	public ServiceResponse<List<PriceTable>> findAllByBranche(Integer organizationID,
+			Integer branchID) {
 		return ServiceResponseFactory.create(priceTableDAO.findAllByBranche(organizationID, branchID));
 	}
 

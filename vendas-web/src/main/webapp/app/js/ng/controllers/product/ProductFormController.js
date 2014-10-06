@@ -64,6 +64,9 @@ vendasApp.controller('ProductFormController',
 			$scope.save = function(){
 				
 				if($('#product-form').valid()){
+					
+					$('#alertProductInputsInvalids').hide();
+					
 					$scope.product.organizationID = ContextService.getOrganizationID();
 					$scope.product.branchID = ContextService.getBranchLogged().branchOfficeID;
 					
@@ -80,6 +83,8 @@ vendasApp.controller('ProductFormController',
 							UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
 						}					
 					});
+				} else {
+					$('#alertProductInputsInvalids').show();
 				}
 			};
 						

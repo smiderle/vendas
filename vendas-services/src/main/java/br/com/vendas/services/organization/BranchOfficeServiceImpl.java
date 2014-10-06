@@ -25,14 +25,14 @@ public class BranchOfficeServiceImpl implements BranchOfficeService{
 
 	@Override
 	public ServiceResponse<List<BranchOffice>> findAllByOrganizationID(
-			Long organizationID) {
+			Integer organizationID) {
 		List<BranchOffice> branchs = branchOfficeDAO.findAllByOrganizationID(organizationID);		
 		return ServiceResponseFactory.create(branchs);
 	}
 
 	@Override
 	public ServiceResponse<BranchOffice> findByOrganizationIDAndBranchOfficeID(
-			Long organizationID, Long branchOfficeID) {
+			Integer organizationID, Integer branchOfficeID) {
 		BranchOffice branchOffice = branchOfficeDAO.findByOrganizationIDAndBranchOfficeID(organizationID, branchOfficeID);
 		return ServiceResponseFactory.create(branchOffice);
 	}

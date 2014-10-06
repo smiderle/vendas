@@ -28,7 +28,7 @@ public class UserBranchController {
 	
 	
 	@RequestMapping(value="getAllByUserID", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getAllByUserID(Long userID){
+	public @ResponseBody ApiResponse getAllByUserID(Integer userID){
 		try {
 			ServiceResponse<List<UserBranchOffice>> payload = userBranchService.findAllByUserID(userID);
 			LOG.debug("List<UserBranchOffice> Size: "+payload.getRowCount());

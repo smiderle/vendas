@@ -16,7 +16,7 @@ import br.com.vendas.domain.product.ProductPromotion;
 public class ProductPromotionDAOImpl  extends ResourceDAO<ProductPromotion> implements ProductPromotionDAO{
 
 	@Override
-	public List<ProductPromotion> findAllByProductID(Long productID, Date afterDate) {
+	public List<ProductPromotion> findAllByProductID(Integer productID, Date afterDate) {
 		Session session = getSession();		
 		
 		Criteria criteria = session.createCriteria(ProductPromotion.class)
@@ -28,7 +28,7 @@ public class ProductPromotionDAOImpl  extends ResourceDAO<ProductPromotion> impl
 	}
 
 	@Override
-	public List<ProductPromotion> findByByInitalDateAndFinalDate(Long productID, Date finalDate, Date initialDate, Long productPromotionID) {
+	public List<ProductPromotion> findByByInitalDateAndFinalDate(Integer productID, Date finalDate, Date initialDate, Integer productPromotionID) {
 
 		
 		Session session = getSession();

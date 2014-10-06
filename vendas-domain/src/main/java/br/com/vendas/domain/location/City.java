@@ -19,7 +19,7 @@ public class City extends Domain{
 	 */
 	@Id
 	@Column(name="IDCIDADE")
-	private Long cityID;
+	private Integer cityID;
 	
 	/**
 	 * Nome da cidade.
@@ -38,11 +38,11 @@ public class City extends Domain{
 	private Integer ibgeCode;
 
 	
-	public Long getCityID() {
+	public Integer getCityID() {
 		return cityID;
 	}
 
-	public void setCityID(Long cityID) {
+	public void setCityID(Integer cityID) {
 		this.cityID = cityID;
 	}
 

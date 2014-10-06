@@ -35,7 +35,7 @@ public class ProductPromotionRest {
 	 */
 	@RequestMapping(value = "getAllByProductID", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse getAllByProductID(Long productID) {
+	ApiResponse getAllByProductID(Integer productID) {
 		try {
 			ServiceResponse<List<ProductPromotion>> payload = productPromotionService.findAllByProductID(productID);
 			LOG.debug("getAllByProductID - List<ProductPromotion> Size: " + payload.getRowCount());

@@ -43,7 +43,7 @@
 		
 		<pmd.version>4.2.4</pmd.version>			
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
-		<amazonaws.version>1.8.10</amazonaws.version>
+		<amazonaws.version>1.8.11</amazonaws.version>
 		
 
 	</properties>

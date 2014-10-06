@@ -18,7 +18,7 @@ public interface UserBranchOfficeDAO  extends GenericDAO<UserBranchOffice>{
 	 * @param userBranchOffice
 	 * @return
 	 */
-	List<UserBranchOffice> findAllByUserID(Long userID);
+	List<UserBranchOffice> findAllByUserID(Integer userID);
 	
 
 }

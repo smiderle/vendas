@@ -9,6 +9,8 @@ vendasApp
 	
 	$scope.isEdition = false;
 	
+	$scope.cities =[];
+	
 	/**
 	 * Ações para o select titulos vencidos, e limite de credito
 	 */
@@ -141,7 +143,7 @@ vendasApp
 		}
 	};
 	
-	$scope.cities =[];
+	
 	
 	
 });

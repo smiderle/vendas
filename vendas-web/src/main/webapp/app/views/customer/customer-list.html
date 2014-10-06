@@ -1,0 +1,82 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="well">
+				<form ng-submit="findCustomersByFilter(filter)">
+					<div class="input-group">			
+						<input class="form-control" type="text" placeholder="Código ou Nome." ng-model="filter">
+							<div class="input-group-btn">
+								<button class="btn btn-default btn-primary" type="button" ng-click="findCustomersByFilter(filter)">
+									<i class="fa fa-search"></i> Pesquisar
+								</button>
+							</div>				
+					</div>
+				</form>
+			</div>
+			
+			<div class="jarviswidget jarviswidget-color-greenDark"  id="wid-customer-list" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Clientes </h2>
+
+				</header>
+
+				<div>
+					<div class="widget-body no-padding">
+						<div class="dt-toolbar">
+							<div class="col-xs-12">
+									<a class="btn btn-primary" ng-click="newCustomer()"> <i class="fa fa-plus-square-o"></i>  Novo</a>
+									<a id="btnCustomerEdit" class="btn btn-primary  required-selected" href="javascript:void(0);" ng-click="editCustomer()" ><i class="fa fa-edit"></i>  Editar</a>
+									<a id="btnCustomerDelete" class="btn  txt-color-white bg-color-redLight required-selected" href="javascript:void(0);" ng-click="deleteCustomer()" ><i class="fa fa-times"></i>  Remover</a>
+							</div>
+							<br>
+						</div>
+
+						<table id="datatable_customers" custom-data-table aa-data="rowsDataTable" ng-init="init()" class="table table-hover table-striped smart-form has-tickbox dataTable" radio="true" paging="true" width="100%" >						
+							<thead>
+									<tr role="row">
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 23px;"></th>										
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 59px;">Código</th>										
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 250px;">Nome/Razão Social</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 100px;">CPF/CNPJ</th>										
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 100px;">Celular</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 150px;">Email</th>
+										<th tabindex="0" rowspan="1" colspan="1" style="width: 50px;">Ativo</th>
+									</tr>
+								</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	pageSetUp();
+
+	$('#btnCustomerEdit').attr("disabled","disabled");
+	$('#btnCustomerDelete').attr("disabled","disabled");
+
+</script>
+
+
+
+
+
+
+
+
+		

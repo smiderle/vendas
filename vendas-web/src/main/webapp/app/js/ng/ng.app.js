@@ -195,6 +195,28 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		controller : 'ProductFormController'		
 	})
 	
+	.when("/cliente/cadastro-cliente",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/customer/customer-form.html';
+			}
+		},
+		controller : 'CustomerFormController'		
+	})
+	
+	.when("/cliente/lista-cliente",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/customer/customer-list.html';
+			}
+		},
+		controller : 'CustomerListController'		
+	})
+	
 	
 	
 	

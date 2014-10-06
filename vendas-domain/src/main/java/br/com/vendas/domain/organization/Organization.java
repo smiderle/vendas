@@ -23,7 +23,7 @@ public class Organization extends Domain {
 	public Organization() {	
 	}
 	
-	public Organization(Long organizationID) {
+	public Organization(Integer organizationID) {
 		super();
 		this.organizationID = organizationID;
 	}
@@ -38,16 +38,16 @@ public class Organization extends Domain {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="idempresa")
-	private Long organizationID;
+	private Integer organizationID;
 	
 	@Column(name="nome")
 	private String name;
 
-	public Long getOrganizationID() {
+	public Integer getOrganizationID() {
 		return organizationID;
 	}
 
-	public void setOrganizationID(Long organizationID) {
+	public void setOrganizationID(Integer organizationID) {
 		this.organizationID = organizationID;
 	}
 

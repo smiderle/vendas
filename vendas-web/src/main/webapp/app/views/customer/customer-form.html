@@ -1,0 +1,413 @@
+<div class="alert alert-warning fade in" style="display:none" id="alertCustomerInputsInvalids">
+	<button class="close" data-dismiss="alert">
+		×
+	</button>
+	<i class="fa-fw fa fa-warning"></i>
+	<strong>Opss!</strong> Alguns campos estão incorretos. Por favor, verifique antes de continuar. 
+</div>
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+			
+			<div  ng-init="init()" class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-customer-form"  data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+				<header >
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Cadastro do Cliente</h2>				
+				</header>
+	
+					<!-- widget div-->
+					<div role="content" style="">
+												
+						<div class="widget-body no-padding">
+								
+							<form autocomplete="off" id="customer-form" class="smart-form" novalidate="novalidate" ng-submit="save(product)" >
+																			
+								<div class="md-header btn-toolbar">
+								<br>
+									<button type="button" class="btn btn-sm btn-default" onclick="window.history.back();">
+									<i class="fa fa-reply"></i>
+												Voltar
+									</button>
+									<button type="submit" class="btn btn-sm  btn-success" id="btnTableSave">
+										<i class="fa fa-save"></i>
+											Salvar
+									</button>								
+									<br>
+								</div>
+								<br>
+								<hr>
+								
+								<ul id="tabUser" class="nav nav-tabs bordered">
+									<li class="active">
+										<a href="#tabMainData" data-toggle="tab"><i class="fa fa-fw fa-lg fa-user"></i>Principal</a>
+									</li>
+									<li>
+										<a href="#tabCustomerAddress" data-toggle="tab"><i class="fa fa-fw fa-lg fa-home"></i>Endereço</a>
+									</li>
+									<li>
+										<a href="#tabFinancial" data-toggle="tab"><i class="fa fa-fw fa-lg fa-dollar"></i>Financeiro</a>
+									</li>																								
+									
+								</ul>
+								<div id="tabContentCustomer" class="tab-content padding-10">
+									<div class="tab-pane fade in active" id="tabMainData">
+										<div class="jcrop-holder">
+											<img alt="Imagem do Cliente" title="Clique para trocar a imagem" width="150" height="150" ng-src="{{customer.pictureUrl}}"  dropzone="dropzoneConfig" >
+										</div>
+										<div class="padding-gutter padding-top-0 padding-bottom-0"> <!-- pull-left  -->
+											<fieldset class="padding-10">
+												<div class="row">
+													<section class="col col-2">
+														<label class="label">Código *</label>																					
+														<label class="input">	
+															<i class="icon-prepend fa fa-hand-o-right"></i>											
+															<input type="text" name="customerID" placeholder="Código" maxlength="9" ng-model="customer.customerID" class="form-control">
+														</label>
+													</section>
+												</div>
+												<div class="row">
+													<section class="col col-6">
+														<label class="label">{{customer.personType == 1 ? 'Nome' : 'Razão Social'}} *</label>
+														<label class="input">												
+														<i class="icon-prepend fa fa-user"></i>
+															<input type="text" name="name" placeholder="{{customer.personType == 1 ? 'Nome' : 'Razão Social'}}" ng-model="customer.name" class="form-control">
+														</label>	
+													</section>
+												</div>
+											</fieldset>																				
+										</div>	
+										<div class="row">
+												
+												<section class="col col-6">
+													<label class="label">Tipo de Cliente</label>
+													<div class="row">
+														<div class="col col-2">
+															<label class="radio state-success"><input type="radio" name="radioPersonType" value="1" ng-model="customer.personType"><i></i>Pessoa Física</label>															
+														</div>
+														<div class="col col-6">
+															<label class="radio state-success"><input type="radio" name="radioPersonType" value="2" ng-model="customer.personType"><i></i>Pessoa Jurídica</label>															
+														</div>														
+													</div>													
+												</section>
+												
+												<section class="col col-6">
+													<label class="label">Cliente Ativo</label>
+													<div class="row">
+														<div class="col col-2">
+															<label class="radio state-success"><input type="radio" name="radioActive" value="true" ng-value="true"  ng-model="customer.active"><i></i>Sim</label>															
+														</div>
+														<div class="col col-2">
+															<label class="radio state-success"><input type="radio" name="radioActive" value="false" ng-value="false" ng-model="customer.active"><i></i>Não</label>															
+														</div>														
+													</div>													
+												</section>												
+										</div>		
+										
+										
+										<div class="row">
+											<section class="col col-6">
+												<label class="label">{{customer.personType == 1 ? 'Apelido/Contato' : 'Nome Fantasia'}} </label>												
+												<label class="input">									
+													<i class="icon-prepend fa fa-user-md"></i>			
+													<input type="text" name="nickName" placeholder="{{customer.personType == 1 ? 'Apelido/Contato' : 'Nome Fantasia'}}" ng-model="customer.nickName" class="form-control">
+												</label>
+											</section>
+											<section class="col col-6">
+												<label class="label">Email</label>												
+												<label class="input">		
+													<i class="icon-prepend fa fa-envelope-o"></i>										
+													<input type="text" name="email" placeholder="Email" ng-model="customer.email" class="form-control">
+												</label>
+											</section>
+										</div>	
+										
+										
+										<div class="row">
+											<section class="col col-6">
+												<label class="label">{{customer.personType == 1 ? 'CPF' : 'CNPJ'}} </label>												
+												<label class="input">					
+													<i class="icon-prepend fa fa-list-alt"></i>							
+													<input type="text" name="cpfCnpj" placeholder="{{customer.personType == 1 ? 'CPF' : 'CNPJ'}}" ng-model="customer.cpfCnpj" class="form-control">
+												</label>
+											</section>
+											<section class="col col-6">
+												<label class="label">{{customer.personType == 1 ? 'RG' : 'Inscrição Estadual'}} </label>												
+												<label class="input">
+													<i class="icon-prepend fa fa-indent"></i>												
+													<input type="text" name="incricao" placeholder="{{customer.personType == 1 ? 'RG' : 'Inscrição Estadual'}} " ng-model="customer.incricao" class="form-control">
+												</label>
+											</section>
+										</div>
+										
+										
+										
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Telefone Comercial</label>												
+												<label class="input">				
+													<i class="icon-prepend fa fa-phone"></i>								
+													<input type="text" name="commercialPhone" placeholder="Telefone Comercial" ng-model="customer.commercialPhone" class="form-control">
+												</label>
+											</section>
+											<section class="col col-3">
+												<label class="label">Telefone Residencial</label>												
+												<label class="input">						
+													<i class="icon-prepend fa fa-phone"></i>						
+													<input type="text" name="homePhone" placeholder="Telefone Residencial" ng-model="customer.homePhone" class="form-control">
+												</label>
+											</section>
+											<section class="col col-3">
+												<label class="label">Celular</label>												
+												<label class="input">
+													<i class="icon-prepend fa fa-mobile-phone"></i>												
+													<input type="text" name="cellPhone" placeholder="Celular" ng-model="customer.cellPhone" class="form-control">
+												</label>
+											</section>
+										</div>
+										
+										<div class="row">
+											<section class="col col-2">
+												<label class="label">Data de Nascimento</label>
+												<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
+													<input type="text" name="birth" id="birth" placeholder="Data de Nascimento"  ng-model="customer.birth">
+												</label>
+											</section>
+										</div>
+										
+										<section>
+											<label class="textarea"> 
+												<i class="icon-append fa fa-comment"></i> 										
+												<textarea rows="5" name="comment" placeholder="Observação" ng-model="customer.observation"></textarea> 
+											</label>
+										</section>
+										
+															
+									</div>
+									
+									<div class="tab-pane fade" id="tabCustomerAddress">										
+										
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">CEP</label>												
+													<div class="input-group">
+														<label class="input">															
+															<input type="text" class="form-control input" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="postalCode" placeholder="CEP" data-mask="99999-999" ng-model="customer.postalCode">
+														</label>
+														<div class="input-group-btn">
+															<button type="button" class="btn btn-sm  btn-primary" ng-click="findPostalCode()">
+																<i class="fa fa-search"></i>
+																	Buscar
+															</button>																	
+														</div>
+													</div>
+											</section>									
+										</div>	
+										
+										<div class="row">
+											<section class="col col-2">
+												<label class="label">Cidade</label>												
+												<label class="input">
+													<input type="text" id="txtCity" name="city" ng-change="onChangeCities()" ng-model="selectedCity" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
+															placeholder="Cidade" typeahead="c as c.name for c in cities | filter:$viewValue | limitTo:10" typeahead-min-length='1' 
+															typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">													
+												</label>
+											</section>
+											<section class="col col-1">
+												<label class="label">Estado</label>
+												<label class="input">
+													<input type="text" disabled="disabled" class="form-control" name="state" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Estado" ng-model="selectedCity.state.uf">
+												</label>
+											</section>	
+											<section class="col col-3">
+												<label class="label">Bairro</label>
+												<label class="input">
+													<input type="text" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="district" placeholder="Bairro" ng-model="customer.district" >
+												</label>
+											</section>									
+																			
+										</div>
+										
+										<div class="row">
+											<section class="col col-3">
+												<label class="label">Rua</label>
+												<label class="input">
+													<input type="text" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="street" placeholder="Rua" ng-model="customer.street" >
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="label">Numero</label>
+												<label class="input">
+													<input type="text" name="number" placeholder="Numero" maxlength="8" ng-model="customer.number">
+												</label>
+											</section>
+										</div>
+										
+										<div class="row">
+											<section class="col col-6">
+												<label class="label">Complemento</label>
+												<label class="input">
+													<input type="text" name="addressComplement" placeholder="Complemento" ng-model="customer.addressComplement" >
+												</label>
+											</section>
+											
+										</div>
+											
+									</div>
+									
+									
+									<div class="tab-pane fade in" id="tabFinancial">	
+										<div class="row">
+											<section class="col col-4">
+												<label class="label">Tabela de Preço Padrão</label>
+												<label class="input">													
+													<select class="form-control"  ng-model="customer.priceTable" ng-options="table.id as  table.description for table in tables"></select>
+													
+												</label>
+											</section>
+										</div>
+										<div class="row">
+											<section class="col col-4">
+												<label class="label">Parcelamento Padrão</label>
+												<label class="input">													
+													<select class="form-control"  ng-model="customer.installment" ng-options="installment.id as installment.description for installment in installments"></select>
+												</label>
+											</section>
+										</div>																			
+										<div class="row">
+											<section class="col col-4">
+												<label class="label">Forma de Pagamento Padrão</label>
+												<label class="input">													
+													<select class="form-control"  ng-model="customer.formPayment" ng-options="payment.id as payment.description for payment in formsPayment"></select>
+												</label>
+											</section>
+										</div>
+										<div class="row">
+											<section class="col col-4">
+												<label class="label">Vendedor Padrão</label>
+												<label class="input">													
+													<select class="form-control"  ng-model="customer.defaultSeller" ng-options="user.userID as user.name for user in users"></select>
+												</label>
+											</section>
+										</div>
+										
+										<div class="row">
+											<section class="col col-2">
+												<label class="label">Limite de Crédito</label>
+												<label class="input">
+													<input type="text" name="creditLimit" placeholder="Limite de crédito" ng-model="customer.creditLimit" >
+												</label>
+											</section>
+											
+										</div>
+									</div>
+									
+								</div>
+								</form>
+							</div>																		
+						</div>	
+						</div>						
+					</div>
+					<!-- end widget div -->
+					
+				</div>			
+			
+		</article>
+	</div>
+</section>
+
+		<!-- Utilizado no autocomplete da cidade -->
+		<script type="text/ng-template" id="customTemplate.html">
+	 		 <a>
+      			<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+      				<i>({{match.model.state.uf}})</i>
+  			</a>
+		</script>
+
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="js/plugin/dropzone/dropzone.min.js"></script>
+
+<script type="text/javascript">
+			
+	/**
+	* Faz com que o jquery validate, valide os campos que que não estão visiveis também.
+	* Fonte http://stackoverflow.com/questions/10145131/how-to-properly-validate-twitters-bootstrap-form-placed-on-several-tabs-with-jq
+	**/
+	$.validator.setDefaults({
+	    ignore: ""
+	});
+	
+	pageSetUp();
+
+	var pagefunction = function() {
+		
+		$('#birth').datepicker({
+			dateFormat : 'dd/mm/yy',
+			prevText : '<i class="fa fa-chevron-left"></i>',
+			nextText : '<i class="fa fa-chevron-right"></i>'			
+		});
+
+		var $checkoutForm = $('#customer-form').validate({
+			// Rules for form validation
+			rules : {
+				customerID : {
+					required : true,
+				},
+				
+				name : {
+					required : true
+				},
+				
+				creditLimit : {
+					number : true
+				}	
+				
+			},
+
+			// Messages for form validation
+			messages : {
+				customerID : {
+					required : 'Por favor, informe um código',
+					digits : 'Por favor, informe somente numeros'
+				},
+				
+				name : {
+					required : 'Por favor, informe um nome',
+				},
+				
+				creditLimit : {					
+					number : 'Por favor, informe somente numeros, por exemplo 10.5'
+				},
+				
+				
+				
+			},
+
+			// Do not change code below
+			errorPlacement : function(error, element) {
+				error.insertAfter(element.parent());
+			}
+		});
+
+
+		
+		
+
+		
+	};	
+
+	loadScript("js/plugin/jquery-form/jquery-form.min.js", pagefunction);
+	
+	
+	
+</script>
+
+

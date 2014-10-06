@@ -28,7 +28,7 @@ public class BranchOffice extends Domain{
 	public BranchOffice() {	
 	}
 	
-	public BranchOffice(Long branchOfficeID, Organization organization,
+	public BranchOffice(Integer branchOfficeID, Organization organization,
 			String realName, String fancyName) {
 		super();
 		this.branchOfficeID = branchOfficeID;
@@ -40,7 +40,7 @@ public class BranchOffice extends Domain{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long branchOfficeID;
+	private Integer branchOfficeID;
 	
 	/**
 	 * Empresa
@@ -254,11 +254,11 @@ public class BranchOffice extends Domain{
 	
 	
 
-	public Long getBranchOfficeID() {
+	public Integer getBranchOfficeID() {
 		return branchOfficeID;
 	}
 
-	public void setBranchOfficeID(Long branchOfficeID) {
+	public void setBranchOfficeID(Integer branchOfficeID) {
 		this.branchOfficeID = branchOfficeID;
 	}
 

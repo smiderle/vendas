@@ -24,7 +24,7 @@ vendasApp.directive('customDataTable', function () {
 
 				"bStateSave": false,	
 				"bFilter": false,
-				"iDisplayLength": 2,		    	
+				"iDisplayLength": 15,		    	
 				"sDom": "<'top't>"+				
 				"<'dt-toolbar-footer'<'col-xs-6'i><'col-xs-6'p>>",
 				"oLanguage": {
@@ -86,8 +86,7 @@ vendasApp.directive('customDataTable', function () {
 			//Quantidade de registros no datatable
 			var iTotal = dataTable.fnPagingInfo().iTotal;
 			
-			//Quantidade de registros no datatable mais a quantidade que sera inserida
-			var totalRow = dataTable.fnPagingInfo().iTotal + val.length;
+
 			
 			
 			
@@ -96,6 +95,9 @@ vendasApp.directive('customDataTable', function () {
 			//dataTable.fnClearTable(0);
 						
 			if (val) {
+				//Quantidade de registros no datatable mais a quantidade que sera inserida
+				var totalRow = dataTable.fnPagingInfo().iTotal + val.length;
+				
 				var i=0,
 				len = val.length;
 				

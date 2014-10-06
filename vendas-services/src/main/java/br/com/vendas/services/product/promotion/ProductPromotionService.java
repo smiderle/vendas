@@ -13,7 +13,7 @@ public interface ProductPromotionService {
 	 * @param productID
 	 * @return
 	 */
-	ServiceResponse<List<ProductPromotion>> findAllByProductID(Long productID);
+	ServiceResponse<List<ProductPromotion>> findAllByProductID(Integer productID);
 	
  	/**
  	 * Salva ou atualiza o preço de promoção do produto

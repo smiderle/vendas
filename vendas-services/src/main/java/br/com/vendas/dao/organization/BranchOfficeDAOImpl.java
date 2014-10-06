@@ -18,14 +18,14 @@ import br.com.vendas.domain.organization.Organization;
 public class BranchOfficeDAOImpl extends ResourceDAO<BranchOffice> implements BranchOfficeDAO{
 
 	@Override
-	public List<BranchOffice> findAllByOrganizationID(Long organizationID) {
+	public List<BranchOffice> findAllByOrganizationID(Integer organizationID) {
 		Criterion criterion = Restrictions.eq("organization.organizationID", organizationID);
 		return findByCriteria(Order.asc("fancyName"), criterion);
 	}
 
 	@Override
 	public BranchOffice findByOrganizationIDAndBranchOfficeID(
-			Long organizationID, Long branchOfficeID) {
+			Integer organizationID, Integer branchOfficeID) {
 		Session session = getSession();
 
 		Criterion criterion = Restrictions.and(

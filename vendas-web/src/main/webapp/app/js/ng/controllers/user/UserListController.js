@@ -1,5 +1,9 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp.controller('UserListController',
 		['$scope','$location','UserService' ,'ContextService', 
         function UserController($scope, $location, UserService, ContextService) {

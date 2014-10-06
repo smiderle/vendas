@@ -17,13 +17,13 @@ public class ProductGroup {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	private Integer ID;
 	
 	@Column(name="IDEMPRESA")
-	private Long organizationID;
+	private Integer organizationID;
 	
 	@Column(name="IDFILIAL")
-	private Long branchID;
+	private Integer branchID;
 	
 	@Column(name="IDGRUPO")
 	private Integer groupID;
@@ -38,27 +38,27 @@ public class ProductGroup {
 	@Column(name="EXCLUIDO")
 	private boolean excluded;
 		
-	public Long getID() {
+	public Integer getID() {
 		return ID;
 	}
 
-	public void setID(Long iD) {
+	public void setID(Integer iD) {
 		ID = iD;
 	}
 
-	public Long getOrganizationID() {
+	public Integer getOrganizationID() {
 		return organizationID;
 	}
 
-	public void setOrganizationID(Long organizationID) {
+	public void setOrganizationID(Integer organizationID) {
 		this.organizationID = organizationID;
 	}
 
-	public Long getBranchID() {
+	public Integer getBranchID() {
 		return branchID;
 	}
 
-	public void setBranchID(Long branchID) {
+	public void setBranchID(Integer branchID) {
 		this.branchID = branchID;
 	}
 

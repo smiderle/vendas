@@ -35,7 +35,7 @@ public class UserBranchOfficeServiceImpl implements UserBranchOfficeService{
 	}
 
 	@Override
-	public ServiceResponse<List<UserBranchOffice>> findAllByUserID(Long userID) {		
+	public ServiceResponse<List<UserBranchOffice>> findAllByUserID(Integer userID) {		
 				
 		List<UserBranchOffice> usersBranches = dao.findAllByUserID(userID);
 		return ServiceResponseFactory.create(usersBranches);

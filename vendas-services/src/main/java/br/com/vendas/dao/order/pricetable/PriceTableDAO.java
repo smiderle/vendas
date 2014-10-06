@@ -13,6 +13,6 @@ public interface PriceTableDAO extends GenericDAO<PriceTable>  {
 	 * @param filialID
 	 * @return
 	 */
-	List<PriceTable> findAllByBranche(Long organizationID, Long branchID);
+	List<PriceTable> findAllByBranche(Integer organizationID, Integer branchID);
 
 }

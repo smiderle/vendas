@@ -11,7 +11,7 @@ public class UserGroup extends Domain{
 	/**
 	 * Código interno.
 	 */
-	private Long userGroupID;
+	private Integer userGroupID;
 	
 
 	private BranchOffice branchOffice;
@@ -41,11 +41,11 @@ public class UserGroup extends Domain{
 	 */
 	private Date registrationDate;
 
-	public Long getUserGroupID() {
+	public Integer getUserGroupID() {
 		return userGroupID;
 	}
 
-	public void setUserGroupID(Long userGroupID) {
+	public void setUserGroupID(Integer userGroupID) {
 		this.userGroupID = userGroupID;
 	}
 

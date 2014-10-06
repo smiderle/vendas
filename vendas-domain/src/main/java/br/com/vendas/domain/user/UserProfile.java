@@ -13,7 +13,7 @@ public class UserProfile {
 	
 	@Id
 	@Column(name="idusuario")
-	private Long userID;	
+	private Integer userID;	
 	
 	@Column(name="aniversario")
 	private Date birthDate;
@@ -21,11 +21,11 @@ public class UserProfile {
 	@Column(name="fone")
 	private String phoneNumber;
 
-	public Long getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
-	public void setUserID(Long userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
 

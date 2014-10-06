@@ -7,6 +7,7 @@ vendasApp.factory('Constants',function(){
 		COOKIE_USER_EMAIL :'usernamevendaslim',
 		
 		URL_UPLOAD_PRODUCT : 'http://localhost/vendas-api/v1/product/uploadImage',
+		URL_UPLOAD_CUSTOMER : 'http://localhost/vendas-api/v1/customer/uploadImage',
 		URL_DEFAULT_NO_PICTURE : 'https://s3-sa-east-1.amazonaws.com/vendas.pictures.product/23ab5f12-fd42-4f54-a17d-775e1d63eb0a',
 		
 		

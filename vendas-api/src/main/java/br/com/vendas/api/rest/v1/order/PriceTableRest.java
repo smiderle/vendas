@@ -30,7 +30,7 @@ public class PriceTableRest {
 	
 	
 	@RequestMapping(value="findAllByBranche", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getAll(Long organizationID, Long branchID){
+	public @ResponseBody ApiResponse getAll(Integer organizationID, Integer branchID){
 		try {
 			ServiceResponse<List<PriceTable>> payload =  priceTableService.findAllByBranche(organizationID, branchID);
 			LOG.debug("findAllByBranche Size: "+payload.getRowCount());

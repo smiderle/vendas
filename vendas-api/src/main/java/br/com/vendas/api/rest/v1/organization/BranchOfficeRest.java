@@ -28,7 +28,7 @@ public class BranchOfficeRest {
 	private BranchOfficeService service;
 
 	@RequestMapping(value="getBranchesByOrganizationID", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getBranchesByOrganizationID(Long organizationID){
+	public @ResponseBody ApiResponse getBranchesByOrganizationID(Integer organizationID){
 		try {
 			ServiceResponse<List<BranchOffice>> payload =  service.findAllByOrganizationID(organizationID);
 			LOG.debug("List<BranchOffice> Size: "+payload.getRowCount());
@@ -41,7 +41,7 @@ public class BranchOfficeRest {
 	
 	
 	@RequestMapping(value="getByOrganizationIDAndBranchOfficeID", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getByOrganizationIDAndBranchOfficeID(Long organizationID, Long branchOfficeID){
+	public @ResponseBody ApiResponse getByOrganizationIDAndBranchOfficeID(Integer organizationID, Integer branchOfficeID){
 		try {
 			ServiceResponse<BranchOffice> payload =  service.findByOrganizationIDAndBranchOfficeID(organizationID, branchOfficeID);
 			LOG.debug("BranchOffice getByOrganizationIDAndBranchOfficeID Size: "+payload.getRowCount());

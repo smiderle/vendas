@@ -27,7 +27,7 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
 	private ProductPromotionDAO productPromotionDAO;
 
 	@Override
-	public ServiceResponse<List<ProductPromotion>> findAllByProductID(Long productID) {
+	public ServiceResponse<List<ProductPromotion>> findAllByProductID(Integer productID) {
 		//Retorna dois meses.
 		GregorianCalendar date = new GregorianCalendar();
 		date.add(Calendar.MONTH,-2);
@@ -55,7 +55,7 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
 	 * @throws RegistrationException
 	 */
 	private void validatePromotionDate(ProductPromotion productPromotion) throws RegistrationException {
-		Long id = productPromotion.getID() != null ? productPromotion.getID() : 0L;
+		Integer id = productPromotion.getID() != null ? productPromotion.getID() : 0;
 		
 		List<ProductPromotion> products = productPromotionDAO.findByByInitalDateAndFinalDate(productPromotion.getProductID(), productPromotion.getFinalDate(),productPromotion.getInitialDate(), id);
 		

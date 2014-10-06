@@ -16,7 +16,7 @@ public class BranchOfficePK implements Serializable{
 	private Organization organization;
 	
 	@Column(name="idfilial")
-	private Long branchOfficeID;
+	private Integer branchOfficeID;
 
 	public Organization getOrganization() {
 		return organization;
@@ -26,11 +26,11 @@ public class BranchOfficePK implements Serializable{
 		this.organization = organization;
 	}
 
-	public Long getBranchOfficeID() {
+	public Integer getBranchOfficeID() {
 		return branchOfficeID;
 	}
 
-	public void setBranchOfficeID(Long branchOfficeID) {
+	public void setBranchOfficeID(Integer branchOfficeID) {
 		this.branchOfficeID = branchOfficeID;
 	}
 

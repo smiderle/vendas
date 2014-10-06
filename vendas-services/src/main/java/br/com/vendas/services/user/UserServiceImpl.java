@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public ServiceResponse<List<UserPojo>> findAllByOrganizationID(Long organizationID, Integer offset) {
+	public ServiceResponse<List<UserPojo>> findAllByOrganizationID(Integer organizationID, Integer offset) {
 		List<User> users = userDAO.findAllByOrganizationID(organizationID, offset, LimitQuery.LIMIT_USER.value());
 		List<UserPojo> usersPojo = new ArrayList<>();
 		for (User user : users) {
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService{
 		ServiceResponse<User> newUser = ServiceResponseFactory.create(userDAO.saveOrUpdate(user));
 				
 		if(isNewUser){
-			Long userID = newUser.getValue().getUserID();
+			Integer userID = newUser.getValue().getUserID();
 			for (UserBranchOffice userBranchOffice : userBranches) {
 				userBranchOffice.setUserID(userID);
 			}
@@ -141,10 +141,10 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(
-			String filter, Long organizationID, Integer offset) {
-		Long userID = 0L;
+			String filter, Integer organizationID, Integer offset) {
+		Integer userID = 0;
 		try{
-			userID = Long.parseLong(filter);
+			userID = Integer.parseInt(filter);
 		} catch(NumberFormatException  e){}
 
 		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LimitQuery.LIMIT_USER.value());

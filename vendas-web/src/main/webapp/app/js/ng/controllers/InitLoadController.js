@@ -1,5 +1,9 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp
 .controller('InitLoadController',function InitLoadController($scope, $window, LocalStorageService, UserService, Constants,UtilityService, Utility) {
 	
@@ -24,9 +28,8 @@ vendasApp
 	function returnUser(base, callback) {
 		if (callback && typeof (callback) === "function") {
 			base.then(function(toReturn){
-				var user = toReturn.value;
-				console.log(user);				
-				//console.log(toReturn.value.userBranches[0].branchOffice);
+				var user = toReturn.value;							
+
 				UserService.addUserAccess(user.userID);				
 				LocalStorageService.addToLocalStorageCrypt(Constants.LOCAL_STORAGE_USER_LOGGED_KEY,user);
 				var lastBranch = LocalStorageService.getFromLocalStorageDecrypt(Constants.LOCAL_STORAGE_LAST_BRANCH_SELECTED_KEY);

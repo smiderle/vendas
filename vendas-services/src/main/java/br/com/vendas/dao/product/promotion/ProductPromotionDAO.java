@@ -15,7 +15,7 @@ public interface ProductPromotionDAO extends GenericDAO<ProductPromotion> {
 	 * @param productID
 	 * @return
 	 */
-	List<ProductPromotion> findAllByProductID(Long productID, Date afterDate);
+	List<ProductPromotion> findAllByProductID(Integer productID, Date afterDate);
 	
 	/**
 	 * Retorna as promoções em um intervalo de datas. Com exceção da promoção com id passado por parametro
@@ -25,6 +25,6 @@ public interface ProductPromotionDAO extends GenericDAO<ProductPromotion> {
 	 * @param productPromotionID
 	 * @return
 	 */
-	List<ProductPromotion> findByByInitalDateAndFinalDate(Long productID, Date finalDate, Date initalDate, Long productPromotionID);
+	List<ProductPromotion> findByByInitalDateAndFinalDate(Integer productID, Date finalDate, Date initalDate, Integer productPromotionID);
 
 }

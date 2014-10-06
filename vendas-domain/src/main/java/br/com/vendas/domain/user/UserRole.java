@@ -24,14 +24,14 @@ public class UserRole implements Serializable{
 
 	public UserRole() {}
 	
-	public UserRole(Long userID, Role role) {
+	public UserRole(Integer userID, Role role) {
 		super();
 		this.userID = userID;
 		this.role = role;
 	}
 	@Id
 	@Column(name="IDUSUARIO")
-	private Long userID;
+	private Integer userID;
 	
 	
 	@Id
@@ -46,11 +46,11 @@ public class UserRole implements Serializable{
 	private User user;
 
 
-	public Long getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
-	public void setUserID(Long userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
 

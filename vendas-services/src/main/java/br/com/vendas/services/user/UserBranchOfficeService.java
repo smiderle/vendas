@@ -28,7 +28,7 @@ public interface UserBranchOfficeService {
 	 * @param userID
 	 * @return
 	 */
-	ServiceResponse<List<UserBranchOffice>> findAllByUserID(Long userID);
+	ServiceResponse<List<UserBranchOffice>> findAllByUserID(Integer userID);
 	
 	/**
 	 * Salva, ou atualiza uma lista de usuarios filiais

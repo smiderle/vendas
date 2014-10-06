@@ -19,7 +19,7 @@ import br.com.vendas.services.product.ProductService;
 public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 
 	@Override
-	public List<User> findAllByOrganizationID(Long organizationID, Integer offset, Integer limit) {		
+	public List<User> findAllByOrganizationID(Integer organizationID, Integer offset, Integer limit) {		
 		
 		Session session = getSession();		
 		Criteria criteria = session.createCriteria(User.class);
@@ -46,7 +46,7 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 	 */
 	@Override
 	public List<User> findUsersByUserIDOrNameOrEmail(String filter,
-			Long organizationID, Long userID, Integer offset, Integer limit) {
+			Integer organizationID, Integer userID, Integer offset, Integer limit) {
 
 		Session session = getSession();
 		Criteria criteria = session.createCriteria(User.class)

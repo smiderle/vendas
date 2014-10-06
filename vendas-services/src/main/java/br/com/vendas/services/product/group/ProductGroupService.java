@@ -13,7 +13,7 @@ public interface ProductGroupService {
 	 * @param filialID
 	 * @return
 	 */
-	ServiceResponse<List<ProductGroup>> findAllByBranch(Long organizationID, Long branchID, Integer offset);
+	ServiceResponse<List<ProductGroup>> findAllByBranch(Integer organizationID, Integer branchID, Integer offset);
 	
 	
 
@@ -25,7 +25,7 @@ public interface ProductGroupService {
 	 * @param limit
 	 * @return
 	 */
-	ServiceResponse<List<ProductGroup>> findAllByDescription(String description, Long organizationID,Long branchID, Integer offset);
+	ServiceResponse<List<ProductGroup>> findAllByDescription(String description, Integer organizationID,Integer branchID, Integer offset);
 
 
 	/**

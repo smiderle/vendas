@@ -13,6 +13,6 @@ public interface InstallmentDAO extends GenericDAO<Installment> {
 	 * @param branchID
 	 * @return
 	 */
-	List<Installment> findAllByBranche(Long organizationID, Long branchID);
+	List<Installment> findAllByBranche(Integer organizationID, Integer branchID);
 
 }

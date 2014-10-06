@@ -35,7 +35,7 @@ import br.com.vendas.support.VendasExceptionWapper;
 @Controller
 public class PublicController {
 		
-	private final static Long INITIAL_BRANCH_OFFICE_ID = 1L;
+	private final static Integer INITIAL_BRANCH_OFFICE_ID = 1;
 	@Inject
 	private OrganizationService organizationService;
 	

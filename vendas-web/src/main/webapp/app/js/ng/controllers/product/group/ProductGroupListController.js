@@ -109,6 +109,7 @@ vendasApp.controller('ProductGroupListController',
 				var aGroup = ProductGroupService.save(groupSelected);
 				aGroup.then(function(toReturn){
 					if(toReturn.code == '200'){
+						clearDatateble();
 						$scope.listGroups();
 						UtilityService.showAlertSucess('Sucesso.', 'Categoria excluida!!');
 					} else {

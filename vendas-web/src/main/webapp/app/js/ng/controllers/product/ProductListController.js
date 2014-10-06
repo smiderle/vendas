@@ -136,6 +136,14 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 			var product = element;
 			if(product && product.id){
 				
+				if(product.stockAmount == null || product.stockAmount == undefined){
+					product.stockAmount = 0;
+				}
+				
+				if(product.salesPrice == null || product.salesPrice == undefined){
+					product.salesPrice = 0;
+				}
+				
 				$scope.products.push(product);
 				//Adiciona um array com as colunas que irão ser apresentadas no dataTable
 

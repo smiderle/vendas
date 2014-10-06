@@ -14,7 +14,7 @@ public interface InstallmentService {
 	 * @param filialID
 	 * @return
 	 */
-	ServiceResponse<List<Installment>> findAllByBranche(Long organizationID, Long branchID);
+	ServiceResponse<List<Installment>> findAllByBranche(Integer organizationID, Integer branchID);
 	
 	/**
 	 * Salva o parcelamento

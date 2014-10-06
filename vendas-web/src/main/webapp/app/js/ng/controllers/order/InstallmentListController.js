@@ -53,6 +53,7 @@ vendasApp.controller('InstallmentListController',
 						var aInstallment = InstallmentService.save(installmentSelected);
 						aInstallment.then(function(toReturn){
 							if(toReturn.code == '200'){
+								clearDatateble();
 								$scope.listInstallments();
 								UtilityService.showAlertSucess('Sucesso.', 'Parcelamenti excluido!!');
 							} else {
@@ -117,7 +118,14 @@ vendasApp.controller('InstallmentListController',
 			
 			};
 			
-			
+			/**
+			 * Remove todos os elementos do datatable
+			 */
+			function clearDatateble(){
+				var dataTable = $('#datatable_installment').dataTable();
+				dataTable.fnClearTable(0);
+				dataTable.fnDraw();
+			}
 			
 			
 		}]);

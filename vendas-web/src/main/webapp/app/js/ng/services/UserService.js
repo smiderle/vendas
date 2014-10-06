@@ -128,7 +128,6 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
         },
         
         addUserAccess: function(userID){
-        	console.log(userID);
         	Restangular.all('v1').all('user').all('addUserAccess').post(userID);
         }
 	};	

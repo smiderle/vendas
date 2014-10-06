@@ -13,7 +13,7 @@ public interface BranchOfficeDAO extends GenericDAO<BranchOffice>{
 	 * @param organizationID
 	 * @return
 	 */
-	List<BranchOffice> findAllByOrganizationID(Long organizationID);
+	List<BranchOffice> findAllByOrganizationID(Integer organizationID);
 	
 	/**
 	 * Retorna a filial
@@ -21,7 +21,7 @@ public interface BranchOfficeDAO extends GenericDAO<BranchOffice>{
 	 * @param branchOfficeID
 	 * @return
 	 */
-	BranchOffice findByOrganizationIDAndBranchOfficeID(Long organizationID, Long branchOfficeID);
+	BranchOffice findByOrganizationIDAndBranchOfficeID(Integer organizationID, Integer branchOfficeID);
 	
 	/**
 	 * Retorna o maior idfilial de determinada empresa. Se não existir nenhuma, retorna 0

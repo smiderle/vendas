@@ -23,14 +23,14 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDAO productDAO;
 
 	@Override
-	public ServiceResponse<List<Product>> findAllByBranche(Long organizationID,
-			Long branchID, Integer offset) {
+	public ServiceResponse<List<Product>> findAllByBranche(Integer organizationID,
+			Integer branchID, Integer offset) {
 		return ServiceResponseFactory.create(productDAO.findAllByBranche(organizationID, branchID, offset, LimitQuery.LIMIT_PRODUCT.value()));
 	}
 
 	@Override
 	public ServiceResponse<List<Product>> findByDescriptionOrProductIDOrBarcode(
-			String filter, Long organizationID, Long branchID, Integer offset) {
+			String filter, Integer organizationID, Integer branchID, Integer offset) {
 		
 		List<Product> products = productDAO.findByDescriptionOrProductIDOrBarcode(filter, filter, filter, organizationID, branchID, offset, LimitQuery.LIMIT_PRODUCT.value());
 		

@@ -25,7 +25,7 @@ public class InstallmentServiceImpl implements InstallmentService{
 	
 	@Override
 	public ServiceResponse<List<Installment>> findAllByBranche(
-			Long organizationID, Long branchID) {
+			Integer organizationID, Integer branchID) {
 		
 		return ServiceResponseFactory.create(installmentDAO.findAllByBranche(organizationID, branchID));
 	}

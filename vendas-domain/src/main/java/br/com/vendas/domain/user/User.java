@@ -21,7 +21,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.NaturalId;
 
 import br.com.vendas.domain.Domain;
@@ -38,7 +37,7 @@ public class User extends Domain{
 	public User() {		
 	}
 	
-	public User(Long organizationID, String email, String password,
+	public User(Integer organizationID, String email, String password,
 			String name, boolean active, boolean portalAccess) {
 		super();
 		this.organizationID = organizationID;
@@ -52,10 +51,10 @@ public class User extends Domain{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="IDUSUARIO")
-	private Long userID;
+	private Integer userID;
 	
 	@Column(name="IDEMPRESA")
-	private Long organizationID;
+	private Integer organizationID;
 	
 	@NaturalId
 	@Column(name="EMAIL")
@@ -96,19 +95,19 @@ public class User extends Domain{
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private Set<UserRole> userRoles;
 	
-	public Long getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
-	public void setUserID(Long userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
 
-	public Long getOrganizationID() {
+	public Integer getOrganizationID() {
 		return organizationID;
 	}
 
-	public void setOrganizationID(Long organizationID) {
+	public void setOrganizationID(Integer organizationID) {
 		this.organizationID = organizationID;
 	}
 

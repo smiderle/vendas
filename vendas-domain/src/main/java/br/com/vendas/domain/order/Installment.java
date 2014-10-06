@@ -17,13 +17,13 @@ public class Installment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	private Integer ID;
 	
 	@Column(name="IDEMPRESA")
-	private Long organizationID;
+	private Integer organizationID;
 	
 	@Column(name="IDFILIAL")
-	private Long branchID;
+	private Integer branchID;
 	
 	@Column(name="idparcelamento")
 	private Integer installmentID;
@@ -48,41 +48,51 @@ public class Installment {
 	@Column(name="EXCLUIDA")
 	private boolean excluded;
 
-	public Long getID() {
+
+	public Integer getID() {
 		return ID;
 	}
 
-	public void setID(Long iD) {
+
+	public void setID(Integer iD) {
 		ID = iD;
 	}
 
-	public Long getOrganizationID() {
+
+	public Integer getOrganizationID() {
 		return organizationID;
 	}
 
-	public void setOrganizationID(Long organizationID) {
+
+	public void setOrganizationID(Integer organizationID) {
 		this.organizationID = organizationID;
 	}
 
-	public Long getBranchID() {
+
+	public Integer getBranchID() {
 		return branchID;
 	}
 
-	public void setBranchID(Long branchID) {
+
+	public void setBranchID(Integer branchID) {
 		this.branchID = branchID;
 	}
+
 
 	public Integer getInstallmentID() {
 		return installmentID;
 	}
 
+
 	public void setInstallmentID(Integer installmentID) {
 		this.installmentID = installmentID;
 	}
 
+
 	public String getDescription() {
 		return description;
 	}
+
 
 	public void setDescription(String description) {
 		this.description = description;
@@ -93,41 +103,50 @@ public class Installment {
 		return installmentsDays;
 	}
 
+
 	public void setInstallmentsDays(String installmentsDays) {
 		this.installmentsDays = installmentsDays;
 	}
 
-	
 
 	public Double getTax() {
 		return tax;
 	}
 
+
 	public void setTax(Double tax) {
 		this.tax = tax;
 	}
+
 
 	public boolean isActive() {
 		return active;
 	}
 
+
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
 
 	public Date getChangeTime() {
 		return changeTime;
 	}
 
+
 	public void setChangeTime(Date changeTime) {
 		this.changeTime = changeTime;
 	}
+
 
 	public boolean isExcluded() {
 		return excluded;
 	}
 
+
 	public void setExcluded(boolean excluded) {
 		this.excluded = excluded;
 	}
+
+	
 }

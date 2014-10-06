@@ -16,7 +16,7 @@ import br.com.vendas.domain.product.Product;
 public class ProductDAOImpl extends ResourceDAO<Product> implements ProductDAO {
 
 	@Override
-	public List<Product> findAllByBranche(Long organizationID, Long branchID,
+	public List<Product> findAllByBranche(Integer organizationID, Integer branchID,
 			Integer offset, Integer limit) {
 
 
@@ -37,7 +37,7 @@ public class ProductDAOImpl extends ResourceDAO<Product> implements ProductDAO {
 
 	@Override
 	public List<Product> findByDescriptionOrProductIDOrBarcode(
-			String description,String productID,String barcode, Long organizationID, Long branchID, Integer offset,
+			String description,String productID,String barcode, Integer organizationID, Integer branchID, Integer offset,
 			Integer limit) {
 
 		Session session = getSession();
@@ -52,6 +52,7 @@ public class ProductDAOImpl extends ResourceDAO<Product> implements ProductDAO {
 										Restrictions.or(
 												Restrictions.eq("productID", productID), 
 												Restrictions.eq("barcode", barcode))))))
+				.add(Restrictions.eq("excluded", false))
 				.setFirstResult(offset)
 				.setMaxResults(limit)		
 				.addOrder(Order.asc("productID"));

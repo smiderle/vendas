@@ -30,8 +30,8 @@ public class UserPojo {
 	}
 	
 	
-	private Long userID;	
-	private Long organizationID;
+	private Integer userID;	
+	private Integer organizationID;
 	private String email;	
 	private String password;	
 	private String name;	
@@ -43,16 +43,16 @@ public class UserPojo {
 	private List<UserBranchOffice> userBranches;	
 	private Set<UserRole> userRoles;
 	
-	public Long getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
-	public void setUserID(Long userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
-	public Long getOrganizationID() {
+	public Integer getOrganizationID() {
 		return organizationID;
 	}
-	public void setOrganizationID(Long organizationID) {
+	public void setOrganizationID(Integer organizationID) {
 		this.organizationID = organizationID;
 	}
 	public String getEmail() {

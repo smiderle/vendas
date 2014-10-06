@@ -13,7 +13,7 @@ public interface ProductGroupDAO extends GenericDAO<ProductGroup>{
 	 * @param filialID
 	 * @return
 	 */
-	List<ProductGroup> findAllByBranche(Long organizationID, Long branchID, Integer offset, Integer limit);
+	List<ProductGroup> findAllByBranche(Integer organizationID, Integer branchID, Integer offset, Integer limit);
 	
 	
 
@@ -25,6 +25,6 @@ public interface ProductGroupDAO extends GenericDAO<ProductGroup>{
 	 * @param limit
 	 * @return
 	 */
-	List<ProductGroup> findByDescription(String description, Long organizationID,Long branchID, Integer offset, Integer limit);
+	List<ProductGroup> findByDescription(String description, Integer organizationID,Integer branchID, Integer offset, Integer limit);
 
 }

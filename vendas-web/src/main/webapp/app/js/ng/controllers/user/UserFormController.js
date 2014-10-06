@@ -1,5 +1,9 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp.controller('UserFormController',
 		['$scope','UserService' ,'BranchService', 'ContextService','UtilityService','Constants', 
 		 function UserController($scope, UserService,BranchService, ContextService, UtilityService,Constants) {

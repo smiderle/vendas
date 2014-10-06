@@ -33,7 +33,7 @@ public class UserBranchOffice extends Domain {
 	
 	
 	public UserBranchOffice(BranchOffice branchOffice,
-			Long userID, boolean enable) {
+			Integer userID, boolean enable) {
 		super();		
 		this.userID = userID;		
 		this.enable = enable; 
@@ -46,7 +46,7 @@ public class UserBranchOffice extends Domain {
 	private BranchOffice branchOffice;	
 		
 	@Id
-	private Long userID;
+	private Integer userID;
 	
 
 	@Column(name="ABILITADO")
@@ -68,12 +68,12 @@ public class UserBranchOffice extends Domain {
 	}
 
 
-	public Long getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
 
-	public void setUserID(Long userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
 

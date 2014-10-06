@@ -1,3 +1,11 @@
+<div class="alert alert-warning fade in" style="display:none" id="alertProductInputsInvalids">
+	<button class="close" data-dismiss="alert">
+		×
+	</button>
+	<i class="fa-fw fa fa-warning"></i>
+	<strong>Opss!</strong> Alguns campos estão incorretos. Por favor, verifique antes de continuar. 
+</div>
+
 <!-- widget grid -->
 <section id="widget-grid" class="">
 
@@ -227,6 +235,14 @@
 		<script src="js/plugin/dropzone/dropzone.min.js"></script>
 
 <script type="text/javascript">
+	
+	/**
+	* Faz com que o jquery validate, valide os campos que que não estão visiveis também.
+	* Fonte http://stackoverflow.com/questions/10145131/how-to-properly-validate-twitters-bootstrap-form-placed-on-several-tabs-with-jq
+	**/
+	$.validator.setDefaults({
+	    ignore: ""
+	});
 	
 	pageSetUp();
 

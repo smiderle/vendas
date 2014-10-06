@@ -11,22 +11,27 @@ public enum LimitQuery {
 	/**
 	 * Limite de registros das consultas dos grupos de produtos
 	 */
-	LIMIT_PRODUCT_GROUP(100),
+	LIMIT_PRODUCT_GROUP(60),
 	
 	/**
 	 * Limite de registros das consultas de tabela de preço 
 	 */
-	LIMIT_PRICE_TABLE(100),
+	LIMIT_PRICE_TABLE(60),
 	
 	/**
 	 * Limite de registros das consultas de usuarios
 	 */
-	LIMIT_USER(100),
+	LIMIT_USER(60),
 	
 	/**
 	 * Limite de registros das consultas de produto
 	 */
-	LIMIT_PRODUCT(4);
+	LIMIT_PRODUCT(60),
+	
+	/**
+	 * Limite de registros das consultas de clientes
+	 */
+	LIMIT_CUSTOMER(60);
 	
 	private final Integer limit;
 	

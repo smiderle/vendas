@@ -16,7 +16,7 @@ public class State extends Domain{
 	 */
 	@Id
 	@Column(name="IDESTADO")
-	private Long stateID;	
+	private Integer stateID;	
 	/**
 	 * UF do estado.
 	 */
@@ -28,10 +28,10 @@ public class State extends Domain{
 	@Column(name="NOME")
 	private String name;
 		
-	public Long getStateID() {
+	public Integer getStateID() {
 		return stateID;
 	}
-	public void setStateID(Long stateID) {
+	public void setStateID(Integer stateID) {
 		this.stateID = stateID;
 	}
 	public String getUf() {
