@@ -1,4 +1,5 @@
-var vendasApp = angular.module('vendasApp', [                                             
+var vendasApp = angular.module('vendasApp', [ 
+                                             'angucomplete-alt',
                                              'ngRoute',
                                              //'ngAnimate', // this is buggy, jarviswidget will not work with ngAnimate :(
                                              'restangular',
@@ -11,6 +12,7 @@ var vendasApp = angular.module('vendasApp', [
                                              'app.localize',
                                              'app.activity',
                                              'app.smartui'
+                                             
                                              ]);
 
 /**
@@ -215,6 +217,17 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 			}
 		},
 		controller : 'CustomerListController'		
+	})
+	
+	.when("/pedido/cadastro-pedido",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/order/order-form.html';
+			}
+		},
+		controller : 'OrderFormController'		
 	})
 	
 	

@@ -14,6 +14,9 @@ vendasApp.factory('LocationService',function(Restangular){
 			});
 		},
 		
+		/**
+		 * Busca a cidade que inicia com a descrição passada por parametro
+		 */
 		findAllByDescription : function(description){			
 			return Restangular.all("v1").all("location").all("getAllByDescription").getList({'description' : description, 'offset':0}).then(function(result){
 				var p = {};

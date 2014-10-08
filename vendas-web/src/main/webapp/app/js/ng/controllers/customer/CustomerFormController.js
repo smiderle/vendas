@@ -39,7 +39,8 @@ vendasApp.controller('CustomerFormController',
 				} else {
 					$scope.customer = {
 							pictureUrl : Constants.URL_DEFAULT_NO_PICTURE,
-							personType : 1
+							personType : 1,
+							active: true
 					};
 				}
 				

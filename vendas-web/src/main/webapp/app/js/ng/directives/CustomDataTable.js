@@ -5,21 +5,21 @@ vendasApp.directive('customDataTable', function () {
 		/**
 		 * Controla quando o envento scope.$emit('vendasApp:isLastPage') pode ser emitido. 
 		 */
-		var enventActive = false, 
+		//var enventActive = false, 
 		
 		/**
 		 * é um datatable com paginação ?
 		 */
-		paging = attrs.paging;
+		var paging = attrs.paging;
 
 		var options = {
 
 				"fnDrawCallback": function(){
 					//console.log('Total ' + this.fnPagingInfo().iTotalPages + ' Current '+ this.fnPagingInfo().iPage + ' Rows dt'+ this.fnPagingInfo().iTotal + 'Total de reg ' + attrs.aaData);
 
-					if(paging && enventActive && (this.fnPagingInfo().iTotalPages == this.fnPagingInfo().iPage)){
+					/*if(paging && enventActive && (this.fnPagingInfo().iTotalPages == this.fnPagingInfo().iPage)){
 						scope.$emit('vendasApp:isLastPage');
-					}
+					}*/
 				},
 
 				"bStateSave": false,	
@@ -90,7 +90,7 @@ vendasApp.directive('customDataTable', function () {
 			
 			
 			
-			enventActive = false;
+			//enventActive = false;
 			//Remove todas as linhas existentes do datatable.
 			//dataTable.fnClearTable(0);
 						
@@ -114,13 +114,14 @@ vendasApp.directive('customDataTable', function () {
 					 */ 
 					if(paging && dataTable.fnPagingInfo().iTotal == (totalRow - 1) /*&& (len == 4)*/){
 						console.log('Ativando evento');
-						enventActive = true;						
+						//enventActive = true;
+						scope.$emit('vendasApp:isLastPage');
 					}
 
-					if(paging && i == (parseInt(i) + iTotal) == totalRow){
+					/*if(paging && i == (parseInt(i) + iTotal) == totalRow){
 						console.log('Desativando evento');
-						enventActive = false;
-					}
+						//enventActive = false;
+					}*/
 					
 				}
 				dataTable.fnPageChange(currentPage-1,true);

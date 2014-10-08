@@ -23,7 +23,10 @@
 
 		<!-- We recommend you use "your_style.css" to override SmartAdmin
 		     specific styles this will also ensure you retrain your customization with each SmartAdmin update. -->
-		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> 
+		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/angucomplete-alt.css">
+		
+		
 
 		<!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">
@@ -170,7 +173,7 @@
 	  	<!-- REST Angular  -->
 	  	<script src="js/libs/angular/restangular.js"></script>
 	  	<script src="js/libs/lodash/lodash.compat.min.js"></script>
-			  	  	  	
+		<script src="js/libs/angular/angucomplete-alt.min.js"></script>	  	  	  	
 
 		<!-- Demo purpose only 
 		ANGULAR: Handled via "ribbon" directive
@@ -196,6 +199,7 @@
 	  	<script src="js/ng/controllers/order/InstallmentListController.js"></script>
 	  	<script src="js/ng/controllers/order/PriceTableFormController.js"></script>
 	  	<script src="js/ng/controllers/order/PriceTableListController.js"></script>
+	  	<script src="js/ng/controllers/order/OrderFormController.js"></script>
 	  	<script src="js/ng/controllers/product/ProductListController.js"></script>
 	  	<script src="js/ng/controllers/product/ProductFormController.js"></script>	  	
 	  	<script src="js/ng/controllers/product/group/ProductGroupListController.js"></script>
@@ -211,7 +215,8 @@
 	  	<script src="js/ng/services/InstallmentService.js"></script>
 	  	<script src="js/ng/services/FormsPaymentService.js"></script>	  	
 	  	<script src="js/ng/services/LocalStorageService.js"></script>
-	  	<script src="js/ng/services/LocationService.js"></script>	  	
+	  	<script src="js/ng/services/LocationService.js"></script>
+	  	<script src="js/ng/services/OrderService.js"></script>		  	
 	  	<script src="js/ng/services/PriceTableService.js"></script>
 	  	<script src="js/ng/services/ProductService.js"></script>
 	  	<script src="js/ng/services/ProductGroupService.js"></script>
@@ -223,6 +228,7 @@
 	  	<script src="js/ng/directives/MenuComponent.js"></script>
 	  	<script src="js/ng/directives/CustomDataTable.js"></script>
 	  	<script src="js/ng/directives/Dropzone.js"></script>
+	  	<script src="js/ng/directives/angucomplete.js"></script>
 	  	
 	  	<!-- Filter -->
 	  	<script src="js/ng/filters/Filters.js"></script>

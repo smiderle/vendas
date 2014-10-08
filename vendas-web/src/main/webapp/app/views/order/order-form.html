@@ -1,0 +1,178 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+			
+			<div  ng-init="init()" class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-user-form"  data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>Pedido</h2>				
+				</header>
+	
+					<!-- widget div-->
+					<div role="content" style="">
+												
+						<div class="widget-body fuelux">
+							
+							<div class="wizard">
+								<ul class="steps">
+									<li data-target="#orderGeneralStep" class="active">
+										<span class="badge badge-info">1</span>Geral<span class="chevron"></span>
+									</li>
+									<li data-target="#orderProductStep">
+										<span class="badge">2</span>Itens do Pedido<span class="chevron"></span>
+									</li>
+									<li data-target="#orderPaymentStep">
+										<span class="badge">3</span>Pagamento<span class="chevron"></span>
+									</li>
+									<li data-target="#step4">
+										<span class="badge">4</span>Finalizar<span class="chevron"></span>
+									</li>
+								</ul>
+								<div class="actions">
+									<button type="button" class="btn btn-sm btn-primary btn-prev">
+										<i class="fa fa-arrow-left"></i>Voltar
+									</button>
+									<button type="button" class="btn btn-sm btn-success btn-next" data-last="Fim">
+										Próximo<i class="fa fa-arrow-right"></i>
+									</button>
+								</div>
+							</div>						
+							<div class="step-content">
+								<form autocomplete="off" id="order-form" class="smart-form" novalidate="novalidate" ng-submit="save(installment)" >
+								
+								<div class="step-pane active" id="orderGeneralStep">
+									
+									<fieldset>
+										<div class="row">
+											<section class="col col-2">
+												<label class="label">Numero</label>																					
+												<label class="input">												
+													<input type="text" name="orderID" placeholder="Código" maxlength="9" ng-model="order.id" class="form-control">
+												</label>											
+											</section>
+										</div>
+												
+										<div class="row">
+											<section class="col col-6">
+												<label class="label">Cliente</label>
+												<angucomplete-alt id="ex1"
+										              placeholder="Pesquisar Clientes"
+										              pause="400"
+										              selected-object="selectedCountry"
+										              remote-url="http://localhost/vendas-api/v1/customer/getAllByFilter?"
+										              remote-url-data-field="payload.value"
+										              remote-url-request-formatter="dataFormatFn"
+										              description-field= "customerID"										              
+										              title-field="name"
+										              image-field="pictureUrl"
+										              minlength="1"
+										              match-class="highlight"
+										              auto-match="true"
+										              text-searching="Aguarde. Pesquisando Cliente..."										              
+										              text-no-results="Nenhum Cliente Encontrado"
+										              input-class="form-control form-control-small"/>											    										
+										    </section>
+										</div>
+										
+										<div class="row">
+											<section class="col col-4">
+												<label class="label">Tabela de Preço</label>
+												<label class="input">													
+													<select class="form-control"  ng-model="order.priceTable" ng-options="table.id as  table.description for table in tables"></select>
+												</label>
+											</section>
+										</div>
+										
+										<div class="row">
+											<section class="col col-2">
+												<label class="label">Data de Emissão</label>
+												<label class="input">
+													<input type="text" name="customer" placeholder="Data de Emissão" id="customer" ng-model="order.customer" ng-disabled="true" class="form-control">
+												</label>
+											</section>										
+										</div>
+											
+										<section>
+											<label class="textarea"> 
+												<i class="icon-append fa fa-comment"></i> 										
+												<textarea rows="5" name="comment" placeholder="Observação" ng-model="order.observation"></textarea> 
+											</label>
+										</section>										
+									</fieldset>
+								</div>
+								
+								<div class="step-pane" id="orderProductStep">
+									<h3>orderProductStep</h3>
+								</div>
+								<div class="step-pane" id="orderPaymentStep">
+									<h3>orderPaymentStep</h3>
+								</div>
+	
+									
+									
+									
+															
+										
+								</form>
+							</div>
+	
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+					
+				</div>			
+			
+		</article>
+	</div>
+</section>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+		
+	pageSetUp();
+	
+	
+	var pagefunction = function() {
+	
+		loadScript("js/plugin/fuelux/wizard/wizard.min.js", fueluxWizard);
+		
+		function fueluxWizard() {
+
+			var wizard = $('.wizard').wizard();
+
+			wizard.on('finished', function(e, data) {
+				//$("#fuelux-wizard").submit();
+				//console.log("submitted!");
+				$.smallBox({
+					title : "Congratulations! Your form was submitted",
+					content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
+					color : "#5F895F",
+					iconSmall : "fa fa-check bounce animated",
+					timeout : 4000
+				});
+
+			});
+
+		};
+
+	};
+
+	// Load bootstrap wizard dependency then run pagefunction
+	pagefunction();
+
+		
+	
+
+</script>
+
+

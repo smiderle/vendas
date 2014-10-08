@@ -58,6 +58,8 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, VendasW
 			return Restangular.all("v1").all("customer").all("getAllByFilter").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
+				p.code = result.code;
+				p.message = result.message;
 				p.rowCount = result.rowCount;
 				return p;
 			});
