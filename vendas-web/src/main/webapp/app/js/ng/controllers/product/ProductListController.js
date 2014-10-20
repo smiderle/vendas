@@ -140,8 +140,8 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 					product.stockAmount = 0;
 				}
 				
-				if(product.salesPrice == null || product.salesPrice == undefined){
-					product.salesPrice = 0;
+				if(product.salePrice == null || product.salePrice == undefined){
+					product.salePrice = 0;
 				}
 				
 				$scope.products.push(product);
@@ -155,7 +155,7 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 				              '<strong><label class="'+classRow+'">'+product.description+'</label></strong>',
 				              '<label class="'+classRow+'">'+product.packaging != null ? product.packaging : '' +'</label>',
 				              '<label class="'+classRow+'">'+parseFloat(product.stockAmount).toFixed(2).replace('.', ',')+'</label>',
-				              '<label class="'+classRow+'"> R$ '+parseFloat(product.salesPrice).toFixed(2).replace('.', ',')+'</label>'		              
+				              '<label class="'+classRow+'"> R$ '+parseFloat(product.salePrice).toFixed(2).replace('.', ',')+'</label>'		              
 				              ]);
 			}
 		});

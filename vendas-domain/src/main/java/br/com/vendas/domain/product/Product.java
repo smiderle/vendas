@@ -51,12 +51,9 @@ public class Product {
 	
 	@Column(name="QUANTIDADE_ESTOQUE")
 	private Double stockAmount;
-	
-	@Column(name="DESCMAX")
-	private Double maximumDiscount;
-	
+		
 	@Column(name="PRECO_VENDA")
-	private Double salesPrice;
+	private Double salePrice;
 	
 	@Column(name="ATIVO")
 	private Boolean active;
@@ -154,21 +151,6 @@ public class Product {
 		this.stockAmount = stockAmount;
 	}
 
-	public Double getMaximumDiscount() {
-		return maximumDiscount;
-	}
-
-	public void setMaximumDiscount(Double maximumDiscount) {
-		this.maximumDiscount = maximumDiscount;
-	}
-
-	public Double getSalesPrice() {
-		return salesPrice;
-	}
-
-	public void setSalesPrice(Double salesPrice) {
-		this.salesPrice = salesPrice;
-	}
 
 	public Boolean getActive() {
 		return active;
@@ -209,7 +191,13 @@ public class Product {
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
-	
-		
 
+	public Double getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(Double salePrice) {
+		this.salePrice = salePrice;
+	}
+	
 }

@@ -1,5 +1,9 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp.controller('InstallmentFormController',
 		['$scope','InstallmentService', 'DateUtil','CalcUtil','UtilityService','ContextService',
 		 function InstallmentFormController($scope, InstallmentService, DateUtil,CalcUtil, UtilityService, ContextService) {

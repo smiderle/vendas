@@ -38,10 +38,19 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public ServiceResponse<List<Customer>> findByIDOrNameOrEmail(String filter,Integer organizationID, Integer branchID, Integer offset) {
-		
-		List<Customer> customers = customerDAO.findByIDOrNameOrEmail(filter, filter,filter, organizationID, branchID, offset, LimitQuery.LIMIT_CUSTOMER.value());
+	public ServiceResponse<List<Customer>> findByIDOrNameOrEmail(String filter,Integer organizationID, Integer branchID, Integer offset, Integer limit) {
+				
+		List<Customer> customers = customerDAO.findByIDOrNameOrCpf(filter, filter,filter, organizationID, branchID, offset, getLimit(limit));
 		return ServiceResponseFactory.create(customers);		
+	}
+	
+	private Integer getLimit(Integer limit){
+		Integer defaultLimit = LimitQuery.LIMIT_CUSTOMER.value();
+		if(limit != null && limit < LimitQuery.LIMIT_CUSTOMER.value() && limit > 0) {
+			defaultLimit = limit;
+		}
+
+		return defaultLimit;
 	}
 
 }

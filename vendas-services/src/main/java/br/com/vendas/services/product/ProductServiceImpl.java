@@ -29,10 +29,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ServiceResponse<List<Product>> findByDescriptionOrProductIDOrBarcode(
-			String filter, Integer organizationID, Integer branchID, Integer offset) {
+	public ServiceResponse<List<Product>> findByDescriptionOrProductID(
+			String filter, Integer organizationID, Integer branchID, Integer offset, Integer limit) {
 		
-		List<Product> products = productDAO.findByDescriptionOrProductIDOrBarcode(filter, filter, filter, organizationID, branchID, offset, LimitQuery.LIMIT_PRODUCT.value());
+		List<Product> products = productDAO.findByDescriptionOrProductID(filter, filter, filter, organizationID, branchID, offset, getLimit(limit));
 		
 		return ServiceResponseFactory.create(products);		
 	}
@@ -42,5 +42,14 @@ public class ProductServiceImpl implements ProductService {
 	public ServiceResponse<Product> saveOrUpdate(Product product) {
 		product.setChangeTime(new Date());
 		return ServiceResponseFactory.create(productDAO.saveOrUpdate(product));
+	}
+	
+	private Integer getLimit(Integer limit) {
+		Integer defaultLimit = LimitQuery.LIMIT_PRODUCT.value();
+		if(limit != null && limit < LimitQuery.LIMIT_PRODUCT.value() && limit > 0) {
+			defaultLimit = limit;
+		}
+
+		return defaultLimit;
 	}
 }

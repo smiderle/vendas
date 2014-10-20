@@ -34,7 +34,7 @@ public class CustomerDAOImpl extends ResourceDAO<Customer> implements CustomerDA
 	}
 
 	@Override
-	public List<Customer> findByIDOrNameOrEmail(String name,String cpfCnpj, String customerID,Integer organizationID, Integer branchID, Integer offset,Integer limit) {
+	public List<Customer> findByIDOrNameOrCpf(String name,String cpfCnpj, String customerID,Integer organizationID, Integer branchID, Integer offset,Integer limit) {
 
 		Session session = getSession();
 
@@ -50,8 +50,8 @@ public class CustomerDAOImpl extends ResourceDAO<Customer> implements CustomerDA
 												Restrictions.eq("cpfCnpj", cpfCnpj))))))
 				.add(Restrictions.eq("excluded", false))
 				.setFirstResult(offset)
-				.setMaxResults(limit)		
-				.addOrder(Order.asc("customerID"));
+				.setMaxResults(limit)
+				.addOrder(Order.asc("ID"));
 		return criteria.list();
 	}
 

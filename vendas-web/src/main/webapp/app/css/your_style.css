@@ -34,3 +34,45 @@ input:-webkit-autofill:focus {
 .jarviswidget-color-greenDark .nav-tabs li:not(.active) a , .jarviswidget-color-green .nav-tabs li:not(.active) a, .jarviswidget-color-greenLight .nav-tabs li:not(.active) a , .jarviswidget-color-purple .nav-tabs li:not(.active) a , .jarviswidget-color-magenta .nav-tabs li:not(.active) a, .jarviswidget-color-pink .nav-tabs li:not(.active) a , .jarviswidget-color-pinkDark .nav-tabs li:not(.active) a , .jarviswidget-color-blueLight .nav-tabs li:not(.active) a , .jarviswidget-color-blueDark .nav-tabs li:not(.active) a, .jarviswidget-color-darken .nav-tabs li:not(.active) a , .jarviswidget-color-yellow .nav-tabs li:not(.active) a , .jarviswidget-color-orange .nav-tabs li:not(.active) a, .jarviswidget-color-orangeDark .nav-tabs li:not(.active) a  , .jarviswidget-color-red .nav-tabs li:not(.active) a , .jarviswidget-color-redLight .nav-tabs li:not(.active) a {
 	color: #030303 !important;
 }
+
+/* .fieldset-edit {
+	background:red !important;	
+} */
+/* 
+.fieldset-edit { 
+        
+        -webkit-transition: background 0.5s linear;
+        -moz-transition: background 0.5s linear;
+        -ms-transition: background 0.5s linear;
+        -o-transition: background 0.5s linear;
+        transition: background 0.5s linear;
+        background-color:red;
+}
+.fieldset-edit-test:hover { background-color: #d1d1d1; color:#fff;  } */
+
+.fieldset-edit {
+	background-color: #d1d1d1 !important;
+	-webkit-transition: background-color 0.15s ease !important;
+	-moz-transition: background-color 0.15s ease !important;
+	-o-transition: background-color 0.15s ease !important;
+	transition: background-color 0.15s ease !important;
+	background-color: D3E1FA !important;
+}
+
+.fieldset-edit-transparent {
+	background-color: transparent !important;
+}
+
+
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;    
+}
+
+input[type=number] {
+	padding: 60px 10x !iportant;
+    -moz-appearance:textfield;
+    
+}

@@ -1,3 +1,8 @@
+.highlight{
+	color: #3276B1;
+	font-weight:bold;	
+}
+
 .angucomplete-holder {
     position: relative;
 }
@@ -31,13 +36,14 @@
 .angucomplete-row {
     padding: 5px;
     color: #000000;
-    margin-bottom: 4px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #CCCCCC;
     clear: both;
 }
 
 .angucomplete-selected-row {
-    background-color: lightblue;
-    color: #ffffff;
+    background-color: #F0F2F7;
+    /* color: #ffffff; */
 }
 
 .angucomplete-image-holder {

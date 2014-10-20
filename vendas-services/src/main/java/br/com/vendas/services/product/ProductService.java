@@ -25,7 +25,7 @@ public interface ProductService {
  	 * @param offset
  	 * @return
  	 */
- 	ServiceResponse<List<Product>> findByDescriptionOrProductIDOrBarcode(String filter, Integer organizationID,Integer branchID, Integer offset);
+ 	ServiceResponse<List<Product>> findByDescriptionOrProductID(String filter, Integer organizationID,Integer branchID, Integer offset, Integer limit);
  	
  	/**
  	 * Salva ou atualiza o produto

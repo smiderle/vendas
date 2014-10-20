@@ -1,5 +1,9 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp.controller('PriceTableFormController',
 		['$scope','ContextService','UtilityService','PriceTableService', 
 		 function PriceTableFormController($scope, ContextService, UtilityService, PriceTableService) {

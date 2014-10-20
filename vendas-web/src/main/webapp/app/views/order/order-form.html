@@ -1,3 +1,11 @@
+<div class="alert alert-warning fade in" style="display:none" id="alertOrderInvalid">	
+	<button class="close" data-dismiss="alert">
+		×
+	</button>
+	<i class="fa-fw fa fa-warning"></i>
+	<strong>Opss!</strong> {{errorMessage}} 
+</div>
+
 <!-- widget grid -->
 <section id="widget-grid" class="">
 
@@ -42,7 +50,7 @@
 								</div>
 							</div>						
 							<div class="step-content">
-								<form autocomplete="off" id="order-form" class="smart-form" novalidate="novalidate" ng-submit="save(installment)" >
+								<form autocomplete="off" id="orderForm" name="orderForm" class="smart-form" novalidate="novalidate" ng-submit="save(installment)" >
 								
 								<div class="step-pane active" id="orderGeneralStep">
 									
@@ -62,11 +70,15 @@
 												<angucomplete-alt id="ex1"
 										              placeholder="Pesquisar Clientes"
 										              pause="400"
-										              selected-object="selectedCountry"
+										              custom-scope="testandoDenovo"
+										              selected-object="customerSelected"
 										              remote-url="http://localhost/vendas-api/v1/customer/getAllByFilter?"
 										              remote-url-data-field="payload.value"
 										              remote-url-request-formatter="dataFormatFn"
-										              description-field= "customerID"										              
+										              description-field= "customerID"	
+										              description-label="Código:"
+										              description-field3= "cellPhone"	
+										              description-label3="Celular:"										              									              
 										              title-field="name"
 										              image-field="pictureUrl"
 										              minlength="1"
@@ -76,15 +88,6 @@
 										              text-no-results="Nenhum Cliente Encontrado"
 										              input-class="form-control form-control-small"/>											    										
 										    </section>
-										</div>
-										
-										<div class="row">
-											<section class="col col-4">
-												<label class="label">Tabela de Preço</label>
-												<label class="input">													
-													<select class="form-control"  ng-model="order.priceTable" ng-options="table.id as  table.description for table in tables"></select>
-												</label>
-											</section>
 										</div>
 										
 										<div class="row">
@@ -106,16 +109,181 @@
 								</div>
 								
 								<div class="step-pane" id="orderProductStep">
-									<h3>orderProductStep</h3>
+									<fieldset id="flsOrderItem">
+										<div class="row">
+												<section class="col col-6">
+													<label class="label">Produtos</label>
+													<angucomplete-alt 
+														  id="autoCompleteProduct"
+											              placeholder="Digite Para Pesquisar algum Produto"
+											              pause="400"
+											              selected-object="productSelectedCallback"
+											              remote-url="http://localhost/vendas-api/v1/product/getAllByFilter?"
+											              remote-url-data-field="payload.value"
+											              remote-url-request-formatter="dataFormatProduct"
+											              description-label="Código:"
+											              description-field= "productID"
+											              description-label2="Preço R$:"
+											              description-field2= "salePrice"	
+											              description-label3="Estoque:"
+											              description-field3= "stockAmount"
+											              title-field="description"
+											              image-field="pictureUrl"
+											              minlength="1"
+											              match-class="highlight"
+											              auto-match="true"
+											              disable-input="orderItemEdition"
+											              text-searching="Aguarde. Pesquisando Produto..."										              
+											              text-no-results="Nenhum Produto Encontrado"
+											              input-class="form-control form-control-small"/>											    										
+											    </section>
+											    <section class="col col-6">
+													<label class="label">Tabela de Preço</label>
+													<label class="input">													
+														<select class="form-control" ng-change="onChangePriceTable()"  ng-model="orderItem.priceTable" ng-options="table as  table.label for table in tables"></select>
+													</label>
+												</section>
+											</div>
+											
+											<div class="row">
+												<section class="col col-2">
+													<label class="label">Quantidade</label>																					
+													<label class="input">					
+														<i class="icon-prepend fa  fa-cube"></i>
+														<input type="number" id="orderItemQuantity" name="orderItemQuantity" placeholder="Quantidade" maxlength="9" ng-model="orderItem.quantity" class="form-control">																							
+													</label>
+												</section>
+											</div>
+											
+											<div class="row">
+												<section class="col col-2">
+													<label class="label">Preço</label>																																		
+													<label class="input">				
+														<i class="icon-prepend fa fa-usd"></i>								
+														<input type="number" name="orderItemSalePrice" placeholder="Preço" maxlength="9" ng-model="orderItem.salePrice" ng-blur="onBlurItemSalePrice()" class="form-control">
+													</label>											
+												</section>
+												
+												<section class="col col-2">
+													<label class="label">Desconto (R$)</label>													
+													<label class="input">				
+														<i class="icon-prepend fa  fa-minus"></i>								
+														<input type="number" id="orderItemDiscount" name="orderItemDiscount" placeholder="Desconto" maxlength="9" ng-model="orderItem.discount" class="form-control">
+														<div class="note txt-color-red" ng-show="orderForm.orderItemDiscountPercentage.$error.maximumdiscountvalidator">
+															O desconto máximo para esse produto é de R$ {{maximunDiscountProduct}} , equivalente a {{maximunDiscount}} %.														
+														</div>	
+													</label>											
+												</section>
+												
+												<section class="col col-2">
+													<label class="label">Desconto (%)</label>													
+													<label class="input">				
+														<i class="icon-prepend fa  fa-minus"></i>								
+														<input type="number" ng-disabled="true" name="orderItemDiscountPercentage" placeholder="Desconto" ng-model="discountPercentage" class="form-control" maximumdiscountvalidator="a">															
+													</label>											
+												</section>
+												
+												<section class="col col-2">
+													<label class="label">Subtotal</label>																																		
+													<label class="input">				
+														<i class="icon-prepend fa  fa-money"></i>								
+														<input type="text" ng-disabled="true"  name="orderItemSubtotal" placeholder="SubTotal" maxlength="9" value="{{ formatFloat(parseFloat(orderItem.salePrice)  * parseFloat(orderItem.quantity))   }}" class="form-control">
+														<!-- <input type="text" ng-disabled="true"  name="orderItemSubtotal" placeholder="SubTotal" maxlength="9" value="{{ validate((parseFloat(orderItem.salePrice) - parseFloat(orderItem.discount)) * parseFloat(orderItem.quantity))   }}" class="form-control"> -->
+													</label>
+												</section>
+												
+											</div>
+											<div class="row">
+												<section  class="col col-6">
+													<label class="textarea"> 
+														<i class="icon-append fa fa-comment"></i> 										
+														<textarea rows="2" name="observation" placeholder="Informações Adicionais" ng-model="orderItem.observation"></textarea> 
+													</label>
+												</section>
+											</div>
+											<button type="button" id="btnAddProductToCart" class="btn btn-sm  btn-primary" ng-click="addProductToCart(orderItem)" ng-disabled="!productSelected.id">
+														<i class="fa fa-thumbs-o-up"></i> {{orderItemEdition ? 'Salvar Edição' : 'Adicionar Produto'}} 
+											</button>
+											<button type="button" class="btn btn-sm  bg-color-redLight txt-color-white" ng-click="cancelEdition()" ng-show="orderItemEdition">
+													<i class="fa fa-thumbs-o-down"></i> Cancelar Edição
+											</button>																																	
+										</fieldset>	
+										
+										<table id="datatable_order_item" class="table table-hover" width="100%" >
+											<thead>
+												<tr role="row">
+													<th style="width: 30px;"></th>
+													<th style="width: 10px;"></th>
+													<th style="width: 200px;">Produto</th>
+													<th style="width: 100px;">Informações</th>
+													<th style="width: 120px;">Tabela</th>
+													<th style="width: 50px;">Quantidade</th>
+													<th style="width: 50px;">Valor Unitário</th>
+													<th style="width: 70px;">Desconto Unitário</th>
+													<th style="width: 50px;">Subtotal</th>																												
+												</tr>
+											</thead>
+											
+											<tbody>
+												<tr ng-repeat="orderItem in ordersItens">
+													<td>
+														<a class="fa fa-lg fa-pencil" href="javascript:void(0);" ng-click="editProduct($index)"></a>
+														<a class="fa fa-lg fa-times" href="javascript:void(0);" ng-click="deleteOrderItem($index)"></a>
+													</td>
+													<td>
+														<h5><small>{{$index+1}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{orderItem.product.description}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{orderItem.observation}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{orderItem.priceTable.description}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{formatFloat(orderItem.quantity)}}</small></h5>
+													</td>
+													<td>
+														<h5><small>R$ {{formatFloat(orderItem.salePrice)}}</small></h5>
+													</td>
+													<td>
+														<h5><small>R$ {{formatFloat(orderItem.discount)}}</small></h5>
+													</td>
+													<td>
+														<h5><small>R$  {{formatFloat(parseFloat(orderItem.salePrice) * parseFloat(orderItem.quantity))}} </small></h5>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										
+										<hr>
+										<fieldset>
+											<div class="invoice-footer">
+												
+		
+													<div class="row">
+														<section>
+					
+															<div class="col-sm-7">
+																
+															</div>
+															<div class="col-sm-5">
+																<div class="invoice-sum-total pull-right">
+																	<h1><strong>Total: <span class="text-success">R$ {{formatFloat(valueTotal)}}</span></strong></h1>
+																</div>
+															</div>
+														</section>
+													</div>												
+												
+											</div>
+										</fieldset>
+																			
 								</div>
 								<div class="step-pane" id="orderPaymentStep">
 									<h3>orderPaymentStep</h3>
-								</div>
-	
-									
-									
-									
-															
+								</div>				
 										
 								</form>
 							</div>
@@ -147,6 +315,90 @@
 		loadScript("js/plugin/fuelux/wizard/wizard.min.js", fueluxWizard);
 		
 		function fueluxWizard() {
+			
+			
+			
+
+			var $validator = $('#order-form').validate({
+				// Rules for form validation
+				rules : {
+					orderItemQuantity : {
+						required : true,
+						number: true
+					},
+					
+					description : {
+						required : true
+					},
+					
+					maximumDiscount : {
+						number : true,
+						max : 100
+					},
+					
+					promotionPrice : {
+						number : true
+					},
+					
+					salePrice : {
+						required : true,
+						number : true
+					},
+					
+					stockAmount : {
+						required : true,
+						number : true
+					},
+					
+					
+				},
+
+				// Messages for form validation
+				messages : {
+					orderItemQuantity : {
+						required : 'Por favor, informe uma quantidade válida',
+						number : 'Por favor, informe somente numeros'
+					},
+					
+					description : {
+						required : 'Por favor, informe uma descrição',
+					},
+					
+					maximumDiscount : {
+						max : 'Por favor, informe um numero menor ou igual a 100',
+						number : 'Por favor, informe um numero válido. Ex: 10.50'
+					},
+					
+					promotionPrice : {
+						number : 'Por favor, informe um numero válido. Ex: 10.50'
+					},
+					
+					salePrice : {
+						required : 'Por favor, informe um preço',
+						number :  'Por favor, informe um numero válido. Ex: 10.50'
+					},
+					
+					stockAmount : {
+						required : 'Por favor, informe a quantidade de estoque',
+						number : 'Por favor, informe um numero válido. Ex: 10.50'
+					},				
+					
+				},
+
+				// Do not change code below
+				errorPlacement : function(error, element) {
+					error.insertAfter(element.parent());
+				}
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 			var wizard = $('.wizard').wizard();
 

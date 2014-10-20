@@ -36,7 +36,7 @@ public class ProductDAOImpl extends ResourceDAO<Product> implements ProductDAO {
 	}
 
 	@Override
-	public List<Product> findByDescriptionOrProductIDOrBarcode(
+	public List<Product> findByDescriptionOrProductID(
 			String description,String productID,String barcode, Integer organizationID, Integer branchID, Integer offset,
 			Integer limit) {
 
@@ -49,9 +49,7 @@ public class ProductDAOImpl extends ResourceDAO<Product> implements ProductDAO {
 								Restrictions.eq("branchID", branchID), 
 								Restrictions.or(
 										Restrictions.like("description", description, MatchMode.START).ignoreCase(),
-										Restrictions.or(
-												Restrictions.eq("productID", productID), 
-												Restrictions.eq("barcode", barcode))))))
+										Restrictions.eq("productID", productID)))))
 				.add(Restrictions.eq("excluded", false))
 				.setFirstResult(offset)
 				.setMaxResults(limit)		

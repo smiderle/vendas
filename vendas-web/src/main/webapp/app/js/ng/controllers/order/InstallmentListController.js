@@ -1,5 +1,9 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp.controller('InstallmentListController',
 		['$scope', '$location', 'InstallmentService','ContextService','UtilityService',
 		 function InstallmentListController($scope,$location, InstallmentService, ContextService, UtilityService) {

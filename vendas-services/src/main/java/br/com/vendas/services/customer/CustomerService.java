@@ -29,5 +29,5 @@ public interface CustomerService {
  	 * @param offset
  	 * @return
  	 */
- 	ServiceResponse<List<Customer>> findByIDOrNameOrEmail(String filter,Integer organizationID, Integer branchID, Integer offset);
+ 	ServiceResponse<List<Customer>> findByIDOrNameOrEmail(String filter,Integer organizationID, Integer branchID, Integer offset, Integer limit);
 }

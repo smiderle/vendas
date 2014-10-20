@@ -64,9 +64,9 @@ public class ProductRest {
 	 * @return
 	 */
 	@RequestMapping(value="getAllByFilter", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getAllByFilter(String filter, Integer organizationID, Integer branchID,Integer offset){
+	public @ResponseBody ApiResponse getAllByFilter(String filter, Integer organizationID, Integer branchID,Integer offset, Integer limit){
 		try {
-			ServiceResponse<List<Product>> payload =  productService.findByDescriptionOrProductIDOrBarcode(filter, organizationID, branchID, offset);
+			ServiceResponse<List<Product>> payload =  productService.findByDescriptionOrProductID(filter, organizationID, branchID, offset, limit);
 			LOG.debug("getAllByFilter - List<Product> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {

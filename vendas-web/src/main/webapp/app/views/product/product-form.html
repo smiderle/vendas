@@ -25,7 +25,7 @@
 												
 						<div class="widget-body no-padding">
 								
-							<form autocomplete="off" id="product-form" class="smart-form" novalidate="novalidate" ng-submit="save(product)" >
+							<form autocomplete="off" id="productForm" name="productForm" class="smart-form" novalidate="novalidate" ng-submit="save(product)" >
 																			
 								<div class="md-header btn-toolbar">
 								<br>
@@ -113,26 +113,16 @@
 											<section class="col col-3">
 												<label class="label">Estoque *</label>												
 												<label class="input">												
-													<input type="text" name="stockAmount" placeholder="Estoque" ng-model="product.stockAmount" class="form-control">
+													<input type="number" name="stockAmount" placeholder="Estoque" ng-model="product.stockAmount" class="form-control">
 												</label>
 											</section>
 											<section class="col col-3">
 												<label class="label">Preço de Venda (R$) *</label>												
 												<label class="input">												
-													<input type="text" name="salesPrice" placeholder="Preço" ng-model="product.salesPrice" class="form-control">
+													<input type="number" name="salePrice" placeholder="Preço" ng-model="product.salePrice" class="form-control">
 												</label>
 											</section>
 										</div>
-										<div class="row">
-											<section class="col col-3">
-												<label class="label">Desconto Máximo (%)</label>												
-												<label class="input">												
-													<input type="text" name="maximumDiscount" placeholder="Desconto Máximo" ng-model="product.maximumDiscount" class="form-control">
-												</label>
-											</section>
-										</div>
-										
-															
 									</div>
 									
 									
@@ -142,15 +132,19 @@
 											<h3 class="text-primary">É necessário salvar o produto para habilitar o preço de promoção</h3>
 										</div>
 									
-										<div ng-show="product.id">																		
+										<div ng-show="product.id">
 												<div class="row">										
 													<section class="col col-2">
 														<label class="label">Preço de Promoção</label>												
 														<label class="input"><i class="icon-prepend fa fa-usd"></i>												
-															<input type="text" name="promotionPrice" placeholder="Preço de Promoção" ng-model="promotion.promotionPrice">
+															<input type="number" name="promotionPrice" placeholder="Preço de Promoção" ng-model="promotion.promotionPrice" number>
+															<div class="note txt-color-red" ng-show="productForm.promotionPrice.$error.number">
+																Informe um preço válido. Ex: 18,54
+															</div>	
 														</label>
 													</section>
 												</div>
+																								
 												<div class="row">
 													<section class="col col-2">
 														<label class="label">Incio da Promoção</label>
@@ -166,8 +160,8 @@
 													</section>											
 												</div>
 												
-												<button type="button" class="btn btn-sm  btn-primary" ng-click="savePromotion(promotion)">
-														<i class="fa fa-thumbs-o-up"></i>
+												<button type="button" class="btn btn-sm  btn-primary" ng-click="savePromotion(promotion)" ng-disable="productForm.$invalid">
+														<i class="fa fa-thumbs-o-down"></i>
 															{{buttonPromotionDescription}}
 												</button>
 												<button type="button" class="btn btn-sm  bg-color-redLight txt-color-white" ng-click="cancelEditionPromotion()" ng-show="promotion.id">
@@ -247,8 +241,9 @@
 	pageSetUp();
 
 	var pagefunction = function() {
+		
 
-		var $checkoutForm = $('#product-form').validate({
+		var $checkoutForm = $('#productForm').validate({
 			// Rules for form validation
 			rules : {
 				prudoctID : {
@@ -259,23 +254,18 @@
 					required : true
 				},
 				
-				maximumDiscount : {
-					number : true,
-					max : 100
-				},
-				
 				promotionPrice : {
 					number : true
 				},
 				
-				salesPrice : {
+				salePrice : {
 					required : true,
 					number : true
 				},
 				
 				stockAmount : {
 					required : true,
-					number : true
+					//number : true
 				},
 				
 				
@@ -291,24 +281,19 @@
 				description : {
 					required : 'Por favor, informe uma descrição',
 				},
-				
-				maximumDiscount : {
-					max : 'Por favor, informe um numero menor ou igual a 100',
-					number : 'Por favor, informe um numero válido. Ex: 10.50'
-				},
-				
+							
 				promotionPrice : {
-					number : 'Por favor, informe um numero válido. Ex: 10.50'
+					number : 'Por favor, informe um numero válido. Ex: 10,50'
 				},
 				
-				salesPrice : {
-					required : 'Por favor, informe um preço',
-					number :  'Por favor, informe um numero válido. Ex: 10.50'
+				salePrice : {
+					required : 'Por favor, informe um preço válido',
+					number :  'Por favor, informe um numero válido. Ex: 10,50'
 				},
 				
 				stockAmount : {
-					required : 'Por favor, informe a quantidade de estoque',
-					number : 'Por favor, informe um numero válido. Ex: 10.50'
+					required : 'Por favor, informe umaa quantidade de estoque válida',
+					number : 'Por favor, informe um numero válido. Ex: 10,50'
 				},				
 				
 			},

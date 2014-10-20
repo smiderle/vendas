@@ -21,7 +21,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import br.com.vendas.aws.s3.picture.Bucket;
 import br.com.vendas.domain.customer.Customer;
-import br.com.vendas.domain.product.Product;
 import br.com.vendas.services.customer.CustomerService;
 import br.com.vendas.services.image.ImageService;
 import br.com.vendas.services.support.ServiceResponse;
@@ -31,9 +30,9 @@ import br.com.vendas.support.VendasExceptionWapper;
 
 @RequestMapping(value="/v1/customer")
 @Controller
-public class CustomerRest {
+public class CustomerRestAPI {
 	
-	private static final Logger LOG = Logger.getLogger(CustomerRest.class);
+	private static final Logger LOG = Logger.getLogger(CustomerRestAPI.class);
 	
 	@Inject
 	private CustomerService customerService;
@@ -73,9 +72,9 @@ public class CustomerRest {
 	
 	
 	@RequestMapping(value="getAllByFilter", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getAllByFilter(String filter, Integer organizationID, Integer branchID,Integer offset){
+	public @ResponseBody ApiResponse getAllByFilter(String filter, Integer organizationID, Integer branchID,Integer offset, Integer limit){
 		try {
-			ServiceResponse<List<Customer>> payload =  customerService.findByIDOrNameOrEmail(filter, organizationID, branchID, offset);
+			ServiceResponse<List<Customer>> payload =  customerService.findByIDOrNameOrEmail(filter, organizationID, branchID, offset, limit);
 			LOG.debug("getAllByFilter - List<Customer> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {

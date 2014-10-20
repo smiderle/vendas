@@ -1,9 +1,11 @@
 'use strict';
 
+/*****************************************************************************/
+/**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
+/***************************************************************************/
+
 vendasApp.factory('CalcUtil',function(DateUtil){
 	
-
-
 	return {		
 
 		/**
@@ -98,6 +100,48 @@ vendasApp.factory('CalcUtil',function(DateUtil){
 			});
 			
 			callback(parcelasExemploTmp);
+		},
+		
+		/**
+		 * Retorna o valor, aplicando o percentual. O /1 , é para forçar um retorno long, pois o toFixed retorna uma string
+		 * val - Valor 
+		 * percentage - percentual
+		 * discount - Se é um desconto, caso contrário é um acréscimo
+		 * Exemplo: function(80, 10, true) - Vai retornar 72
+		 *          function(80, 10, false) - Vai retornar 88
+		 * 
+		 */
+		applyPercentage : function(val, percentage, discount){
+			var variant = val * percentage / 100;
+			if(discount){
+				return parseFloat( val - variant ).toFixed(2) /1;
+			} else {
+				return parseFloat( val + variant ).toFixed(2) /1;				
+			}			
+		},
+		
+		/**
+		 * Retorna o valor em reais que equivale determinado percentual.
+		 * Exemplo: function(50, 10) - Retorna 5, ou seja, 10 porcento de 50 é 5. 
+		 * 
+		 */
+		getValueByPercentage : function(val, percentage, discount){
+			return val * percentage / 100;						
+		},
+		
+		/**
+		 * Retorna o percentual de um valor referente a outro
+		 * originalValue - Valor cheio, sem o desconto
+		 * changedValue - O valor com o desconto
+		 */
+		getPercentageByValue : function(originalValue, changedValue){
+			//if(originalValue >= changedValue) {
+				var percentage = changedValue * 100 / originalValue;
+				return percentage;
+			/*} else {
+				var percentage = changedValue * 100 / originalValue;
+				return percentage - 100;
+			}*/			
 		}
-	}
+	};
 });

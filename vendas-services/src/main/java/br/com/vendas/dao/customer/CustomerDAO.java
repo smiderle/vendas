@@ -23,6 +23,6 @@ public interface CustomerDAO extends GenericDAO<Customer> {
 	 * @param limit
 	 * @return
 	 */
-	List<Customer> findByIDOrNameOrEmail(String name,String cpfCnpj,String customerID,Integer organizationID, Integer branchID, Integer offset,Integer limit);
+	List<Customer> findByIDOrNameOrCpf(String name,String cpfCnpj,String customerID,Integer organizationID, Integer branchID, Integer offset,Integer limit);
 
 }

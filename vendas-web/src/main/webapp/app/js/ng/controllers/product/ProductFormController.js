@@ -63,7 +63,7 @@ vendasApp.controller('ProductFormController',
 			 */
 			$scope.save = function(){
 				
-				if($('#product-form').valid()){
+				if($('#productForm').valid()){
 					
 					$('#alertProductInputsInvalids').hide();
 					
@@ -88,9 +88,9 @@ vendasApp.controller('ProductFormController',
 				}
 			};
 						
-			/**
+		/*	*//**
 			 * Quando o autocomplete de catagorias estiver vazio, e quando ganhar o focus é retornado as primeiras categorias
-			 */
+			 *//*
 			$scope.onFocusGroups = function(){
 				var group = $('#txtProductGroup').val();				
 				if(group == ''){					
@@ -110,7 +110,7 @@ vendasApp.controller('ProductFormController',
 					});
 					
 				}
-			};
+			};*/
 			
 			$scope.onChangeGroups = function(){
 				/*
@@ -171,7 +171,7 @@ vendasApp.controller('ProductFormController',
 				$scope.product.pictureUrl = url;
 			});
 			
-			
+						
 			/*PROMOÇÃO*/
 			
 			/**
@@ -179,31 +179,39 @@ vendasApp.controller('ProductFormController',
 			 */
 			$scope.savePromotion = function(promotion){
 				
-				var initialDate = $('#initialDate').val();
-				var finalDate = $('#finalDate').val();
-								
-				if(DateUtil.isValidDate(initialDate) && DateUtil.isValidDate(finalDate)){
+				if(isValidPromotionPrice()){
+					$('#alertProductInputsInvalids').hide();
+					//Se não tiver sido digitado nenhum valor, é setado 0
+					if(!promotion || !promotion.promotionPrice){
+						promotion = { promotionPrice : 0 };
+					}
 					
-					promotion.initialDate = DateUtil.getTime(initialDate);
-					promotion.finalDate = DateUtil.getTime(finalDate);
-					promotion.productID = $scope.product.id;
-					
-					var aPromotion = ProductService.savePromotionPrice(promotion);
-					aPromotion.then(function(toReturn){
-						if(toReturn.code == '200'){
-							clearPromotionFields();
-							loadPromotions();
-							UtilityService.showAlertSucess('Sucesso.', 'Preço de promoção salvo com sucesso!!');							
-						} else {
-							UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
-						}					
-					});
-					
+					var initialDate = $('#initialDate').val();
+					var finalDate = $('#finalDate').val();
+									
+					if(DateUtil.isValidDate(initialDate) && DateUtil.isValidDate(finalDate)){
+												
+						promotion.initialDate = DateUtil.getTime(initialDate);
+						promotion.finalDate = DateUtil.getTime(finalDate);
+						promotion.productID = $scope.product.id;
+						
+						var aPromotion = ProductService.savePromotionPrice(promotion);
+						aPromotion.then(function(toReturn){
+							if(toReturn.code == '200'){
+								clearPromotionFields();
+								loadPromotions();
+								UtilityService.showAlertSucess('Sucesso.', 'Preço de promoção salvo com sucesso!!');							
+							} else {
+								UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
+							}					
+						});
+						
+					} else {
+						UtilityService.showAlertError('Opss ','Data Inválida');
+					}					
 				} else {
-					UtilityService.showAlertError('Opss ','Data Inválida');
+					$('#alertProductInputsInvalids').show();
 				}
-				
-				
 			};
 			
 			$scope.editPromotion = function(index){				
@@ -260,6 +268,16 @@ vendasApp.controller('ProductFormController',
 					
 					$scope.promotions = tmp;
 				});
+			}
+			
+			/**
+			 * Valida se os campos no qual foi utilizado as directivas validator
+			 */
+			function isValidPromotionPrice(){
+				if($scope.productForm.promotionPrice.$valid){
+					return true;
+				}
+				return false;
 			}
 			
 			/**
