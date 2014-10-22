@@ -25,7 +25,7 @@
 												
 						<div class="widget-body fuelux">
 							
-							<div class="wizard">
+							<div class="wizard" id= "myWizard">
 								<ul class="steps">
 									<li data-target="#orderGeneralStep" class="active">
 										<span class="badge badge-info">1</span>Geral<span class="chevron"></span>
@@ -36,7 +36,7 @@
 									<li data-target="#orderPaymentStep">
 										<span class="badge">3</span>Pagamento<span class="chevron"></span>
 									</li>
-									<li data-target="#step4">
+									<li data-target="#orderFinallyStep">
 										<span class="badge">4</span>Finalizar<span class="chevron"></span>
 									</li>
 								</ul>
@@ -44,7 +44,7 @@
 									<button type="button" class="btn btn-sm btn-primary btn-prev">
 										<i class="fa fa-arrow-left"></i>Voltar
 									</button>
-									<button type="button" class="btn btn-sm btn-success btn-next" data-last="Fim">
+									<button type="button" class="btn btn-sm btn-success btn-next" data-last="Finalizar Venda">
 										Próximo<i class="fa fa-arrow-right"></i>
 									</button>
 								</div>
@@ -55,15 +55,7 @@
 								<div class="step-pane active" id="orderGeneralStep">
 									
 									<fieldset>
-										<div class="row">
-											<section class="col col-2">
-												<label class="label">Numero</label>																					
-												<label class="input">												
-													<input type="text" name="orderID" placeholder="Código" maxlength="9" ng-model="order.id" class="form-control">
-												</label>											
-											</section>
-										</div>
-												
+																			
 										<div class="row">
 											<section class="col col-6">
 												<label class="label">Cliente</label>
@@ -71,7 +63,7 @@
 										              placeholder="Pesquisar Clientes"
 										              pause="400"
 										              custom-scope="testandoDenovo"
-										              selected-object="customerSelected"
+										              selected-object="customerSelectedCallback"
 										              remote-url="http://localhost/vendas-api/v1/customer/getAllByFilter?"
 										              remote-url-data-field="payload.value"
 										              remote-url-request-formatter="dataFormatFn"
@@ -94,7 +86,7 @@
 											<section class="col col-2">
 												<label class="label">Data de Emissão</label>
 												<label class="input">
-													<input type="text" name="customer" placeholder="Data de Emissão" id="customer" ng-model="order.customer" ng-disabled="true" class="form-control">
+													<input type="text" name="issuanceTime" placeholder="Data de Emissão" value="{{order.issuanceTime | date: 'dd/MM/yyyy HH:mm'}}" ng-disabled="true" class="form-control"> 
 												</label>
 											</section>										
 										</div>
@@ -168,7 +160,7 @@
 													<label class="label">Desconto (R$)</label>													
 													<label class="input">				
 														<i class="icon-prepend fa  fa-minus"></i>								
-														<input type="number" id="orderItemDiscount" name="orderItemDiscount" placeholder="Desconto" maxlength="9" ng-model="orderItem.discount" class="form-control">
+														<input type="number" id="orderItemDiscount" name="orderItemDiscount" placeholder="Desconto em Reais" maxlength="9" ng-blur="onBlurDiscount()"  ng-model="orderItem.discount" class="form-control">
 														<div class="note txt-color-red" ng-show="orderForm.orderItemDiscountPercentage.$error.maximumdiscountvalidator">
 															O desconto máximo para esse produto é de R$ {{maximunDiscountProduct}} , equivalente a {{maximunDiscount}} %.														
 														</div>	
@@ -179,7 +171,7 @@
 													<label class="label">Desconto (%)</label>													
 													<label class="input">				
 														<i class="icon-prepend fa  fa-minus"></i>								
-														<input type="number" ng-disabled="true" name="orderItemDiscountPercentage" placeholder="Desconto" ng-model="discountPercentage" class="form-control" maximumdiscountvalidator="a">															
+														<input type="number" ng-disabled="true" name="orderItemDiscountPercentage" placeholder="Desconto em Percentual" ng-model="discountPercentage" class="form-control" maximumdiscountvalidator="a">															
 													</label>											
 												</section>
 												
@@ -282,8 +274,231 @@
 																			
 								</div>
 								<div class="step-pane" id="orderPaymentStep">
-									<h3>orderPaymentStep</h3>
-								</div>				
+									<fieldset>
+										<div class="row">
+											<section class="col col-6">
+												<div class="row">
+													<section class="col col-10">
+														<label class="label">Forma de Pagamento</label>
+														<label class="input">													
+															<select class="form-control" ng-change="onChangeFormPayment()"  ng-model="order.formPayment" ng-options="payment.id as payment.description for payment in formsPayment"></select>
+														</label>
+													</section>
+												</div>
+												<div class="row">
+													<section class="col col-10">
+														<label class="label">Parcelamento</label>
+														<label class="input">													
+															<select class="form-control"  ng-model="installment" ng-change="onChangeInstallment()" ng-options="installment.id as installment.description for installment in installments"></select>
+														</label>
+													</section>
+												</div>
+											</section>
+											<!-- <section class="col col-6">
+												<div class="pull-right">
+													<h1 class="font-400"><strong>Total: <span class="text-success">R$ {{formatFloat(valueTotal)}}</span></strong></h1>
+												</div>	
+											</section> -->
+										</div>
+									
+									
+								
+										
+										<legend>Parcelas </legend>
+										<div class="row">
+											
+												<table class="table table-hover" width="100%">
+													<thead>
+														<tr>
+															<th style="width: 20px;"></th>																											
+															<th style="width: 100px;"> <i class="fa fa-dollar" ></i>  Valor da parcela</th>
+															<th style="width: 100px;"> <i class="fa fa-calendar" ></i>  Data de vencimento</th>
+															<th style="width: 150px;"><i class="fa fa-file-excel-o" ></i>  Numero do Documento</th>
+															<th style="width: 150px;"> <i class="fa fa-info-circle" ></i>  Informação</th>
+															
+														</tr>
+													</thead>												
+													<tr ng-repeat="parcela in parcelas">														
+														<td>
+															<h5><small>{{parcela.sequencia}}</small></h5>
+														</td>														
+														<td>
+															<h5><small>R$ {{parcela.valor}}</small></h5>
+														</td>
+														<td>
+															<h5><small>{{parcela.vencimento}}</small></h5>
+														</td>
+														<td>
+															<input type="text" class="form-control" ng-model="parcela.documentNumber">
+														</td>
+														<td>
+															<input type="text" class="form-control" ng-model="parcela.observation">
+														</td>
+													</tr>
+												</table>	
+										</div>
+										
+										<hr>
+										<fieldset>
+											<div class="invoice-footer">
+												
+		
+													<div class="row">
+														<section>
+					
+															<div class="col-sm-7">
+																
+															</div>
+															<div class="col-sm-5">
+																<div class="invoice-sum-total pull-right">
+																	<h1><strong>Valor Total das Parcelas: <span class="text-success">R$ {{formatFloat(valueTotalInstallment)}}</span></strong></h1>
+																</div>
+															</div>
+														</section>
+													</div>												
+												
+											</div>
+										</fieldset>
+										
+										
+										
+										
+										<!-- <div class="row">
+											<section>												
+												<div class="col-sm-12">
+													<div class="invoice-sum-total pull-right">
+														<h1 class="font-xl"><strong>Valor Total das Parcelas: <span class="text-success">R$ {{formatFloat(valueTotal)}}</span></strong></h1>
+													</div>
+												</div>
+											</section>
+										</div>	 -->	
+																				
+									</fieldset>
+								</div>		
+								<div class="step-pane" id="orderFinallyStep">
+									<div class="padding-10">
+										<br>
+										<div class="pull-left">
+											<img src="img/logo-blacknwhite.png" width="150" height="32" alt="invoice icon">
+			
+											<address>
+												<br>
+												<strong>{{branch.realName}}</strong>
+												<br>
+												{{branch.street}}  {{branch.number}} 												
+												<br>
+												{{branch.city.name}}  {{branch.city.state.uf}} {{branch.postalCode}}										
+												<br>
+												<abbr title="Phone"></abbr>Fone: {{branch.phoneNumber}}
+											</address>
+										</div>										
+										<div class="clearfix"></div>
+										<br>
+										<br>
+										<div class="padding-10 row">										
+											<div class="col-sm-9">
+												<h4 class="semi-bold">{{order.customer.name}}</h4>
+												<address>
+													<strong>{{order.customer.nickName}}</strong>
+													<br>
+													{{order.customer.street}}  {{order.customer.number}}													
+													<br>
+													{{order.customer.city.name}}  {{order.customer.city.state.uf}}	{{order.customer.postalCode}}
+													<br>
+													<abbr title="Phone"></abbr>Fone: {{order.customer.phoneNumber}}
+												</address>
+											</div>
+											<div class="col-sm-3">
+												<div>
+													<div class="font-md">
+														<strong>Data de Emissão:</strong>
+														<span class="pull-right"> <i class="fa fa-calendar"></i> 15/02/13 </span>
+													</div>
+			
+												</div>
+												<br>
+												<div class="well well-sm  bg-color-darken txt-color-white no-border padding-5">
+													<div class="fa-lg">
+														Valor Total:
+														<span class="pull-right"> R$ {{formatFloat(valueTotalInstallment)}} </span>
+													</div>
+			
+												</div>
+												<br>
+												<br>
+											</div>
+										</div>
+										<table id="datatable_order_item_finally" class="table table-hover" width="100%" >
+											<thead>
+												<tr role="row">
+													<th style="width: 10px;"></th>
+													<th style="width: 200px;">Produto</th>
+													<th style="width: 100px;">Informações</th>
+													<th style="width: 120px;">Tabela</th>
+													<th style="width: 50px;">Quantidade</th>
+													<th style="width: 50px;">Valor Unitário</th>
+													<th style="width: 70px;">Desconto Unitário</th>
+													<th style="width: 50px;">Subtotal</th>																												
+												</tr>
+											</thead>
+											
+											<tbody>
+												<tr ng-repeat="orderItem in ordersItens">
+													<td>
+														<h5><small>{{$index+1}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{orderItem.product.description}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{orderItem.observation}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{orderItem.priceTable.description}}</small></h5>
+													</td>
+													<td>
+														<h5><small>{{formatFloat(orderItem.quantity)}}</small></h5>
+													</td>
+													<td>
+														<h5><small>R$ {{formatFloat(orderItem.salePrice)}}</small></h5>
+													</td>
+													<td>
+														<h5><small>R$ {{formatFloat(orderItem.discount)}}</small></h5>
+													</td>
+													<td>
+														<h5><small>R$  {{formatFloat(parseFloat(orderItem.salePrice) * parseFloat(orderItem.quantity))}} </small></h5>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<hr>
+			
+										<div class="invoice-footer">
+			
+											<div class="row">
+			
+												<div class="col-sm-7">
+													<div class="payment-methods">
+														<h5>Forma de Pagamento - {{formPaymentSelected.description}} - {{installmenetSelected.description}}</h5>	 
+													</div>
+												</div>
+												<div class="col-sm-5">
+													<div class="invoice-sum-total pull-right">
+														<h3><strong>Total: <span class="text-success">R$ {{formatFloat(valueTotalInstallment)}}</span></strong></h3>
+													</div>
+												</div>
+			
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-12">
+													<p class="note">Observação: {{order.observation}}</p>
+												</div>
+											</div>
+			
+										</div>
+									</div>
+								</div>		
 										
 								</form>
 							</div>
@@ -309,14 +524,13 @@
 		
 	pageSetUp();
 	
-	
 	var pagefunction = function() {
+		
+		
 	
 		loadScript("js/plugin/fuelux/wizard/wizard.min.js", fueluxWizard);
 		
 		function fueluxWizard() {
-			
-			
 			
 
 			var $validator = $('#order-form').validate({
@@ -390,19 +604,17 @@
 					error.insertAfter(element.parent());
 				}
 			});
+						
+
+			//var wizard = $('.wizard').wizard();
 			
 			
-			
-			
-			
-			
-			
-			
+			 
+			 
+			 
 			
 
-			var wizard = $('.wizard').wizard();
-
-			wizard.on('finished', function(e, data) {
+			/* wizard.on('finished', function(e, data) {
 				//$("#fuelux-wizard").submit();
 				//console.log("submitted!");
 				$.smallBox({
@@ -413,7 +625,7 @@
 					timeout : 4000
 				});
 
-			});
+			}); */
 
 		};
 

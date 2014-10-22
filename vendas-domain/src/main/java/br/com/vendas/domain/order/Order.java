@@ -76,6 +76,9 @@ public class Order {
 	@JoinColumn(name="IDPEDIDO")
 	private List<OrderItem> lsOrderIten;	
 	
+	@Column(name="FORMAPAGAMENTO")
+	private Integer formPayment;
+	
 	public Integer getID() {
 		return ID;
 	}
@@ -187,5 +190,12 @@ public class Order {
 	public void setLsOrderIten(List<OrderItem> lsOrderIten) {
 		this.lsOrderIten = lsOrderIten;
 	}
-	
+
+	public Integer getFormPayment() {
+		return formPayment;
+	}
+
+	public void setFormPayment(Integer formPayment) {
+		this.formPayment = formPayment;
+	}	
 }

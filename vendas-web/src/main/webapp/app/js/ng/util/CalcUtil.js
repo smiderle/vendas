@@ -41,10 +41,7 @@ vendasApp.factory('CalcUtil',function(DateUtil){
 			 			 
 			
 			var parcelasExemploTmp = [];
-			/**
-			 * Data atual
-			 */
-			var today = new Date();
+
 			
 			/**
 			 * Calcula o valor de cada parcela. Se for informado alguma taxa de juros, é aplicado o juros em cada parcela
@@ -63,7 +60,7 @@ vendasApp.factory('CalcUtil',function(DateUtil){
 				 
 			} else {
 				valorParcela = valorTotal / numeroPrestacoes;
-				valorParcela = parseFloat(valorParcela).toFixed(2);
+				valorParcela = parseFloat(valorParcela).toFixed(2)/1;
 			}			
 			
 			
@@ -74,7 +71,7 @@ vendasApp.factory('CalcUtil',function(DateUtil){
 			if(valorParcela * numeroPrestacoes == valorTotal){
 				valorUltimaParcela = valorParcela;
 			} else {
-				valorUltimaParcela = parseFloat(valorTotal - (valorParcela * (numeroPrestacoes-1))).toFixed(2) ;
+				valorUltimaParcela = parseFloat(valorTotal - (valorParcela * (numeroPrestacoes-1))).toFixed(2)/1 ;
 			}
 			
 			
@@ -84,7 +81,8 @@ vendasApp.factory('CalcUtil',function(DateUtil){
 			 * Monta o array com as parcelas
 			 */
 			diasVencimento.forEach(function(diaParaVencer,i){
-				today.setDate(today.getDate() + diaParaVencer);
+				var date = new Date();
+				date.setDate(new Date().getDate() + diaParaVencer);
 				//Se for a ultima parcela e não possuir juros
 				if(i+1 == numeroPrestacoes && taxa === 0){
 					valorParcela = valorUltimaParcela;
@@ -93,7 +91,7 @@ vendasApp.factory('CalcUtil',function(DateUtil){
 				
 				var parcela = {
 						valor : valorParcela,
-						vencimento : DateUtil.format(today),
+						vencimento : DateUtil.format(date),
 						sequencia: i+1
 				};
 				parcelasExemploTmp.push(parcela);

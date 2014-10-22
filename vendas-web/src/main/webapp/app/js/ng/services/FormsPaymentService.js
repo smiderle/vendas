@@ -7,7 +7,7 @@ vendasApp.factory('FormsPaymentService', function() {
 		 * Retorna as formas de pagamento. Por enquanto ta fixo. Posteriormente,
 		 * avaliar a necessidade de persistir isso em banco.
 		 */
-		getFormsPayment : function(customer) {
+		getFormsPayment : function() {
 			return [ {
 				description : 'Dinheiro',
 				id : 1

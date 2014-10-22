@@ -51,10 +51,7 @@ public class Customer {
 	 */
 	@Column(name="inscriestad")
 	private String incricao;
-	
-	@Column(name="CONTATO")
-	private String contact;
-	
+
 	@Column(name="FONE_COMERCIAL")
 	private String commercialPhone;
 	
@@ -224,13 +221,6 @@ public class Customer {
 		this.incricao = incricao;
 	}
 
-	public String getContact() {
-		return contact;
-	}
-
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
 
 	public String getCommercialPhone() {
 		return commercialPhone;

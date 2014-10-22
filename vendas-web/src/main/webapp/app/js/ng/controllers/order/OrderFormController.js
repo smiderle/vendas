@@ -5,10 +5,11 @@
 /***************************************************************************/
 
 vendasApp.controller('OrderFormController',
-		['$scope','$rootScope','OrderService','UtilityService','ContextService','PriceTableService','CustomerService','CalcUtil',
-		 function BudgetFormController($scope,$rootScope,OrderService, UtilityService, ContextService, PriceTableService, CustomerService, CalcUtil) {
+		['$scope','$rootScope','OrderService','UtilityService','ContextService','PriceTableService','CustomerService','CalcUtil','FormsPaymentService','InstallmentService',
+		 function BudgetFormController($scope,$rootScope,OrderService, UtilityService, ContextService, PriceTableService, CustomerService, CalcUtil, FormsPaymentService, InstallmentService) {
 			
-
+			$scope.branch = ContextService.getBranchLogged();
+			
 			$scope.errorMessage = 'Testando';
 			
 			/**
@@ -35,6 +36,17 @@ vendasApp.controller('OrderFormController',
 			 * Cliente selecionado
 			 */
 			$scope.customerSelected = {};
+			
+			/**
+			 * Parcelamento selecionado
+			 */
+			$scope.installmenetSelected = {};
+			
+			/**
+			 * Forma de pagamento selecionado
+			 */
+			$scope.formPaymentSelected;
+			
 						
 			/**
 			 * Tabelas de preço
@@ -45,6 +57,11 @@ vendasApp.controller('OrderFormController',
              * Valor Total do pedido
              */
             $scope.valueTotal = 0.0;
+            
+            /**
+             * Valor Total das Parcelas.
+             */
+            $scope.valueTotalInstallment = 0.0;
 			
 			/**
 			 * Quando for editar um item do pedido é armazendo o item antes da
@@ -58,7 +75,78 @@ vendasApp.controller('OrderFormController',
 			/**
 			 * Utilizados pela directiva validator
 			 */			
-			$scope.maximunDiscount = ContextService.getBranchLogged().maximumDiscount;
+			$scope.maximunDiscount = $scope.branch.maximumDiscount;
+						
+
+			$scope.init = function(){
+				
+				configWizard();
+				
+				$scope.order.issuanceTime = new Date();
+
+				$scope.errorMessage = 'Alguns campos estão incorretos. Por favor, verifique antes de continuar.';
+
+				/**
+				 * Inicializa os parametros que irão ser setados na url do autocomplete
+				 */
+				$scope.dataFormatFn = function(str) {
+					return {
+						filter: str,
+						organizationID: ContextService.getOrganizationID(),
+						branchID: $scope.branch.branchOfficeID,
+						offset: 0,
+						limit: 20
+					}; 
+				};
+
+				/**
+				 * Inicializa os parametros que irão ser setados na url do autocomplete
+				 */
+				$scope.dataFormatProduct = function(str) {
+					return {
+						filter: str,
+						organizationID: ContextService.getOrganizationID(),
+						branchID: $scope.branch.branchOfficeID,
+						offset: 0,
+						limit: 20
+					}; 
+				};
+
+				var isEdition = false;
+
+				listTables(
+						function(){
+							if(!isEdition && $scope.tables.length > 0){
+								$scope.orderItem.priceTable =  $scope.tables[0];
+								applyPriceTable();
+							}
+						});
+				
+				listFormsPayment(
+						function(){
+							if(!isEdition && $scope.formsPayment.length > 0)
+								if($scope.order.customer && $scope.order.customer.formPayment){
+									$scope.order.formPayment =  $scope.order.customer.formPayment;
+								} else {
+									$scope.formPaymentSelected = $scope.formsPayment[0];
+									$scope.order.formPayment =  $scope.formsPayment[0].id;
+								}																
+							});
+				
+				listInstallments(
+						function(){
+							if(!isEdition && $scope.installments.length > 0)
+								if($scope.order.customer && $scope.order.customer.installment){
+									$scope.installment =  $scope.order.customer.installment;
+								} else {
+									$scope.installmenetSelected = $scope.installments[0];
+									$scope.installment =  $scope.installments[0].id;
+								}
+								
+								  
+							});
+
+			};	
 			
 			/**
 			 * Quando o desconto (em reais) é alterado, é calculado o percentual e alterado desconto (em precentual)
@@ -73,8 +161,23 @@ vendasApp.controller('OrderFormController',
 					
 					var valFinal = valPriceTable - $scope.orderItem.discount;
 					$scope.orderItem.salePrice = parseFloat(valFinal).toFixed(2)/1;
+				} else {
+					$scope.discountPercentage = undefined;
 				}
 			});
+			
+			$scope.onBlurDiscount = function(){
+				/*if(!isNaN($scope.orderItem.discount)){
+					
+					calcPercentageDiscount($scope.orderItem.discount);
+					
+					var table = $scope.orderItem.priceTable;
+					var valPriceTable = CalcUtil.applyPercentage($scope.productSelected.salePrice,table.percentage, !table.increase);
+					
+					var valFinal = valPriceTable - $scope.orderItem.discount;
+					$scope.orderItem.salePrice = parseFloat(valFinal).toFixed(2)/1;
+				}*/
+			};
 			
 			/**
 			 * Quando o campo orderItemSalePrice, preço de venda, perder o focu
@@ -91,30 +194,13 @@ vendasApp.controller('OrderFormController',
 						var valFinal = valPriceTable - $scope.orderItem.salePrice ;
 						$scope.orderItem.discount = parseFloat(valFinal).toFixed(2)/1;
 					} else {
-						$scope.orderItem.discount = 0/1;
+						$scope.orderItem.discount = undefined;
 					}
 				}
 			};
 					
 			
-			/**
-			 * Produto selecionado
-			 */
-			$scope.productSelectedCallback = function(obj){
-				if(obj){
-					$scope.productSelected = obj.originalObject;
-					
-					applyPriceTable(obj.originalObject.salePrice);
-					
-					var table = $scope.orderItem.priceTable;
-					var valProductPriceTable = CalcUtil.applyPercentage(obj.originalObject.salePrice,table.percentage, !table.increase);
-					$scope.orderItem.salePrice = valProductPriceTable; 
-					// foi colocado o 0.0/1, porque se deixar somente 0.0, o input do tipo number não esta apresentando o valor 
-					$scope.orderItem.discount = 0.0;
-					$scope.orderItem.quantity = 1;
-					$scope.orderItem.product = obj.originalObject;
-				}				
-			};
+			
 			
 			/**
 			 * Quando mudar a tabela de preço
@@ -125,10 +211,41 @@ vendasApp.controller('OrderFormController',
 					var valFinal = 0;
 					valFinal = CalcUtil.applyPercentage($scope.productSelected.salePrice,table.percentage, !table.increase);
 					$scope.orderItem.salePrice= valFinal;
-					$scope.orderItem.discount = 0.0;
+					$scope.orderItem.discount = undefined;
 					//Recalcula o desconto em percentual com a nova tabela de preço selecionada
 					calcPercentageDiscount($scope.orderItem.discount);
 				}
+			};
+			
+			/**
+			 * Quando mudar o combo do parcelamento
+			 */
+			$scope.onChangeInstallment = function(){
+				var installment = $scope.installments;
+				
+				var i = 0;
+				for(;i < installment.length; i++){
+					if(installment[i].id === $scope.installment){
+						$scope.installmenetSelected = installment[i];
+						generateInstallment(installment[i]);
+						break;
+					}
+				}				
+			};
+			
+			/**
+			 * Quando mudar o combo de forma de parcelamento
+			 */
+			$scope.onChangeFormPayment = function(){
+				
+				var formsPayment = $scope.formsPayment;
+					
+				for(var i = 0 ; i < formsPayment.length ; i++){
+					if(formsPayment[i].id === $scope.order.formPayment){
+						$scope.formPaymentSelected = formsPayment[i];
+						break;
+					}
+				}				
 			};
 			
 			
@@ -143,7 +260,7 @@ vendasApp.controller('OrderFormController',
 					$('#alertOrderInvalid').hide();
 					
 					if(orderItem.discount == undefined){
-						orderItem.discount = 0.0;
+						//orderItem.discount = 0.0;
 					}
 
 					//console.log($scope.orderForm.orderItemDiscountPercentage.$error.maximumdiscountvalidator);
@@ -185,7 +302,7 @@ vendasApp.controller('OrderFormController',
 			$scope.editProduct = function(orderItemIndex){
 				
 				var orderItem = $scope.ordersItens[orderItemIndex];
-								
+				
 				$scope.orderItemEdition = {
 						discount : orderItem.discount,
 						quantity: orderItem.quantity,
@@ -209,6 +326,44 @@ vendasApp.controller('OrderFormController',
 				$rootScope.$broadcast('angucomplete-alt:setValue', { elementId:  'autoCompleteProduct', value: orderItem.product.description } );
 			};
 			
+			/**
+			 * Produto selecionado
+			 */
+			$scope.productSelectedCallback = function(obj){
+				if(obj){
+					$scope.productSelected = obj.originalObject;
+					
+					applyPriceTable(obj.originalObject.salePrice);
+					
+					var table = $scope.orderItem.priceTable;
+					var valProductPriceTable = CalcUtil.applyPercentage(obj.originalObject.salePrice,table.percentage, !table.increase);
+					$scope.orderItem.salePrice = valProductPriceTable; 
+					// foi colocado o 0.0/1, porque se deixar somente 0.0, o input do tipo number não esta apresentando o valor 
+					$scope.orderItem.discount = undefined;
+					$scope.orderItem.quantity = 1;
+					$scope.orderItem.product = obj.originalObject;
+				}				
+			};
+			
+			/**
+			 * Cliente selecionado
+			 */
+			
+			$scope.customerSelectedCallback = function(obj){
+				if(obj){
+					$scope.order.customer = obj.originalObject;
+					 
+					if($scope.order.customer && $scope.order.customer.installment){
+						$scope.installment =  $scope.order.customer.installment;
+					}					
+					
+					if($scope.customerSelected && $scope.customerSelected.formPayment){
+						$scope.order.formPayment =  $scope.order.customer.formPayment;
+					}
+					
+				}				
+			};
+			
 			
 			/**
 			 * Remove o item do pedido
@@ -218,48 +373,7 @@ vendasApp.controller('OrderFormController',
                 calcValueTotal();
 			};
 
-
-			$scope.init = function(){
-				
-				$scope.errorMessage = 'Alguns campos estão incorretos. Por favor, verifique antes de continuar.';
-
-				/**
-				 * Inicializa os parametros que irão ser setados na url do autocomplete
-				 */
-				$scope.dataFormatFn = function(str) {
-					return {
-						filter: str,
-						organizationID: ContextService.getOrganizationID(),
-						branchID: ContextService.getBranchLogged().branchOfficeID,
-						offset: 0,
-						limit: 20
-					}; 
-				};
-
-				/**
-				 * Inicializa os parametros que irão ser setados na url do autocomplete
-				 */
-				$scope.dataFormatProduct = function(str) {
-					return {
-						filter: str,
-						organizationID: ContextService.getOrganizationID(),
-						branchID: ContextService.getBranchLogged().branchOfficeID,
-						offset: 0,
-						limit: 20
-					}; 
-				};
-
-				var isEdition = false;
-
-				listTables(
-						function(){
-							if(!isEdition && $scope.tables.length > 0){
-								$scope.orderItem.priceTable =  $scope.tables[0];
-								applyPriceTable();
-							}
-						});
-
-			};		
+	
 			
 			$scope.parseFloat = function(val) {
 			    return isNaN(parseFloat(val)) ? 0: parseFloat(val);
@@ -275,6 +389,24 @@ vendasApp.controller('OrderFormController',
 				} else {
 					return numberFormat(val, 2, ',', '.'); 
 				}			
+			};
+			
+
+			
+			function generateInstallment(installment){
+								
+				var dias = installment.installmentsDays.split(' ').map(Number);
+				
+				CalcUtil.geraParcelas($scope.valueTotal, dias,installment.tax,function(parcelasGeradas){
+					$scope.parcelas = parcelasGeradas;
+					
+					var valueTotalInstallment = 0.0;
+					parcelasGeradas.forEach(function(parcela){
+						valueTotalInstallment += parcela.valor;						
+					});
+					
+					$scope.valueTotalInstallment = valueTotalInstallment;
+				});
 			};
 			
 			/**
@@ -297,7 +429,7 @@ vendasApp.controller('OrderFormController',
 				
 				var maxDesc = CalcUtil.getValueByPercentage(
 						productPriceTable,
-						ContextService.getBranchLogged().maximumDiscount);
+						$scope.branch.maximumDiscount);
 				
 				$scope.maximunDiscountProduct = $scope.formatFloat(maxDesc);
 				
@@ -321,13 +453,43 @@ vendasApp.controller('OrderFormController',
 				}
 				$scope.valueTotal = total;
 			}
+			
+			$scope.getFormPaymentSelected = function(){
+				var length = $scope.formsPayment;
+				for(var i=0 ; i < length; i++ ){
+					if(payment.id === $scope.formsPayment[i]){
+						return payment;
+						break;
+					};
+				}
+				
+			};
 			 			
+			/**
+			 * Carrega as formas de pagamento
+			 */
+			function listFormsPayment(callback){
+				$scope.formsPayment =  FormsPaymentService.getFormsPayment();
+				callback();
+			};
+			
+			/**
+			 * Carrega os parcelamentos
+			 */
+			function listInstallments(callback) {
+				var aInstallments = InstallmentService.getAllByBranch(ContextService.getOrganizationID(), $scope.branch.branchOfficeID);
+				aInstallments.then(function(toReturn){
+					$scope.installments = toReturn.value;
+					callback();
+				});
+			};
+			
 
 			/**
 			 * Carrega as tabelas de preço 
 			 */			
 			function listTables(callback) {
-				var aTables = PriceTableService.getAllByBranch(ContextService.getOrganizationID(), ContextService.getBranchLogged().branchOfficeID);
+				var aTables = PriceTableService.getAllByBranch(ContextService.getOrganizationID(), $scope.branch.branchOfficeID);
 				aTables.then(function(toReturn){
 					$scope.tables = toReturn.value;
 					callback();
@@ -397,6 +559,56 @@ vendasApp.controller('OrderFormController',
 				}
 				return errorMessages;
 				
+			}
+			
+			/**
+			 * Faz algumas configurações no wizard do pedido, como por exemplo, 
+			 * registrar ouvintes nas trocas de paginas.
+			 */
+			function configWizard(){
+				$('#myWizard').on('change', function(e, data) {
+	                console.log('change');
+	                console.log(data.step);	         
+	                
+	                
+	                if(data.step === 2 && data.direction==='next') {
+	                	$scope.onChangeInstallment();
+	                    // return e.preventDefault();
+	                }
+	                
+	                if(data.step === 3 && data.direction==='next') {
+	                	
+	                	$scope.parcelas.forEach(function(parcela){
+	                		console.log(parcela);
+	                	});
+	                }
+	                
+	                
+	                
+	            });
+	 
+	            $('#myWizard').on('changed', function(e, data) {	    
+	            	console.log(data);
+	                console.log('changed');
+	            });
+	 
+	            $('#myWizard').on('finished', function(e, data) {
+	            	$.smallBox({
+						title : "Congratulations! Your form was submitted",
+						content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
+						color : "#5F895F",
+						iconSmall : "fa fa-check bounce animated",
+						timeout : 4000
+					});
+	            });
+	 
+	            $('.btn-prev').on('click', function() {
+	                console.log('prev');
+	            });
+	 
+	            $('.btn-next').on('click', function() {
+	                console.log('next');
+	            });
 			}
 
 			

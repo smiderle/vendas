@@ -1,6 +1,6 @@
 'use strict';
 
-var INTEGER_REGEXP = /^\-?\d+$/;
+/*var INTEGER_REGEXP = /^\-?\d+$/;
 vendasApp.directive('discountMaximo2', function () {
 	return {
 	    require: 'ngModel',
@@ -19,7 +19,7 @@ vendasApp.directive('discountMaximo2', function () {
 	      });
 	    }
 	  };
-});
+});*/
 
 /**
  * Valida se o desconto que esta sendo digitado no input esta é superior ao desconto máximo
