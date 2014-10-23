@@ -82,7 +82,14 @@ vendasApp.controller('OrderFormController',
 				
 				configWizard();
 				
-				$scope.order.issuanceTime = new Date();
+				$scope.order = {
+						issuanceTime : new Date(),
+						organizationID: ContextService.getOrganizationID(),
+						branchID: $scope.branch.branchOfficeID,
+						userID: ContextService.getUserLogged().userID
+				};
+				
+				//$scope.order.issuanceTime = new Date();
 
 				$scope.errorMessage = 'Alguns campos estão incorretos. Por favor, verifique antes de continuar.';
 
@@ -267,6 +274,10 @@ vendasApp.controller('OrderFormController',
 					
 					//Se essa variavel estiver vazia, significa que não é uma edição
 					if($scope.orderItemEdition == undefined || $scope.orderItemEdition  == null){
+						
+						orderItem.organizationID = ContextService.getOrganizationID();
+						orderItem.branchID = $scope.branch.branchOfficeID;
+
 						$scope.ordersItens.push(orderItem);
 					} else {
 						$scope.orderItemEdition = undefined;
@@ -281,6 +292,9 @@ vendasApp.controller('OrderFormController',
 
 			};
 			
+			/**
+			 * Cancela a edição, setando os valores default para o item do pedido.
+			 */
 			$scope.cancelEdition = function(){
 				
 				var orderItem = $scope.orderItemEdition;
@@ -324,6 +338,27 @@ vendasApp.controller('OrderFormController',
 				calcPercentageDiscount($scope.orderItem.discount);
 				
 				$rootScope.$broadcast('angucomplete-alt:setValue', { elementId:  'autoCompleteProduct', value: orderItem.product.description } );
+			};
+			
+			/**
+			 * Salva o pedido
+			 */
+			$scope.save = function() {
+				/*var orderWrapper = {};
+				
+				orderWrapper.order = $scope.order;
+				orderWrapper.order.ordersItens =  angular.copy($scope.ordersItens);
+								
+				OrderService.save(orderWrapper);*/
+				
+				var orderWrapper = {};
+				
+				orderWrapper.order = $scope.order;
+				//orderWrapper.order.ordersItens =  angular.copy($scope.ordersItens);
+				orderWrapper.order.ordersItens =  $scope.ordersItens;				
+								
+				console.log(orderWrapper);
+				OrderService.save(orderWrapper);
 			};
 			
 			/**
@@ -399,6 +434,8 @@ vendasApp.controller('OrderFormController',
 				
 				CalcUtil.geraParcelas($scope.valueTotal, dias,installment.tax,function(parcelasGeradas){
 					$scope.parcelas = parcelasGeradas;
+										
+					$scope.order.ordersPayments = $scope.parcelas;
 					
 					var valueTotalInstallment = 0.0;
 					parcelasGeradas.forEach(function(parcela){
@@ -593,6 +630,9 @@ vendasApp.controller('OrderFormController',
 	            });
 	 
 	            $('#myWizard').on('finished', function(e, data) {
+	            	$scope.save();
+	            	
+	            	
 	            	$.smallBox({
 						title : "Congratulations! Your form was submitted",
 						content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",

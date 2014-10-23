@@ -223,7 +223,7 @@
 														<a class="fa fa-lg fa-times" href="javascript:void(0);" ng-click="deleteOrderItem($index)"></a>
 													</td>
 													<td>
-														<h5><small>{{$index+1}}</small></h5>
+														<h5><small>{{orderItem.sequence = $index+1}}</small></h5>
 													</td>
 													<td>
 														<h5><small>{{orderItem.product.description}}</small></h5>
@@ -318,15 +318,15 @@
 															
 														</tr>
 													</thead>												
-													<tr ng-repeat="parcela in parcelas">														
+													<tr ng-repeat="parcela in parcelas">
 														<td>
-															<h5><small>{{parcela.sequencia}}</small></h5>
+															<h5><small>{{parcela.sequence}}</small></h5>
 														</td>														
 														<td>
-															<h5><small>R$ {{parcela.valor}}</small></h5>
+															<h5><small>R$ {{parcela.installmentValue}}</small></h5>
 														</td>
 														<td>
-															<h5><small>{{parcela.vencimento}}</small></h5>
+															<h5><small>{{parcela.paymentDate}}</small></h5>
 														</td>
 														<td>
 															<input type="text" class="form-control" ng-model="parcela.documentNumber">

@@ -4,7 +4,7 @@
 /**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
 /***************************************************************************/
 
-vendasApp.factory('CalcUtil',function(DateUtil){
+vendasApp.factory('CalcUtil',function(DateUtil, ContextService){
 	
 	return {		
 
@@ -90,10 +90,13 @@ vendasApp.factory('CalcUtil',function(DateUtil){
 					
 				
 				var parcela = {
-						valor : valorParcela,
-						vencimento : DateUtil.format(date),
-						sequencia: i+1
+						installmentValue : valorParcela,
+						expirationDate : date,
+						sequence: i+1,
+						organizationID: ContextService.getOrganizationID(),
+						branchID: ContextService.getBranchLogged().branchOfficeID
 				};
+				
 				parcelasExemploTmp.push(parcela);
 			});
 			

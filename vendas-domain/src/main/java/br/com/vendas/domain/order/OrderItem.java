@@ -1,5 +1,7 @@
 package br.com.vendas.domain.order;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,8 +16,13 @@ import br.com.vendas.domain.product.Product;
 
 @Entity
 @Table(name="PEDIDOITEM")
-public class OrderItem {
+public class OrderItem implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8795675300876421269L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
@@ -26,12 +33,16 @@ public class OrderItem {
 	
 	@Column(name="IDFILIAL")
 	private Integer branchID;
-	
-	@Column(name="IDPEDIDO")
-	private Integer orderID;
+
 	
 	@Column(name="SEQUENCIA")	
 	private Integer sequence;
+	
+	/*@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="IDPEDIDO")*/
+	@ManyToOne
+    @JoinColumn(name = "IDPEDIDO")
+	private Order order;	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="IDPRODUTO")
@@ -48,8 +59,10 @@ public class OrderItem {
 	
 	@Column(name="OBSERVACAO")
 	private String observation;
-
-
+	
+	@ManyToOne
+	@JoinColumn(name="TABPRECO")
+	private PriceTable priceTable;
 
 	public Long getID() {
 		return ID;
@@ -75,14 +88,7 @@ public class OrderItem {
 		this.branchID = branchID;
 	}
 
-	public Integer getOrderID() {
-		return orderID;
-	}
-
-	public void setOrderID(Integer orderID) {
-		this.orderID = orderID;
-	}
-
+	
 	public Integer getSequence() {
 		return sequence;
 	}
@@ -129,5 +135,21 @@ public class OrderItem {
 
 	public void setObservation(String observation) {
 		this.observation = observation;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public PriceTable getPriceTable() {
+		return priceTable;
+	}
+
+	public void setPriceTable(PriceTable priceTable) {
+		this.priceTable = priceTable;
 	}	
 }

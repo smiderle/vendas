@@ -2,7 +2,6 @@ package br.com.vendas.exception;
 
 public class ApplicationException extends VendasException {
 	private static final long serialVersionUID = 1L;
-	public static final String CODE_TIME_OUT = "1019";
 
 	public ApplicationException() {
 		super();

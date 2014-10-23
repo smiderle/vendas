@@ -1,9 +1,11 @@
 package br.com.vendas.domain.order;
 
-import java.util.Calendar;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,17 +20,21 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.vendas.domain.customer.Customer;
-import br.com.vendas.domain.user.User;
 
 
 @Entity
 @Table(name="PEDIDO")
-public class Order {
+public class Order implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8873651768509661696L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
-	private Integer ID;
+	private Long ID;
 	
 	@Column(name="IDEMPRESA")
 	private Integer organizationID;
@@ -40,13 +46,13 @@ public class Order {
 	@JoinColumn(name="IDCLIENTE")
 	private Customer customer;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	/*@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="IDVENDEDOR")
-	private User user;
+	private User user;*/
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="TABELAPRECO")
-	private PriceTable priceTable;
+	@Column(name="IDVENDEDOR")
+	private Integer userID;
+	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="PARCELAMENTO")
@@ -65,25 +71,29 @@ public class Order {
 	@Column(name="DTHRALTERACAO")
 	private Date changeTime;
 		
-	@Column(name="OBSERVATION")	
-	private String observacao;
+	@Column(name="OBSERVACAO")	
+	private String observation;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DTHREMISSAO")
-	private Calendar issuanceTime;
+	private Date issuanceTime;
 
-	@OneToMany
-	@JoinColumn(name="IDPEDIDO")
-	private List<OrderItem> lsOrderIten;	
+	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="IDPEDIDO")*/
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.EAGER)
+	private Set<OrderItem> ordersItens = new HashSet<>(0);	
+	
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.EAGER)
+	private Set<OrderPayment> ordersPayments = new HashSet<>(0);
 	
 	@Column(name="FORMAPAGAMENTO")
 	private Integer formPayment;
 	
-	public Integer getID() {
+	public Long getID() {
 		return ID;
 	}
 
-	public void setID(Integer iD) {
+	public void setID(Long iD) {
 		ID = iD;
 	}
 
@@ -111,22 +121,7 @@ public class Order {
 		this.customer = customer;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public PriceTable getPriceTable() {
-		return priceTable;
-	}
-
-	public void setPriceTable(PriceTable priceTable) {
-		this.priceTable = priceTable;
-	}
-
+	
 	public Installment getInstallment() {
 		return installment;
 	}
@@ -167,28 +162,29 @@ public class Order {
 		this.changeTime = changeTime;
 	}
 
-	public String getObservacao() {
-		return observacao;
+	public String getObservation() {
+		return observation;
 	}
 
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
+	public void setObservation(String observation) {
+		this.observation = observation;
 	}
 
-	public Calendar getIssuanceTime() {
+	public Date getIssuanceTime() {
 		return issuanceTime;
 	}
 
-	public void setIssuanceTime(Calendar issuanceTime) {
+	public void setIssuanceTime(Date issuanceTime) {
 		this.issuanceTime = issuanceTime;
 	}
-
-	public List<OrderItem> getLsOrderIten() {
-		return lsOrderIten;
+	
+	
+	public Set<OrderItem> getOrdersItens() {
+		return ordersItens;
 	}
 
-	public void setLsOrderIten(List<OrderItem> lsOrderIten) {
-		this.lsOrderIten = lsOrderIten;
+	public void setOrdersItens(Set<OrderItem> ordersItens) {
+		this.ordersItens = ordersItens;
 	}
 
 	public Integer getFormPayment() {
@@ -197,5 +193,21 @@ public class Order {
 
 	public void setFormPayment(Integer formPayment) {
 		this.formPayment = formPayment;
+	}
+
+	public Integer getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
+
+	public Set<OrderPayment> getOrdersPayments() {
+		return ordersPayments;
+	}
+
+	public void setOrdersPayments(Set<OrderPayment> ordersPayments) {
+		this.ordersPayments = ordersPayments;
 	}	
 }
