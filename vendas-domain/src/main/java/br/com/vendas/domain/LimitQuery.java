@@ -31,7 +31,12 @@ public enum LimitQuery {
 	/**
 	 * Limite de registros das consultas de clientes
 	 */
-	LIMIT_CUSTOMER(60);
+	LIMIT_CUSTOMER(60),
+	
+	/**
+	 * Limite de registros das consultas do pedido
+	 */
+	LIMIT_ORDER(60);
 	
 	private final Integer limit;
 	

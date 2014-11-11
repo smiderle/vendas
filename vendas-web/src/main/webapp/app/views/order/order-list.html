@@ -1,0 +1,71 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">		
+			<div class="well">
+				<form ng-submit="findOrdersByFilter()">
+					<div class="input-group">			
+						<input class="form-control" type="text" placeholder="Pesquise pelo numero do pedido/orçamento, código ou cpf do cliente." ng-model="filter" id="filterOrders">
+							<div class="input-group-btn">
+								<button class="btn btn-default btn-primary" type="button" ng-click="findOrdersByFilter()">
+									<i class="fa fa-search"></i> Pesquisar
+								</button>
+							</div>				
+					</div>
+				</form>
+			</div>		
+			<div class="jarviswidget jarviswidget-color-greenDark" id="wid-branch-list" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Pedidos/Orçamentos </h2>
+
+				</header>
+
+				<div>
+					<div class="widget-body no-padding">
+						<div class="dt-toolbar">
+							<div class="col-xs-12">
+								<a class="btn btn-primary"  ng-click="newOrder()"> <i class="fa fa-plus-square-o"></i>  Novo</a>
+								<a id="btnOrderEdit" class="btn btn-primary  required-selected" href="javascript:void(0);" ng-click="editOrder()" ><i class="fa fa-edit"></i>  Editar</a>
+								<a id="btnCustomerShowDetails" class="btn  txt-color-white bg-color-blueDark required-selected" href="javascript:void(0);" ng-click="showOrderDetails()" ><i class="fa fa-search"></i>  Detalhes</a>
+							</div>
+							<br>
+						</div>
+
+						<table id="datatable_order" custom-data-table aa-data="rowsDataTable" ng-init="init()" class="table table-hover table-striped smart-form has-tickbox dataTable" radio="true" paging="true" limit="60" width="100%" >
+							<thead>
+									<tr role="row">
+										<th style="width: 10px;" ></th>
+										<th style="width: 23px;">Sequência</th>										
+										<th style="width: 50px;">Numero</th>
+										<th style="width: 400px;">Cliente</th>
+										<th style="width: 50px;">Valor</th>
+										<th style="width: 50px;">Data de Emissão</th>
+										<th style="width: 50px;">Tipo</th>										
+									</tr>
+								</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+
+		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	pageSetUp();
+	
+	$('#btnOrderEdit').attr("disabled","disabled");
+	$('#btnCustomerShowDetails').attr("disabled","disabled");
+</script>

@@ -24,5 +24,12 @@ public interface CustomerDAO extends GenericDAO<Customer> {
 	 * @return
 	 */
 	List<Customer> findByIDOrNameOrCpf(String name,String cpfCnpj,String customerID,Integer organizationID, Integer branchID, Integer offset,Integer limit);
+	
+	/**
+	 * Retorna o cliente pelo id
+	 * @param id
+	 * @return
+	 */
+	Customer findByID(Integer id);
 
 }

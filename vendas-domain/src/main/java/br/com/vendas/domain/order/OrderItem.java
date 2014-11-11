@@ -1,6 +1,7 @@
 package br.com.vendas.domain.order;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.vendas.domain.product.Product;
 
@@ -37,14 +42,13 @@ public class OrderItem implements Serializable{
 	
 	@Column(name="SEQUENCIA")	
 	private Integer sequence;
-	
-	/*@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="IDPEDIDO")*/
+
 	@ManyToOne
     @JoinColumn(name = "IDPEDIDO")
+	@JsonIgnore
 	private Order order;	
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="IDPRODUTO")
 	private Product product;
 	
@@ -63,6 +67,10 @@ public class OrderItem implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="TABPRECO")
 	private PriceTable priceTable;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="DTHRALTERACAO")
+	private Date changeTime;
 
 	public Long getID() {
 		return ID;
@@ -151,5 +159,13 @@ public class OrderItem implements Serializable{
 
 	public void setPriceTable(PriceTable priceTable) {
 		this.priceTable = priceTable;
-	}	
+	}
+
+	public Date getChangeTime() {
+		return changeTime;
+	}
+
+	public void setChangeTime(Date changeTime) {
+		this.changeTime = changeTime;
+	}
 }

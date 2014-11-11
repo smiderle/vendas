@@ -5,15 +5,19 @@
 /***************************************************************************/
 
 vendasApp
-.controller('ContextController',function AppController($scope, ContextService,LocalStorageService, Constants, $location) {
+.controller('ContextController',function AppController($scope,ContextService,LocalStorageService, Constants, $location) {
 	
 	//Filial atual
 	$scope.currentBranch;
 	
+	//Empresa logada
+	$scope.organizationID  = ContextService.getOrganizationID();
+	
 	//Usuario logado
 	var userLogged = ContextService.getUserLogged();
 		
-	if(userLogged){			
+	if(userLogged){
+		console.log('Chamando no ContextController');
 		var usersBranchTmp = [];
 		userLogged.userBranches.forEach(function(userBranch){
 			if(userBranch.enable){
@@ -50,7 +54,26 @@ vendasApp
 		ContextService.setBranchLogged(branch);			
 		$scope.currentBranch = branch;
 		$location.path("/");
-	};			
-
+	};
 	
+	/**
+	 * Atualiza $scope.userBranches com as empresas do usuário.
+	 * É invocado quando o usuário faz alguma alteração no cadastro da empresa, então é emitido um evento
+	 * para atualizar as empresas que estão no escopo, para ficar com os dados atualizados
+	 */
+	$scope.$on('vendasApp:updateBranches', function(){
+		console.log('CHAMOU UPDATE BRANCHES');
+		var usersBranchTmp = [];
+		userLogged.userBranches.forEach(function(userBranch){
+			if(userBranch.enable){
+				usersBranchTmp.push(userBranch.branchOffice);
+			}
+		});
+
+		$scope.userBranches = usersBranchTmp;
+	});
+	
+	
+	 
+	 
 });

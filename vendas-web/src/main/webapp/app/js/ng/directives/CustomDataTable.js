@@ -5,21 +5,24 @@ vendasApp.directive('customDataTable', function () {
 		/**
 		 * Controla quando o envento scope.$emit('vendasApp:isLastPage') pode ser emitido. 
 		 */
-		//var enventActive = false, 
+		var enventActive = false, 
 		
 		/**
 		 * é um datatable com paginação ?
-		 */
-		var paging = attrs.paging;
+		 */ 
+		paging = attrs.paging,
+		
+		
+		limit = attrs.limit;
+		
 
 		var options = {
 
 				"fnDrawCallback": function(){
 					//console.log('Total ' + this.fnPagingInfo().iTotalPages + ' Current '+ this.fnPagingInfo().iPage + ' Rows dt'+ this.fnPagingInfo().iTotal + 'Total de reg ' + attrs.aaData);
-
-					/*if(paging && enventActive && (this.fnPagingInfo().iTotalPages == this.fnPagingInfo().iPage)){
+					if(paging && enventActive && (this.fnPagingInfo().iTotalPages == this.fnPagingInfo().iPage)){
 						scope.$emit('vendasApp:isLastPage');
-					}*/
+					}
 				},
 
 				"bStateSave": false,	
@@ -79,24 +82,19 @@ vendasApp.directive('customDataTable', function () {
 		 */
 		scope.$watch(attrs.aaData, function(value) {
 			var currentPage = dataTable.fnPagingInfo().iPage;
-			var iLength = dataTable.fnPagingInfo().iLength;
-			
 			
 			var val = value || null;
 			//Quantidade de registros no datatable
 			var iTotal = dataTable.fnPagingInfo().iTotal;
 			
-
 			
-			
-			
-			//enventActive = false;
-			//Remove todas as linhas existentes do datatable.
-			//dataTable.fnClearTable(0);
+			enventActive = false;
 						
 			if (val) {
 				//Quantidade de registros no datatable mais a quantidade que sera inserida
 				var totalRow = dataTable.fnPagingInfo().iTotal + val.length;
+				
+				var iTotal = dataTable.fnPagingInfo().iTotal;
 				
 				var i=0,
 				len = val.length;
@@ -112,25 +110,20 @@ vendasApp.directive('customDataTable', function () {
 					 * e for o penultimo produto a ser carregado 
 					 * e a quantidade de item que foi retornado do server for maior que o limite de linhas por pagina
 					 */ 
-					if(paging && dataTable.fnPagingInfo().iTotal == (totalRow - 1) /*&& (len == 4)*/){
+					if(paging && dataTable.fnPagingInfo().iTotal == (totalRow - 1) && val.length >= parseInt(limit) /*&& (len == 4)*/){
 						console.log('Ativando evento');
-						//enventActive = true;
-						scope.$emit('vendasApp:isLastPage');
+						enventActive = true;						
 					}
 
-					/*if(paging && i == (parseInt(i) + iTotal) == totalRow){
+					if(paging && (i + iTotal) == totalRow){
 						console.log('Desativando evento');
-						//enventActive = false;
-					}*/
+						enventActive = false;
+					}
 					
 				}
 				dataTable.fnPageChange(currentPage-1,true);
-				
-				
 			}
-			
-			//Atualiza a datatable 
-			//dataTable.fnDraw();
+
 		});
 
 

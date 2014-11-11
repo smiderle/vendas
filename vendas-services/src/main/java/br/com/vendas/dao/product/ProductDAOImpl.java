@@ -16,7 +16,7 @@ import br.com.vendas.domain.product.Product;
 public class ProductDAOImpl extends ResourceDAO<Product> implements ProductDAO {
 
 	@Override
-	public List<Product> findAllByBranche(Integer organizationID, Integer branchID,
+	public List<Product> findAllByBranch(Integer organizationID, Integer branchID,
 			Integer offset, Integer limit) {
 
 

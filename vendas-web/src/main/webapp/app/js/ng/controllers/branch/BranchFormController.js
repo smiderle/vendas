@@ -2,7 +2,7 @@
 
 vendasApp
 .controller('BranchFormController',
-		function BranchController($scope, BranchService, ContextService, UtilityService, LocationService) {
+		function BranchController($scope,$rootScope, BranchService, ContextService, UtilityService, LocationService) {
 	
 	
 	$scope.branchOffice;
@@ -15,9 +15,10 @@ vendasApp
 	 * Ações para o select titulos vencidos, e limite de credito
 	 */
 	$scope.actions = [
-	                  { label: 'Bloquear', code: 'B'},
 	                  { label: 'Avisar', code: 'A'},
-	                  { label: 'Não Fazer Nada', code: 'N'},
+	                  { label: 'Bloquear', code: 'B'},
+	                  { label: 'Solicitar Liberação', code: 'L'},
+	                  { label: 'Não Fazer Nada', code: 'N'}	                  
 	                  ];
 	
 	/**
@@ -84,7 +85,7 @@ vendasApp
 	/**
 	 * Salva a filial
 	 */
-	$scope.save = function(branchOffice){		
+	$scope.save = function(branchOffice){
 		if($('#branchOffice-registration-form').valid()){
 			//Esconde a mensagem de erro caso esteja visivel
 			$('#alertOrganizationInputsInvalids').hide();
@@ -105,6 +106,7 @@ vendasApp
 			
 			cBranchOffice.then(function(toReturn){
 				if(toReturn.code == '200'){
+					updateBranchUserLogged(toReturn.value);
 					UtilityService.showAlertSucess('Sucesso.', 'Empresa salva com sucesso!!');
 				} else {
 					UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
@@ -142,6 +144,34 @@ vendasApp
 			});
 		}
 	};
+	
+	/**
+	 * Atualiza as informações das empresas do usuário logado, que estão na escopo
+	 */
+	function updateBranchUserLogged(branchSaved){
+		var userLogged = ContextService.getUserLogged();
+		var currentBranch = ContextService.getBranchLogged();
+		
+		//Se a empresa que esta sendo editada for a mesma do usuário logado
+		if(currentBranch.branchOfficeID == branchSaved.branchOfficeID){
+			ContextService.setBranchLogged(branchSaved);
+		}
+		
+		if(userLogged){
+			userLogged.userBranches.forEach(function(userBranch) {
+								
+				if( userBranch.branchOffice.branchOfficeID == branchSaved.branchOfficeID ){
+					userBranch.branchOffice = branchSaved;
+				}
+			});
+		}
+		
+		//Seta o usuario logado novamente, agora com as empresas atualizadas
+		ContextService.setUserLogged(userLogged);
+		
+		//Sera capturado no ContextController para atualizar as empresas no combo do header
+		$rootScope.$broadcast('vendasApp:updateBranches');
+	}
 	
 	
 	

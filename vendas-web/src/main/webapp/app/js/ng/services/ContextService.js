@@ -16,6 +16,13 @@ vendasApp.factory('ContextService',function($rootScope, Restangular,UtilityServi
     };
     
     /**
+     * Salva o usuario no local Storage criptografado
+     */
+    function setUserLogged(user){
+    	LocalStorageService.addToLocalStorageCrypt(Constants.LOCAL_STORAGE_USER_LOGGED_KEY,user);
+    };
+    
+    /**
      * Retorna o id da empresa do usuario
      */
     function getOrganizationID(){
@@ -51,14 +58,14 @@ vendasApp.factory('ContextService',function($rootScope, Restangular,UtilityServi
     	$rootScope.branchLogged = branchLogged;
     	LocalStorageService.addToLocalStorageCrypt(Constants.LOCAL_STORAGE_LAST_BRANCH_SELECTED_KEY,branchLogged);
     };
+    
 
-	
 	
 	return {
 		getOrganizationID : getOrganizationID,
 		getUserLogged : getUserLogged,
+		setUserLogged: setUserLogged,
 		getBranchLogged: getBranchLogged,
 		setBranchLogged: setBranchLogged
-		
 	};	
 });

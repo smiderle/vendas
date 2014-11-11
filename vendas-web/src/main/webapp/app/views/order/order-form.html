@@ -17,7 +17,7 @@
 			<div  ng-init="init()" class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-user-form"  data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
 				<header>
 					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-					<h2>Pedido</h2>				
+					<h2>{{order.type == 1 ? 'Pedido' : 'Orçamento'}}</h2>				
 				</header>
 	
 					<!-- widget div-->
@@ -41,21 +41,33 @@
 									</li>
 								</ul>
 								<div class="actions">
-									<button type="button" class="btn btn-sm btn-primary btn-prev">
+									<button type="button" id="btnOrders" class="btn btn-sm btn-primary btn-prev">
 										<i class="fa fa-arrow-left"></i>Voltar
 									</button>
-									<button type="button" class="btn btn-sm btn-success btn-next" data-last="Finalizar Venda">
+									<button type="button" id="btnNext" class="btn btn-sm btn-success btn-next" >
 										Próximo<i class="fa fa-arrow-right"></i>
 									</button>
 								</div>
 							</div>						
 							<div class="step-content">
-								<form autocomplete="off" id="orderForm" name="orderForm" class="smart-form" novalidate="novalidate" ng-submit="save(installment)" >
+								<form autocomplete="off" id="orderForm" name="orderForm" class="smart-form" novalidate="novalidate" >
 								
 								<div class="step-pane active" id="orderGeneralStep">
 									
 									<fieldset>
-																			
+										
+										<div class="row">
+											<section class="col col-6">
+												<div class="row">
+													<div class="col col-2">
+														<label class="radio state-success"><input type="radio" name="radioOrderType" value="1" ng-model="order.type"><i></i>Pedido</label>															
+													</div>
+													<div class="col col-6">
+														<label class="radio state-success"><input type="radio" name="radioOrderType" value="2" ng-model="order.type"><i></i>Orçamento</label>															
+													</div>														
+												</div>													
+											</section>
+										</div>																			
 										<div class="row">
 											<section class="col col-6">
 												<label class="label">Cliente</label>
@@ -79,8 +91,16 @@
 										              text-searching="Aguarde. Pesquisando Cliente..."										              
 										              text-no-results="Nenhum Cliente Encontrado"
 										              input-class="form-control form-control-small"/>											    										
-										    </section>
+										    </section>	
+										    
+										    <section class="col col-2"  ng-show="branch.actionCreditLimit === 'B' || branch.actionCreditLimit === 'A' || branch.actionCreditLimit == 'L'">
+												<label class="label">Limite de crédito</label>
+												<label class="input">
+													<input type="text" name="creditLimit" placeholder="Limite de crédito" value="{{ formatFloat(avaliableCreditLimit, true)}}" ng-disabled="true" class="form-control"> 
+												</label>
+											</section>																	    
 										</div>
+										
 										
 										<div class="row">
 											<section class="col col-2">
@@ -160,7 +180,7 @@
 													<label class="label">Desconto (R$)</label>													
 													<label class="input">				
 														<i class="icon-prepend fa  fa-minus"></i>								
-														<input type="number" id="orderItemDiscount" name="orderItemDiscount" placeholder="Desconto em Reais" maxlength="9" ng-blur="onBlurDiscount()"  ng-model="orderItem.discount" class="form-control">
+														<input type="number" id="orderItemDiscount" name="orderItemDiscount" placeholder="Desconto em Reais" maxlength="9" ng-model="orderItem.discount" class="form-control">
 														<div class="note txt-color-red" ng-show="orderForm.orderItemDiscountPercentage.$error.maximumdiscountvalidator">
 															O desconto máximo para esse produto é de R$ {{maximunDiscountProduct}} , equivalente a {{maximunDiscount}} %.														
 														</div>	
@@ -289,7 +309,7 @@
 													<section class="col col-10">
 														<label class="label">Parcelamento</label>
 														<label class="input">													
-															<select class="form-control"  ng-model="installment" ng-change="onChangeInstallment()" ng-options="installment.id as installment.description for installment in installments"></select>
+															<select class="form-control"  ng-model="order.installment" ng-change="onChangeInstallment()" ng-options="installment as installment.description for installment in installments track by installment.id"></select>
 														</label>
 													</section>
 												</div>
@@ -326,7 +346,7 @@
 															<h5><small>R$ {{parcela.installmentValue}}</small></h5>
 														</td>
 														<td>
-															<h5><small>{{parcela.paymentDate}}</small></h5>
+															<h5><small>{{parcela.expirationDate | date: 'dd/MM/yyyy'}}</small></h5>
 														</td>
 														<td>
 															<input type="text" class="form-control" ng-model="parcela.documentNumber">
@@ -351,7 +371,7 @@
 															</div>
 															<div class="col-sm-5">
 																<div class="invoice-sum-total pull-right">
-																	<h1><strong>Valor Total das Parcelas: <span class="text-success">R$ {{formatFloat(valueTotalInstallment)}}</span></strong></h1>
+																	<h1><strong>Valor Total das Parcelas: <span class="text-success">R$ {{formatFloat(order.netValue)}}</span></strong></h1>
 																</div>
 															</div>
 														</section>
@@ -367,11 +387,11 @@
 											<section>												
 												<div class="col-sm-12">
 													<div class="invoice-sum-total pull-right">
-														<h1 class="font-xl"><strong>Valor Total das Parcelas: <span class="text-success">R$ {{formatFloat(valueTotal)}}</span></strong></h1>
+														<h1 class="font-xl"><strong>Pedido Nº: <span class="text-success">{{order.id}}</span></strong></h1>
 													</div>
 												</div>
 											</section>
-										</div>	 -->	
+										</div>	 -->
 																				
 									</fieldset>
 								</div>		
@@ -391,7 +411,10 @@
 												<br>
 												<abbr title="Phone"></abbr>Fone: {{branch.phoneNumber}}
 											</address>
-										</div>										
+										</div>	
+										<div class="pull-right">
+											<h1 class="font-xg" ng-show="order.id"><strong>{{order.type == 1 ? 'Pedido': 'Orçamento' }} Nº : <span class="text-success"> {{order.id}}</span></strong></h1>
+										</div>									
 										<div class="clearfix"></div>
 										<br>
 										<br>
@@ -409,10 +432,17 @@
 												</address>
 											</div>
 											<div class="col-sm-3">
+												<div ng-show="order.id">
+													<div>
+														<strong>{{order.type == 1 ? 'Pedido': 'Orçamento' }} Numero:</strong>
+														<span class="pull-right"> {{order.id}} </span>
+													</div>
+			
+												</div>
 												<div>
 													<div class="font-md">
 														<strong>Data de Emissão:</strong>
-														<span class="pull-right"> <i class="fa fa-calendar"></i> 15/02/13 </span>
+														<span class="pull-right"> <i class="fa fa-calendar"></i> {{order.issuanceTime | date: 'dd/MM/yyyy HH:mm'}}</span>
 													</div>
 			
 												</div>
@@ -420,7 +450,7 @@
 												<div class="well well-sm  bg-color-darken txt-color-white no-border padding-5">
 													<div class="fa-lg">
 														Valor Total:
-														<span class="pull-right"> R$ {{formatFloat(valueTotalInstallment)}} </span>
+														<span class="pull-right"> R$ {{formatFloat(order.netValue)}} </span>
 													</div>
 			
 												</div>
@@ -472,19 +502,19 @@
 											</tbody>
 										</table>
 										<hr>
-			
+										<br>
 										<div class="invoice-footer">
 			
 											<div class="row">
 			
-												<div class="col-sm-7">
+												<div class="col-sm-7" >
 													<div class="payment-methods">
-														<h5>Forma de Pagamento - {{formPaymentSelected.description}} - {{installmenetSelected.description}}</h5>	 
+														<h3><strong>Forma de Pagamento : <span class="text-success"> {{formPaymentSelected.description}} - {{order.installment.description}}</span></strong></h3>
 													</div>
 												</div>
 												<div class="col-sm-5">
 													<div class="invoice-sum-total pull-right">
-														<h3><strong>Total: <span class="text-success">R$ {{formatFloat(valueTotalInstallment)}}</span></strong></h3>
+														<h3><strong>Total: <span class="text-success">R$ {{formatFloat(order.netValue)}}</span></strong></h3>
 													</div>
 												</div>
 			
@@ -514,6 +544,65 @@
 		</article>
 	</div>
 </section>
+
+
+
+
+
+				<div class="modal fade" id="dialogCreditLimit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h3 class="modal-title text-primary" id="myModalLabel">Cliente sem limite de crédito</h3>
+							</div>
+							<div class="modal-body">
+				
+								<div class="row">
+									<div class="col-md-12">
+										
+										<div ng-show="avaliableCreditLimit < order.netValue">
+											<p>O cliente não possui limite de crédito suficiente. </p>
+											<ul>
+												<li>Limite de crédito disponivel R$ {{formatFloat(avaliableCreditLimit, true)}}</li>
+												<li>Valor da venda R$ {{formatFloat(order.netValue)}}</li>
+											</ul>
+										</div>
+										
+										<div ng-show="hasExpiratePayment">
+											<p>O cliente possui parcelas vencidas. </p>
+										</div>
+										
+										<h3 ng-class="{'text-success' : authorizationResponse.authorized , 'text-danger' : !authorizationResponse.authorized}" ng-show="authorizationLabel && !showProgressBar"> <i ng-class="{'fa-check' : authorizationResponse.authorized, 'fa-ban' : !authorizationResponse.authorized }" class="fa fadeInLeft animated"></i> {{authorizationLabel}}</h3>										
+										
+										<div class="form-group" ng-show="showJustificationText && !authorizationResponse.authorized">
+											<textarea class="form-control" placeholder="Digite alguma informação para solicitar liberação" ng-model="authorizationInfo" rows="5" required></textarea>
+										</div>
+										
+										<p ng-show="showProgressBar">Aguarde até que o administrador autorize a venda.</p>
+										<div class="progress progress-lg progress-striped active" ng-show="showProgressBar">
+											<div class="progress-bar bg-color-purple" role="progressbar" style="width: 100%"></div>
+										</div>										
+									</div>																		
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" ng-hide="authorizationResponse.authorized">
+									Fechar
+								</button>
+								<button type="button" class="btn btn-primary" ng-show="showJustificationText && !authorizationResponse.authorized" ng-click="solicitAuthorization()">
+									Solicitar liberação
+								</button>
+								<button type="button" class="btn btn-success" ng-show="authorizationResponse.authorized" ng-click="save()">
+									Concluir Venda
+								</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+
 
 		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
 		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>

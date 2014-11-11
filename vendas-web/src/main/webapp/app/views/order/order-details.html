@@ -1,0 +1,187 @@
+
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+			
+			<div  ng-init="init()" class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-user-form"  data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+				<header>
+					<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+					<h2>{{order.type == 1 ? 'Pedido' : 'Orçamento'}}</h2>				
+				</header>
+	
+					<!-- widget div-->
+					<div role="content" style="">
+						
+						
+						<div class="padding-10">
+										<br>
+										<div class="pull-left">
+											<img src="img/logo-blacknwhite.png" width="150" height="32" alt="invoice icon">
+			
+											<address>
+												<br>
+												<strong>{{branch.realName}}</strong>
+												<br>
+												{{branch.street}}  {{branch.number}} 												
+												<br>
+												{{branch.city.name}}  {{branch.city.state.uf}} {{branch.postalCode}}										
+												<br>
+												<abbr title="Phone"></abbr>Fone: {{branch.phoneNumber}}
+											</address>
+										</div>	
+										<div class="pull-right">											
+											<h1 class="font-xg" ng-show="order.id"><strong>{{order.type == 1 ? 'Pedido': 'Orçamento' }} Nº : <span class="text-success"> {{order.id}}</span></strong></h1>
+										</div>									
+										<div class="clearfix"></div>
+										<br>
+										<br>
+										<div class="padding-10 row">										
+											<div class="col-sm-9">
+												<h4 class="semi-bold">{{order.customer.name}}</h4>
+												<address>
+													<strong>{{order.customer.nickName}}</strong>
+													<br>
+													{{order.customer.street}}  {{order.customer.number}}													
+													<br>
+													{{order.customer.city.name}}  {{order.customer.city.state.uf}}	{{order.customer.postalCode}}
+													<br>
+													<abbr title="Phone"></abbr>Fone: {{order.customer.phoneNumber}}
+												</address>
+											</div>
+											<div class="col-sm-3">
+												<div ng-show="order.id">
+													<div>
+														<strong>{{order.type == 1 ? 'Pedido': 'Orçamento' }} Numero:</strong>
+														<span class="pull-right"> {{order.id}} </span>
+													</div>
+			
+												</div>
+												<div>
+													<div class="font-md">
+														<strong>Data de Emissão:</strong>
+														<span class="pull-right"> <i class="fa fa-calendar"></i> {{order.issuanceTime | date: 'dd/MM/yyyy HH:mm'}}</span>
+													</div>
+			
+												</div>
+												<br>
+												<div class="well well-sm  bg-color-darken txt-color-white no-border padding-5">
+													<div class="fa-lg">
+														Valor Total:
+														<span class="pull-right"> R$ {{formatFloat(order.netValue)}} </span>
+													</div>
+			
+												</div>
+												<br>
+												<br>
+											</div>
+										</div>
+										<table id="datatable_order_item_finally" class="table table-hover" width="100%" >
+											<thead>
+												<tr role="row">
+													<th style="width: 10px;"></th>
+													<th style="width: 200px;">Produto</th>
+													<th style="width: 100px;">Informações</th>
+													<th style="width: 120px;">Tabela</th>
+													<th style="width: 50px;">Quantidade</th>
+													<th style="width: 50px;">Valor Unitário</th>
+													<th style="width: 70px;">Desconto Unitário</th>
+													<th style="width: 50px;">Subtotal</th>																												
+												</tr>
+											</thead>
+											
+											<tbody>
+												<tr ng-repeat="orderItem in order.ordersItens">
+													<td>
+														{{$index+1}}
+													</td>
+													<td>
+														{{orderItem.product.description}}
+													</td>
+													<td>
+														{{orderItem.observation}}
+													</td>
+													<td>
+														{{orderItem.priceTable.description}}
+													</td>
+													<td>
+														{{formatFloat(orderItem.quantity)}}
+													</td>
+													<td>
+														R$ {{formatFloat(orderItem.salePrice)}}
+													</td>
+													<td>
+														R$ {{formatFloat(orderItem.discount)}}
+													</td>
+													<td>
+														R$  {{formatFloat(parseFloat(orderItem.salePrice) * parseFloat(orderItem.quantity))}} 
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<hr>
+										<br>
+										<div class="invoice-footer">
+			
+											<div class="row">
+			
+												<div class="col-sm-7" >
+													<div class="payment-methods">
+														<h3><strong>Forma de Pagamento : <span class="text-success"> {{formPaymentSelected.description}} - {{order.installment.description}}</span></strong></h3>
+													</div>
+												</div>
+												<div class="col-sm-5">
+													<div class="invoice-sum-total pull-right">
+														<h3><strong>Total: <span class="text-success">R$ {{formatFloat(order.netValue)}}</span></strong></h3>
+													</div>
+												</div>
+			
+											</div>											
+											<div class="bs-example">
+												<blockquote>
+													<small ng-repeat="payment in order.ordersPayments">Vencimento em {{formatDate(payment.expirationDate)}} no valor de R$ {{formatFloat(payment.installmentValue)}}. {{payment.documentNumber ?  'Documento Nº '+ payment.documentNumber : ''}} {{payment.observation ? 'Observação: '+ payment.observation : '' }}</small>
+												
+												
+													<!-- <small>Venciemento 24/10/2014 Valor R$ 50,84 Documento numero: 332133213 Observação: qualque rcoisa</small>
+													<small>Venciemento 24/10/2014 Valor R$ 50,84 Documento numero: 332133213 Observação: qualque rcoisa</small>
+													<small>Venciemento 24/10/2014 Valor R$ 50,84 Documento numero: 332133213 Observação: qualque rcoisa</small> -->
+												</blockquote>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<p class="note">Observação: {{order.observation}}</p>
+												</div>
+											</div>
+			
+										</div>
+										
+									</div> 
+						
+					</div>
+					<!-- end widget div -->
+					
+				</div>			
+			
+		</article>
+	</div>
+</section>
+<script type="text/javascript">
+		
+	pageSetUp();
+	
+	var pagefunction = function() {
+
+	};
+
+	// Load bootstrap wizard dependency then run pagefunction
+	pagefunction();
+
+		
+	
+
+</script>
+
+

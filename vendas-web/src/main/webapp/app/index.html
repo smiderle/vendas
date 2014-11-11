@@ -158,8 +158,6 @@
 		
 		<!-- Tradução do Calendario  -->
 		<script src="js/plugin/jquery-datepicker/datepicker-pt-BR.js"></script>
-		
-				
 
 		<!--[if IE 8]>
 			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
@@ -173,7 +171,11 @@
 	  	<!-- REST Angular  -->
 	  	<script src="js/libs/angular/restangular.js"></script>
 	  	<script src="js/libs/lodash/lodash.compat.min.js"></script>
-		<script src="js/libs/angular/angucomplete-alt.min.js"></script>	  	  	  	
+	  	<!-- Alguns plugins para o angular  -->
+		<script src="js/libs/angular/angucomplete-alt.min.js"></script>
+		
+		<!-- SocketIO  -->
+		<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 
 		<!-- Demo purpose only 
 		ANGULAR: Handled via "ribbon" directive
@@ -201,6 +203,8 @@
 	  	<script src="js/ng/controllers/order/PriceTableFormController.js"></script>
 	  	<script src="js/ng/controllers/order/PriceTableListController.js"></script>
 	  	<script src="js/ng/controllers/order/OrderFormController.js"></script>
+	  	<script src="js/ng/controllers/order/OrderDetailsController.js"></script>	  	
+	  	<script src="js/ng/controllers/order/OrderListController.js"></script>	  	
 	  	<script src="js/ng/controllers/product/ProductListController.js"></script>
 	  	<script src="js/ng/controllers/product/ProductFormController.js"></script>	  	
 	  	<script src="js/ng/controllers/product/group/ProductGroupListController.js"></script>
@@ -210,6 +214,7 @@
 	  	<script src="js/ng/controllers/user/UserListController.js"></script>
 	  	
 	  	<!-- Services -->
+	  	<script src="js/ng/services/AuthService.js"></script>
 	  	<script src="js/ng/services/BranchService.js"></script>
 	  	<script src="js/ng/services/ContextService.js"></script>
 	  	<script src="js/ng/services/CustomerService.js"></script>
@@ -224,9 +229,11 @@
 	  	<script src="js/ng/services/StateService.js"></script>
 	  	<script src="js/ng/services/UserService.js"></script>	  	
 	  	<script src="js/ng/services/UtilityService.js"></script>
+	  	
+	  	<script src="js/ng/services/SocketIO.js"></script>
 	  		  	
 	  	<!-- Directives -->
-	  	<script src="js/ng/directives/angucomplete.js"></script>
+	  	<!-- <script src="js/ng/directives/angucomplete.js"></script> -->
 	  	<script src="js/ng/directives/CustomDataTable.js"></script>
 	  	<script src="js/ng/directives/Dropzone.js"></script>
 	  	<script src="js/ng/directives/MenuComponent.js"></script>
@@ -249,6 +256,23 @@
 	  	<script src="js/ng/plunker.js"></script>
 	  	<script src="js/plugin/ng-upload.js"></script>
   		
+  		<script type="text/javascript">
+  			/**
+  			* Quando o administrador não autorizar a venda.
+  			* No onclick do componente de notificação chama essa função, que chama o scope do AppController.  			
+  			* Foi feito assim, porque como é um componente Jquery que é inserido dinamicamente na pagina, não consegui pegar o scope de outra forma.
+  			*/
+		    function unauthorizedSale() {
+				  var appController = angular.element('body').scope();
+				  appController.unauthorizedSale("asdasd");
+			}
+  			
+  			function authorizedSale(valor, authorized) {
+  				//console.log(valor);
+  				var appController = angular.element('body').scope();
+				  appController.authorizedResponse(valor, authorized);
+  			}
+  		</script>
 
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -257,8 +281,7 @@
 		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 		
 		  ga('create', 'UA-27526615-2', 'auto');
-		  ga('send', 'pageview');
-		
+		  ga('send', 'pageview');		  
 		</script>
 				
 	</body>

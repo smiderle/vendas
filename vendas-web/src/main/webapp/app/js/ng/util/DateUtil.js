@@ -13,7 +13,7 @@ vendasApp.factory('DateUtil',function(){
 		 * Espera uma date e o separador. Caso seja passada uma string no lugar da data,
 		 * é instanciado um date com a string passada por parametro 
 		 */
-		format : function(date, separator){
+		format : function(date, separator, showMinutes){
 			
 			var formated='';
 			
@@ -24,7 +24,9 @@ vendasApp.factory('DateUtil',function(){
 			if(date && date instanceof Date){
 				var dd = date.getDate(),
 				MM = date.getMonth()+1,
-				yyyy = date.getFullYear();
+				yyyy = date.getFullYear(),
+				HH = date.getHours(),
+				mm = date.getMinutes();
 				
 				//Insere um zero na frente do numero, caso seja menor que 10
 				dd = dd < 10 ? '0'+dd : dd;
@@ -33,6 +35,12 @@ vendasApp.factory('DateUtil',function(){
 				separator = separator || '/';
 				if(date instanceof Date){
 					formated = dd+separator+ MM + separator +yyyy;
+				}
+				
+				if(showMinutes){
+					if(HH < 10){ HH = '0'+HH;};
+					if(mm < 10){ mm = '0'+mm;};
+					formated  = formated + ' '+ HH + ':'+ mm; 
 				}
 			}
 			

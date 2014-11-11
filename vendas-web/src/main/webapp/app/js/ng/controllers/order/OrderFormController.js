@@ -5,12 +5,26 @@
 /***************************************************************************/
 
 vendasApp.controller('OrderFormController',
-		['$scope','$rootScope','OrderService','UtilityService','ContextService','PriceTableService','CustomerService','CalcUtil','FormsPaymentService','InstallmentService',
-		 function BudgetFormController($scope,$rootScope,OrderService, UtilityService, ContextService, PriceTableService, CustomerService, CalcUtil, FormsPaymentService, InstallmentService) {
+		['$scope','$rootScope','$route','$location','OrderService','UtilityService','ContextService','PriceTableService','CustomerService','CalcUtil','FormsPaymentService','InstallmentService','socket',
+		 function OrderFormController($scope,$rootScope,$route,$location,OrderService, UtilityService, ContextService, PriceTableService, CustomerService, CalcUtil, FormsPaymentService, InstallmentService, socket) {
 			
 			$scope.branch = ContextService.getBranchLogged();
 			
+			$scope.organizationID  = ContextService.getOrganizationID();
+			
+			
 			$scope.errorMessage = 'Testando';
+			
+			/**
+			 * Texto do botão de navegação. Quando for a ultima tab, o texto muda.
+			 */
+			//$scope.buttonNextText = 'Próximo';
+			
+			/**
+			 * Utilizado para controlar as ações da ultima aba. commit true, 
+			 * significa que o pedido foi enviado.
+			 */
+			$scope.commit = false;
 			
 			/**
 			 * Pedido
@@ -35,17 +49,12 @@ vendasApp.controller('OrderFormController',
 			/**
 			 * Cliente selecionado
 			 */
-			$scope.customerSelected = {};
+			//$scope.customerSelected = {};
 			
 			/**
 			 * Parcelamento selecionado
 			 */
 			$scope.installmenetSelected = {};
-			
-			/**
-			 * Forma de pagamento selecionado
-			 */
-			$scope.formPaymentSelected;
 			
 						
 			/**
@@ -61,8 +70,8 @@ vendasApp.controller('OrderFormController',
             /**
              * Valor Total das Parcelas.
              */
-            $scope.valueTotalInstallment = 0.0;
-			
+            //$scope.valueTotalInstallment = 0.0;
+            			
 			/**
 			 * Quando for editar um item do pedido é armazendo o item antes da
 			 * edição nessa variavel, para que se o usuário cancelar a operação,
@@ -71,12 +80,18 @@ vendasApp.controller('OrderFormController',
 			 
 			$scope.orderItemEdition = undefined;
 			
+			/**
+			 * Limite de crédito disponivel
+			 */
+			$scope.avaliableCreditLimit;
 			
 			/**
 			 * Utilizados pela directiva validator
 			 */			
 			$scope.maximunDiscount = $scope.branch.maximumDiscount;
-						
+			
+			$scope.tokenAuthorization = undefined;
+									
 
 			$scope.init = function(){
 				
@@ -86,7 +101,8 @@ vendasApp.controller('OrderFormController',
 						issuanceTime : new Date(),
 						organizationID: ContextService.getOrganizationID(),
 						branchID: $scope.branch.branchOfficeID,
-						userID: ContextService.getUserLogged().userID
+						userID: ContextService.getUserLogged().userID,
+						type: 1
 				};
 				
 				//$scope.order.issuanceTime = new Date();
@@ -102,7 +118,7 @@ vendasApp.controller('OrderFormController',
 						organizationID: ContextService.getOrganizationID(),
 						branchID: $scope.branch.branchOfficeID,
 						offset: 0,
-						limit: 20
+						limit: 10
 					}; 
 				};
 
@@ -115,7 +131,7 @@ vendasApp.controller('OrderFormController',
 						organizationID: ContextService.getOrganizationID(),
 						branchID: $scope.branch.branchOfficeID,
 						offset: 0,
-						limit: 20
+						limit: 10
 					}; 
 				};
 
@@ -131,27 +147,19 @@ vendasApp.controller('OrderFormController',
 				
 				listFormsPayment(
 						function(){
-							if(!isEdition && $scope.formsPayment.length > 0)
-								if($scope.order.customer && $scope.order.customer.formPayment){
-									$scope.order.formPayment =  $scope.order.customer.formPayment;
-								} else {
-									$scope.formPaymentSelected = $scope.formsPayment[0];
-									$scope.order.formPayment =  $scope.formsPayment[0].id;
-								}																
-							});
+							if(!isEdition){
+								$scope.order.formPayment =  $scope.formsPayment[0].id;
+								$scope.onChangeFormPayment();
+							}
+
+						});
 				
 				listInstallments(
 						function(){
-							if(!isEdition && $scope.installments.length > 0)
-								if($scope.order.customer && $scope.order.customer.installment){
-									$scope.installment =  $scope.order.customer.installment;
-								} else {
-									$scope.installmenetSelected = $scope.installments[0];
-									$scope.installment =  $scope.installments[0].id;
-								}
-								
-								  
-							});
+							if(!isEdition) {
+								$scope.order.installment = $scope.installments[0];								
+							} 							  
+						});
 
 			};	
 			
@@ -172,19 +180,7 @@ vendasApp.controller('OrderFormController',
 					$scope.discountPercentage = undefined;
 				}
 			});
-			
-			$scope.onBlurDiscount = function(){
-				/*if(!isNaN($scope.orderItem.discount)){
 					
-					calcPercentageDiscount($scope.orderItem.discount);
-					
-					var table = $scope.orderItem.priceTable;
-					var valPriceTable = CalcUtil.applyPercentage($scope.productSelected.salePrice,table.percentage, !table.increase);
-					
-					var valFinal = valPriceTable - $scope.orderItem.discount;
-					$scope.orderItem.salePrice = parseFloat(valFinal).toFixed(2)/1;
-				}*/
-			};
 			
 			/**
 			 * Quando o campo orderItemSalePrice, preço de venda, perder o focu
@@ -228,31 +224,12 @@ vendasApp.controller('OrderFormController',
 			 * Quando mudar o combo do parcelamento
 			 */
 			$scope.onChangeInstallment = function(){
-				var installment = $scope.installments;
-				
-				var i = 0;
-				for(;i < installment.length; i++){
-					if(installment[i].id === $scope.installment){
-						$scope.installmenetSelected = installment[i];
-						generateInstallment(installment[i]);
-						break;
-					}
-				}				
+				generateInstallment();
 			};
 			
-			/**
-			 * Quando mudar o combo de forma de parcelamento
-			 */
+			
 			$scope.onChangeFormPayment = function(){
-				
-				var formsPayment = $scope.formsPayment;
-					
-				for(var i = 0 ; i < formsPayment.length ; i++){
-					if(formsPayment[i].id === $scope.order.formPayment){
-						$scope.formPaymentSelected = formsPayment[i];
-						break;
-					}
-				}				
+				$scope.formPaymentSelected = FormsPaymentService.getByID($scope.order.formPayment);
 			};
 			
 			
@@ -260,7 +237,6 @@ vendasApp.controller('OrderFormController',
 			 * Adiciona o produto no "carrinho"
 			 */
 			$scope.addProductToCart = function(orderItem){
-							
 				var errorMessages = isValidOrderItem();
 				if(errorMessages == undefined){
 
@@ -269,8 +245,6 @@ vendasApp.controller('OrderFormController',
 					if(orderItem.discount == undefined){
 						//orderItem.discount = 0.0;
 					}
-
-					//console.log($scope.orderForm.orderItemDiscountPercentage.$error.maximumdiscountvalidator);
 					
 					//Se essa variavel estiver vazia, significa que não é uma edição
 					if($scope.orderItemEdition == undefined || $scope.orderItemEdition  == null){
@@ -341,24 +315,19 @@ vendasApp.controller('OrderFormController',
 			};
 			
 			/**
-			 * Salva o pedido
+			 * Irá validar se estiver configurado para bloquear ou solicitar liberação, ira mostrar o dialog, 
+			 * caso esteja configurado para não fazer nada, ira executar o callback, que ira salvar o pedido. 
 			 */
-			$scope.save = function() {
-				/*var orderWrapper = {};
-				
-				orderWrapper.order = $scope.order;
-				orderWrapper.order.ordersItens =  angular.copy($scope.ordersItens);
-								
-				OrderService.save(orderWrapper);*/
-				
-				var orderWrapper = {};
-				
-				orderWrapper.order = $scope.order;
-				//orderWrapper.order.ordersItens =  angular.copy($scope.ordersItens);
-				orderWrapper.order.ordersItens =  $scope.ordersItens;				
-								
-				console.log(orderWrapper);
-				OrderService.save(orderWrapper);
+			$scope.finish = function() {
+				orderValidate(save);
+			};
+			
+			/**
+			 * Salva o Pedido/Orçamento
+			 */
+			$scope.save = function(){
+				$('#dialogCreditLimit').modal('hide');
+				save();
 			};
 			
 			/**
@@ -389,13 +358,45 @@ vendasApp.controller('OrderFormController',
 					$scope.order.customer = obj.originalObject;
 					 
 					if($scope.order.customer && $scope.order.customer.installment){
-						$scope.installment =  $scope.order.customer.installment;
+						if($scope.order.customer.installment){
+							$scope.order.installment =  $scope.order.customer.installment;
+						}
 					}					
 					
-					if($scope.customerSelected && $scope.customerSelected.formPayment){
-						$scope.order.formPayment =  $scope.order.customer.formPayment;
+					if($scope.order.customer && $scope.order.customer.formPayment){
+						if($scope.order.customer.formPayment){
+							$scope.order.formPayment =  $scope.order.customer.formPayment;
+							$scope.onChangeFormPayment();
+						}
 					}
 					
+					/*
+					 * Se a configuração de limite de crédito do cliente for igual a bloquear ou solicitar autorização, 
+					 * ira buscar o limite de crédito disponivel do cliente.
+					 */ 
+					if($scope.branch.actionCreditLimit === 'B' || $scope.branch.actionCreditLimit === 'L') {
+						var cAvaliable = CustomerService.getAvaliableCreditLimit($scope.order.customer.id);
+						
+						cAvaliable.then(function(data){
+							if(data.code === '200'){
+								$scope.avaliableCreditLimit = data.value;
+							}
+						});
+					}
+					
+					/*
+					 * Se a configuração de titulos vencidos do cliente for igual a bloquear ou solicitar autorização, 
+					 * ira buscar se o cliente possui titulos vencidos.
+					 */ 
+					if($scope.branch.actionOverdue === 'B' || $scope.branch.actionOverdue === 'L') {
+						var cAvaliable = CustomerService.hasExpiratePayment($scope.order.customer.id);
+						
+						cAvaliable.then(function(data){
+							if(data.code === '200'){
+								$scope.hasExpiratePayment = data.value;
+							}
+						});
+					}
 				}				
 			};
 			
@@ -416,11 +417,18 @@ vendasApp.controller('OrderFormController',
 			
 			/**
 			 * Formata o valor com 2 casas decimais e virgula.
+			 * val - Valor a ser formatado
+			 * negativeValue - Se true, é permitido formatar numeros negativos também. 
+			 * Se false, caso seja passado um numero negativo, é retornado 0 
 			 */
-			$scope.formatFloat = function(val){
+			$scope.formatFloat = function(val, negativeValue){
 
 				if(isNaN(val) || val <= 0){
-					return '0,00';
+					if(negativeValue){
+						return numberFormat(val, 2, ',', '.');
+					} else {
+						return '0,00';
+					}
 				} else {
 					return numberFormat(val, 2, ',', '.'); 
 				}			
@@ -428,7 +436,8 @@ vendasApp.controller('OrderFormController',
 			
 
 			
-			function generateInstallment(installment){
+			function generateInstallment(){
+				var installment = $scope.order.installment;
 								
 				var dias = installment.installmentsDays.split(' ').map(Number);
 				
@@ -439,10 +448,10 @@ vendasApp.controller('OrderFormController',
 					
 					var valueTotalInstallment = 0.0;
 					parcelasGeradas.forEach(function(parcela){
-						valueTotalInstallment += parcela.valor;						
+						valueTotalInstallment += parcela.installmentValue;						
 					});
 					
-					$scope.valueTotalInstallment = valueTotalInstallment;
+					$scope.order.netValue = valueTotalInstallment;
 				});
 			};
 			
@@ -490,17 +499,8 @@ vendasApp.controller('OrderFormController',
 				}
 				$scope.valueTotal = total;
 			}
-			
-			$scope.getFormPaymentSelected = function(){
-				var length = $scope.formsPayment;
-				for(var i=0 ; i < length; i++ ){
-					if(payment.id === $scope.formsPayment[i]){
-						return payment;
-						break;
-					};
-				}
-				
-			};
+		
+
 			 			
 			/**
 			 * Carrega as formas de pagamento
@@ -597,6 +597,7 @@ vendasApp.controller('OrderFormController',
 				return errorMessages;
 				
 			}
+				
 			
 			/**
 			 * Faz algumas configurações no wizard do pedido, como por exemplo, 
@@ -604,66 +605,228 @@ vendasApp.controller('OrderFormController',
 			 */
 			function configWizard(){
 				$('#myWizard').on('change', function(e, data) {
-	                console.log('change');
-	                console.log(data.step);	         
-	                
-	                
-	                if(data.step === 2 && data.direction==='next') {
+	                if(data.step === 1 && data.direction==='next') {
+	                	
+	                	if($scope.order.customer == undefined){	                		
+	                		UtilityService.showAlertWarning(' Opss', 'Talvez seja melhor selecionar um cliente antes de continuar.');	                		
+	                		return e.preventDefault();
+	                	}
+	                }
+
+	                if(data.step === 2 && data.direction==='next') {	                	
 	                	$scope.onChangeInstallment();
-	                    // return e.preventDefault();
+	                	if($scope.ordersItens.length === 0){
+	                		UtilityService.showAlertWarning(' Opss', 'Talvez seja melhor adicionar pelo menos um produto antes de continuar.');	                		
+	                		return e.preventDefault();
+	                	}
 	                }
 	                
 	                if(data.step === 3 && data.direction==='next') {
+	                	$("#btnNext").html('Finalizar Venda <i class="fa fa-check"></i>');
+	                }	  
+	                
+	                if(data.step === 4 && data.direction==='previous') {
+	                	if($scope.commit){
+		                	$scope.$apply(function () {
+								$scope.$emit('vendasApp:goList');
+								return e.preventDefault();
+							});
+	                	}
 	                	
-	                	$scope.parcelas.forEach(function(parcela){
-	                		console.log(parcela);
-	                	});
-	                }
-	                
-	                
+	                	$("#btnNext").html('Próximo <i class="fa fa-arrow-right"></i>');
+	                	
+	                	/**
+	                	 * Chamado para limpar os campos do dialog, caso o usuário tenha já solicitado uma autorização, 
+	                	 * e volte para os itens do pedido.
+	                	 */
+	                	$scope.$apply(function () {
+							$scope.$emit('vendasApp:clearDialog');
+						});
+	                }	                
 	                
 	            });
 	 
-	            $('#myWizard').on('changed', function(e, data) {	    
-	            	console.log(data);
-	                console.log('changed');
+	            $('#myWizard').on('changed', function(e, data) {
+	            	/*console.log(data);
+	                console.log('changed');*/
 	            });
 	 
 	            $('#myWizard').on('finished', function(e, data) {
-	            	$scope.save();
+	            	if(!$scope.commit){
+	            		$scope.finish();
+	            	} else {	            		
+	            		$route.reload();
+	            	}
 	            	
 	            	
-	            	$.smallBox({
-						title : "Congratulations! Your form was submitted",
-						content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
-						color : "#5F895F",
-						iconSmall : "fa fa-check bounce animated",
-						timeout : 4000
-					});
 	            });
 	 
 	            $('.btn-prev').on('click', function() {
-	                console.log('prev');
 	            });
 	 
 	            $('.btn-next').on('click', function() {
-	                console.log('next');
 	            });
 			}
+			
+			
+			/**
+			 * 
+			 * Solicita a autoriação para vender  para cliente sem limite de crédito
+			 */
+			$scope.solicitAuthorization = function(){
+				
+				$scope.showJustificationText = false;
+				$scope.showProgressBar = true;
 
-			
-			/*function validateOrderItem(){
-				var messageInvalid = undefined;
-				if(isNaN($scope.orderItem.quantity)){
-					messageInvalid = 'Informe uma quantidade válida.';
-				} else if($scope.orderItem.quantity != 0){
-					
-				} else if($scope.orderItem.salePrice != 0){
-					
-				}				
+				/*setTimeout(function (){
+					$scope.$apply(function() {
+						$scope.waitingAuthorization = false;
+						$scope.acceptAuthorization = true;
+					});
+				}, 5000);*/
+				
+				$scope.tokenAuthorization = Math.floor( ( Math.random() * 100000000 ) + 1 );
+				
+				var authorizationType = '';
+				
+				if($scope.avaliableCreditLimit < $scope.order.netValue){
+					authorizationType += 'Cliente sem limite de crédito suficiente. ';
+				}
+				
+				if($scope.hasExpiratePayment){
+					authorizationType += 'Cliente com parcelas vencidas';
+				}
 				
 				
-			}*/
+				
+				
+				
+				socket.emit('authorization request',  
+						{
+							roomName: $scope.organizationID,
+							token: $scope.tokenAuthorization,
+							user: {
+								userID : ContextService.getUserLogged().userID,
+								name : ContextService.getUserLogged().name,
+							},
+							details: {
+								authorizationInfo : $scope.authorizationInfo, 
+								customer : $scope.order.customer,
+								netValue : $scope.order.netValue,
+								formPaymentSelected : $scope.formPaymentSelected,
+								installment : $scope.order.installment,
+								avaliableCreditLimit : $scope.avaliableCreditLimit,
+								authorizationType: authorizationType
+							}
+						}
+				 );
+				
+				socket.on('authorization response', function(authorizationResponse){
+					$scope.$apply(function() {
+						$scope.authorizationResponse = authorizationResponse;
+						$scope.showJustificationText = false;
+						$scope.showProgressBar = false;
+						
+						if(authorizationResponse.authorized){
+							$scope.authorizationLabel = 'Venda autorizada pelo usuário '+ authorizationResponse.admin.name; 
+						} else {
+							$scope.authorizationLabel = 'Venda não foi autorizada pelo usuário '+authorizationResponse.admin.name;
+						}
+						 
+					});
+				});
+			};
+			
+			/**
+			 * Controles dos componentes do dialog de bloqueio/liberação
+			 */
+			$scope.showJustificationText = false;
+			$scope.showBtnSolicitAuthorization = false;
+			//$scope.showFinalizeButton;
 			
 			
+			/**
+			 * Valida se o pedido, se estiver tudo ok, executa o callback
+			 */
+			function orderValidate(callback){
+				
+				if($scope.hasExpiratePayment){
+					//$scope.authorizationLabel = 'O cliente possui parcelas vencidas.';
+				}
+				
+				
+				if($scope.branch.actionCreditLimit === 'B' || $scope.branch.actionCreditLimit === 'L') {
+					if($scope.branch.actionCreditLimit === 'L'){
+				        $scope.$apply(function(){
+				        	$scope.showJustificationText = true;
+				        	$scope.showBtnSolicitAuthorization = true;
+				        });						
+					}
+					
+					if($scope.avaliableCreditLimit < $scope.order.netValue){
+						$('#dialogCreditLimit').modal();
+						return;
+					}
+				}
+				
+				if($scope.branch.actionOverdue === 'B' || $scope.branch.actionOverdue === 'L') {	
+					if($scope.branch.actionOverdue === 'L'){
+
+				        $scope.$apply(function(){
+				        	$scope.showJustificationText = true;
+				        });
+					}
+					
+					if($scope.hasExpiratePayment){
+						$('#dialogCreditLimit').modal();
+						return;
+					}
+				}
+				
+				callback();
+			}
+			
+			/**
+			 * Salva o pedido
+			 */
+			function save() {
+				var orderWrapper = {};
+				
+				orderWrapper.order = $scope.order;				
+				orderWrapper.order.ordersItens =  $scope.ordersItens;				
+				
+				OrderService.save(orderWrapper).then(function(toReturn){
+					if(toReturn.code == '200'){
+						$scope.commit = true;
+						$("#btnNext").html('Novo Pedido <i class="fa fa-plus"></i>');
+						$("#btnOrders").html('<i class="fa fa-reorder"></i> Histórico de Pedidos ');
+						
+						$scope.order.id = toReturn.value.id;
+						UtilityService.showAlertSucess('Sucesso.', 'Pedido salvo com sucesso!!');
+					} else {
+						UtilityService.showAlertError('Opss, algo estranho aconteceu.', toReturn.message);
+					}
+				});
+			}
+			
+			/**
+			 * Foi utilizado dessa forma, porque se colocar o location dentro do on do jquery, o redirecionamento não funciona
+			 */
+			$scope.$on('vendasApp:goList', function (event) {
+				event.stopPropagation();
+				$location.path('/pedido/lista-pedido');
+			});
+			
+			
+			/**
+			 * Foi utilizado dessa forma, porque não atualiza os scope dentro do jquery
+			 */
+			$scope.$on('vendasApp:clearDialog', function (event) {
+				event.stopPropagation();
+				$scope.showJustificationText = true;
+				$scope.showProgressBar = false;
+				$scope.authorizationResponse = undefined;
+				$scope.authorizationLabel = undefined;
+				
+			});
 		}]);

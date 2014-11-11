@@ -12,7 +12,6 @@ var vendasApp = angular.module('vendasApp', [
                                              'app.localize',
                                              'app.activity',
                                              'app.smartui'
-                                             
                                              ]);
 
 /**
@@ -228,6 +227,28 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 			}
 		},
 		controller : 'OrderFormController'		
+	})
+	
+	.when("/pedido/lista-pedido",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/order/order-list.html';
+			}
+		},
+		controller : 'OrderListController'		
+	})
+	
+	.when("/pedido/detalhes-pedido",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/order/order-details.html';
+			}
+		},
+		controller : 'OrderDetailsController'		
 	})
 	
 	

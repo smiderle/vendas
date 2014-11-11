@@ -16,7 +16,7 @@ public interface ProductDAO extends GenericDAO<Product> {
 	 * @param limit
 	 * @return
 	 */
-	List<Product> findAllByBranche(Integer organizationID, Integer branchID, Integer offset, Integer limit);
+	List<Product> findAllByBranch(Integer organizationID, Integer branchID, Integer offset, Integer limit);
 	
 	
 

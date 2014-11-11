@@ -45,7 +45,7 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, VendasW
 		 * Retorna todos os produtos de determinada filial.
 		 * @returns
 		 */
-		getAllByFilter: function(filter,organizationID,branchID, offset){
+		getAllByFilter : function(filter,organizationID,branchID, offset){
 			
 			var parameters = {
 					'filter': filter,
@@ -56,6 +56,44 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, VendasW
 
 
 			return Restangular.all("v1").all("customer").all("getAllByFilter").getList(parameters).then(function(result){
+				var p = {};
+				p.value = result.value;
+				p.code = result.code;
+				p.message = result.message;
+				p.rowCount = result.rowCount;
+				return p;
+			});
+		},
+		
+		/**
+		 * Retorna o limite de crédito do cliente
+		 */
+		getAvaliableCreditLimit : function(customerID){
+			
+			var parameters = {
+					'customerID': customerID
+			};
+
+			return Restangular.all("v1").all("customer").all("getAvaliableCreditLimit").getList(parameters).then(function(result){
+				var p = {};
+				p.value = result.value;
+				p.code = result.code;
+				p.message = result.message;
+				p.rowCount = result.rowCount;
+				return p;
+			});
+		},
+		
+		/**
+		 * Verifica se existe algum pagamento vencido
+		 */
+		hasExpiratePayment : function(customerID){
+			
+			var parameters = {
+					'customerID': customerID
+			};
+
+			return Restangular.all("v1").all("customer").all("hasExpiratePayment").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.code = result.code;

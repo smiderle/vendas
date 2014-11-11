@@ -55,4 +55,16 @@ public class CustomerDAOImpl extends ResourceDAO<Customer> implements CustomerDA
 		return criteria.list();
 	}
 
+	@Override
+	public Customer findByID(Integer id) {
+		
+		Session session = getSession();
+		
+		Criteria criteria = session.createCriteria(Customer.class)
+
+				.add(Restrictions.eq("id", id));
+
+		return (Customer) criteria.uniqueResult();
+	}
+
 }

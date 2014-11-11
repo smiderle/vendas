@@ -55,8 +55,10 @@ vendasApp.controller('CustomerFormController',
 							});
 				listInstallments(
 						function(){
-							if(!isEdition && $scope.installments.length > 0) 
-								$scope.customer.installment =  $scope.installments[0].id;  
+							if(!isEdition && $scope.installments.length > 0){
+								$scope.customer.installment =  $scope.installments[0];
+							}
+								  
 							});
 				listFormsPayment(
 						function(){
@@ -138,6 +140,7 @@ vendasApp.controller('CustomerFormController',
 			 * Intercepta o evento vendasApp:change, para atualizar a imagem
 			 */
 			$scope.$on('vendasApp:customerPictureChange', function (event) {
+				event.stopPropagation();
 				$scope.customer.pictureUrl = url;
 			});	
 			

@@ -14,11 +14,18 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="PEDIDOPGTO")
 public class OrderPayment implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7550716822062484831L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
@@ -32,6 +39,7 @@ public class OrderPayment implements Serializable {
 	
 	@ManyToOne
     @JoinColumn(name = "IDPEDIDO")
+	@JsonIgnore
 	private Order order;	
 
 	@Column(name="SEQUENCIA")	
@@ -45,8 +53,18 @@ public class OrderPayment implements Serializable {
 	@Column(name="DTPAGAMENTO")
 	private Date paymentDate;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="DTHRALTERACAO")
+	private Date changeTime;
+	
 	@Column(name="VALORPARCELA")	
 	private Double installmentValue;
+	
+	@Column(name="OBSERVACAO")
+	private String observation;
+	
+	@Column(name="NUMERODOC")
+	private String documentNumber;
 
 	public Long getID() {
 		return ID;
@@ -111,4 +129,28 @@ public class OrderPayment implements Serializable {
 	public void setInstallmentValue(Double installmentValue) {
 		this.installmentValue = installmentValue;
 	}
+
+	public Date getChangeTime() {
+		return changeTime;
+	}
+
+	public void setChangeTime(Date changeTime) {
+		this.changeTime = changeTime;
+	}
+
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+
+	public String getDocumentNumber() {
+		return documentNumber;
+	}
+
+	public void setDocumentNumber(String documentNumber) {
+		this.documentNumber = documentNumber;
+	}	
 }

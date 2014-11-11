@@ -122,7 +122,8 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 	function buildProductDataTable(toReturn){
 		
 		var products = toReturn.value;
-		var productRows = [];
+		var productRows = [],
+		productsSize = $scope.products.length;
 		
 		/*
 		 * Quando não retornar nemhum produto, seta essa variavel para sinalizar que não existe mais produtos, e
@@ -134,6 +135,7 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 		
 		products.forEach(function(element, index){
 			var product = element;
+			
 			if(product && product.id){
 				
 				if(product.stockAmount == null || product.stockAmount == undefined){
@@ -150,7 +152,7 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 				var classRow = product.stockAmount > 0 ? '' : 'txt-color-red';
 				productRows.push([
 				              '<label class="checkbox"><input type="radio" name="checkbox-inline" value="'+product.id+'"><i></i></label>',
-				              '<label class="'+classRow+'">'+ (index+1) +'</label>',
+				              '<label class="'+classRow+'">'+ (productsSize + index +1 ) +'</label>',
 				              '<label class="'+classRow+'">'+product.productID+'</label>',
 				              '<strong><label class="'+classRow+'">'+product.description+'</label></strong>',
 				              '<label class="'+classRow+'">'+product.packaging != null ? product.packaging : '' +'</label>',

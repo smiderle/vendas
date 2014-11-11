@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,7 +43,7 @@ public class Order implements Serializable {
 	@Column(name="IDFILIAL")
 	private Integer branchID;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="IDCLIENTE")
 	private Customer customer;
 	
@@ -54,8 +55,8 @@ public class Order implements Serializable {
 	private Integer userID;
 	
 	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="PARCELAMENTO")
+	@ManyToOne
+	@JoinColumn(name="IDPARCELAMENTO")
 	private Installment installment;
 	
 	@Column(name="VALORBRUTO")
@@ -80,14 +81,21 @@ public class Order implements Serializable {
 
 	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="IDPEDIDO")*/
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.LAZY)
 	private Set<OrderItem> ordersItens = new HashSet<>(0);	
 	
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.LAZY)
+	@OrderBy("sequence")
 	private Set<OrderPayment> ordersPayments = new HashSet<>(0);
 	
 	@Column(name="FORMAPAGAMENTO")
 	private Integer formPayment;
+	
+	@Column(name="EXCLUIDO")
+	private boolean excluded;
+	
+	@Column(name="TIPO")
+	private Integer type;
 	
 	public Long getID() {
 		return ID;
@@ -209,5 +217,21 @@ public class Order implements Serializable {
 
 	public void setOrdersPayments(Set<OrderPayment> ordersPayments) {
 		this.ordersPayments = ordersPayments;
-	}	
+	}
+
+	public boolean isExcluded() {
+		return excluded;
+	}
+
+	public void setExcluded(boolean excluded) {
+		this.excluded = excluded;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 }

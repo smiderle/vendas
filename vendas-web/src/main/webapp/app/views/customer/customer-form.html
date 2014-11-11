@@ -274,7 +274,7 @@
 											<section class="col col-4">
 												<label class="label">Parcelamento Padrão</label>
 												<label class="input">													
-													<select class="form-control"  ng-model="customer.installment" ng-options="installment.id as installment.description for installment in installments"></select>
+													<select class="form-control"  ng-model="customer.installment" ng-options="installment as installment.description for installment in installments track by installment.id"></select>
 												</label>
 											</section>
 										</div>																			

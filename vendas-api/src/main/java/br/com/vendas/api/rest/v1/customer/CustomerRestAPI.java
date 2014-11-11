@@ -1,6 +1,7 @@
 package br.com.vendas.api.rest.v1.customer;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,15 +32,15 @@ import br.com.vendas.support.VendasExceptionWapper;
 @RequestMapping(value="/v1/customer")
 @Controller
 public class CustomerRestAPI {
-	
+
 	private static final Logger LOG = Logger.getLogger(CustomerRestAPI.class);
-	
+
 	@Inject
 	private CustomerService customerService;
-	
+
 	@Inject
 	private ImageService imageService;
-	
+
 	@RequestMapping(value="getCustomersByOrganizationID", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getCustomersByOrganizationID(Integer organizationID, Integer branchID, Integer offset) {
 		try {
@@ -51,8 +52,8 @@ public class CustomerRestAPI {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
-	
-	
+
+
 	/**
 	 * Salva o cliente.
 	 * @param customer
@@ -69,8 +70,8 @@ public class CustomerRestAPI {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
-	
-	
+
+
 	@RequestMapping(value="getAllByFilter", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getAllByFilter(String filter, Integer organizationID, Integer branchID,Integer offset, Integer limit){
 		try {
@@ -82,7 +83,7 @@ public class CustomerRestAPI {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
-	
+
 
 	/**
 	 * Faz upload da imagem do cliente
@@ -108,7 +109,37 @@ public class CustomerRestAPI {
 		return null;
 
 	}
+
+
+	@RequestMapping(value="getAvaliableCreditLimit", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getInstallmentPendingTotalValue(Integer customerID) {
+		try {
+			ServiceResponse<BigDecimal> payload =  customerService.getAvaliableCreditLimit(customerID);
+			LOG.debug("getAvaliableCreditLimit: "+payload.getValue());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+		}
+	}
 	
+	/**
+	 * Tem algum pagamento vencido
+	 * @param customerID
+	 * @return
+	 */
+	@RequestMapping(value="hasExpiratePayment", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse hasExpiratePayment(Integer customerID) {
+		try {
+			ServiceResponse<Boolean> payload =  customerService.hasExpiratePayment(customerID);
+			LOG.debug("hasExpiratePayment: "+payload.getValue());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+		}
+	}
+
 	/**
 	 * Precisa ter pois se não da erro 500 ao enviar a imagem
 	 * @return
@@ -119,6 +150,7 @@ public class CustomerRestAPI {
 		multipartResolver.setMaxUploadSize(500000000);
 		return multipartResolver;
 	}
+
 
 
 }

@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ServiceResponse<List<Product>> findAllByBranche(Integer organizationID,
 			Integer branchID, Integer offset) {
-		return ServiceResponseFactory.create(productDAO.findAllByBranche(organizationID, branchID, offset, LimitQuery.LIMIT_PRODUCT.value()));
+		return ServiceResponseFactory.create(productDAO.findAllByBranch(organizationID, branchID, offset, LimitQuery.LIMIT_PRODUCT.value()));
 	}
 
 	@Override

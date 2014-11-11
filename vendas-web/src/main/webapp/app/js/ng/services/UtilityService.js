@@ -54,6 +54,16 @@ vendasApp.factory('UtilityService',function(){
 				iconSmall : "fa fa-times fa-2x fadeInRight animated",
 				timeout : 12000
 			});
-		}
+		},
+		
+		showAlertWarning: function(title, content){
+			$.smallBox({
+				title : title,
+				content : content,
+				color : "#C79121",
+				iconSmall : "fa fa-warning shake animated",
+				timeout : 10000
+			});
+		},		
 	};	
 });

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.vendas.domain.location.City;
+import br.com.vendas.domain.order.Installment;
 
 @Entity
 @Table(name="CLIENTE")
@@ -143,8 +144,10 @@ public class Customer {
 	@Column(name="TABPRECO")		
 	private Integer priceTable;
 	
-	@Column(name="PARCELAMENTO")
-	private Integer installment;
+	@ManyToOne
+	@JoinColumn(name="IDPARCELAMENTO")
+	private Installment installment;
+	
 	
 	@Column(name="FORMA_PAGAMENTO")
 	private Integer formPayment;
@@ -398,14 +401,7 @@ public class Customer {
 	public void setPriceTable(Integer priceTable) {
 		this.priceTable = priceTable;
 	}
-
-	public Integer getInstallment() {
-		return installment;
-	}
-
-	public void setInstallment(Integer installment) {
-		this.installment = installment;
-	}
+	
 
 	public Integer getFormPayment() {
 		return formPayment;
@@ -413,5 +409,13 @@ public class Customer {
 
 	public void setFormPayment(Integer formPayment) {
 		this.formPayment = formPayment;
+	}
+
+	public Installment getInstallment() {
+		return installment;
+	}
+
+	public void setInstallment(Installment installment) {
+		this.installment = installment;
 	}	
 }
