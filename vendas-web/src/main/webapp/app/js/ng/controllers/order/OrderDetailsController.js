@@ -41,9 +41,7 @@ vendasApp.controller('OrderDetailsController',
 			};
 			
 			$scope.formatDate = function(dateStr){
-				var date = new Date(dateStr);
-				date.setDate(date.getDate() + 1);
-				return DateUtil.format(date,'/');
+				return DateUtil.format(dateStr,'/');
 			};
 			
 		}]);

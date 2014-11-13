@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.vendas.domain.order.Order;
 import br.com.vendas.domain.wrapper.OrderWrapper;
-import br.com.vendas.dto.order.OrderDTO;
+import br.com.vendas.dto.OrderDTO;
 import br.com.vendas.services.support.ServiceResponse;
 
 public interface OrderService {

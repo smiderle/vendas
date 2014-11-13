@@ -1,4 +1,4 @@
-package br.com.vendas.dto.order;
+package br.com.vendas.dto;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -18,7 +18,6 @@ public class OrderDTO {
 			setID(order.getID());
 			setOrganizationID(order.getOrganizationID());
 			setBranchID(order.getBranchID());
-			setCustomer(customer);
 			setUserID(order.getUserID());
 			setInstallment(installment);
 			setGrossValue(order.getGrossValue());

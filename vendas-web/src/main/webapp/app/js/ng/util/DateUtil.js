@@ -52,7 +52,11 @@ vendasApp.factory('DateUtil',function(){
 		 * Fonte: https://stackoverflow.com/questions/7151543/convert-dd-mm-yyyy-string-to-date/7151626#7151626
 		 */
 		getTime : function(ddMYYYY){
-			return new Date(ddMYYYY.replace( /(\d{2})\/(\d{2})\/(\d{4})/, "$2/$1/$3")).getTime();			
+			if(ddMYYYY){
+				return new Date(ddMYYYY.replace( /(\d{2})\/(\d{2})\/(\d{4})/, "$2/$1/$3")).getTime();
+			} else {
+				return undefined;
+			}						
 		},
 		
 		/**

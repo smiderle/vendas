@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.product.Product;
 import br.com.vendas.domain.wrapper.OrderWrapper;
-import br.com.vendas.dto.order.OrderDTO;
+import br.com.vendas.dto.OrderDTO;
 import br.com.vendas.exception.VendasException;
 import br.com.vendas.helper.ObjectMapperHelper;
 import br.com.vendas.services.order.OrderService;

@@ -103,7 +103,7 @@ vendasApp.controller('OrderListController',
 						                order.id, 
 						                order.customer.name ,
 						                'R$ '+ parseFloat(order.netValue).toFixed(2).replace('.', ','),
-						                DateUtil.format(new Date(order.issuanceTime), '/', true),
+						                DateUtil.format(order.issuanceTime, '/', true),
 						                order.type == 1 ? '<span class="badge bg-color-green padding-5">Pedido</span>' : '<span class="badge bg-color-blue padding-5">Orçamento</span>'
 						                
 						                ]);
@@ -120,6 +120,7 @@ vendasApp.controller('OrderListController',
 			 */
 			$scope.$on('vendasApp:isLastPage', function (event) {
 				console.log('Camando o evento ultima pagina');
+				event.stopPropagation();
 				if(!noMoreOrders){
 					//listOrders($scope.orders.length);
 					$scope.listOrders();

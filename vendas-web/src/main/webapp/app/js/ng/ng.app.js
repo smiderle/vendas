@@ -251,6 +251,28 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		controller : 'OrderDetailsController'		
 	})
 	
+	.when("/financeiro/lista-contas-receber",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/payment/payment-list.html';
+			}
+		},
+		controller : 'PaymentListController'		
+	})
+	
+	.when("/financeiro/detalhes-contas-receber",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/payment/payment-details.html';
+			}
+		},
+		controller : 'PaymentDetailsController'		
+	})
+	
 	
 	
 	

@@ -1,0 +1,220 @@
+<!-- widget grid -->
+<section id="widget-grid" class="">
+
+	<!-- row -->
+	<div class="row">
+
+		<article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+			
+			<div  ng-init="init()" class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-user-form"  data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+				<header >
+					<span class="widget-icon"> <i class="fa fa-info"></i> </span>
+					<h2>Detalhes da Parcela</h2>				
+				</header>
+	
+					<!-- widget div-->
+					<div role="content" style="">
+												
+						<div class="widget-body no-padding">
+								
+							<form autocomplete="off" id="pricetable-form" class="smart-form" novalidate="novalidate" ng-submit="save(priceTable)" >
+																			
+								<div class="md-header btn-toolbar">
+								<br>
+									<button type="button" class="btn btn-sm btn-default" onclick="window.history.back();">
+									<i class="fa fa-reply"></i>
+												Voltar
+									</button>
+									<!-- <button type="submit" class="btn btn-sm  btn-success" id="btnTableSave">
+										<i class="fa fa-save"></i>
+											Salvar
+									</button> -->								
+									<br>
+								</div>
+								<br>
+								<hr>
+								
+								
+								<ul id="tabPayment" class="nav nav-tabs bordered">
+									<li class="active"  id="tabMainDataA">
+										<a href="#tabMainData"  data-toggle="tab"><i class="fa fa-fw fa-lg fa-file-text-o"></i>Detalhes da Parcela</a>
+									</li>
+									<li  id="tabAllPaymentA">
+										<a href="#tabAllPayment" data-toggle="tab"><i class="fa fa-fw fa-lg fa-list-ol"></i>Demais Parcelas</a>
+									</li>	
+								</ul>		
+								
+								
+								
+								<div id="tabContentPayment" class="tab-content padding-10">
+									<div class="tab-pane fade in active" id="tabMainData">
+										<fieldset>
+											<div class="row">
+												<section class="col col-3">
+													<label class="label">Número do Pedido</label>																					
+													<label class="input">	
+													<i class="icon-prepend fa  fa-file-text-o"></i>
+														<input type="text" name="orderID" placeholder="Nº do Pedido" maxlength="9" ng-model="paymentSelected.order.id" ng-disabled="true" class="form-control">
+													</label>											
+												</section>										
+											</div>
+											
+											<div class="row">
+												<section class="col col-3">
+													<label class="label">Número da Parcela</label>
+													<label class="input">
+														<i class="icon-prepend fa  fa-sort-numeric-asc"></i>													
+														<input type="text" name="installment" placeholder="Parcela" id="sequence" ng-model="paymentSelected.sequence" ng-disabled="true" class="form-control">
+													</label>
+												</section>	
+												
+												<section class="col col-3">
+													<label class="label">Status da Parcela</label>
+													<label class="input">													 
+													 	<i class="icon-prepend fa  fa-circle-o"></i>
+														<input type="text" name="paymentDate" placeholder="Parcela Paga" id="paymentDate" value="{{ getPaymentStatus( paymentSelected) }}" ng-disabled="true" class="form-control">
+													</label>
+												</section>	
+												
+												<section class="col col-3">
+													<label class="label">Valor da Parcela</label>
+													<label class="input">
+														<i class="icon-prepend fa  fa-usd"></i>
+														<input type="text" name="installmentValue" placeholder="Valor da Parcela" id="sequence" ng-model="paymentSelected.installmentValue" ng-disabled="true" class="form-control">
+													</label>
+												</section>	
+												
+												
+											</div>
+											
+											<div class="row">
+												
+												<section class="col col-3">
+													<label class="label">Data de Vencimento</label>
+													<label class="input">
+														<i class="icon-prepend fa  fa-calendar"></i>
+														<input type="text" name="expirationDate " placeholder="Data de Vencimento" id="expirationDate "  value="{{paymentSelected.expirationDate | date: 'dd/MM/yyyy' }}"  ng-disabled="true" class="form-control">
+													</label>
+												</section>								
+												
+												<section class="col col-3">
+													<label class="label">Data de Lançamento</label>
+													<label class="input">
+														<i class="icon-prepend fa  fa-calendar"></i>
+														<input type="text" placeholder="Lançamento" id="registrationDate" value="{{paymentSelected.registrationDate | date: 'dd/MM/yyyy HH:mm' }}" ng-disabled="true" class="form-control">
+													</label>
+												</section>
+												
+												<section class="col col-3">
+													<label class="label">Data de Pagamento</label>
+													<label class="input">
+														<i class="icon-prepend fa  fa-calendar"></i>
+														<input type="text" name="paymentDate" placeholder="{{ paymentSelected.paymentDate == null ? 'Parcela não foi paga ainda' : paymentSelected.paymentDate}}" value="{{ paymentSelected.paymentDate | date: 'dd/MM/yyyy HH:mm'}}"  ng-disabled="true" class="form-control">
+													</label>
+												</section>	
+											</div>
+											<div class="row">
+												<section class="col col-3">
+													<label class="label">Forma de Pagamento</label>
+													<label class="input">
+														<i class="icon-prepend fa fa-credit-card"></i>													
+														<input type="text" placeholder="Forma de Pagamento" id="formPayment" ng-model="formPayment.description" ng-disabled="true" class="form-control">
+													</label>
+												</section>
+												
+												<section class="col col-3">
+													<label class="label">Forma de Parcelamento</label>
+													<label class="input">
+														<i class="icon-prepend fa fa-reorder"></i>													
+														<input type="text" placeholder="Forma de Parcelamento" id="installment" ng-model="paymentSelected.order.installment.description" ng-disabled="true" class="form-control">
+													</label>
+												</section>
+											</div>
+											
+											<div class="row">
+												<section class="col col-3">
+													<label class="label">Número do documento</label>
+													<label class="input">
+														<i class="icon-prepend fa  fa-file-o"></i>													
+														<input type="text" placeholder="Número do Documento" id="documentNumber" ng-model="paymentSelected.documentNumber" ng-disabled="true" class="form-control">
+													</label>
+												</section>
+												
+												<section class="col col-6">
+													<label class="label">Observação</label>
+													<label class="input">
+														<i class="icon-prepend fa  fa-comment"></i>
+														<input type="text" placeholder="Observação" id="observation" ng-model="paymentSelected.observation" ng-disabled="true" class="form-control">
+													</label>
+												</section>
+											</div>
+										</fieldset>	
+									</div>
+									
+									<div class="tab-pane fade in" id="tabAllPayment">
+									
+									
+									
+										<table id="datatable_installments"  
+													class="table table-hover table-striped smart-form has-tickbox dataTable" radio="false" width="100%" >
+												<thead>
+													<tr role="row">
+														<th style="width: 50px;"></th>													
+														<th style="width: 100px;">Vencimento</th>
+														<th style="width: 100px;">Documento</th>
+														<th style="width: 100px;">Observação</th>
+														<th style="width: 100px;">Valor</th>
+														<th style="width: 100px;">Parcela N°</th>
+														<th style="width: 50px;">Status</th>																												
+													</tr>
+												</thead>
+												
+												<tbody>
+													<tr ng-repeat="otherPayment in payment.order.ordersPayments">
+														<td>
+															<a class="fa fa-lg fa-search" href="javascript:void(0);" ng-click="showInstallment($index)"></a>															
+														</td>
+														<td>
+															<h5><small>{{otherPayment.expirationDate | date: 'dd/MM/yyyy'}}</small></h5>
+														</td>
+														<td>
+															<h5><small>{{otherPayment.documentNumber}}</small></h5>
+														</td>
+														<td>
+															<h5><small>{{otherPayment.observation}}</small></h5>
+														</td>
+														<td>
+															<h5><small>R$ {{otherPayment.installmentValue}}</small></h5>
+														</td>
+														<td>
+															<h5><small>{{otherPayment.sequence}}</small></h5>
+														</td>
+														<td>
+															<h5><span class="label  padding-5 txt-color-white pull-left" ng-class=" {'label-warning' : getPaymentStatus(otherPayment) == 'Pendente', 'label-success' : getPaymentStatus(otherPayment) == 'Paga' ,  'label-danger' :  getPaymentStatus(otherPayment) == 'Atrasada'} ">{{ getPaymentStatus(otherPayment) }}</span></h5>
+														</td>
+														
+													</tr>
+												</tbody>
+											</table>										
+									</div>
+								</div>						
+									
+							</form>
+	
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+					
+				</div>			
+			
+		</article>
+	</div>
+</section>		
+<script type="text/javascript">
+	
+
+</script>
+
+

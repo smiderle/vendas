@@ -1,73 +1,50 @@
-package br.com.vendas.domain.order;
+package br.com.vendas.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import br.com.vendas.domain.order.OrderPayment;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+public class OrderPaymentDTO {
 
+	public OrderPaymentDTO(OrderPayment orderPayment, OrderDTO orderDTO) {
+		setID(orderPayment.getID());
+		setOrganizationID(orderPayment.getOrganizationID());
+		setBranchID(orderPayment.getBranchID());
+		setSequence(orderPayment.getSequence());
+		setExpirationDate(orderPayment.getExpirationDate());
+		setPaymentDate(orderPayment.getPaymentDate());
+		setChangeTime(orderPayment.getChangeTime());
+		setInstallmentValue(orderPayment.getInstallmentValue());
+		setObservation(orderPayment.getObservation());
+		setDocumentNumber(orderPayment.getDocumentNumber());
+		setOrder(orderDTO);
+		setRegistrationDate(orderPayment.getRegistrationDate());
+	}
 
-@Entity
-@Table(name="PEDIDOPGTO")
-public class OrderPayment implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7550716822062484831L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
 	private Long ID;
 	
-	@Column(name="IDEMPRESA")
 	private Integer organizationID;
 	
-	@Column(name="IDFILIAL")
 	private Integer branchID;
 	
-	@ManyToOne
-    @JoinColumn(name = "IDPEDIDO")
-	@JsonIgnore
-	private Order order;	
+	//private Order order;	
 
-	@Column(name="SEQUENCIA")	
 	private Integer sequence;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name="DTVENCIMENTO")
 	private Date expirationDate;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DTPAGAMENTO")
 	private Date paymentDate;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DTHRALTERACAO")
 	private Date changeTime;
 	
-	@Column(name="VALORPARCELA")	
 	private Double installmentValue;
 	
-	@Column(name="OBSERVACAO")
 	private String observation;
 	
-	@Column(name="NUMERODOC")
 	private String documentNumber;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DTHRCADASTRO", insertable=false)
+	private OrderDTO order;
+	
 	private Date registrationDate;
 
 	public Long getID() {
@@ -94,14 +71,6 @@ public class OrderPayment implements Serializable {
 		this.branchID = branchID;
 	}
 
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
 	public Integer getSequence() {
 		return sequence;
 	}
@@ -126,20 +95,20 @@ public class OrderPayment implements Serializable {
 		this.paymentDate = paymentDate;
 	}
 
-	public Double getInstallmentValue() {
-		return installmentValue;
-	}
-
-	public void setInstallmentValue(Double installmentValue) {
-		this.installmentValue = installmentValue;
-	}
-
 	public Date getChangeTime() {
 		return changeTime;
 	}
 
 	public void setChangeTime(Date changeTime) {
 		this.changeTime = changeTime;
+	}
+
+	public Double getInstallmentValue() {
+		return installmentValue;
+	}
+
+	public void setInstallmentValue(Double installmentValue) {
+		this.installmentValue = installmentValue;
 	}
 
 	public String getObservation() {
@@ -158,6 +127,14 @@ public class OrderPayment implements Serializable {
 		this.documentNumber = documentNumber;
 	}
 
+	public OrderDTO getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderDTO order) {
+		this.order = order;
+	}
+
 	public Date getRegistrationDate() {
 		return registrationDate;
 	}
@@ -165,6 +142,7 @@ public class OrderPayment implements Serializable {
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+
 	
 	
 }
