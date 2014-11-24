@@ -1,6 +1,8 @@
 'use strict';
 
-vendasApp.factory('ContextService',function($rootScope, Restangular,UtilityService, VendasWebRestangular, LocalStorageService, Constants){
+vendasApp.factory('ContextService',
+		['$rootScope','Restangular','UtilityService','LocalStorageService', 'Constants',
+        function($rootScope, Restangular,UtilityService, LocalStorageService, Constants){
 
 	/**
 	 * Retorna o usuario logado salvo no objeto $rootScope.user, caso não o encontre, busca no localStorage
@@ -68,4 +70,4 @@ vendasApp.factory('ContextService',function($rootScope, Restangular,UtilityServi
 		getBranchLogged: getBranchLogged,
 		setBranchLogged: setBranchLogged
 	};	
-});
+}]);

@@ -1,0 +1,168 @@
+            * {
+              box-sizing: border-box;
+            }
+
+          
+
+            /*html, body {
+              height: 100%;
+              margin: 0;
+              padding: 0;
+            }*/
+
+            ul {
+              list-style: none;
+              word-wrap: break-word;
+            }
+
+            /* Pages */
+
+            .pages {
+              height: 100%;
+              margin: 0;
+              padding: 0;
+              width: 100%;
+            }
+
+            .chat {
+              height: 100%;
+              position: absolute;
+              width: 100%;
+            }
+
+          
+            /* Font */
+
+            .chat-body {
+              font-size: 120%;
+            }
+
+            .inputMessage {
+              font-size: 100%;
+            }
+
+            .rowMessageTime {               
+                width: 100%;
+                float: right;
+            }
+            .messageTime {
+                font-size: 55%;
+                float: right;
+            }
+
+            .log {
+              color: gray;
+              font-size: 70%;
+              margin: 5px;
+              text-align: center;
+            }
+
+            /* Messages */
+
+            .chatArea {                
+              height: 100%;
+              padding-bottom: 60px;
+            }
+
+            .messages {
+              height: 100%;
+              margin: 0;
+              overflow-y: scroll;
+              padding: 10px 20px 10px 20px;
+            }
+
+            .message.typing .messageBody {
+              color: gray;
+            }
+
+            .username {
+              float: left;
+              font-weight: 700;
+              overflow: hidden;
+              padding-right: 15px;
+              text-align: right;
+            }
+
+            /* Input */
+
+            .inputMessage {
+              border: 10px solid #000;
+              bottom: 0;
+              height: 60px;
+              left: 0;
+              outline: none;
+              padding-left: 10px;
+              position: absolute;
+              right: 0;
+              width: 50%;
+            }
+            
+            /* bubble */
+            .bubble{
+                background-color: #F2F2F2;
+                border-radius: 5px;
+                box-shadow: 0 0 6px #B2B2B2;
+                display: inline-block;
+                padding: 10px 18px;
+                position: relative;
+                vertical-align: top;
+            }
+
+            .bubble::before {
+                background-color: #F2F2F2;
+                content: "\00a0";
+                display: block;
+                height: 16px;
+                position: absolute;
+                top: 11px;
+                transform:             rotate( 29deg ) skew( -35deg );
+                    -moz-transform:    rotate( 29deg ) skew( -35deg );
+                    -ms-transform:     rotate( 29deg ) skew( -35deg );
+                    -o-transform:      rotate( 29deg ) skew( -35deg );
+                    -webkit-transform: rotate( 29deg ) skew( -35deg );
+                width:  20px;
+            }
+
+            .you {
+                float: left;   
+                margin: 30px 20px 5px 20px;    
+                clear: both;
+            }
+
+            .you::before {
+                box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+                left: -9px;           
+            }
+
+            .me {
+                float: right;    
+                margin: 30px 20px 5px 45px;
+                clear: both;
+            }
+
+            .me::before {
+                box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
+                right: -9px;    
+            }
+            
+            .rowInbox {
+            	border-bottom: solid 1px;
+            }
+            
+            
+
+.inbox-side-bar-custom {
+	border-right: solid 1px #CBCBCB;
+	border-bottom: solid 1px #CBCBCB;
+	/* width: 20% !important; */
+	text-transform: capitalize;	
+}
+
+.user-row {
+	border-bottom: solid 1px #EAEAEA;
+	color: #4192D4;
+}
+
+.inbox-menu-lg li a{
+	color: #4192D4 !important; 
+}

@@ -24,15 +24,13 @@
 		<!-- We recommend you use "your_style.css" to override SmartAdmin
 		     specific styles this will also ensure you retrain your customization with each SmartAdmin update. -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="css/angucomplete-alt.css">
-		
-		
+		<link rel="stylesheet" type="text/css" media="screen" href="css/angucomplete-alt.css">		
+		<link rel="stylesheet" type="text/css" media="screen" href="css/angular-busy.min.css">		
 
 		<!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/demo.min.css">
 		
 		<link rel="stylesheet" type="text/css" media="screen" href="css/loader.css">
-		
 
 		<!-- Angular Related CSS -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ng.min.css">
@@ -176,6 +174,9 @@
 		
 		<script src="js/libs/moment/moment-with-locales.js"></script>
 		
+		<script src="js/libs/angular-busy/angular-busy.min.js"></script>
+		
+		
 		<!-- SocketIO  -->
 		<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 
@@ -199,7 +200,8 @@
 	  	<script src="js/ng/controllers/branch/BranchFormController.js"></script>
 	  	<script src="js/ng/controllers/branch/BranchListController.js"></script>
 	  	<script src="js/ng/controllers/customer/CustomerListController.js"></script>
-	  	<script src="js/ng/controllers/customer/CustomerFormController.js"></script>	  	
+	  	<script src="js/ng/controllers/customer/CustomerFormController.js"></script>
+	  	<script src="js/ng/controllers/message/MessageController.js"></script>	  	
 	  	<script src="js/ng/controllers/order/InstallmentFormController.js"></script>
 	  	<script src="js/ng/controllers/order/InstallmentListController.js"></script>
 	  	<script src="js/ng/controllers/order/PriceTableFormController.js"></script>
@@ -226,6 +228,7 @@
 	  	<script src="js/ng/services/FormsPaymentService.js"></script>	  	
 	  	<script src="js/ng/services/LocalStorageService.js"></script>
 	  	<script src="js/ng/services/LocationService.js"></script>
+	  	<script src="js/ng/services/MessageService.js"></script>
 	  	<script src="js/ng/services/OrderService.js"></script>
 	  	<script src="js/ng/services/PaymentService.js"></script>
 	  	<script src="js/ng/services/PriceTableService.js"></script>

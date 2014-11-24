@@ -15,6 +15,18 @@ public interface UserService {
 	 * @return
 	 */
 	ServiceResponse<List<UserPojo>> findAllByOrganizationID(Integer organizationID, Integer offset);
+	
+	
+	/**
+	 * Retorna todos os usuários, com exceção do passado por parametro
+	 * @param organizationID
+	 * @param userID
+	 * @param offset
+	 * @param limit
+	 * @return
+	 */
+	ServiceResponse<List<UserPojo>> findOtherUsersByOrganizationID(Integer organizationID,Integer userID, Integer offset);
+	
 	/**
 	 * Salva o usuario
 	 * @param user
@@ -57,6 +69,7 @@ public interface UserService {
 	 * @param limit
 	 * @return
 	 */
-	ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(String filter,Integer organizationID, Integer offset);	
+	ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(String filter,Integer organizationID, Integer offset);
+	
 
 }

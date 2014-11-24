@@ -29,6 +29,16 @@ public interface UserDAO extends GenericDAO<User> {
 	 * @return
 	 */
 	List<User> findUsersByUserIDOrNameOrEmail(String filter, Integer organizationID, Integer userID, Integer offset, Integer limit);
+	
+	/**
+	 * Retorna todos os usuários, com exceção do usuário passado por parametro
+	 * @param organizationID
+	 * @param userID
+	 * @param offset
+	 * @param limit
+	 * @return
+	 */
+	List<User> findOtherUsersByOrganizationID(Integer organizationID,Integer userID, Integer offset, Integer limit);		
 
 	
 }

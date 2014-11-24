@@ -100,6 +100,24 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 			});
         }, 
         
+        getOtherUsersByOrganizationID: function(organizationID,userID, offset){
+        	
+        	var parameters = {
+					'organizationID' : organizationID, 
+					'offset' : offset,
+					'userID': userID
+					};
+        	
+        	
+        	return Restangular.all('v1').all("user").all("getOtherUsersByOrganizationID").getList(parameters).then(function(result){
+				var p = {};
+				p.value = result.value;
+				p.rowCount = result.rowCount;			
+				return p;
+			});
+        }, 
+        
+        
         /**
          * Busca os usuarios pelo filtro de pesquisa 
          */

@@ -157,4 +157,18 @@ public class UserServiceImpl implements UserService{
 		return ServiceResponseFactory.create(usersPojo);
 	}
 
+	@Override
+	public ServiceResponse<List<UserPojo>> findOtherUsersByOrganizationID(Integer organizationID, Integer userID, Integer offset) {
+		List<User> users = userDAO.findOtherUsersByOrganizationID(organizationID, userID,offset, LimitQuery.LIMIT_USER.value());
+		List<UserPojo> usersPojo = new ArrayList<>();
+		for (User user : users) {
+			/*Hibernate.initialize(user.getMenusApplication());
+			Hibernate.initialize(user.getUserBranches());
+			Hibernate.initialize(user.getUserRoles());*/
+			UserPojo userPojo = new UserPojo(user, null, null, null);
+			usersPojo.add(userPojo);
+		}
+		return ServiceResponseFactory.create(usersPojo);
+	}
+
 }

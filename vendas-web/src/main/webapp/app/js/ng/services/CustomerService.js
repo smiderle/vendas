@@ -1,6 +1,6 @@
 'use strict';
 
-vendasApp.factory('CustomerService',function(Restangular,UtilityService, VendasWebRestangular, LocalStorageService){
+vendasApp.factory('CustomerService',function(Restangular,UtilityService, LocalStorageService){
 	var _customer;
 	//Cliente que sera editado
 	var customerEdition;

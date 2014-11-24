@@ -11,7 +11,8 @@ var vendasApp = angular.module('vendasApp', [
                                              'app.navigation',
                                              'app.localize',
                                              'app.activity',
-                                             'app.smartui'
+                                             'app.smartui',
+                                             'cgBusy'
                                              ]);
 
 /**
@@ -21,6 +22,15 @@ var vendasApp = angular.module('vendasApp', [
 vendasApp.factory('VendasWebRestangular', function(Restangular) {
 	return Restangular.withConfig(function(RestangularConfigurer) {
 		RestangularConfigurer.setBaseUrl('/vendas-web');
+	});
+});
+
+/**
+ * Restangular que mapeado para o NodeJS
+ */
+vendasApp.factory('RestangularNode', function(Restangular) {
+	return Restangular.withConfig(function(RestangularConfigurer) {
+		RestangularConfigurer.setBaseUrl('http://localhost:3000/vendas-api');
 	});
 });
 
@@ -44,7 +54,6 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		}
 		return newResponse;
 	});
-
 
 	$routeProvider
 	.when('/', {
@@ -272,6 +281,19 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		},
 		controller : 'PaymentDetailsController'		
 	})
+	
+	.when("/mensagem/mensagens",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/message/message.html';
+			}
+		},
+		controller : 'MessageController'		
+	})
+	
+	
 	
 	
 	

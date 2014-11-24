@@ -31,6 +31,21 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 		return criteria
 				.addOrder(Order.asc("email")).list();
 	}
+	
+	@Override
+	public List<User> findOtherUsersByOrganizationID(Integer organizationID,Integer userID, Integer offset, Integer limit) {		
+		
+		Session session = getSession();		
+		Criteria criteria = session.createCriteria(User.class);
+		criteria.add(Restrictions.eq("organizationID", organizationID))
+			.add(Restrictions.ne("userID", userID))
+			.setFirstResult(offset)
+			.setMaxResults(limit);
+		
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return criteria
+				.addOrder(Order.asc("email")).list();
+	}
 
 	@Override
 	public User findUserByEmail(String email) {		

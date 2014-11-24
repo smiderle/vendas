@@ -1,6 +1,6 @@
 'use strict';
 
-vendasApp.directive('menuComponent',[ 'ContextService', function (ContextService) {
+vendasApp.directive('menuComponent',[ 'ContextService', 'MessageService','$timeout' , function (ContextService, MessageService, $timeout) {
     return  {
     	restrict : 'E',
     		
@@ -18,7 +18,7 @@ vendasApp.directive('menuComponent',[ 'ContextService', function (ContextService
 						//Se o menu pai tiver menus filhos
 						if(menu.childrenMenu.length > 0){
 							//Inicia o pai
-							menuHtml += '<nav:group data-icon="'+menu.icon+'" title="'+menu.label+'" >';
+							menuHtml += '<nav:group data-icon="'+menu.icon+'" title="'+menu.label+'" id="menu_'+menu.menuID+'" >';
 							var childrenMenu = menu.childrenMenu;
 								
 							childrenMenu.forEach(function(childMenu){
@@ -28,7 +28,7 @@ vendasApp.directive('menuComponent',[ 'ContextService', function (ContextService
 								for(i in menusApplication){
 									if(childMenu.menuID == menusApplication[i].menuID){
 										//Insere o filho
-										menuHtml += '<nav:item data-view="'+childMenu.url+'" data-icon="'+childMenu.icon+'" title="'+childMenu.label+'" />';
+										menuHtml += '<nav:item data-view="'+childMenu.url+'" id="menu_'+childMenu.menuID+'" data-icon="'+childMenu.icon+'" title="'+childMenu.label+'" />';
 										break;
 									}
 								}
@@ -38,13 +38,30 @@ vendasApp.directive('menuComponent',[ 'ContextService', function (ContextService
 							//Encerra o pai
 							menuHtml += '</nav:group>';
 						} else {
-							menuHtml += '<nav:item data-view="'+menu.url+'" data-icon="'+menu.icon+'" title="'+menu.label+'" />';
+							menuHtml += '<nav:item data-view="'+menu.url+'" data-icon="'+menu.icon+'" title="'+menu.label+'" id="menu_'+menu.menuID+'"/>';
 						}
 					}
 				
 					
 				});
 				menuHtml +='</navigation>';
+				
+				//É setado um tempo para garantir, que ira chamar/retornar o serviço depois que carregar o menu
+				$timeout(function(){
+					var cMessages = MessageService.getMessagesUnreadCount(user.userID);
+					cMessages.then(function(toReturn){
+						if(toReturn.code === '200' && toReturn.value > 0){
+							
+							
+							$('#iconMenuNewMessage').remove();
+							//Adiciona o icone de nova mensage no lado do meu Mensagens
+							$('#menu_18 a').append('<span id="iconMenuNewMessage" class="badge bg-color-green bounceIn animated pull-right inbox-badge"><i class="fa fa-md fa-envelope-o"></i></span>');
+						}
+					});
+				}, 100);
+				
+				
+				
 				return menuHtml;
 			
 			}

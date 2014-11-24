@@ -63,6 +63,25 @@ public class UserController {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
+	
+	/**
+	 * Retorna todos os usarios de determinada empresa, com exceção do usuário passado por parametro.
+	 * @param organizationID
+	 * @return
+	 */
+	@RequestMapping(value="getOtherUsersByOrganizationID", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getOtherUsersByOrganizationID(Integer organizationID, Integer userID, Integer offset){
+		try {
+			ServiceResponse<List<UserPojo>> payload =  service.findOtherUsersByOrganizationID(organizationID,userID, offset);
+			LOG.debug("getOtherUsersByOrganizationID Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+		}
+	}
+	
+	
 
 	/**
 	 * Retorna o usuario por email.
