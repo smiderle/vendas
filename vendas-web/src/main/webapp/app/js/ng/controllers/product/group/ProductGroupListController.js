@@ -46,7 +46,7 @@ vendasApp.controller('ProductGroupListController',
 		var branchID = ContextService.getBranchLogged().branchOfficeID;
 		
 		var offset = 0;
-		var cGroups_ = ProductGroupService.getAllByBranch(organizationID,branchID, offset);
+		var cGroups_ = $scope.busyLoader = ProductGroupService.getAllByBranch(organizationID,branchID, offset);
 		cGroups_.then(function(toReturn){
 			$scope.groups = toReturn.value;
 			buildGroupDataTable(toReturn.value);
@@ -66,7 +66,7 @@ vendasApp.controller('ProductGroupListController',
 		var organizationID = ContextService.getOrganizationID();
 		var branchID = ContextService.getBranchLogged().branchOfficeID;
 		var offset = 0;
-		var cGroups = ProductGroupService.getAllByDescription(filter,organizationID,branchID,offset);
+		var cGroups = $scope.busyLoader = ProductGroupService.getAllByDescription(filter,organizationID,branchID,offset);
 		cGroups.then(function(toReturn){
 			$scope.groups = toReturn.value;
 			buildGroupDataTable(toReturn.value);

@@ -1,0 +1,28 @@
+<div  ng-controller="NotificationController" ng-init="load(1)">
+<div id="loader" ng-show="showLoad">
+
+	<div id="d1"></div>
+	<div id="d2"></div>
+	<div id="d3"></div>
+	<div id="d4"></div>
+	<div id="d5"></div>	
+</div>
+
+<ul class="notification-body">
+
+	<li ng-repeat="notif in notifications">
+		<span  ng-class="{ 'unread' : notif.detached }">
+			<!-- style="cursor:default"  para não mostrar a mao no ponteiro do mouse   -->
+			<a href="javascript:void(0);" class="msg" style="cursor:default">
+				<img   ng-src="{{notif.pictureUrl}}"  alt="" class="air air-top-left margin-top-5" width="40" height="40">				
+				<span class="from">{{notif.from}}</span>
+				<time>{{formatDate(notif.notificationDate)}}</time>
+				<span class="subject">{{notif.title}}</span>
+				<span>{{notif.message}}</span>
+			</a>
+		</span>
+	</li>	
+	
+</ul>
+
+</div>

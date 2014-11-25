@@ -43,4 +43,17 @@ public interface OrderDAO extends GenericDAO<Order> {
 	 * @return
 	 */
 	Order findByID(Long id);
+	
+	/**
+	 * Retorna os pedidos pelo id ou código do cliente, de determinado usuário
+	 * @param organizationID
+	 * @param branchID
+	 * @param userID
+	 * @param orderId
+	 * @param customerID
+	 * @param offset
+	 * @param limit
+	 * @return
+	 */
+	List<Order> findByIDOrCustomerIDAndUserID(Integer organizationID, Integer branchID, Integer userID, Long orderId, String customerID, Integer offset, Integer limit);
 }

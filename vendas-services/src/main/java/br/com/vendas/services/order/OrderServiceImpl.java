@@ -118,6 +118,25 @@ public class OrderServiceImpl implements OrderService {
 		return ServiceResponseFactory.create(lsOrderTDO);
 	}
 	
+	@Override
+	public ServiceResponse<List<OrderDTO>> findByIDOrCustomerIDAndUserID(Integer organizationID, Integer branchID, Integer userID, String filter, Integer offset, Integer limit) {
+		Long orderID = 0L;
+		
+		if(StringUtils.isInteger(filter)) {
+			orderID = Long.parseLong(filter);
+		}
+		
+		List<Order> lsOrder = orderDAO.findByIDOrCustomerIDAndUserID(organizationID, branchID, userID, orderID, filter, offset,  getLimit(limit));
+		
+		List<OrderDTO> lsOrderTDO = new ArrayList<>(lsOrder.size());
+		
+		for (Order order : lsOrder) {
+			lsOrderTDO.add(new OrderDTO(order, null, null, null));
+		}
+		
+		return ServiceResponseFactory.create(lsOrderTDO);
+	}
+	
 	private Integer getLimit( Integer limit ) {
 		Integer defaultLimit = LimitQuery.LIMIT_ORDER.value();
 		if(limit != null && limit < LimitQuery.LIMIT_ORDER.value() && limit > 0) {
@@ -125,5 +144,5 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		return defaultLimit;
-	}
+	}	
 }

@@ -54,5 +54,19 @@ public interface OrderService {
 	 * @return
 	 */
 	ServiceResponse<List<OrderDTO>> findByIDOrCustomerID( Integer organizationID, Integer branchID, String filter, Integer offset, Integer limit);
+	
+	/**
+	 * Retorna os pedidos pelo código ou pelo cliente, de determinado usuário
+	 * @param organizationID
+	 * @param branchID
+	 * @param userID
+	 * @param filter
+	 * @param offset
+	 * @param limit
+	 * @return
+	 */
+	ServiceResponse<List<OrderDTO>> findByIDOrCustomerIDAndUserID( Integer organizationID, Integer branchID, Integer userID, String filter, Integer offset, Integer limit);
+	
+	
 
 }

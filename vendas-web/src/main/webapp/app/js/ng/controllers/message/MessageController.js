@@ -53,18 +53,22 @@
 		 * Envia mensagem
 		 */
 		$scope.sendMessage = function(txtMessage){
-			var message = { 
-					'from': userLogged.userID,
-					'to': $scope.userSelected.userID,
-					'message': txtMessage
-			};
+			if($scope.userSelected){
+				var message = { 
+						'from': userLogged.userID,
+						'to': $scope.userSelected.userID,
+						'message': txtMessage
+				};
 
-			socket.emit('private msg', message);
-			
-			addMessage(false,true, userLogged.name, txtMessage, moment().format('DD/MM/YYYY hh:mm:ss'));
-			
-			scrollToEnd();
-			$scope.message = '';
+				socket.emit('private msg', message);
+				
+				addMessage(false,true, userLogged.name, txtMessage, moment().format('DD/MM/YYYY hh:mm:ss'));
+				
+				scrollToEnd();
+				$scope.message = '';
+			} else {
+				alert('Selecione um usuário');
+			}
 		};
 		
 		/**
@@ -89,7 +93,7 @@
 		}
 		
 		
-		function loadMessages(from, to, callback) {	
+		function loadMessages(from, to, callback) {
 
 			var scrollHeightBefore = $('.chat-body').get(0).scrollHeight;
 			

@@ -1,98 +1,118 @@
-'use strict';
-
 /*****************************************************************************/
 /**    Author: Ladair C. Smiderle Junior - ladairsmiderle@gmail.com        **/
 /***************************************************************************/
 
-vendasApp.factory('OrderService',
-		function(Restangular){ 
-	
-	var orderEdit;
-	return {
-		
-		/**
-		 * Salva o pedido
-		 */
-		save : function(orderWrapper){
-			return  Restangular.all("v1").all('order').all('save').post(orderWrapper);
-		},
-		
-		/**
-		 * Retorna todas os pedidos de determinada filial
-		 */
-		getAllByBranch: function( organizationID, branchID,offset,limit ) {
+(function(){
+	'use strict';
 
-			var parameters = {
-					'organizationID' : organizationID, 
-					'branchID' : branchID,
-					'offset': offset,
-					'limit': limit
-			};
+	vendasApp.factory('OrderService',
+			function(Restangular){ 
+		
+		var orderEdit;
+		return {
 			
-			return Restangular.all("v1").all("order").all("getAllByBranch").getList(parameters).then(function(result){
-				var p = {};
-				p.value = result.value;
-				p.rowCount = result.rowCount;			
-				return p;
-			});
-		}, 
-		
-		getAllByUserAndBranch: function( organizationID, branchID,userID ,offset ,limit) {
-
-			var parameters = {
-					'organizationID' : organizationID, 
-					'branchID' : branchID,
-					'userID': userID,
-					'offset': offset,
-					'limit': limit
-			};
+			/**
+			 * Salva o pedido
+			 */
+			save : function(orderWrapper){
+				return  Restangular.all("v1").all('order').all('save').post(orderWrapper);
+			},
 			
-			return Restangular.all("v1").all("order").all("getAllByUserAndBranch").getList(parameters).then(function(result){
-				var p = {};
-				p.value = result.value;
-				p.rowCount = result.rowCount;			
-				return p;
-			});
-		}, 	
-		
-		getByID: function( id) {
+			/**
+			 * Retorna todas os pedidos de determinada filial
+			 */
+			getAllByBranch: function( organizationID, branchID,offset,limit ) {
 
-			var parameters = {
-					'id' : id,				
-			};
+				var parameters = {
+						'organizationID' : organizationID, 
+						'branchID' : branchID,
+						'offset': offset,
+						'limit': limit
+				};
+				
+				return Restangular.all("v1").all("order").all("getAllByBranch").getList(parameters).then(function(result){
+					var p = {};
+					p.value = result.value;
+					p.rowCount = result.rowCount;			
+					return p;
+				});
+			}, 
 			
-			return Restangular.all("v1").all("order").all("getByID").getList(parameters).then(function(result){
-				var p = {};
-				p.value = result.value;
-				p.rowCount = result.rowCount;			
-				return p;
-			});
-		}, 	
-		
-		getByFilter : function( filter, organizationID, branchID, offset) {
+			getAllByUserAndBranch: function( organizationID, branchID,userID ,offset ,limit) {
 
-			var parameters = {
-					'filter': filter,
-					'organizationID' : organizationID, 
-					'branchID' : branchID,
-					'offset': offset
-			};
+				var parameters = {
+						'organizationID' : organizationID, 
+						'branchID' : branchID,
+						'userID': userID,
+						'offset': offset,
+						'limit': limit
+				};
+				
+				return Restangular.all("v1").all("order").all("getAllByUserAndBranch").getList(parameters).then(function(result){
+					var p = {};
+					p.value = result.value;
+					p.rowCount = result.rowCount;			
+					return p;
+				});
+			}, 	
 			
-			return Restangular.all("v1").all("order").all("getByFilter").getList(parameters).then(function(result){
-				var p = {};
-				p.value = result.value;
-				p.rowCount = result.rowCount;			
-				return p;
-			});
-		}, 	
-		
-		
-		setOrderEdition : function(order){
-			orderEdit = order;
-		},
+			getByID: function( id) {
 
-		getOrderEdition : function(){
-			return orderEdit;
-		} 
-	};
-});
+				var parameters = {
+						'id' : id,				
+				};
+				
+				return Restangular.all("v1").all("order").all("getByID").getList(parameters).then(function(result){
+					var p = {};
+					p.value = result.value;
+					p.rowCount = result.rowCount;			
+					return p;
+				});
+			}, 	
+			
+			getByFilter : function( filter, organizationID, branchID, offset) {
+
+				var parameters = {
+						'filter': filter,
+						'organizationID' : organizationID, 
+						'branchID' : branchID,
+						'offset': offset
+				};
+				
+				return Restangular.all("v1").all("order").all("getByFilter").getList(parameters).then(function(result){
+					var p = {};
+					p.value = result.value;
+					p.rowCount = result.rowCount;			
+					return p;
+				});
+			}, 	
+			
+			getByFilterAndUserID : function( filter, organizationID, branchID, userID, offset ) {
+
+				var parameters = {
+						'filter': filter,
+						'organizationID' : organizationID, 
+						'branchID' : branchID,
+						'userID': userID,
+						'offset': offset
+				};
+				
+				return Restangular.all("v1").all("order").all("getByFilterAndUserID").getList(parameters).then(function(result){
+					var p = {};
+					p.value = result.value;
+					p.rowCount = result.rowCount;			
+					return p;
+				});
+			}, 	
+			
+			
+			setOrderEdition : function(order){
+				orderEdit = order;
+			},
+
+			getOrderEdition : function(){
+				return orderEdit;
+			} 
+		};
+	});
+})();

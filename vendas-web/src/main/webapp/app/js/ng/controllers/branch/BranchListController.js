@@ -20,7 +20,7 @@ vendasApp
 	 */
 	$scope.listBranches = function(){
 		var organizationID = ContextService.getOrganizationID();
-		var cBranches = BranchService.getAllBranchesByOrganizationID(organizationID);
+		var cBranches = $scope.busyLoader = BranchService.getAllBranchesByOrganizationID(organizationID);
 		cBranches.then(function(toReturn){
 			$scope.branches = toReturn.value;
 			buildBranchOfficeDataTable(toReturn.value);

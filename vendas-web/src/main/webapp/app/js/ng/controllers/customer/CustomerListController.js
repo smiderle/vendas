@@ -103,7 +103,7 @@ vendasApp.controller('CustomerListController',
 				
 				customerSelected.excluded = true;
 				
-				var aCustomer = CustomerService.save(customerSelected);
+				var aCustomer = $scope.loadOrder = CustomerService.save(customerSelected);
 				aCustomer.then(function(toReturn){
 					if(toReturn.code == '200'){
 						clearDatateble();
@@ -175,7 +175,7 @@ vendasApp.controller('CustomerListController',
 		
 		var organizationID = ContextService.getOrganizationID();
 		var branchID = ContextService.getBranchLogged().branchOfficeID;		
-		var cCustomers = CustomerService.getAllByOrganization(organizationID,branchID, _offset);
+		var cCustomers = $scope.loadOrder = CustomerService.getAllByOrganization(organizationID,branchID, _offset);
 		cCustomers.then(function(toReturn){
 			buildCustomerDataTable(toReturn);
 		});	
@@ -210,7 +210,7 @@ vendasApp.controller('CustomerListController',
 		var organizationID = ContextService.getOrganizationID();
 		var branchID = ContextService.getBranchLogged().branchOfficeID;
 		
-		var cCustomer = CustomerService.getAllByFilter(filter,organizationID,branchID,offset);
+		var cCustomer = $scope.loadOrder = CustomerService.getAllByFilter(filter,organizationID,branchID,offset);
 		cCustomer.then(function(toReturn){
 			buildCustomerDataTable(toReturn);
 		});

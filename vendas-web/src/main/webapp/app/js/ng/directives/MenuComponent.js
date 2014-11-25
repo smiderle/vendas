@@ -18,7 +18,7 @@ vendasApp.directive('menuComponent',[ 'ContextService', 'MessageService','$timeo
 						//Se o menu pai tiver menus filhos
 						if(menu.childrenMenu.length > 0){
 							//Inicia o pai
-							menuHtml += '<nav:group data-icon="'+menu.icon+'" title="'+menu.label+'" id="menu_'+menu.menuID+'" >';
+							menuHtml += '<nav:group data-icon="'+menu.icon+'" title="'+menu.label+'" id="menu_'+menu.menuID+'" class="fadeInLeft animated" >';
 							var childrenMenu = menu.childrenMenu;
 								
 							childrenMenu.forEach(function(childMenu){
@@ -28,7 +28,7 @@ vendasApp.directive('menuComponent',[ 'ContextService', 'MessageService','$timeo
 								for(i in menusApplication){
 									if(childMenu.menuID == menusApplication[i].menuID){
 										//Insere o filho
-										menuHtml += '<nav:item data-view="'+childMenu.url+'" id="menu_'+childMenu.menuID+'" data-icon="'+childMenu.icon+'" title="'+childMenu.label+'" />';
+										menuHtml += '<nav:item data-view="'+childMenu.url+'" id="menu_'+childMenu.menuID+'" data-icon="'+childMenu.icon+'" title="'+childMenu.label+'"  />';
 										break;
 									}
 								}
@@ -38,7 +38,7 @@ vendasApp.directive('menuComponent',[ 'ContextService', 'MessageService','$timeo
 							//Encerra o pai
 							menuHtml += '</nav:group>';
 						} else {
-							menuHtml += '<nav:item data-view="'+menu.url+'" data-icon="'+menu.icon+'" title="'+menu.label+'" id="menu_'+menu.menuID+'"/>';
+							menuHtml += '<nav:item data-view="'+menu.url+'" data-icon="'+menu.icon+'" title="'+menu.label+'" id="menu_'+menu.menuID+'" class="fadeInLeft animated"/>';
 						}
 					}
 				

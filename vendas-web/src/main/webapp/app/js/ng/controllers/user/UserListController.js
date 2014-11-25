@@ -48,7 +48,7 @@ vendasApp.controller('UserListController',
 	$scope.listUsers = function(){
 		var organizationID = ContextService.getOrganizationID();
 		var offset = 0;
-		var cUsers_ = UserService.getAllByOrganization(organizationID, offset);
+		var cUsers_ = $scope.busyLoader = UserService.getAllByOrganization(organizationID, offset);
 		cUsers_.then(function(toReturn){
 			$scope.users = toReturn.value;
 			buildUserDataTable(toReturn.value);
@@ -67,7 +67,7 @@ vendasApp.controller('UserListController',
 		
 		var organizationID = ContextService.getOrganizationID();
 		var offset = 0;
-		var cUsers = UserService.findUsersByFilter(organizationID,filter, offset);
+		var cUsers = $scope.busyLoader =UserService.findUsersByFilter(organizationID,filter, offset);
 		cUsers.then(function(toReturn){
 			$scope.users = toReturn.value;
 			buildUserDataTable(toReturn.value);

@@ -789,7 +789,7 @@ angular.module('app.activity', [])
 			template: '\
 					<span id="activity" class="activity-dropdown">\
 						<i ng-class="icon"></i>\
-						<b class="badge"> {{ total }} </b>\
+						<b class="badge bounceIn animated" ng-show="total > 0"> {{ total }} </b>\
 					</span>',
 			link: function(scope, element, attrs, activityCtrl) {
 
@@ -821,10 +821,13 @@ angular.module('app.activity', [])
 					e.preventDefault();
 				});
 
+				console.log(scope.total);
 				if (scope.total > 0) {
 					var $badge = element.find('.badge');
 					$badge.addClass("bg-color-red bounceIn animated");
-				}
+				}/* else {
+					element.find('.badge').remove();
+				}*/
 			}
 		};
 	})
@@ -852,16 +855,11 @@ angular.module('app.activity', [])
 					<div class="btn-group btn-group-justified" data-toggle="buttons" data-ng-transclude=""></div>\
 					<div class="ajax-notifications custom-scroll">\
 						<div class="alert alert-transparent">\
-							<h4>Click a button to show messages here</h4>\
-							This blank page message helps protect your privacy, or you can show the first message here automatically.\
+							<h4>Clique no botão a cima para visualizar as notificações ou avisos</h4>\
+							As notificações são enviadas pelo sistema. Os avisos, são enviados por nossa equipe.\
 						</div>\
-						<i class="fa fa-lock fa-4x fa-border"></i>\
+						<i class="fa  fa-bell-o fa-4x fa-border"></i>\
 					</div>\
-					<span> {{ footer }}\
-						<button type="button" data-loading-text="Loading..." data-ng-click="refresh($event)" class="btn btn-xs btn-default pull-right" data-activty-refresh-button="">\
-						<i class="fa fa-refresh"></i>\
-						</button>\
-					</span>\
 				</div>',
 			link: function(scope, element, attrs, activityCtrl) {
 				scope.refresh = function(e) {
@@ -893,7 +891,7 @@ angular.module('app.activity', [])
 			transclude: true,
 			replace: true,
 			template: '\
-				<label class="btn btn-default" data-ng-click="loadItem()" ng-class="{active: active}">\
+				<label class="btn btn-default btn-primary txt-color-white" data-ng-click="loadItem()" ng-class="{active: active}">\
 					<input type="radio" name="activity">\
 					<span data-ng-transclude=""></span>\
 				</label>',

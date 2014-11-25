@@ -84,6 +84,7 @@ angular.module('app.controllers', [])
 
 	angular.module('app.demoControllers', [])
 	.controller('WidgetDemoCtrl', ['$scope', '$sce', function($scope, $sce) {
+		
 		$scope.title = 'SmartUI Widget';
 		$scope.icon = 'fa fa-user';
 		$scope.toolbars = [
@@ -112,7 +113,7 @@ angular.module('app.controllers', [])
 	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 	}])
 
-	.controller('ActivityDemoCtrl', ['$scope', function($scope) {
+	.controller('ActivityDemoCtrl', ['$scope','NotificationService','ContextService', function($scope, NotificationService, ContextService) {
 		var ctrl = this;
 		ctrl.getDate = function() {
 			return new Date().toUTCString();
@@ -130,36 +131,56 @@ angular.module('app.controllers', [])
 	
 			$scope.footerContent = ctrl.getDate();
 		};
-	
-		$scope.items = [
-		                {
-		                	title: 'Msgs',
-		                	count: 14, 
-		                	src: 'ajax/notify/mail.html',
-		                	onload: function(item) {
-		                		console.log(item);
-		                		alert('[Callback] Loading Messages ...');
-		                	}
-		                },
-		                {
-		                	title: 'Notify',
-		                	count: 3,
-		                	src: 'ajax/notify/notifications.html'
-		                },
-		                {
-		                	title: 'Tasks',
-		                	count: 4,
-		                	src: 'ajax/notify/tasks.html',
-		                	//active: true
-		                }
-		                ];
-	
-		$scope.total = 0;
-		angular.forEach($scope.items, function(item) {
-			$scope.total += item.count;
-		})
-	
-		$scope.footerContent = ctrl.getDate();
-	
+		
+		
+		var notificationCount = NotificationService.getNotificationsUnreadCount(ContextService.getUserLogged().userID);
+		
+		notificationCount.then(function(toReturn){
+			console.log(toReturn);
+			var countNotice = 0,
+			    countNotification = 0;
+			if(toReturn.code === '200'){
+				for(var i = 0 ; i < toReturn.value.length ; i++){
+					
+					if(toReturn.value[i]._id == 1){
+						countNotification = toReturn.value[i].notificationCount ;
+					} else if(toReturn.value[i]._id == 2){
+						countNotice = toReturn.value[i].notificationCount;
+					}
+				}
+				
+
+				$scope.items = [
+				                {
+				                	title: 'Notificações',
+				                	count: countNotification, 
+				                	src: 'ajax/notification.html'/*,
+				                	onload: function(item) {
+				                		console.log(item);
+				                		alert('[Callback] Loading Messages ...');
+				                	}*/
+				                },
+				                {
+				                	title: 'Avisos',
+				                	count: countNotice,
+				                	src: 'ajax/notice.html'
+				                }/*,
+				                {
+				                	title: 'Tasks',
+				                	count: 4,
+				                	src: 'ajax/notify/tasks.html',
+				                	//active: true
+				                }*/
+				                ];
+			
+				$scope.total = 0;
+				angular.forEach($scope.items, function(item) {
+					$scope.total += item.count;
+				})
+			
+				$scope.footerContent = ctrl.getDate();
+			}
+			
+		});
 	}])
 	;

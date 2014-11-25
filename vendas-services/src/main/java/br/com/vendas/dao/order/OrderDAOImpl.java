@@ -74,5 +74,25 @@ public class OrderDAOImpl  extends ResourceDAO<Order> implements OrderDAO {
 
 		return criteria.list();
 	}
+	
+	@Override
+	public List<Order> findByIDOrCustomerIDAndUserID(Integer organizationID, Integer branchID, Integer userID, Long orderId, String customerID, Integer offset, Integer limit) {
+		Session session = getSession();
+		
+		Criteria criteria = session.createCriteria(Order.class)
+				.createAlias("customer", "c")
+				.add(Restrictions.eq("excluded", false))
+				.add(Restrictions.eq("organizationID", organizationID))
+				.add(Restrictions.eq("branchID", branchID))
+				.add(Restrictions.eq("userID", userID ))
+				.add(Restrictions.or(
+								Restrictions.eq("id", orderId),
+								Restrictions.eq("c.customerID",customerID)))
+				.setFirstResult(offset)
+				.setMaxResults(limit)
+				.addOrder(org.hibernate.criterion.Order.desc("issuanceTime"));
+
+		return criteria.list();
+	}
 
 }

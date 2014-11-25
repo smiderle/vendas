@@ -98,5 +98,17 @@ public class OrderRest {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
+	
+	@RequestMapping(value="getByFilterAndUserID", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getByFilterAndUserID(String filter, Integer organizationID, Integer branchID, Integer userID, Integer offset, Integer limit) {
+		try {
+			ServiceResponse<List<OrderDTO>> payload =  orderService.findByIDOrCustomerIDAndUserID(organizationID, branchID,userID , filter, offset, limit);
+			LOG.debug("getByFilterAndUserID - List<OrderDTO> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+		}
+	}
 
 }

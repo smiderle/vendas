@@ -100,7 +100,7 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 				productSelected.excluded = true;
 				
 				
-				var aProduct = ProductService.save(productSelected);
+				var aProduct = $scope.busyLoader = ProductService.save(productSelected);
 				aProduct.then(function(toReturn){
 					if(toReturn.code == '200'){
 						listProducts(0);
@@ -175,7 +175,7 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 		
 		var organizationID = ContextService.getOrganizationID();
 		var branchID = ContextService.getBranchLogged().branchOfficeID;		
-		var cProducts = ProductService.getAllByBranch(organizationID,branchID, _offset);
+		var cProducts = $scope.busyLoader = ProductService.getAllByBranch(organizationID,branchID, _offset);
 		cProducts.then(function(toReturn){
 			buildProductDataTable(toReturn);
 		});	
@@ -189,7 +189,7 @@ vendasApp.controller('ProductListController',['$scope','$location','ProductServi
 		var organizationID = ContextService.getOrganizationID();
 		var branchID = ContextService.getBranchLogged().branchOfficeID;
 		
-		var cProducts = ProductService.getAllByFilter(filter,organizationID,branchID,offset);
+		var cProducts = $scope.busyLoader = ProductService.getAllByFilter(filter,organizationID,branchID,offset);
 		cProducts.then(function(toReturn){
 			buildProductDataTable(toReturn);
 		});
