@@ -7,11 +7,11 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.vendas.domain.product.Product;
 import br.com.vendas.domain.wrapper.OrderWrapper;
 import br.com.vendas.dto.OrderDTO;
 import br.com.vendas.exception.VendasException;
@@ -32,10 +32,10 @@ public class OrderRest {
 	private OrderService orderService;
 
 	@RequestMapping(value="save", method = RequestMethod.POST)
-	public @ResponseBody ApiResponse getAll(@RequestBody String orderWrapper) {
+	public @ResponseBody ApiResponse save( @RequestHeader(value="userID") Integer userID, @RequestBody String orderWrapper ) {
 		try {
 			OrderWrapper order = new ObjectMapperHelper().readValue(orderWrapper, OrderWrapper.class);
-			ServiceResponse<OrderDTO> payload = orderService.save(order);
+			ServiceResponse<OrderDTO> payload = orderService.save(userID, order);
 
 			LOG.debug("save Size: "+payload.getRowCount());
 

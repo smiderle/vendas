@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.vendas.domain.user.User;
 import br.com.vendas.exception.RegistrationException;
-import br.com.vendas.pojo.user.UserPojo;
+import br.com.vendas.pojo.UserDTO;
 import br.com.vendas.services.support.ServiceResponse;
 
 public interface UserService {
@@ -14,7 +14,7 @@ public interface UserService {
 	 * @param organizationID
 	 * @return
 	 */
-	ServiceResponse<List<UserPojo>> findAllByOrganizationID(Integer organizationID, Integer offset);
+	ServiceResponse<List<UserDTO>> findAllByOrganizationID(Integer organizationID, Integer offset);
 	
 	
 	/**
@@ -25,7 +25,7 @@ public interface UserService {
 	 * @param limit
 	 * @return
 	 */
-	ServiceResponse<List<UserPojo>> findOtherUsersByOrganizationID(Integer organizationID,Integer userID, Integer offset);
+	ServiceResponse<List<UserDTO>> findOtherUsersByOrganizationID(Integer organizationID,Integer userID, Integer offset);
 	
 	/**
 	 * Salva o usuario
@@ -40,7 +40,7 @@ public interface UserService {
 	 * @return
 	 * @throws RegistrationException 
 	 */
-	ServiceResponse<User> saveOrUpdate(User user) throws RegistrationException;
+	ServiceResponse<User> saveOrUpdate(Integer fromUserID, User user) throws RegistrationException;
 	
 	
 
@@ -49,7 +49,7 @@ public interface UserService {
 	 * @param email
 	 * @return
 	 */
-	ServiceResponse<UserPojo> findUserByEmail(String email);
+	ServiceResponse<UserDTO> findUserByEmail(String email);
 	
 	
 	/**
@@ -69,7 +69,7 @@ public interface UserService {
 	 * @param limit
 	 * @return
 	 */
-	ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(String filter,Integer organizationID, Integer offset);
+	ServiceResponse<List<UserDTO>> findUsersByUserIDOrNameOrEmail(String filter,Integer organizationID, Integer offset);
 	
 
 }

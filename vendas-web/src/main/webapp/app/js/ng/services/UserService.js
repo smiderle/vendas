@@ -9,11 +9,12 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 		
 		/**
 		 * Registra um novo usuario para o sistema.
+		 * Primeiro parametro é o usuário que esta sendo salvo, segundo parametro é o código do usuário que esta salvando
 		 * @param fields
 		 * @returns
 		 */
-		saveUser : function(user){
-			var user = Restangular.all('v1').all('user').all('saveUser').post(user);
+		saveUser : function(user, userID){
+			var user = Restangular.all('v1').all('user').all('saveUser').post(user,{},{'userID' : userID});
 			return user;
         },
 
@@ -58,23 +59,7 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
 			
 			return Restangular.all('v1').all("user").all("getUserByEmail").getList({"email":email}).then(function(result){
 				var p = {};
-				var value = {};
-				//Remove outros objetos que vem junto com o request
-				if(result.value){
-					value.userID = result.value.userID;
-					value.organizationID = result.value.organizationID;
-					value.email= result.value.email;
-					value.password = result.value.password;
-					value.name = result.value.name;
-					value.changeTime = result.value.changeTime;
-					value.registrationDate = result.value.registrationDate;
-					value.active = result.value.active;
-					value.portalAccess = result.value.portalAccess;
-					value.menusApplication = result.value.menusApplication;
-					value.userBranches = result.value.userBranches;
-					value.userRoles = result.value.userRoles;
-				}
-				p.value = value;
+				p.value = result.value;
 				p.rowCount = result.rowCount;				
 				return p;
 			});
@@ -147,6 +132,34 @@ vendasApp.factory('UserService',function(Restangular,UtilityService, VendasWebRe
         
         addUserAccess: function(userID){
         	Restangular.all('v1').all('user').all('addUserAccess').post(userID);
-        }
+        },
+        
+        /**
+         * Retorna true,se o vendedor passado por parametro possuir as permissões de administrador
+         */
+        isAdmin : function( userRoles ){
+	    	if(userRoles){
+	    		for(var i = 0 ; i < userRoles.length; i++){
+	    			if(userRoles[i].role === 'ROLE_ADMIN'){
+	    				return true;
+	    			}
+	    		}
+	    	}
+	    	return false;
+		},
+		
+		/**
+         * Retorna true,se o vendedor passado por parametro possuir as permissões de vendedor
+         */
+		isSeller : function(userRoles){
+	    	if(userRoles){
+	    		for(var i = 0 ; i < userRoles.length; i++){
+	    			if(userRoles[i].role === 'ROLE_USER'){
+	    				return true;
+	    			}
+	    		}
+	    	}
+	    	return false;
+		}
 	};	
 });

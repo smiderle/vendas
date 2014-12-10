@@ -13,8 +13,8 @@ vendasApp.factory('ProductService',
 		/**
 		 * Salva ou atualiza o produto
 		 */
-		save : function(product){
-			return  Restangular.all("v1").all('product').all('save').post(product);
+		save : function(product, userID){
+			return  Restangular.all("v1").all('product').all('save').post(product,{},{'userID' : userID});
 		},
 
 		/**

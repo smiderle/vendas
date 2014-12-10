@@ -81,10 +81,10 @@ public abstract class DefaultGenericDAO<DOMAINTYPE> implements
 	
 	
 	@Override
-	public List<DOMAINTYPE> saveOrUpdate(List<DOMAINTYPE> datas){
+	public List<DOMAINTYPE> saveOrUpdate(List<DOMAINTYPE> data){
 		List<DOMAINTYPE> toReturn = new ArrayList<>();		
 		Session session = getSession();
-		for (DOMAINTYPE domaintype : toReturn) {
+		for (DOMAINTYPE domaintype : data) {
 			session.saveOrUpdate(domaintype);
 			toReturn.add(domaintype);
 		}

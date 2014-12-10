@@ -56,13 +56,13 @@ vendasApp.factory('UtilityService',function(){
 			});
 		},
 		
-		showAlertWarning: function(title, content){
+		showAlertWarning: function(title, content, time){
 			$.smallBox({
 				title : title,
 				content : content,
 				color : "#C79121",
 				iconSmall : "fa fa-warning shake animated",
-				timeout : 10000
+				timeout : time || 10000
 			});
 		},		
 	};	

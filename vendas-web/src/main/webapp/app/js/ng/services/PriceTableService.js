@@ -5,8 +5,8 @@ vendasApp.factory('PriceTableService',function(Restangular){
 	var priceTableEdit; 
 	return {
 		
-		save : function(priceTable){
-			var priceTable_ = Restangular.all("v1").all('priceTable').all('save').post(priceTable);
+		save : function(priceTable, userID){
+			var priceTable_ = Restangular.all("v1").all('priceTable').all('save').post(priceTable ,{},{'userID' : userID});
 			return priceTable_;
         },
 		

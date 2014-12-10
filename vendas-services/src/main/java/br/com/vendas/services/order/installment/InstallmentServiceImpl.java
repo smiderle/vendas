@@ -11,8 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vendas.dao.order.installment.InstallmentDAO;
 import br.com.vendas.domain.order.Installment;
+import br.com.vendas.domain.user.UserAction;
+import br.com.vendas.helper.UserActionHelper;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.support.ServiceResponseFactory;
+import br.com.vendas.services.user.UserActionService;
 
 
 @Service
@@ -21,6 +24,9 @@ public class InstallmentServiceImpl implements InstallmentService{
 		
 	@Inject
 	private InstallmentDAO installmentDAO;
+	
+	@Inject
+	private UserActionService userActionService;
 
 	
 	@Override
@@ -32,16 +38,43 @@ public class InstallmentServiceImpl implements InstallmentService{
 
 	@Transactional(readOnly=false)
 	@Override
-	public ServiceResponse<Installment> save(Installment installment) {
+	public ServiceResponse<Installment> save(Integer userID, Installment installment) {
 		installment.setChangeTime(new Date());
+		
+		saveInstallmentAction(userID, installment);
+		
 		return ServiceResponseFactory.create(installmentDAO.save(installment));
 	}
 
 	@Transactional(readOnly=false)
 	@Override
-	public ServiceResponse<Installment> saveOrUpdate(Installment installment) {
+	public ServiceResponse<Installment> saveOrUpdate(Integer userID, Installment installment) {
 		installment.setChangeTime(new Date());
+		
+		saveInstallmentAction(userID, installment);
+		
 		return ServiceResponseFactory.create(installmentDAO.saveOrUpdate(installment));
+	}
+	
+	/**
+	 * Salva as alções do usuário para o cadastro ou edição de um novo cliente
+	 * @param userID
+	 * @param customer
+	 */
+	private void saveInstallmentAction( Integer userID, Installment installment ){
+		UserAction userAction = null;
+		
+		if(installment.isExcluded()){
+			userAction = UserActionHelper.createInstallmentDelete(userID, installment);
+		} else if(installment.getID() == null) {
+			userAction = UserActionHelper.createInstallmentSave(userID, installment);			
+		} else {
+			userAction = UserActionHelper.createInstallmentEdit(userID, installment);
+			
+		}
+		
+		userActionService.save( userAction );
+		
 	}
 
 }

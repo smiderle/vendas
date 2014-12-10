@@ -16,10 +16,13 @@ import br.com.vendas.core.util.StringUtils;
 import br.com.vendas.dao.order.payment.OrderPaymentDAO;
 import br.com.vendas.domain.LimitQuery;
 import br.com.vendas.domain.order.OrderPayment;
+import br.com.vendas.domain.user.UserAction;
 import br.com.vendas.dto.OrderDTO;
 import br.com.vendas.dto.OrderPaymentDTO;
+import br.com.vendas.helper.UserActionHelper;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.support.ServiceResponseFactory;
+import br.com.vendas.services.user.UserActionService;
 
 
 @Service
@@ -28,6 +31,9 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 
 	@Inject 
 	private OrderPaymentDAO orderPaymentDAO; 
+	
+	@Inject 
+	private UserActionService userActionService;
 	
 	@Override
 	public ServiceResponse<BigDecimal> getTotalValuePending(Integer customerID) {
@@ -106,8 +112,11 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 	
 	@Transactional(readOnly=false)
 	@Override
-	public ServiceResponse<Boolean> setPaid(Long id) {		
+	public ServiceResponse<Boolean> setPaid(Integer userID, Long id) {		
 		OrderPayment orderPayment = orderPaymentDAO.findByID(id);
+		
+		saveOrderPaymentAction(userID, orderPayment);
+		
 		orderPayment.setPaymentDate(new Date());
 		return ServiceResponseFactory.create(true);
 	}
@@ -150,6 +159,22 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 		}
 
 		return ServiceResponseFactory.create(ordersPaymentDTO);
+	}
+	
+
+	/**
+	 * Salva as alções do usuário para o cadastro ou edição de um produto
+	 * @param userID
+	 * @param customer
+	 */
+	private void saveOrderPaymentAction( Integer userID, OrderPayment orderPayment) {
+		UserAction userAction = null;
+		
+		
+		userAction = UserActionHelper.createOrderPaymentEdit( userID, orderPayment );
+				
+		userActionService.save( userAction );
+		
 	}
 	
 	private Integer getLimit(Integer limit) {

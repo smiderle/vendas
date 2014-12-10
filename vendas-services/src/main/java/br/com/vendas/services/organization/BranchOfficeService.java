@@ -30,7 +30,7 @@ public interface BranchOfficeService {
 	 * @return
 	 * @throws RegistrationException
 	 */
-	ServiceResponse<BranchOffice> save (BranchOffice branchOffice) throws RegistrationException;
+	ServiceResponse<BranchOffice> save (Integer userID, BranchOffice branchOffice) throws RegistrationException;
 	
 	/**
 	 * Retorna o proximo idfilial de determinada empresa.
@@ -43,7 +43,7 @@ public interface BranchOfficeService {
 	 * @param branchOffice
 	 * @return
 	 */
-	ServiceResponse<BranchOffice> saveOrUpdate(BranchOffice branchOffice);
+	ServiceResponse<BranchOffice> saveOrUpdate(Integer userID, BranchOffice branchOffice);
 
 
 }

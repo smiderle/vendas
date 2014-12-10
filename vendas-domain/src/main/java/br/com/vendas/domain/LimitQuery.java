@@ -41,7 +41,12 @@ public enum LimitQuery {
 	/**
 	 * Limite de registros das consultas de parcelas
 	 */
-	LIMIT_ORDER_PAYMENT(60);
+	LIMIT_ORDER_PAYMENT(60),
+	
+	/**
+	 * Ações do usuário
+	 */
+	LIMIT_USER_ACTIONS(20);
 	
 	private final Integer limit;
 	

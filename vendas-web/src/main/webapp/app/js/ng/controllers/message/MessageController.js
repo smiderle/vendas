@@ -6,8 +6,8 @@
 
 	'use strict';
 
-	vendasApp.controller('MessageController',['$scope','$http','$compile' , 'ContextService', 'UserService','socket', 'MessageService',
-	        function MessageController($scope, $http,$compile, ContextService, UserService, socket, MessageService) {
+	vendasApp.controller('MessageController',['$scope','$compile' , 'ContextService', 'UserService','socket', 'MessageService','AuthService','Constants','$location',
+	        function MessageController($scope, $compile, ContextService, UserService, socket, MessageService, AuthService, Constants, $location) {
 			
 		var userLogged = ContextService.getUserLogged();
 		
@@ -21,13 +21,16 @@
 		/**
 		 * Function inicial
 		 */
-		$scope.init = function(){
+		$scope.init = function() {
+			if( AuthService.hasAccess( Constants.MENUID_MESSAGE) ){
+				$location.path('/accessdenied');
+				return;
+			}
 			
 			//Quando entrar nas mensagems, remove o icone da nova mensagem do menu
 			$('#iconMenuNewMessage').remove();
-			
-			$scope.listUsers();		
-			
+
+			$scope.listUsers();
 		};
 		
 		
@@ -36,6 +39,8 @@
 		 * Quando selecionado um usuário
 		 */
 		$scope.setUserSelected = function(user, index){
+			
+			MessageService.setUserSelected(user);
 
 			reset();
 			
@@ -76,12 +81,19 @@
 		 */
 		$scope.listUsers = function(){
 			var organizationID = ContextService.getOrganizationID(),
-				userID = userLogged.userID;
+				userID = userLogged.userID,
+				user = MessageService.getUserSelected();
 			
 			var cUsers = UserService.getOtherUsersByOrganizationID(organizationID, userID, 0);
 			cUsers.then(function(toReturn){
 				$scope.users = toReturn.value;
 				checkNewMessages();
+				
+				if(user){
+					$scope.setUserSelected(user);
+				} else if($scope.users.length > 0){
+					$scope.setUserSelected($scope.users[0]);
+				}				
 			});
 		};
 		

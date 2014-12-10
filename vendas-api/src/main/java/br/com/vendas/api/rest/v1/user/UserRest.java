@@ -1,29 +1,22 @@
 package br.com.vendas.api.rest.v1.user;
 
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import br.com.vendas.aws.s3.picture.Bucket;
 import br.com.vendas.domain.user.User;
 import br.com.vendas.exception.ApplicationException;
-import br.com.vendas.pojo.user.UserPojo;
-import br.com.vendas.services.image.ImageService;
+import br.com.vendas.exception.ParseJsonException;
+import br.com.vendas.helper.ObjectMapperHelper;
+import br.com.vendas.pojo.UserDTO;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.user.UserAccessService;
 import br.com.vendas.services.user.UserService;
@@ -33,9 +26,9 @@ import br.com.vendas.support.VendasExceptionWapper;
 
 @RequestMapping(value="/v1/user")
 @Controller
-public class UserController {
+public class UserRest {
 
-	private static final Logger LOG = Logger.getLogger(UserController.class);
+	private static final Logger LOG = Logger.getLogger(UserRest.class);
 
 	@Inject
 	private UserService service;
@@ -43,9 +36,6 @@ public class UserController {
 
 	@Inject
 	private UserAccessService userAccessService;
-
-	@Inject
-	private ImageService imageService;
 
 	/**
 	 * Retorna todos os usarios de determinada empresa.
@@ -55,7 +45,7 @@ public class UserController {
 	@RequestMapping(value="getUsersByOrganizationID", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getUsersByOrganizationID(Integer organizationID, Integer offset){
 		try {
-			ServiceResponse<List<UserPojo>> payload =  service.findAllByOrganizationID(organizationID, offset);
+			ServiceResponse<List<UserDTO>> payload =  service.findAllByOrganizationID(organizationID, offset);
 			LOG.debug("List<User> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -72,7 +62,7 @@ public class UserController {
 	@RequestMapping(value="getOtherUsersByOrganizationID", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getOtherUsersByOrganizationID(Integer organizationID, Integer userID, Integer offset){
 		try {
-			ServiceResponse<List<UserPojo>> payload =  service.findOtherUsersByOrganizationID(organizationID,userID, offset);
+			ServiceResponse<List<UserDTO>> payload =  service.findOtherUsersByOrganizationID(organizationID,userID, offset);
 			LOG.debug("getOtherUsersByOrganizationID Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -91,7 +81,7 @@ public class UserController {
 	@RequestMapping(value="getUserByEmail", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getUserByEmail(String email){
 		try{
-			ServiceResponse<UserPojo> payload =  service.findUserByEmail(email);
+			ServiceResponse<UserDTO> payload =  service.findUserByEmail(email);
 			LOG.debug("getUserByEmail Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -126,12 +116,15 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="saveUser", method = RequestMethod.POST)
-	public @ResponseBody ApiResponse saveUser(@RequestBody User user){
+	public @ResponseBody ApiResponse saveUser(@RequestHeader(value="userID") Integer userID,  @RequestBody String userWrapper) {
 		try{			
-			ServiceResponse<User> payload =  service.saveOrUpdate(user);			
+			
+			User user = new ObjectMapperHelper().readValue(userWrapper, User.class);
+			
+			ServiceResponse<User> payload =  service.saveOrUpdate(userID, user);			
 			LOG.debug("saveUser Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
-		} catch (ApplicationException e) {
+		} catch (ApplicationException | ParseJsonException e) {
 			LOG.error(e.getMessage(), e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
@@ -148,7 +141,7 @@ public class UserController {
 	@RequestMapping(value="getUsersByUserIDOrNameOrEmail", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getUsersByUserIDOrNameOrEmail(Integer organizationID, String filter, Integer offset){
 		try {
-			ServiceResponse<List<UserPojo>> payload =  service.findUsersByUserIDOrNameOrEmail(filter, organizationID, offset);
+			ServiceResponse<List<UserDTO>> payload =  service.findUsersByUserIDOrNameOrEmail(filter, organizationID, offset);
 			LOG.debug("getUsersByUserIDOrNameOrEmail Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {

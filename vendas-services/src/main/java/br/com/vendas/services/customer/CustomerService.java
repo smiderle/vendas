@@ -21,7 +21,7 @@ public interface CustomerService {
 	 * @param customer
 	 * @return
 	 */
-	ServiceResponse<Customer> save(Customer customer);
+	ServiceResponse<Customer> save(Integer userID, Customer customer);
 	
  	/**
  	 * Retorna todos os produtos que iniciem com a descrição, ou código do produto, ou código de barras passada no filter.

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,9 +54,9 @@ public class BranchOfficeRest {
 	}
 	
 	@RequestMapping(value="save", method = RequestMethod.POST)
-	public @ResponseBody ApiResponse save(@RequestBody BranchOffice branchOffice){
+	public @ResponseBody ApiResponse save(@RequestHeader(value="userID") Integer userID, @RequestBody BranchOffice branchOffice){
 		try {
-			ServiceResponse<BranchOffice> payload =  service.save(branchOffice);
+			ServiceResponse<BranchOffice> payload =  service.save(userID, branchOffice);
 			LOG.debug("BranchOffice save Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -66,9 +67,9 @@ public class BranchOfficeRest {
 	
 	
 	@RequestMapping(value="update", method = RequestMethod.POST)
-	public @ResponseBody ApiResponse update(@RequestBody BranchOffice branchOffice){
+	public @ResponseBody ApiResponse update(@RequestHeader(value="userID") Integer userID, @RequestBody BranchOffice branchOffice){
 		try {
-			ServiceResponse<BranchOffice> payload =  service.saveOrUpdate(branchOffice);
+			ServiceResponse<BranchOffice> payload =  service.saveOrUpdate(userID, branchOffice);
 			LOG.debug("BranchOffice saveOrUpdate Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {

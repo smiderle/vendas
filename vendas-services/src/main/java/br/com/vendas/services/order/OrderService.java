@@ -1,8 +1,8 @@
 package br.com.vendas.services.order;
 
+import java.util.Date;
 import java.util.List;
 
-import br.com.vendas.domain.order.Order;
 import br.com.vendas.domain.wrapper.OrderWrapper;
 import br.com.vendas.dto.OrderDTO;
 import br.com.vendas.services.support.ServiceResponse;
@@ -14,7 +14,7 @@ public interface OrderService {
 	 * @param order
 	 * @return
 	 */
-	ServiceResponse<OrderDTO> save(OrderWrapper orderWrapper);
+	ServiceResponse<OrderDTO> save(Integer userID, OrderWrapper orderWrapper);
 	
 	/**
 	 * Retorna todos os pedidos/orçamentos por filial
@@ -67,6 +67,14 @@ public interface OrderService {
 	 */
 	ServiceResponse<List<OrderDTO>> findByIDOrCustomerIDAndUserID( Integer organizationID, Integer branchID, Integer userID, String filter, Integer offset, Integer limit);
 	
+
 	
+	/**
+	 * Retorna a quantidade de Pedidos/Orçamentos realizado
+	 * @param organizationID
+	 * @param branchID
+	 * @return
+	 */
+	ServiceResponse<Long> getCurrentCountSalesByBranch( Integer organizationID, Integer branchID ) ;	
 
 }

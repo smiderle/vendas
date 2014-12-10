@@ -5,8 +5,8 @@ vendasApp.factory('InstallmentService',function(Restangular){
 	var installmentEdit; 
 	return {
 		
-		save : function(installment){
-			var installment_ = Restangular.all("v1").all('installment').all('save').post(installment);
+		save : function( installment, userID ){
+			var installment_ = Restangular.all("v1").all('installment').all('save').post(installment,{},{'userID' : userID});
 			return installment_;
         },
 		

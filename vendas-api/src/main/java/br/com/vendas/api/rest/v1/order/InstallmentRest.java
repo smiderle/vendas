@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,9 +43,9 @@ public class InstallmentRest {
 	}
 	
 	@RequestMapping(value="save", method = RequestMethod.POST)
-	public @ResponseBody ApiResponse getAll(@RequestBody Installment installment){
+	public @ResponseBody ApiResponse save(@RequestHeader(value="userID") Integer userID, @RequestBody Installment installment){
 		try {
-			ServiceResponse<Installment> payload =  installmentService.saveOrUpdate(installment);
+			ServiceResponse<Installment> payload =  installmentService.saveOrUpdate(userID, installment);
 			LOG.debug("save Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {

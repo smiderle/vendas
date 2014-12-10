@@ -29,7 +29,7 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 		
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return criteria
-				.addOrder(Order.asc("email")).list();
+				.addOrder(Order.asc("name")).list();
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 		
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return criteria
-				.addOrder(Order.asc("email")).list();
+				.addOrder(Order.asc("name")).list();
 	}
 
 	@Override

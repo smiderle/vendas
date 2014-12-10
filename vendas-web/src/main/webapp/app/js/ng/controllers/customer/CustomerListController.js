@@ -3,6 +3,15 @@
 vendasApp.controller('CustomerListController',
 		['$scope','$location','CustomerService' ,'ContextService','UtilityService', 
         function CustomerListController($scope, $location, CustomerService, ContextService, UtilityService) {
+			
+
+	/**
+	 * Quando todos os clientes já tiverem sidos retornados do server, é setado como true.
+	 * Assim, quando chegar na ultima pagina, não ira mais buscar os clientes no server.
+	 */
+	var noMoreProduct = false,
+	
+		userLogged = ContextService.getUserLogged();
 	
 	/**
 	 * Lista de clientes carregados
@@ -16,11 +25,6 @@ vendasApp.controller('CustomerListController',
 	$scope.rowsDataTable = [];
 	
 	
-	/**
-	 * Quando todos os clientes já tiverem sidos retornados do server, é setado como true.
-	 * Assim, quando chegar na ultima pagina, não ira mais buscar os clientes no server.
-	 */
-	var noMoreProduct = false;
 	
 	$scope.init = function(){
 		listCustomers(0);
@@ -103,7 +107,7 @@ vendasApp.controller('CustomerListController',
 				
 				customerSelected.excluded = true;
 				
-				var aCustomer = $scope.loadOrder = CustomerService.save(customerSelected);
+				var aCustomer = $scope.loadOrder = CustomerService.save(customerSelected, userLogged.userID);
 				aCustomer.then(function(toReturn){
 					if(toReturn.code == '200'){
 						clearDatateble();

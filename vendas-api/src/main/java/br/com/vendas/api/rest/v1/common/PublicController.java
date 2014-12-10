@@ -71,7 +71,7 @@ public class PublicController {
 			//Cria uma filial
 			BranchOffice branchOffice = new BranchOffice(INITIAL_BRANCH_OFFICE_ID,newOrganization,organizationName,organizationName);
 			
-			BranchOffice newBranchOffice = branchOfficeService.save(branchOffice).getValue();
+			BranchOffice newBranchOffice = branchOfficeService.save(null, branchOffice).getValue();
 			
 			//Cria um usuario
 			User user = new User(newOrganization.getOrganizationID(),email,password,userName,true,true);

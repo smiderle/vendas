@@ -21,7 +21,7 @@ public interface InstallmentService {
 	 * @param priceTable
 	 * @return
 	 */
-	ServiceResponse<Installment> save(Installment installment);
+	ServiceResponse<Installment> save(Integer userID, Installment installment);
 	
 	/**
 	 * Atualiza o parcelamento
@@ -29,5 +29,5 @@ public interface InstallmentService {
 	 * @return
 	 * @throws RegistrationException
 	 */
-	ServiceResponse<Installment> saveOrUpdate(Installment installment) ;
+	ServiceResponse<Installment> saveOrUpdate(Integer userID, Installment installment) ;
 }

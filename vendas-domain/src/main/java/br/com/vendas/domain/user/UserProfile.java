@@ -20,6 +20,9 @@ public class UserProfile {
 	
 	@Column(name="fone")
 	private String phoneNumber;
+	
+	@Column(name="url_foto")
+	private String pictureUrl;
 
 	public Integer getUserID() {
 		return userID;
@@ -44,4 +47,12 @@ public class UserProfile {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
+	}	
 }

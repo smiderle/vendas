@@ -34,6 +34,8 @@
 
 		<!-- Angular Related CSS -->
 		<link rel="stylesheet" type="text/css" media="screen" href="css/ng.min.css">
+		
+		<link rel="stylesheet" type="text/css" media="screen" href="css/nv.d3.css">
 
 		<!-- FAVICONS -->
 		<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
@@ -174,7 +176,13 @@
 		
 		<script src="js/libs/moment/moment-with-locales.js"></script>
 		
+		<script src="js/libs/moment/angular-moment.min.js"></script>
+		
 		<script src="js/libs/angular-busy/angular-busy.min.js"></script>
+		
+		<script src="js/libs/d3/d3.js"></script>
+		<script src="js/libs/d3/nv.d3.js"></script>
+		<script src="js/libs/angular-nvd3/angularjs-nvd3-directives.min.js"></script>
 		
 		
 		<!-- SocketIO  -->
@@ -195,8 +203,9 @@
 	  	
 	  	<!-- Controllers -->
 	  	<script src="js/ng/controllers/AppController.js"></script>
-	  	<script src="js/ng/controllers/StateController.js"></script>	  	
+	  	
 	  	<script src="js/ng/controllers/ContextController.js"></script>
+	  	<script src="js/ng/controllers/dashboard/DashboardController.js"></script>
 	  	<script src="js/ng/controllers/branch/BranchFormController.js"></script>
 	  	<script src="js/ng/controllers/branch/BranchListController.js"></script>
 	  	<script src="js/ng/controllers/customer/CustomerListController.js"></script>
@@ -215,14 +224,17 @@
 	  	<script src="js/ng/controllers/product/ProductListController.js"></script>
 	  	<script src="js/ng/controllers/product/ProductFormController.js"></script>	  	
 	  	<script src="js/ng/controllers/product/group/ProductGroupListController.js"></script>
-	  	<script src="js/ng/controllers/product/group/ProductGroupFormController.js"></script>	  	
-	  	
+	  	<script src="js/ng/controllers/product/group/ProductGroupFormController.js"></script>
+	  	<script src="js/ng/controllers/goal/GoalFormController.js"></script>	  	
 	  	<script src="js/ng/controllers/user/UserFormController.js"></script>
 	  	<script src="js/ng/controllers/user/UserListController.js"></script>
+	  	<script src="js/ng/controllers/user/UserProfileController.js"></script>
+	  	<script src="js/ng/controllers/StateController.js"></script>
 	  	
 	  	<!-- Services -->
 	  	<script src="js/ng/services/AuthService.js"></script>
 	  	<script src="js/ng/services/BranchService.js"></script>
+	  	<script src="js/ng/services/ChartService.js"></script>
 	  	<script src="js/ng/services/ContextService.js"></script>
 	  	<script src="js/ng/services/CustomerService.js"></script>
 	  	<script src="js/ng/services/InstallmentService.js"></script>
@@ -236,9 +248,12 @@
 	  	<script src="js/ng/services/PriceTableService.js"></script>
 	  	<script src="js/ng/services/ProductService.js"></script>
 	  	<script src="js/ng/services/ProductGroupService.js"></script>
+	  	<script src="js/ng/services/ReportService.js"></script>
 	  	<script src="js/ng/services/StateService.js"></script>
+	  	<script src="js/ng/services/UserActionService.js"></script>
 	  	<script src="js/ng/services/UserService.js"></script>	  	
 	  	<script src="js/ng/services/UtilityService.js"></script>
+	  	<script src="js/ng/services/GoalService.js"></script>
 	  	
 	  	<script src="js/ng/services/SocketIO.js"></script>
 	  		  	

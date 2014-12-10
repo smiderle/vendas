@@ -15,12 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vendas.dao.user.UserDAO;
 import br.com.vendas.dao.user.UserRoleDAO;
 import br.com.vendas.domain.LimitQuery;
-import br.com.vendas.domain.converter.MenuApplicationConverter;
 import br.com.vendas.domain.user.User;
+import br.com.vendas.domain.user.UserAction;
 import br.com.vendas.domain.user.UserBranchOffice;
 import br.com.vendas.domain.user.UserRole;
 import br.com.vendas.exception.RegistrationException;
-import br.com.vendas.pojo.user.UserPojo;
+import br.com.vendas.helper.UserActionHelper;
+import br.com.vendas.pojo.UserDTO;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.support.ServiceResponseFactory;
 /**
@@ -45,17 +46,20 @@ public class UserServiceImpl implements UserService{
 	
 	@Inject
 	private UserRoleService userRoleService;
+	
+	@Inject
+	private UserActionService userActionService;
 
 
 	@Override
-	public ServiceResponse<List<UserPojo>> findAllByOrganizationID(Integer organizationID, Integer offset) {
+	public ServiceResponse<List<UserDTO>> findAllByOrganizationID(Integer organizationID, Integer offset) {
 		List<User> users = userDAO.findAllByOrganizationID(organizationID, offset, LimitQuery.LIMIT_USER.value());
-		List<UserPojo> usersPojo = new ArrayList<>();
+		List<UserDTO> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			/*Hibernate.initialize(user.getMenusApplication());
 			Hibernate.initialize(user.getUserBranches());
 			Hibernate.initialize(user.getUserRoles());*/
-			UserPojo userPojo = new UserPojo(user, null, null, null);
+			UserDTO userPojo = new UserDTO(user, null, null, null);
 			usersPojo.add(userPojo);
 		}
 		return ServiceResponseFactory.create(usersPojo);
@@ -72,7 +76,7 @@ public class UserServiceImpl implements UserService{
 
 	@Transactional(readOnly=false)
 	@Override
-	public ServiceResponse<User> saveOrUpdate(User user) throws RegistrationException {
+	public ServiceResponse<User> saveOrUpdate(Integer fromUserID, User user) throws RegistrationException {
 		boolean isNewUser = user.getUserID() == null;
 		
 		List<UserBranchOffice> userBranches = null;
@@ -98,7 +102,7 @@ public class UserServiceImpl implements UserService{
 		user.setChangeTime(new GregorianCalendar());
 		ServiceResponse<User> newUser = ServiceResponseFactory.create(userDAO.saveOrUpdate(user));
 				
-		if(isNewUser){
+		if(isNewUser){			
 			Integer userID = newUser.getValue().getUserID();
 			for (UserBranchOffice userBranchOffice : userBranches) {
 				userBranchOffice.setUserID(userID);
@@ -109,7 +113,15 @@ public class UserServiceImpl implements UserService{
 				userRole.setUserID(userID);
 			}
 			user.setUserBranches(userBranches);		
-			user.setUserRoles(userRoles);
+			user.setUserRoles(userRoles);		
+
+			UserAction userSave = UserActionHelper.createUserSave(fromUserID, user);
+			userActionService.save(userSave);
+		} else {
+			
+			UserAction userEdit = UserActionHelper.createUserEdit(fromUserID, user);
+			userActionService.save(userEdit);
+			
 		}
 		return newUser;	
 	}
@@ -118,14 +130,14 @@ public class UserServiceImpl implements UserService{
 	 * Retorna o usuario por email. Carrega todos os objetos lazy e seta no pojo.
 	 */
 	@Override
-	public ServiceResponse<UserPojo> findUserByEmail(String email) {
+	public ServiceResponse<UserDTO> findUserByEmail(String email) {
 		User user = userDAO.findUserByEmail(email);
-		UserPojo userPojo = null;
+		UserDTO userPojo = null;
 		if(user != null){
 			Hibernate.initialize(user.getMenusApplication());
 			Hibernate.initialize(user.getUserBranches());
-			Hibernate.initialize(user.getUserRoles());
-			userPojo = new UserPojo(user, user.getMenusApplication() , user.getUserBranches(), user.getUserRoles());
+			Hibernate.initialize(user.getUserRoles());			
+			userPojo = new UserDTO(user, user.getMenusApplication() , user.getUserBranches(), user.getUserRoles());
 			//userPojo = new UserPojo(user, null , null, null);
 		}		
 		return ServiceResponseFactory.create(userPojo);
@@ -140,7 +152,7 @@ public class UserServiceImpl implements UserService{
 	 * Converte o filtro para um long para setar no usuarioID, pois pode ser que no filtro tenha sido digitado o código do usuario.
 	 */
 	@Override
-	public ServiceResponse<List<UserPojo>> findUsersByUserIDOrNameOrEmail(
+	public ServiceResponse<List<UserDTO>> findUsersByUserIDOrNameOrEmail(
 			String filter, Integer organizationID, Integer offset) {
 		Integer userID = 0;
 		try{
@@ -148,9 +160,9 @@ public class UserServiceImpl implements UserService{
 		} catch(NumberFormatException  e){}
 
 		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LimitQuery.LIMIT_USER.value());
-		List<UserPojo> usersPojo = new ArrayList<>();
+		List<UserDTO> usersPojo = new ArrayList<>();
 		for (User user : users) {
-			UserPojo userPojo = new UserPojo(user, null, null, null);
+			UserDTO userPojo = new UserDTO(user, null, null, null);
 			usersPojo.add(userPojo);
 			//Hibernate.initialize(user.getMenusApplication());
 		}
@@ -158,14 +170,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public ServiceResponse<List<UserPojo>> findOtherUsersByOrganizationID(Integer organizationID, Integer userID, Integer offset) {
+	public ServiceResponse<List<UserDTO>> findOtherUsersByOrganizationID(Integer organizationID, Integer userID, Integer offset) {
 		List<User> users = userDAO.findOtherUsersByOrganizationID(organizationID, userID,offset, LimitQuery.LIMIT_USER.value());
-		List<UserPojo> usersPojo = new ArrayList<>();
+		List<UserDTO> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			/*Hibernate.initialize(user.getMenusApplication());
 			Hibernate.initialize(user.getUserBranches());
 			Hibernate.initialize(user.getUserRoles());*/
-			UserPojo userPojo = new UserPojo(user, null, null, null);
+			UserDTO userPojo = new UserDTO(user, null, null, null);
 			usersPojo.add(userPojo);
 		}
 		return ServiceResponseFactory.create(usersPojo);

@@ -21,7 +21,7 @@ public interface PriceTableService {
 	 * @param priceTable
 	 * @return
 	 */
-	ServiceResponse<PriceTable> save(PriceTable priceTable);
+	ServiceResponse<PriceTable> save( Integer userID, PriceTable priceTable );
 	
 	/**
 	 * Atualiza a tabela de preço
@@ -29,6 +29,6 @@ public interface PriceTableService {
 	 * @return
 	 * @throws RegistrationException
 	 */
-	ServiceResponse<PriceTable> saveOrUpdate(PriceTable priceTable) ;
+	ServiceResponse<PriceTable> saveOrUpdate( Integer userID, PriceTable priceTable ) ;
 
 }

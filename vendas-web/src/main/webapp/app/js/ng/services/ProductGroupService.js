@@ -8,8 +8,8 @@ vendasApp.factory('ProductGroupService',function(Restangular){
 		/**
 		 * Salva ou atualiza o grupo de produtos
 		 */
-		save : function(productGroup){
-			var productGroup_ = Restangular.all("v1").all('productGroup').all('save').post(productGroup);
+		save : function(productGroup, userID){
+			var productGroup_ = Restangular.all("v1").all('productGroup').all('save').post( productGroup ,{},{'userID' : userID} );
 			return productGroup_;
 		},
 

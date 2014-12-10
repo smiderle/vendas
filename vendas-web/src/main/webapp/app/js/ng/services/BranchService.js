@@ -28,8 +28,8 @@ vendasApp.factory('BranchService',
 		 * @param fields
 		 * @returns
 		 */
-		save : function(branchOffice){
-			var branch = Restangular.all("v1").all('branchOffice').all('save').post(branchOffice);
+		save : function(branchOffice, userID){
+			var branch = Restangular.all("v1").all('branchOffice').all('save').post(branchOffice, {},{'userID' : userID});
 			return branch;
         },
         
@@ -38,8 +38,8 @@ vendasApp.factory('BranchService',
 		 * @param fields
 		 * @returns
 		 */
-        update : function(branchOffice){
-			var branch = Restangular.all("v1").all('branchOffice').all('update').post(branchOffice);
+        update : function(branchOffice, userID){
+			var branch = Restangular.all("v1").all('branchOffice').all('update').post(branchOffice,{},{'userID' : userID});
 			return branch;
         },
         

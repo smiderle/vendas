@@ -9,6 +9,8 @@
 	vendasApp.controller('PriceTableListController',
 			function PriceTableListController($scope,$location, $window,ContextService , PriceTableService, UtilityService) {
 		
+		var userLogged = ContextService.getUserLogged();
+		
 		
 		/**
 		 * Linhas que irão popular a datatable das Tabelas De Preço.
@@ -51,7 +53,7 @@
 					priceTableSelected.excluded = true;
 					
 					
-					var aTable = $scope.busyLoader = PriceTableService.save(priceTableSelected);
+					var aTable = $scope.busyLoader = PriceTableService.save(priceTableSelected, userLogged.userID);
 					aTable.then(function(toReturn){
 						if(toReturn.code == '200'){
 							clearDatateble();

@@ -1,0 +1,362 @@
+<link rel="stylesheet" href="css/chat.css"/>
+
+<div id="user-profile-content" class="inbox-body no-content-padding" ng-init="init()" >
+	
+	<div class="inbox-side-bar inbox-side-bar-custom">
+
+
+		<ul class="inbox-menu-lg">
+			<li class="message message-reply user-row" ng-repeat="user in users" ng-class="{'active' : user == userSelected}">					
+				<span class="message-text"> <a href="javascript:void(0);" ng-click="setUserSelected(user)" id="{{ $index }}"><img ng-src="{{user.pictureUrl}}" width="40px" height="40px">  &nbsp;&nbsp;{{user.name}}</a> </span>
+			</li>
+		</ul>	
+	</div>
+	
+	<div class="table-wrap custom-scroll animated fast fadeInRight row user-profile-body">			
+					
+					
+		<div class="row" >
+	         
+	            <div class="col-sm-12 col-md-12 col-lg-12">
+	
+	
+		           <div class="row">
+	
+						<div class="col-sm-12">
+					
+					
+								<div>
+					
+									<!-- Inicio Div Perfil -->
+									<div class="row">
+					
+										<div class="col-sm-12 col-md-12 col-lg-6">
+											<div class="well well-light well-sm no-margin no-padding">
+					
+												<div class="row" >
+					
+													<div class="col-sm-12">
+														<div id="myCarousel" class="carousel fade profile-carousel">
+															<div class="air air-bottom-right padding-10" ng-if="isAdmin()">
+																<a href="javascript:void(0);" class="btn txt-color-white btn-primary btn-sm" ng-click="userEdit()"><i class="fa fa-check"></i> Editar Perfil</a>&nbsp;
+															</div>
+															
+															<ol class="carousel-indicators">
+																<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+																<li data-target="#myCarousel" data-slide-to="1" class=""></li>
+																<li data-target="#myCarousel" data-slide-to="2" class=""></li>
+															</ol>
+															<div class="carousel-inner">
+																
+																<div class="item active">
+																	<img src="img/demo/s2.jpg" alt="">
+																</div>
+																
+																<div class="item">
+																	<img src="img/demo/s1.jpg" alt="">
+																</div>
+																
+																<div class="item">
+																	<img src="img/demo/m3.jpg" alt="">
+																</div>
+															</div>
+														</div>
+													</div>
+					
+													<div class="col-sm-12">
+					
+														<div class="row">
+					
+															<div class="col-sm-3 profile-pic">
+																<img width="110" height="110" ng-src="{{userSelected.pictureUrl}}">																
+																<div class="padding-10" ng-if="userLogged.userID != userSelected.userID && showBtnMessage">
+																	
+																	<a href="javascript:void(0);" class="btn btn-primary btn-xs" ng-click="userMessage()"><i class="fa fa-envelope-o"></i> Mensagem</a>
+																	<!-- <h4 class="font-md"><strong>1,543</strong>
+																	<br>
+																	<small>Pedidos</small></h4>
+																	<br>
+																	<h4 class="font-md"><strong>419</strong>
+																	<br>
+																	<small>Connections</small></h4> -->
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<h1>{{userSelected.name}} </span>
+																<br>
+																<small>{{ getPermissionsStr()}}</small></h1>
+					
+																<ul class="list-unstyled">
+																	<li>
+																		<p class="text-muted">
+																			<i class="fa fa-phone"></i>&nbsp;&nbsp; <span class="txt-color-darken">{{userSelected.phoneNumber}}</span>
+																		</p>
+																	</li>
+																	<li>
+																		<p class="text-muted">
+																			<i class="fa fa-phone"></i>&nbsp;&nbsp; <span class="txt-color-darken">{{userSelected.cellPhone}}</span>
+																		</p>
+																	</li>
+																	<li>
+																		<p class="text-muted">
+																			<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{userSelected.email}}">{{userSelected.email}}</a>
+																		</p>
+																	</li>
+																	<li>
+																		<p class="text-muted">
+																			<i class="fa fa-skype"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{userSelected.skype}}</span>
+																		</p>
+																	</li>
+																	<li>
+																		<p class="text-muted">
+																			<i class="fa fa-facebook-square"></i>&nbsp;&nbsp;<span class="txt-color-darken"><a href="{{userSelected.linkFacebook}}" target="_blanck">{{userSelected.linkFacebook}}</a></span>
+																		</p>
+																	</li>
+																	<li>
+																		<p class="text-muted">
+																			<i class="fa fa-google-plus-square"></i>&nbsp;&nbsp;<span class="txt-color-darken"><a href="{{userSelected.linkGooglePlus}}"  target="_blanck"> {{userSelected.linkGooglePlus}}</a></span>
+																		</p>
+																	</li>																	
+																</ul>
+					
+															</div>
+															<!-- <div class="col-sm-3">
+																<h1><small>Conquistas</small></h1>
+																<ul class="list-inline friends-list">
+																	<li><img src="img/avatars/1.png" alt="friend-1">
+																	</li>
+																	<li><img src="img/avatars/2.png" alt="friend-2">
+																	</li>
+																	<li><img src="img/avatars/3.png" alt="friend-3">
+																	</li>
+																	<li><img src="img/avatars/4.png" alt="friend-4">
+																	</li>
+																	<li><img src="img/avatars/5.png" alt="friend-5">
+																	</li>
+																	<li><img src="img/avatars/male.png" alt="friend-6">
+																	</li>
+																	<li>
+																		<a href="javascript:void(0);">413 more</a>
+																	</li>
+																</ul>
+															</div> -->
+					
+														</div>
+					
+													</div>
+					
+												</div>
+					
+												<div class="row">
+					
+													<div class="col-sm-12">
+														<div class="padding-10">
+														<hr>
+															<h3 class="text-primary">Endereço</h3>
+															<address>
+														        <!-- <strong>Twitter, Inc.</strong><br> -->
+														        {{userSelected.street != undefined ? userSelected.street : 'Rua não informada'}}, N° {{userSelected.number != undefined ? userSelected.number : 'S/N'}}  {{userSelected.district != undefined ? ' - '+ userSelected.district : '' }} {{userSelected.postalCode != undefined ? ' - '+ userSelected.postalCode : '' }} <br>
+														        {{ userSelected.city != undefined ? ( userSelected.city.name + ' - '  + userSelected.city.state.name + ' - ' + userSelected.city.state.uf) : '' }}<br>
+														      </address>
+														<hr>
+														</div>					
+													</div>
+					
+												</div>					
+											</div>
+					
+										</div>
+										<!-- Inicio da TimeLine  -->
+										<div class="col-sm-12 col-md-12 col-lg-6" id="divUserActions"  ng-if="isAdminLogged">
+											<div class="well well-sm">
+											<h3 class="text-primary">Atividades recentes do usuário:</h3>
+											<hr>
+											<div class="smart-timeline" cg-busy="loadActions">
+											
+												<ul class="smart-timeline-list" >
+													<li ng-repeat="userAction in userActions">
+														<div class="smart-timeline-icon"  ng-class="getClassOperation(userAction)">
+															<i class="fa" ng-class="getClassCategory(userAction)"></i>
+														</div>
+														<div class="smart-timeline-time">
+															<small>{{ userAction.registrationDate | amDateFormat:'DD/MM/YYYY HH:mm:ss'}}</small>
+														</div>
+														<div class="smart-timeline-content">
+															<p>
+																<a href="javascript:void(0);"><strong>{{userAction.title}}</strong></a>
+															</p>
+															<p>{{userAction.description}}</p>
+														</div>
+													</li>
+												</ul>
+												<h3 class="text-primary" ng-show="userActions.length == 0">Nenhuma atividade foi registrada ainda</h3>
+											</div>	
+											</div>			
+										</div>
+									</div>
+								</div>
+					
+					
+						</div>
+		
+					</div>
+					<br>
+					<div class="row" ng-if="isAdminLogged">
+						<article class="col-sm-12 sortable-grid ui-sortable">
+							<!-- new widget -->
+							
+							<!-- end widget -->
+							
+				
+						<div class="jarviswidget jarviswidget-sortable jarviswidget-color-blue" id="wid-id-0" data-widget-togglebutton="true" data-widget-collapsed="true" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget" style="position: relative; opacity: 1;">							
+								<header role="heading">
+									<span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-white"></i> </span>
+									<h2>Metas </h2>
+				
+									<ul class="nav nav-tabs pull-right in" id="myTab">
+										<li class="active"  ng-click="onTabGoalCurrentMonth()">
+											<a data-toggle="tab" href="#s1"><i class="fa fa-calendar-o"></i> <span class="hidden-mobile hidden-tablet">Mês Atual</span></a>
+										</li>
+				
+										<li  ng-click="onTabGoalPreviousMonth()">
+											<a data-toggle="tab" href="#s2"><i class="fa fa-calendar"></i> <span class="hidden-mobile hidden-tablet">Mês Anterior</span></a>
+										</li>
+									</ul>
+				
+								<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+				
+								<!-- widget div-->
+								<div class="no-padding" role="content" id="s1" cg-busy="loadChartGoal">
+									<div style="height: 400px;">
+									 	<nvd3-line-chart
+									    	data="goalData"
+									        id="showLegendExample"
+									        showXAxis="true"
+									        showYAxis="true"
+									        showLegend="true"
+									        showXAxis="true"
+								            showYAxis="true"
+								            isArea="true"
+								            tooltips="true"
+            								interactive="true"
+            								margin="{left:50,top:50,bottom:50,right:50}"
+            								tooltipcontent="toolTipGoalContentFunction()"
+            								color="colorFunction()"
+            								legendColor="colorFunction()">
+									        	<svg></svg>
+									   </nvd3-line-chart>
+									</div> 
+									<fieldset class="padding-10">
+										<div class="col-sm-6">
+											<ul class="list-unstyled">									            
+									            <li class="text-success"><i class="fa fa-circle"></i> <strong>Meta R$</strong> {{goalValue}}</li> 
+									            <li class="txt-color-blue"><i class="fa fa fa-circle"></i> <i><strong>Atingido R$</strong></i> {{totalValue}}</li>
+									            <li class="txt-color-yellow"><i class="fa fa fa-circle"></i> <i><strong>Falta R$</strong></i> {{remaining}}</li>
+									        </ul>
+										</div>
+									</fieldset>
+								</div>								
+								<!-- end widget div -->
+							</div>
+						</article>
+					</div>
+					
+					
+					
+					<div class="row" ng-if="isAdminLogged">
+						<article class="col-sm-12 sortable-grid ui-sortable">
+							<!-- new widget -->
+							
+							<!-- end widget -->
+							
+				
+						<div class="jarviswidget jarviswidget-sortable jarviswidget-color-blue" id="wid-id-0" data-widget-togglebutton="true" data-widget-collapsed="true" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget" style="position: relative; opacity: 1;">							
+								<header role="heading">
+									<span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-white"></i> </span>
+									<h2>Vendas </h2>
+				
+									<ul class="nav nav-tabs pull-right in" id="myTab">
+										<li class="active"  ng-click="onTabSalesCurrentMonth()">
+											<a data-toggle="tab" href="#s1"><i class="fa fa-calendar-o"></i> <span class="hidden-mobile hidden-tablet">Mês Atual</span></a>
+										</li>
+				
+										<li  ng-click="onTabSalesPreviousMonth()">
+											<a data-toggle="tab" href="#s2"><i class="fa fa-calendar"></i> <span class="hidden-mobile hidden-tablet">Mês Anterior</span></a>
+										</li>
+									</ul>
+				
+								<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+				
+								<!-- widget div-->
+								<div class="no-padding" role="content" id="s1" cg-busy="loadChartSales">
+									<div style="height: 400px;">
+											<nvd3-multi-bar-chart
+										    	data="salesData"
+										        id="salesChart"
+										        showXAxis="true"
+										        showYAxis="true"										        
+										        showXAxis="true"
+									            showYAxis="true"
+										        tooltips="true"
+            									interactive="true"
+            									tooltipcontent="toolTipSalesContentFunction()"
+            									margin="{left:50,top:50,bottom:50,right:50}">
+										        	<svg></svg>
+										    </nvd3-multi-bar-chart>
+									</div>
+									
+								</div>								
+								<!-- end widget div -->
+							</div>
+						</article>
+					</div>
+	
+		            			
+		</div>
+	</div>	  
+
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	
+
+	pageSetUp();
+	
+	loadInbox();
+	function loadInbox() {
+		//loadURL("ajax/profile.html", $('#user-profile-content > .table-wrap'));
+	}
+
+
+	 
+	 tableHeightSize();
+
+		$(window).resize(function() {
+			tableHeightSize()
+		})
+		
+		function tableHeightSize() {
+
+			if ($('body').hasClass('menu-on-top')) {
+				var menuHeight = 68;
+
+				var tableHeight = ($(window).height() - 184) - menuHeight;
+				/* $('.table-wrap').css('height', tableHeight + 'px');
+				$('.chat-body').css('height', (tableHeight -100) + 'px'); */
+				/* $('#divUserActions').css('min-height', (tableHeight - 100) + 'px'); */
+				$('.user-profile-body').css('min-height', (tableHeight ) + 'px');
+
+			} else {
+				var tableHeight = $(window).height() - 184;
+				/* $('.table-wrap').css('height', tableHeight + 'px');
+				$('.chat-body').css('height', (tableHeight -100) + 'px'); */				
+				/* $('#divUserActions').css('min-height', (tableHeight - 100) + 'px'); */
+				$('.user-profile-body').css('min-height', (tableHeight) + 'px');				
+
+			}
+
+		}			
+	
+</script>

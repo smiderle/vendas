@@ -32,6 +32,6 @@ public interface ProductService {
  	 * @param product
  	 * @return
  	 */
-	ServiceResponse<Product> saveOrUpdate(Product product) ;
+	ServiceResponse<Product> saveOrUpdate(Integer userID, Product product) ;
 
 }

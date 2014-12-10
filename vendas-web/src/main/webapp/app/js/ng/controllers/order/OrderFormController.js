@@ -8,6 +8,8 @@ vendasApp.controller('OrderFormController',
 		['$scope','$rootScope','$route','$location','OrderService','UtilityService','ContextService','PriceTableService','CustomerService','CalcUtil','FormsPaymentService','InstallmentService','socket',
 		 function OrderFormController($scope,$rootScope,$route,$location,OrderService, UtilityService, ContextService, PriceTableService, CustomerService, CalcUtil, FormsPaymentService, InstallmentService, socket) {
 			
+			var userLogged = ContextService.getUserLogged();
+			
 			$scope.branch = ContextService.getBranchLogged();
 			
 			$scope.organizationID  = ContextService.getOrganizationID();
@@ -101,7 +103,7 @@ vendasApp.controller('OrderFormController',
 						issuanceTime : new Date(),
 						organizationID: ContextService.getOrganizationID(),
 						branchID: $scope.branch.branchOfficeID,
-						userID: ContextService.getUserLogged().userID,
+						userID: userLogged.userID,
 						type: 1
 				};
 				
@@ -795,7 +797,7 @@ vendasApp.controller('OrderFormController',
 				orderWrapper.order = $scope.order;				
 				orderWrapper.order.ordersItens =  $scope.ordersItens;				
 				
-				OrderService.save(orderWrapper).then(function(toReturn){
+				OrderService.save( orderWrapper, userLogged.userID ).then(function(toReturn){
 					if(toReturn.code == '200'){
 						$scope.commit = true;
 						$("#btnNext").html('Novo Pedido <i class="fa fa-plus"></i>');

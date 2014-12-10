@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,9 +84,9 @@ public class OrderPaymentRest {
 	 * @return
 	 */
 	@RequestMapping(value="setPaid", method = RequestMethod.POST)
-	public @ResponseBody ApiResponse setPaid(@RequestBody Long orderPaymentID) {
+	public @ResponseBody ApiResponse setPaid(@RequestHeader(value="userID") Integer userID, @RequestBody Long orderPaymentID) {
 		try {
-			ServiceResponse<Boolean> payload =  orderPaymentService.setPaid(orderPaymentID);
+			ServiceResponse<Boolean> payload =  orderPaymentService.setPaid(userID, orderPaymentID);
 			LOG.debug("setPaid Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {

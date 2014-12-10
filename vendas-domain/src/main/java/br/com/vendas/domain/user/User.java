@@ -16,15 +16,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 
 import br.com.vendas.domain.Domain;
 import br.com.vendas.domain.application.MenuApplication;
+import br.com.vendas.domain.location.City;
 
 @Entity
 @Table(name="USUARIO", uniqueConstraints={		
@@ -66,7 +72,11 @@ public class User extends Domain{
 	@Column(name="NOME", length=50)
 	private String name;		
 	
+	/**
+	 * Data e hora de alteração
+	 */
 	@Column(name="DTHRALTERACAO")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar changeTime;
 	
 	
@@ -95,6 +105,62 @@ public class User extends Domain{
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private Set<UserRole> userRoles;
 	
+	@Column(name="dtnascimento")
+	private Date birthDate;
+	
+	@Column(name="fone")
+	private String phoneNumber;
+		
+	@Column(name="celular")
+	private String cellPhone;
+	
+	@Column(name="urlfoto")
+	private String pictureUrl;
+	
+	@Column(name="facebook")
+	private String linkFacebook;
+	
+	@Column(name="googleplus")
+	private String linkGooglePlus;
+	
+	@Column(name="skype")
+	private String skype;
+	
+	@Column(name="rua")
+	private String street;
+	
+	@Column(name="bairro")
+	private String district;
+	
+	/**
+	 * Numero
+	 */
+	@Column(name="NUMERO")
+	private String number;
+
+	
+	@Column(name="cep")
+	private String postalCode;
+	
+	@ManyToOne
+	@JoinColumn(name="CIDADE")
+	private City city;
+	
+	@Column(name="CPFCNPJ")
+	private String cpfCnpj;
+	
+	/**
+	 * RG ou Inscrição Estadual
+	 */
+	@Column(name="inscriestad")
+	private String inscricao;
+	
+	@Column(name="contato")
+	private String contactName;
+	
+	@Column(name="observacao")
+	private String observation;
+
 	public Integer getUserID() {
 		return userID;
 	}
@@ -190,7 +256,142 @@ public class User extends Domain{
 
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
+	}
+
+	public String getLinkFacebook() {
+		return linkFacebook;
+	}
+
+	public void setLinkFacebook(String linkFacebook) {
+		this.linkFacebook = linkFacebook;
+	}
+
+	public String getLinkGooglePlus() {
+		return linkGooglePlus;
+	}
+
+	public void setLinkGooglePlus(String linkGooglePlus) {
+		this.linkGooglePlus = linkGooglePlus;
+	}
+
+	
+
+	public String getSkype() {
+		return skype;
+	}
+
+	public void setSkype(String skype) {
+		this.skype = skype;
+	}
+
+	
+	
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}	
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public String getCellPhone() {
+		return cellPhone;
+	}
+
+	public void setCellPhone(String cellPhone) {
+		this.cellPhone = cellPhone;
+	}
+
+	public String getCpfCnpj() {
+		return cpfCnpj;
+	}
+
+	public void setCpfCnpj(String cpfCnpj) {
+		this.cpfCnpj = cpfCnpj;
+	}
+
+	public String getInscricao() {
+		return inscricao;
+	}
+
+	public void setInscricao(String inscricao) {
+		this.inscricao = inscricao;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+
+	
 	
 	
 }

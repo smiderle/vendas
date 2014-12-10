@@ -12,8 +12,8 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, LocalSt
 		 * @param fields
 		 * @returns
 		 */
-		save : function(customer){
-			var newCustomer = Restangular.all('v1').all('customer').all('saveCustomer').post(customer);
+		save : function(customer, userID){
+			var newCustomer = Restangular.all('v1').all('customer').all('saveCustomer').post(customer,{},{'userID' : userID});
 			return newCustomer;
         },
 

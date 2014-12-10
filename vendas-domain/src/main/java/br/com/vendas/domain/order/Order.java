@@ -27,6 +27,9 @@ import br.com.vendas.domain.customer.Customer;
 @Table(name="PEDIDO")
 public class Order implements Serializable {
 	
+	public static final int PEDIDO = 1;
+	public static final int ORCAMENTO = 2;
+	
 	/**
 	 * 
 	 */
@@ -94,6 +97,10 @@ public class Order implements Serializable {
 	@Column(name="EXCLUIDO")
 	private boolean excluded;
 	
+	/**
+	 * 1 - Pedido
+	 * 2 - Orçamento
+	 */
 	@Column(name="TIPO")
 	private Integer type;
 	

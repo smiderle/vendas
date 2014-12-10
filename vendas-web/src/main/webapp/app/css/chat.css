@@ -164,5 +164,7 @@
 }
 
 .inbox-menu-lg li a{
-	color: #4192D4 !important; 
+	color: #4192D4 !important;
+	text-overflow: ellipsis;
+	white-space: nowrap; 
 }

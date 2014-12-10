@@ -1,3 +1,164 @@
 <div class="row">
-	DASHBOARD
+	<div class="col-xs-12 col-sm-5 col-md-5 col-lg-12">
+		<ul id="sparks" class="">
+			<li class="sparks-info">
+				<h5> Pedidos do Mês Atual<span class="txt-color-blue">$ {{totalValueSalesBrahcn}}</span></h5>
+			</li>
+			<li class="sparks-info">
+				<h5> Quantidade Total de Pedidos<span class="txt-color-greenDark"><i class="fa fa-shopping-cart"></i>&nbsp;{{countSalesByBranch}}</span></h5>
+			</li>
+		</ul>
+	</div>
 </div>
+
+
+<section id="widget-grid" class="" ng-init="init()">
+
+
+	<div class="row">
+		<article class="col-sm-12 sortable-grid ui-sortable">
+			<div class="jarviswidget jarviswidget-sortable jarviswidget-color-blue" id="wid-id-salesData" data-widget-togglebutton="true" data-widget-collapsed="true" data-widget-editbutton="false" data-widget-fullscreenbutton="true" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget" style="position: relative; opacity: 1;">							
+				<header role="heading">
+					<span class="widget-icon"> <i class="fa fa-user txt-color-white"></i> </span>
+					<h2>Valor total diário das minhas vendas</h2>
+
+					<ul class="nav nav-tabs pull-right in">
+						<li class="active"  ng-click="onTabSalesCurrentMonth()">
+							<a data-toggle="tab" href="#s1"><i class="fa fa-calendar-o"></i> <span class="hidden-mobile hidden-tablet">Mês Atual</span></a>
+						</li>
+
+						<li  ng-click="onTabSalesPreviousMonth()">
+							<a data-toggle="tab"><i class="fa fa-calendar"></i> <span class="hidden-mobile hidden-tablet">Mês Anterior</span></a>
+						</li>
+					</ul>
+
+					<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+				</header>
+
+				<div class="no-padding" role="content" id="s1" cg-busy="loadChartSales">
+					<div style="height: 350px;">
+							<nvd3-multi-bar-chart
+						    	data="salesData"
+						        id="salesChart"
+						        showXAxis="true"
+						        showYAxis="true"										        
+						        showXAxis="true"
+					            showYAxis="true"
+						        tooltips="true"
+        						interactive="true"
+        						tooltipcontent="toolTipSalesContentFunction()"
+        						margin="{left:50,top:50,bottom:50,right:50}"
+        						noData=" Nenhum dado encontrado">
+						        	<svg></svg>
+						    </nvd3-multi-bar-chart>
+					</div>						
+				</div>								
+			</div>
+		</article>
+	</div>
+	
+	
+	<div class="row">
+		<article class="col-sm-12 sortable-grid ui-sortable">
+			<div class="jarviswidget jarviswidget-sortable jarviswidget-color-teal" id="wid-id-goalData" data-widget-togglebutton="true" data-widget-collapsed="true" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget" style="position: relative; opacity: 1;">							
+				<header role="heading">
+					<span class="widget-icon"> <i class="glyphicon glyphicon-stats txt-color-white"></i> </span>
+					<h2>Minhas Metas  </h2>
+
+					<ul class="nav nav-tabs pull-right in">
+						<li class="active"  ng-click="onTabGoalCurrentMonth()">
+							<a data-toggle="tab" href="#s11"><i class="fa fa-calendar-o"></i> <span class="hidden-mobile hidden-tablet">Mês Atual</span></a>
+						</li>
+
+						<li  ng-click="onTabGoalPreviousMonth()">
+							<a data-toggle="tab"><i class="fa fa-calendar"></i> <span class="hidden-mobile hidden-tablet">Mês Anterior</span></a>
+						</li>
+					</ul>
+
+					<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+				</header>
+	
+				<div class="no-padding" role="content" id="s11" cg-busy="loadChartGoal">
+					<div style="height: 350px;">
+					 	<nvd3-line-chart
+					    	data="goalData"
+					        id="showLegendExample"
+					        showXAxis="true"
+					        showYAxis="true"
+					        showLegend="true"
+					        showXAxis="true"
+				            showYAxis="true"
+				            isArea="true"
+				            tooltips="true"
+     						interactive="true"
+     						margin="{left:50,top:50,bottom:50,right:50}"
+     						tooltipcontent="toolTipGoalContentFunction()"
+     						color="colorFunction()"
+     						legendColor="colorFunction()"
+     						noData=" Nenhum dado encontrado">
+					        	<svg></svg>
+					   </nvd3-line-chart>
+					</div> 
+					<fieldset class="padding-10">
+						<div class="col-sm-6">
+							<ul class="list-unstyled">									            
+					            <li class="text-success"><i class="fa fa-circle"></i> <strong>Meta R$</strong> {{goalValue}}</li> 
+					            <li class="txt-color-blue"><i class="fa fa fa-circle"></i> <i><strong>Atingido R$</strong></i> {{totalValue}}</li>
+					            <li class="txt-color-yellow"><i class="fa fa fa-circle"></i> <i><strong>Falta R$</strong></i> {{remaining}}</li>
+					        </ul>
+						</div>
+					</fieldset>
+				</div>								
+			</div>
+		</article>
+	</div>
+	
+	<div class="row" ng-if="isAdminLogged">
+		<article class="col-sm-12 sortable-grid ui-sortable">
+			<div class="jarviswidget jarviswidget-sortable jarviswidget-color-blue" id="wid-id-salesDataBranch" data-widget-togglebutton="true" data-widget-collapsed="true" data-widget-editbutton="false" data-widget-fullscreenbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" role="widget" style="position: relative; opacity: 1;">							
+				<header role="heading">
+					<span class="widget-icon"> <i class="fa fa-building txt-color-white"></i> </span>
+					<h2>Valor total diário de venda da empresa</h2>
+
+					<ul class="nav nav-tabs pull-right in">
+						<li class="active"  ng-click="onTabSalesBranchCurrentMonth()">
+							<a data-toggle="tab" href="#s111"><i class="fa fa-calendar-o"></i> <span class="hidden-mobile hidden-tablet">Mês Atual</span></a>
+						</li>
+
+						<li  ng-click="onTabSalesBranchPreviousMonth()">
+							<a data-toggle="tab"><i class="fa fa-calendar"></i> <span class="hidden-mobile hidden-tablet">Mês Anterior</span></a>
+						</li>
+					</ul>	
+					<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+				</header>
+
+				<div class="no-padding" role="content" id="s111" cg-busy="loadChartBranchSales">
+					<div style="height: 350px;">
+							<nvd3-multi-bar-chart
+						    	data="salesDataBranch"
+						        id="salesDataBranch"
+						        showXAxis="true"
+						        showYAxis="true"										        
+						        showXAxis="true"
+					            showYAxis="true"
+						        tooltips="true"
+        						interactive="true"
+        						tooltipcontent="toolTipSalesContentFunction()"
+        						color="colorFunction2()"
+        						margin="{left:50,top:50,bottom:50,right:50}"
+        						noData=" Nenhum dado encontrado">
+						        	<svg></svg>
+						    </nvd3-multi-bar-chart>
+					</div>						
+					</div>								
+			</div>
+		</article>
+	</div>
+	
+</section>
+
+
+<script type="text/javascript">
+		
+	pageSetUp();
+</script>

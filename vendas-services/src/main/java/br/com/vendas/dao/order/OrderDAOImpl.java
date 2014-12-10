@@ -1,9 +1,12 @@
 package br.com.vendas.dao.order;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -93,6 +96,53 @@ public class OrderDAOImpl  extends ResourceDAO<Order> implements OrderDAO {
 				.addOrder(org.hibernate.criterion.Order.desc("issuanceTime"));
 
 		return criteria.list();
+	}
+
+	@Override
+	public List<Object[]> getTotalValueDailyBetweenDateAndUserID(Integer userID, Date dtIntial, Date dtFinal) {
+		/*SELECT 	('day', dthremissao) "day", sum(valorliquido) views
+		FROM pedido
+		where dthremissao > '2014-10-01'
+		group by 1
+		ORDER BY 1*/
+				
+		String hql = "select day(issuanceTime), sum(netValue) from Order where userID = :userID and issuanceTime > :dtInitial and  issuanceTime < :dtFinal group by 1 order by 1 ";
+		Session session = getSession();
+		Query query = session.createQuery(hql);
+		query.setParameter(	"userID", userID );
+		query.setParameter("dtInitial", dtIntial );
+		query.setParameter("dtFinal", dtFinal );
+		
+		return query.list();
+	}
+	
+	@Override
+	public List<Object[]> getTotalValueDailyBetweenDateAndBranchID(Integer branchID, Date dtIntial, Date dtFinal) {					
+		String hql = "select day(issuanceTime), sum(netValue) from Order where branchID = :branchID and issuanceTime > :dtInitial and  issuanceTime < :dtFinal group by 1 order by 1 ";
+		Session session = getSession();
+		Query query = session.createQuery(hql);
+		query.setParameter(	"branchID", branchID );
+		query.setParameter("dtInitial", dtIntial );
+		query.setParameter("dtFinal", dtFinal );
+		
+		return query.list();
+	}
+	
+	
+	@Override
+	public Long getCountSalesByBranchAndDate( Integer organizationID, Integer branchID, Date initialDate, Date finalDate ) {
+
+		Session session = getSession();		
+
+		Criteria criteria = session.createCriteria(Order.class)
+				.add(Restrictions.eq("excluded", false))
+				.add(Restrictions.eq("organizationID", organizationID))
+				.add( Restrictions.ge("issuanceTime", initialDate))
+				.add( Restrictions.le("issuanceTime", finalDate))
+				.add(Restrictions.eq("branchID", branchID)).setProjection( Projections.rowCount() );
+		
+
+		return (Long) criteria.uniqueResult();
 	}
 
 }

@@ -33,7 +33,7 @@ public interface ProductGroupService {
 	 * @param productGroup
 	 * @return
 	 */
-	ServiceResponse<ProductGroup> saveOrUpdate(ProductGroup productGroup) ;
+	ServiceResponse<ProductGroup> saveOrUpdate(Integer userID, ProductGroup productGroup) ;
 
 
 

@@ -12,8 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vendas.dao.product.group.ProductGroupDAO;
 import br.com.vendas.domain.LimitQuery;
 import br.com.vendas.domain.product.ProductGroup;
+import br.com.vendas.domain.user.UserAction;
+import br.com.vendas.helper.UserActionHelper;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.services.support.ServiceResponseFactory;
+import br.com.vendas.services.user.UserActionService;
 
 @Service
 @Transactional(readOnly = true, propagation=Propagation.SUPPORTS)
@@ -21,6 +24,9 @@ public class ProductGroupServiceImpl implements ProductGroupService{
 
 	@Inject
 	private ProductGroupDAO productDAO;
+	
+	@Inject
+	private UserActionService userActionService;
 
 	@Override
 	public ServiceResponse<List<ProductGroup>> findAllByBranch(
@@ -38,8 +44,34 @@ public class ProductGroupServiceImpl implements ProductGroupService{
 
 	@Transactional(readOnly=false)
 	@Override
-	public ServiceResponse<ProductGroup> saveOrUpdate(ProductGroup productGroup) {
+	public ServiceResponse<ProductGroup> saveOrUpdate(Integer userID, ProductGroup productGroup) {
+		
 		productGroup.setChangeTime(new Date());
+		
+		saveProductGoupAction(userID, productGroup);
+		
 		return ServiceResponseFactory.create(productDAO.saveOrUpdate(productGroup));
+	}
+	
+	
+	/**
+	 * Salva as alções do usuário para o cadastro ou edição 
+	 * @param userID
+	 * @param customer
+	 */
+	private void saveProductGoupAction( Integer userID, ProductGroup productGroup) {
+		UserAction userAction = null;
+		
+		if(productGroup.isExcluded()){
+			userAction = UserActionHelper.createProductGroupDelete( userID, productGroup );
+		} else if(productGroup.getID() == null) {
+			userAction = UserActionHelper.createProductGroupSave( userID, productGroup );			
+		} else {
+			userAction = UserActionHelper.createProductGroupEdit( userID, productGroup );
+			
+		}
+		
+		userActionService.save( userAction );
+		
 	}
 }

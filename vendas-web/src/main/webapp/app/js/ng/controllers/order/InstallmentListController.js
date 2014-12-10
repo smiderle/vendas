@@ -9,6 +9,8 @@
 	vendasApp.controller('InstallmentListController',
 			['$scope', '$location', 'InstallmentService','ContextService','UtilityService',
 			 function InstallmentListController($scope,$location, InstallmentService, ContextService, UtilityService) {
+				
+				var userLogged = ContextService.getUserLogged();
 
 				$scope.listInstallments = function(){
 					var aInstallments = $scope.busyLoader = InstallmentService.getAllByBranch(ContextService.getOrganizationID(), ContextService.getBranchLogged().branchOfficeID);
@@ -56,7 +58,7 @@
 							installmentSelected.excluded = true;
 							
 							
-							var aInstallment = $scope.busyLoader = InstallmentService.save(installmentSelected);
+							var aInstallment = $scope.busyLoader = InstallmentService.save(installmentSelected, userLogged.userID);
 							aInstallment.then(function(toReturn){
 								if(toReturn.code == '200'){
 									clearDatateble();

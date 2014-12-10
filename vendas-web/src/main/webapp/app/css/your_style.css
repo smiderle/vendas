@@ -76,3 +76,9 @@ input[type=number] {
     -moz-appearance:textfield;
     
 }
+
+
+/* Div com a Dropzone  */
+.jcrop-holder{
+	cursor: pointer;	
+}

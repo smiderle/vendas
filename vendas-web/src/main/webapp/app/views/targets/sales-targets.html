@@ -1,0 +1,86 @@
+<!-- widget grid -->
+<section id="widget-grid" class="" ng-init="init()">
+
+	<!-- row -->
+	<div class="row">
+
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12" cg-busy="busyLoader">			
+			<div class="jarviswidget jarviswidget-color-greenDark" id="wid-branch-list" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-togglebutton="false">
+
+				<header>
+					<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+					<h2>Metas</h2>
+
+				</header>
+
+				<div>
+					<div class="widget-body no-padding">
+						<div class="dt-toolbar">
+							<div class="col-xs-12">
+								<a class="btn btn-primary"  ng-click="save()"> <i class="fa fa-check"></i>  Salvar</a>
+							</div>
+							<br>
+						</div>
+						
+						<table class="table table-hover table-striped smart-form has-tickbox dataTable" width="100%">
+								<thead>
+									<tr>
+										<th style="width: 150px;"></th>
+										<th style="width: 60px;" ng-repeat="userTarget in userTargets[0].targets"><i class="fa fa-calendar" ></i>
+											{{ getMonthDescription( userTarget.month ) }}
+										</th>
+										
+									</tr>
+								</thead>												
+								<tr ng-repeat="userTarget in userTargets">
+									<td>
+										<h5><small>{{userTarget.user.name}}</small></h5>
+									</td>				
+									<td>
+										<label class="input input-sm">
+											<i class="icon-prepend fa fa-usd"></i>
+											<input type="number" class="form-control input-sm" placeholder="Valor da Meta" maxlength="9" ng-model="userTarget.targets[0].value">
+										</label>					
+									</td>														
+									<td>
+										<label class="input input-sm">
+											<i class="icon-prepend fa fa-usd"></i>
+											<input type="number" class="form-control input-sm" placeholder="Valor da Meta" maxlength="9" ng-model="userTarget.targets[1].value">
+										</label>					
+									</td>
+									<td>
+										<label class="input input-sm">
+											<i class="icon-prepend fa fa-usd"></i>
+											<input type="number" class="form-control input-sm" placeholder="Valor da Meta" maxlength="9" ng-model="userTarget.targets[2].value">
+										</label>					
+									</td>
+									<td>
+										<label class="input input-sm">
+											<i class="icon-prepend fa fa-usd"></i>
+											<input type="number" class="form-control input-sm" placeholder="Valor da Meta" maxlength="9" ng-model="userTarget.targets[3].value">
+										</label>					
+									</td>									
+								</tr>
+							</table>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+
+
+<script type="text/javascript">
+	 pageSetUp();
+		 
+</script>
+
+
+
+
+
+
+
+
+		

@@ -9,7 +9,8 @@
 	vendasApp.controller('PaymentListController',['$scope','$location','PaymentService' ,'ContextService','UtilityService','FormsPaymentService', 'DateUtil',
 	        function PaymentListController($scope,$location, PaymentService, ContextService,UtilityService,FormsPaymentService, DateUtil) {
 		
-		var noMorePayments = false;
+		var noMorePayments = false,
+			userLogged = ContextService.getUserLogged();
 		
 		$scope.payments = [];
 		
@@ -102,7 +103,7 @@
 			for(i in payments){
 				var payment = payments[i];
 				if(payment && payment.id == paymentSelectedID ){
-					PaymentService.setPayment(payment);
+					PaymentService.setPayment(payment, userLogged.userID);
 					$location.path('/financeiro/detalhes-contas-receber');
 					break;
 				}
@@ -123,7 +124,7 @@
 				if (ButtonPressed === "Sim") {
 					
 					var paymentSelectedID = $( "input:checked" ).val();
-					var aPay = PaymentService.setPaid(paymentSelectedID);
+					var aPay = PaymentService.setPaid(paymentSelectedID, userLogged.userID);
 					
 					
 					aPay.then(function(toReturn){

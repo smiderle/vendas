@@ -12,7 +12,8 @@ vendasApp.controller('CustomerFormController',
 
 			
 			
-			var url = '';
+			var url = '',
+				userLogged = ContextService.getUserLogged();
 			
 			$scope.cities =[];
 
@@ -90,9 +91,8 @@ vendasApp.controller('CustomerFormController',
 					
 					$scope.customer.organizationID = ContextService.getOrganizationID();
 					$scope.customer.branchID = ContextService.getBranchLogged().branchOfficeID;
-
 					
-					var aCustomer = CustomerService.save($scope.customer);
+					var aCustomer = CustomerService.save($scope.customer, userLogged.userID);
 					aCustomer.then(function(toReturn){
 						if(toReturn.code == '200'){
 							$scope.customer.id = toReturn.value.id; 

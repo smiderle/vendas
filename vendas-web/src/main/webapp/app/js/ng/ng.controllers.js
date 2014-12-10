@@ -68,6 +68,11 @@ angular.module('app.controllers', [])
 			});*/
 	}])
 	
+	.controller('LeftPanelController', ['$scope', 'ContextService', function($scope, ContextService) {
+		$scope.userPicture = ContextService.getUserLogged().pictureUrl;
+	}])
+
+	
 	.controller('LangController', ['$scope', 'settings', 'localize', function($scope, settings, localize) {
 		$scope.languages = settings.languages;
 		$scope.currentLang = settings.currentLang;

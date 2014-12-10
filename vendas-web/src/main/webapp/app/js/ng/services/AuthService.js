@@ -18,6 +18,20 @@ vendasApp.factory('AuthService', function(ContextService){
 	    	}
 	    	return false;
 			
+		},
+		
+		/**
+		 * Verifica se o usuário tem acesso a determinado menu
+		 */
+		hasAccess : function( menuID ){
+			var user = ContextService.getUserLogged();
+			var size = user.menusApplication.length;
+			for( var i = 0; i < size ; i++ ){
+				if( menuID === user.menusApplication[i].menuID ){
+					return true;
+				}
+			}
+			return false;
 		}
 	};
 });

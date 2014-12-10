@@ -7,6 +7,8 @@
 vendasApp.controller('InstallmentFormController',
 		['$scope','InstallmentService', 'DateUtil','CalcUtil','UtilityService','ContextService',
 		 function InstallmentFormController($scope, InstallmentService, DateUtil,CalcUtil, UtilityService, ContextService) {
+			
+			var userLogged = ContextService.getUserLogged();
 			/**
 			 * Valor exemplo para as parcelas
 			 */
@@ -23,7 +25,7 @@ vendasApp.controller('InstallmentFormController',
 				if($('#installment-form').valid() && $scope.isValidInstallment){
 					installment.organizationID = ContextService.getOrganizationID();
 					installment.branchID = ContextService.getBranchLogged().branchOfficeID;
-					var aInstallment =  InstallmentService.save(installment);
+					var aInstallment =  InstallmentService.save(installment, userLogged.userID);
 					aInstallment.then(function(toReturn){
 						if(toReturn.code == '200'){
 							UtilityService.showAlertSucess('Sucesso.', 'Parcelamento salvo com sucesso!!');

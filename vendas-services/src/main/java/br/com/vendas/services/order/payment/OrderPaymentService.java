@@ -61,7 +61,7 @@ public interface OrderPaymentService {
 	 * @param orderPayment
 	 * @return
 	 */
-	ServiceResponse<Boolean> setPaid(Long id);
+	ServiceResponse<Boolean> setPaid(Integer userID, Long id);
 	
 	
 	/**

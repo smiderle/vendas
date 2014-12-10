@@ -45,7 +45,10 @@
 								
 								<ul id="tabUser" class="nav nav-tabs bordered">
 									<li class="active">
-										<a href="#tabLoginaData" data-toggle="tab"><i class="fa fa-fw fa-lg fa-user"></i>Dados de Login</a>
+										<a href="#tabLoginData" data-toggle="tab"><i class="fa fa-fw fa-lg fa-user"></i>Dados de Login</a>
+									</li>
+									<li>
+										<a href="#tabContactUser" data-toggle="tab"><i class="fa fa-fw fa-lg fa-reorder"></i>Dados Adicionais</a>
 									</li>
 									<li>
 										<a href="#tabUserAccess" data-toggle="tab"><i class="fa fa-fw fa-lg fa-reorder"></i>Acessos</a>
@@ -57,34 +60,54 @@
 								</ul>
 								
 								<div id="tabContentUser" class="tab-content padding-10">
-									<div class="tab-pane fade in active" id="tabLoginaData">
-										<section>
-											<input name="email" style="display:none" ng-model="userAccount.email"> <!-- Incluido essa linha para o chrome ignorar o autocomplete  -->
-											<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>												
-												<input type="email" name="email" placeholder="E-mail" ng-model="userAccount.email" ng-disabled="isEdition" class="form-control">
-											</label>
-										</section>
+									<div class="tab-pane fade in active" id="tabLoginData">
+										<div class="jcrop-holder" cg-busy="loaderPictureBusy">
+											<img alt="Imagem do Usuário" title="Clique para trocar a imagem" width="150" height="150" ng-src="{{userAccount.pictureUrl}}"  dropzone="dropzoneConfig">
+										</div>
+										<div class="padding-gutter padding-top-0 padding-bottom-0">
+											<fieldset class="padding-10">
+												<div class="row">
+													<section class="col col-6">
+														<label class="label">Email *</label>
+														<input name="email" style="display:none" ng-model="userAccount.email"> <!-- Incluido essa linha para o chrome ignorar o autocomplete  -->
+														<label class="input"> 
+															<i class="icon-prepend fa fa-envelope-o"></i>
+															<input type="email" name="email" placeholder="E-mail" ng-model="userAccount.email" ng-disabled="isEdition" class="form-control">				
+															
+														</label>		
+													</section>
+												</div>
+												<div class="row">
+													<section class="col col-6">
+														<label class="label">Nome *</label>
+														<label class="input"> 
+															<i class="icon-prepend fa fa-user"></i>
+															<input type="text" name="fname" placeholder="Nome" ng-model="userAccount.name">
+														</label>
+													</section>										
+												</div>	
+											</fieldset>
+										</div>
+																			
+										
 										
 										<div class="row">
 											<section class="col col-6">
-												<label class="input"> <i class="icon-prepend fa fa-lock"></i>
+												<label class="label">Senha *</label>
+												<label class="input"> 
+													<i class="icon-prepend fa fa-lock"></i>
 													<input type="password" name="password" placeholder="Senha" id="password" ng-model="userAccount.password" >
 												</label>
 											</section>
 											<section class="col col-6">
-												<label class="input"> <i class="icon-prepend fa fa-lock"></i>
+												<label class="label">Repita a Senha *</label>
+												<label class="input"> 
+													<i class="icon-prepend fa fa-lock"></i>
 													<input type="password" name="passwordConfirm" placeholder="Repita a Senha" ng-model="passwordConfirm">
 												</label>
 											</section>
 										</div>
-										
-										<div class="row">
-											<section class="col col-6">
-												<label class="input"> <i class="icon-prepend fa fa-user"></i>
-													<input type="text" name="fname" placeholder="Nome" ng-model="userAccount.name">
-												</label>
-											</section>										
-										</div>										
+																			
 										<section>
 											<label class="checkbox"><input type="checkbox" name="chkActiveUser" id="chkActiveUser" ng-model="userAccount.active"><i></i>Usuário ativo</label>
 											<label class="checkbox"><input type="checkbox" name="chkPortalAccess" id="chkPortalAccess" ng-model="userAccount.portalAccess"/><i></i>Usuário terá acesso ao portal </label>
@@ -92,8 +115,181 @@
 											<label class="checkbox"><input type="checkbox" name="chkIsAdmin" id="chkIsAdmin" ng-model="userIsAdministrator"><i></i>Esse usuário é um administrador</label>  
 										</section>	
 									</div>
+									
+									
+									
+									
+									<div class="tab-pane fade in" id="tabContactUser">
+										
+										<fieldset>										
+											<legend><h3 class="text-primary">Dados Pessoais</h3></legend>
+									
+											<div class="row">
+												<section class="col col-6">
+													<label class="label">Apelido/Contato</label>												
+													<label class="input">									
+														<i class="icon-prepend fa fa-user-md"></i>			
+														<input type="text" name="contactName" placeholder="Apelido/Contato" ng-model="userAccount.contactName" class="form-control">
+													</label>
+												</section>											
+											</div>
+											<div class="row">
+												<section class="col col-6">
+													<label class="label">CPF</label>												
+													<label class="input">					
+														<i class="icon-prepend fa fa-list-alt"></i>							
+														<input type="text" name="cpfCnpj" placeholder="CPF" ng-model="userAccount.cpfCnpj" class="form-control">
+													</label>
+												</section>
+												<section class="col col-6">
+													<label class="label">RG</label>												
+													<label class="input">
+														<i class="icon-prepend fa fa-indent"></i>												
+														<input type="text" name="incricao" placeholder="RG" ng-model="userAccount.inscricao" class="form-control">
+													</label>
+												</section>
+												
+												
+													<section class="col col-6">
+														<label class="label">Data de Nascimento</label>
+														<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
+															<input type="text" name="birth" id="birth" placeholder="Data de Nascimento"  ng-model="userAccount.birth">
+														</label>
+													</section>
+												
+											</div>
+										
+										
+										</fieldset>
+										
+										<fieldset>										
+											<legend><h3 class="text-primary">Contato</h3></legend>		
+										
+											<div class="row">											
+												<section class="col col-6">
+													<label class="label">Telefone Residencial</label>												
+													<label class="input">						
+														<i class="icon-prepend fa fa-phone"></i>						
+														<input type="text" name="phoneNumber" placeholder="Telefone" ng-model="userAccount.phoneNumber" class="form-control">
+													</label>
+												</section>
+												<section class="col col-6">
+													<label class="label">Celular</label>												
+													<label class="input">
+														<i class="icon-prepend fa fa-mobile-phone"></i>												
+														<input type="text" name="cellPhone" placeholder="Celular" ng-model="userAccount.cellPhone" class="form-control">
+													</label>
+												</section>
+											</div>
+											
+											<div class="row">											
+												<section class="col col-4">
+													<label class="label">Skype</label>												
+													<label class="input">						
+														<i class="icon-prepend fa fa-skype"></i>						
+														<input type="text" name="homePhone" placeholder="Skype" ng-model="userAccount.skype" class="form-control">
+													</label>
+												</section>
+												<section class="col col-4">
+													<label class="label">Facebook</label>
+													<label class="input">
+														<i class="icon-prepend fa fa-facebook-square"></i>												
+														<input type="text" name="linkFacebook" placeholder="Link do Facebook" ng-model="userAccount.linkFacebook" class="form-control">
+													</label>
+												</section>
+												<section class="col col-4">
+													<label class="label">Google Plus</label>
+													<label class="input">
+														<i class="icon-prepend fa fa-google-plus-square"></i>												
+														<input type="text" name="linkGooglePlus" placeholder="Link do Google Plus" ng-model="userAccount.linkGooglePlus" class="form-control">
+													</label>
+												</section>
+											</div>
+											
+										
+										</fieldset>
+										
+										
+										
+										
+										
+										
+										<fieldset>
+										
+											<legend><h3 class="text-primary">Endereço</h3></legend>
+											
+											<div class="row">
+												<section class="col col-3">
+													<label class="label">CEP</label>												
+														<div class="input-group">
+															<label class="input">															
+																<input type="text" class="form-control input" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="postalCode" placeholder="CEP" data-mask="99999-999" ng-model="userAccount.postalCode">
+															</label>
+															<div class="input-group-btn">
+																<button type="button" class="btn btn-sm  btn-primary" ng-click="findPostalCode()">
+																	<i class="fa fa-search"></i>
+																		Buscar
+																</button>																	
+															</div>
+														</div>
+												</section>									
+											</div>										
+											
+											<div class="row">
+												<section class="col col-6">
+													<label class="label">Cidade</label>												
+													<label class="input">
+														<input type="text" id="txtCity" name="city" ng-change="onChangeCities()" ng-model="selectedCity" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
+																placeholder="Cidade" typeahead="c as c.name for c in cities | filter:$viewValue | limitTo:10" typeahead-min-length='1' 
+																typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">													
+													</label>
+												</section>
+												<section class="col col-3">
+													<label class="label">Estado</label>
+													<label class="input">
+														<input type="text" disabled="disabled" class="form-control" name="state" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Estado" ng-model="selectedCity.state.uf">
+													</label>
+												</section>
+																				
+																				
+											</div>
+											
+											<div class="row">
+												<section class="col col-6">
+													<label class="label">Rua</label>
+													<label class="input">
+														<input type="text" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="street" placeholder="Rua" ng-model="userAccount.street" >
+													</label>
+												</section>
+											
+												<section class="col col-4">
+													<label class="label">Bairro</label>
+													<label class="input">
+														<input type="text" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" name="district" placeholder="Bairro" ng-model="userAccount.district" >
+													</label>
+												</section>	
+												
+												
+												<section class="col col-2">
+													<label class="label">Numero</label>
+													<label class="input">
+														<input type="text" name="number" placeholder="Numero" maxlength="8" ng-model="userAccount.number">
+													</label>
+												</section>
+											</div>
+											
+											<section>
+												<label class="textarea"> 
+													<i class="icon-append fa fa-comment"></i> 										
+													<textarea rows="5" name="comment" placeholder="Observação" ng-model="userAccount.observation"></textarea> 
+												</label>
+											</section>		
+										
+										</fieldset>
+									</div>
+									
 									<div class="tab-pane fade in" id="tabUserAccess">
-										<h4><small>Selecione os menus do sistema que usuário terá acesso.</small></h4>
+										<h4><small>Selecione quais os menus do sistema que o usuário terá acesso.</small></h4>
 										<br>
 										<div class="tree smart-form">
 											<ul role="tree">
@@ -115,6 +311,17 @@
 																</li>
 																<li>
 																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" ng-model="menusApplication.customer" name="checkbox-inline">
+																			<i></i>Clientes</label> </span>
+																</li>
+																<li>
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" ng-model="menusApplication.organization"  name="checkbox-inline">
+																			<i></i>Empresas</label> </span>
+																</li>
+																
+																<li>
+																	<span> <label class="checkbox inline-block">
 																			<input type="checkbox" ng-model="menusApplication.priceTable" name="checkbox-inline">
 																			<i></i>Tabelas de Preço</label> </span>
 																</li>
@@ -123,23 +330,68 @@
 																			<input type="checkbox" ng-model="menusApplication.installment"  name="checkbox-inline">
 																			<i></i>Parcelamentos</label> </span>
 																</li>
+																
 																<li>
 																	<span> <label class="checkbox inline-block">
-																			<input type="checkbox" ng-model="menusApplication.organization"  name="checkbox-inline">
-																			<i></i>Empresas</label> </span>
+																			<input type="checkbox" ng-model="menusApplication.productGroup" name="checkbox-inline">
+																			<i></i>Categoria de Produtos</label> </span>
 																</li>
 															</ul>
-														</li>
-																										
+														</li>																										
 														
 														<li class="parent_li" role="treeitem">
-															<span title="Collapse this branch"><i class="fa fa-lg fa-minus-circle"></i> Pedido</span>
+															<span title="Collapse this branch"><i class="fa fa-lg fa-minus-circle"></i> Venda</span>
 															<ul role="group">
 																<li>
 																	<span> <label class="checkbox inline-block">
-																			<input type="checkbox" ng-model="menusApplication.order"  name="checkbox-inline">
-																			<i></i>Pedido</label> </span>
-																</li>														
+																			<input type="checkbox" ng-model="menusApplication.orderNew"  name="checkbox-inline">
+																			<i></i>Nova Venda</label> </span>
+																</li>	
+																<li>
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" ng-model="menusApplication.orderHistory"  name="checkbox-inline">
+																			<i></i>Histórico de Vendas</label> </span>
+																</li>													
+															</ul>
+														</li>
+														<li class="parent_li" role="treeitem">
+															<span title="Collapse this branch"><i class="fa fa-lg fa-minus-circle"></i> Financeiro</span>
+															<ul role="group">
+																<li>
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" ng-model="menusApplication.financialEntry"  name="checkbox-inline">
+																			<i></i>Contas a Receber</label> </span>
+																</li>
+															</ul>
+														</li>
+														<li class="parent_li" role="treeitem">
+															<span title="Collapse this branch"><i class="fa fa-lg fa-minus-circle"></i> Mensage</span>
+															<ul role="group">
+																<li>
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" ng-model="menusApplication.message"  name="checkbox-inline">
+																			<i></i>Enviar Mensagem</label> </span>
+																</li>
+															</ul>
+														</li>
+														<li class="parent_li" role="treeitem">
+															<span title="Collapse this branch"><i class="fa fa-lg fa-minus-circle"></i> Usuários</span>
+															<ul role="group">
+																<li>
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" ng-model="menusApplication.userProfile"  name="checkbox-inline">
+																			<i></i>Perfil do Usuário</label> </span>
+																</li>
+															</ul>
+														</li>
+														<li class="parent_li" role="treeitem">
+															<span title="Collapse this branch"><i class="fa fa-lg fa-minus-circle"></i> Metas</span>
+															<ul role="group">
+																<li>
+																	<span> <label class="checkbox inline-block">
+																			<input type="checkbox" ng-model="menusApplication.goalNew"  name="checkbox-inline">
+																			<i></i>Cadastro de Metas</label> </span>
+																</li>
 															</ul>
 														</li>
 													</ul>
@@ -149,7 +401,7 @@
 									</div>
 									
 									<div class="tab-pane fade in" id="tabUserSellerConfig">
-										<h4><small>Selecione as empresas que o usuário terá acesso.</small></h4>
+										<h4><small>Selecione quais as empresas que o usuário terá acesso.</small></h4>
 										<br>
 										
 										<table id="datatable_branches" custom-data-table aa-data="userBranchesDataTable" ng-init="listBranches()" 
@@ -187,10 +439,19 @@
 	</div>
 </section>
 
+		<!-- Utilizado no autocomplete da cidade -->
+		<script type="text/ng-template" id="customTemplate.html">
+	 		 <a>
+      			<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+      				<i>({{match.model.state.uf}})</i>
+  			</a>
+		</script>
+
 		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
 		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
 		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>
 		<script src="js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="js/plugin/dropzone/dropzone.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {

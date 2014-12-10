@@ -12,7 +12,9 @@ var vendasApp = angular.module('vendasApp', [
                                              'app.localize',
                                              'app.activity',
                                              'app.smartui',
-                                             'cgBusy'
+                                             'cgBusy',
+                                             'angularMoment',
+                                             'nvd3ChartDirectives'
                                              ]);
 
 /**
@@ -59,6 +61,10 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 	.when('/', {
 		redirectTo: '/dashboard'
 	})
+	
+	.when("/accessdenied",{
+		templateUrl : 'views/accessdenied.html'
+	})
 		
 	.when("/dashboard",{
 		templateUrl : function($routeParams) {
@@ -68,7 +74,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 				return  'views/dashboard.html';
 			}
 		},
-		controller : 'UserFormController'		
+		controller : 'DashboardController'
 	})
 	
 
@@ -292,6 +298,30 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		},
 		controller : 'MessageController'		
 	})
+	
+	.when("/usuarios",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/user/user-profile.html';
+			}
+		},
+		controller : 'UserProfileController'		
+	})
+	
+	.when("/metas/cadastro-metas",{
+		templateUrl : function($routeParams) {
+			if(false){
+				return  'views/accessdenied.html';
+			} else {
+				return  'views/targets/sales-targets.html';
+			}
+		},
+		controller : 'GoalFormController'		
+	})
+	
+	
 	
 	
 	

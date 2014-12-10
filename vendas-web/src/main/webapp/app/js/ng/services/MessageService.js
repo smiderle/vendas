@@ -9,6 +9,8 @@
 	vendasApp.factory('MessageService', 
 			['RestangularNode', 
 			function(RestangularNode){
+				
+				var userSelected = undefined;
 		
 		return {
 			/**
@@ -45,7 +47,17 @@
 					p.rowCount = result.rowCount;
 					return p;
 				});
-	        } 
+	        } ,
+	        
+	        setUserSelected : function( user ) {
+	        	userSelected = user;
+	        },
+	        
+	        getUserSelected : function() {
+	        	return userSelected;
+	        }
+	        
+	        
 		};
 	}]);
 })();
