@@ -26,6 +26,7 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 	$scope.onTabSalesCurrentMonth = function(){
 		var cCurrent = $scope.loadChartSales = ChartService.getChartSalesCurrentMonth( userLogged.userID );
 		cCurrent.then( function( toReturn ){
+			console.log(toReturn.value);
 			$scope.salesData = toReturn.value;
 		});
 	};
@@ -53,7 +54,7 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 				 * Foi feito esse ajuste, porque quando no dia um, se os valores ma meta e atingido forem iguais, o gráfico
 				 * não esta mostrando o tooltip, então é setado o valor de 0.01 no primeiro dia da meta. 
 				 */
-				if( atingido.values[0][1] === meta.values[0][1]){
+				if( atingido.values[0] != undefined && atingido.values[0][1] === meta.values[0][1]){
 					meta.values[0][1] = 0.01;
 				}
 				

@@ -22,10 +22,10 @@
 		 * Function inicial
 		 */
 		$scope.init = function() {
-			if( AuthService.hasAccess( Constants.MENUID_MESSAGE) ){
+			/*if( AuthService.hasAccess( Constants.MENUID_MESSAGE) ){
 				$location.path('/accessdenied');
 				return;
-			}
+			}*/
 			
 			//Quando entrar nas mensagems, remove o icone da nova mensagem do menu
 			$('#iconMenuNewMessage').remove();

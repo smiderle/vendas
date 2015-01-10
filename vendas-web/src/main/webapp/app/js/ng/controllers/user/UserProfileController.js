@@ -275,7 +275,7 @@
 							 * não esta mostrando o tooltip, então é setado o valor de 0.01 no primeiro dia da meta. 
 							 */
 							if( atingido.values[0][1] === meta.values[0][1]){
-								meta.values[0][1] = 0.01;
+								meta.values[0][1] = 0.01;								
 							}
 							
 							$scope.goalData = toReturn.value;

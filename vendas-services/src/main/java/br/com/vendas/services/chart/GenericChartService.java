@@ -33,15 +33,17 @@ public abstract class GenericChartService {
 				}
 			}
 
-			/**
-			 * Se extir mais dias até o final do mês, é completado a lista com valores diários zerado
-			 */
-			int actualMaximum = new GregorianCalendar().getActualMaximum( Calendar.DAY_OF_MONTH);
+			
 
-			if( diaAtual < actualMaximum );{
-				gerarDeAte( diasRetorno, diaAtual , actualMaximum );
-			}
+		}
+		
+		/**
+		 * Se extir mais dias até o final do mês, é completado a lista com valores diários zerado
+		 */
+		int actualMaximum = new GregorianCalendar().getActualMaximum( Calendar.DAY_OF_MONTH);
 
+		if( diaAtual < actualMaximum );{
+			gerarDeAte( diasRetorno, diaAtual , actualMaximum );
 		}
 
 		return diasRetorno;
