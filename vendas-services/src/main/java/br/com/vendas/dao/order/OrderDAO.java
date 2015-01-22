@@ -66,7 +66,7 @@ public interface OrderDAO extends GenericDAO<Order> {
 	 * @param dtFinal
 	 * @return
 	 */
-	List<Object[]>  getTotalValueDailyBetweenDateAndUserID(Integer userID, Date dtIntial, Date dtFinal);
+	List<Object[]>  getTotalValueDailyBetweenDateAndUserID(Integer organizationID, Integer branchID, Integer userID, Date dtIntial, Date dtFinal);
 	
 	/**
 	 * Retorna o valor total de vendas diario entre determinado periodo e filial
@@ -75,7 +75,7 @@ public interface OrderDAO extends GenericDAO<Order> {
 	 * @param dtFinal
 	 * @return
 	 */
-	List<Object[]> getTotalValueDailyBetweenDateAndBranchID(Integer branchID, Date dtIntial, Date dtFinal);
+	List<Object[]> getTotalValueDailyBetweenDateAndBranchID(Integer organizationID, Integer branchID, Date dtIntial, Date dtFinal);
 	
 	/**
 	 * Retorna a quantidade de Pedidos/Orçamentos realizado

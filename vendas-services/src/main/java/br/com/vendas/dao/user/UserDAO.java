@@ -39,6 +39,13 @@ public interface UserDAO extends GenericDAO<User> {
 	 * @return
 	 */
 	List<User> findOtherUsersByOrganizationID(Integer organizationID,Integer userID, Integer offset, Integer limit);		
+	
+	/**
+	 * Retorna o usuário por id.
+	 * @param userID
+	 * @return
+	 */
+	User findUserByID( Integer userID );
 
 	
 }

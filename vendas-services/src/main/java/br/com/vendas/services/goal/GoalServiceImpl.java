@@ -123,8 +123,8 @@ public class GoalServiceImpl implements GoalService {
 	}
 
 	@Override
-	public ServiceResponse<Goal> findTargetsByUserAndMonth(Integer userID, Integer yearMonth) {
-		return ServiceResponseFactory.create( targetsDAO.findGoalByUserAndMonth( userID, yearMonth ) );
+	public ServiceResponse<Goal> findTargetsByUserAndMonth(Integer organizationID, Integer branchID, Integer userID, Integer yearMonth) {
+		return ServiceResponseFactory.create( targetsDAO.findGoalByUserAndMonth(organizationID, branchID, userID, yearMonth ) );
 	}
 
 }

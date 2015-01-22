@@ -32,31 +32,58 @@ vendasApp.factory('VendasWebRestangular', function(Restangular) {
  */
 vendasApp.factory('RestangularNode', function(Restangular) {
 	return Restangular.withConfig(function(RestangularConfigurer) {
-		RestangularConfigurer.setBaseUrl('http://localhost:3000/vendas-api');
+		RestangularConfigurer.setBaseUrl('http://54.94.216.207:3000/vendas-api');
 	});
 });
 
-vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($routeProvider,RestangularProvider,$provide) {
+/**
+ * Interceptrador, para redirecionar para a pagina de login, caso a o token seja inválido
+ */
+vendasApp.factory('OauthInterceptor',['$rootScope', '$q', '$injector','$location', function( $rootScope, $q, $injector, $location ){
+	return function( promise ) {
+        return promise.then(function(response) {
+            return response;
+        }, function (response) {
+           if ( response.status === 401 ) {        	   
+        	   var deferred = $q.defer();
+        	   window.location = 'http://54.94.216.207/vendas-web/j_spring_security_logout';
+        	   deferred.reject();
+            }     
+           return $q.reject(response); 
+        });
+    };
+}]);
+
+vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProvider', function( $routeProvider,RestangularProvider,$provide,$httpProvider ) {
 	//Define a url base url como vendas-api
 	RestangularProvider.setBaseUrl('/vendas-api');
-	RestangularProvider.setResponseExtractor(function(response,operation, what, url) {
-		var newResponse = response.payload;
-		newResponse.message = response.message;
-		newResponse.code = response.code;
-		if (angular.isArray(newResponse)) {
-			angular.forEach(newResponse, function(value, key) {
-				if (newResponse[key] != undefined) {
-					newResponse[key].originalElement = angular.copy(value);
+	RestangularProvider.setResponseExtractor(function(response,operation, what, url) {	
+		if( response.payload ){
+			var newResponse = response.payload;
+			newResponse.message = response.message;
+			newResponse.code = response.code;
+			if (angular.isArray(newResponse)) {
+				angular.forEach(newResponse, function(value, key) {
+					if (newResponse[key] != undefined) {
+						newResponse[key].originalElement = angular.copy(value);
+					}
+				});
+			} else {
+				if (newResponse != undefined) {
+					newResponse.originalElement = angular.copy(newResponse);
 				}
-			});
-		} else {
-			if (newResponse != undefined) {
-				newResponse.originalElement = angular.copy(newResponse);
 			}
+			return newResponse;
+		} else {
+			return response;
 		}
-		return newResponse;
+		
+		
 	});
-
+		
+	// Iterceptor para tokens oauth 
+    $httpProvider.responseInterceptors.push('OauthInterceptor');
+	
 	$routeProvider
 	.when('/', {
 		redirectTo: '/dashboard'
@@ -97,7 +124,8 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 			}
 		},
 		controller : 'UserListController'		
-	})
+	})	
+	
 	.when("/branch/branch-list",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -321,13 +349,6 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 		controller : 'GoalFormController'		
 	})
 	
-	
-	
-	
-	
-	
-	
-	
 	.when("/error404",{
 		templateUrl : 'views/misc/error404.html'	
 	})
@@ -350,7 +371,18 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', function($
 
 }]);
 
-vendasApp.run(['$rootScope', 'settings', function($rootScope, settings) {
+/**
+ * Intercepta todas as requests para inserir o token no header.
+ */
+vendasApp.run(['$rootScope', 'settings','$injector','OauthClientService', function($rootScope, settings, $injector, OauthClientService) {
+	$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {				
+        if ( OauthClientService.getAccessToken() ) headersGetter()['Authorization'] = "Bearer "+ OauthClientService.getAccessToken();
+        if (data) {
+            return angular.toJson(data);
+        }
+    };
+	
+	
 	settings.currentLang = settings.languages[0]; // en
 
 	$rootScope.hasRole = function(role) {
@@ -365,4 +397,4 @@ vendasApp.run(['$rootScope', 'settings', function($rootScope, settings) {
 
 		return $rootScope.user.roles[role];
 	};
-}])
+}]);

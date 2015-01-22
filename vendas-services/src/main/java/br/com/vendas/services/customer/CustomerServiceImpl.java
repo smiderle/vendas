@@ -124,4 +124,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 		return defaultLimit;
 	}
+
+
+
+	@Override
+	public void save(List<Customer> customers) {
+		customerDAO.save( customers );
+	}
 }

@@ -21,7 +21,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping("/v1/goal")
+@RequestMapping("/private/v1/goal")
 @Controller
 public class GoalRest {
 	

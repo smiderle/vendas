@@ -77,4 +77,9 @@ public class InstallmentServiceImpl implements InstallmentService{
 		
 	}
 
+	@Override
+	public void save(List<Installment> installments) {
+		installmentDAO.save( installments );
+	}
+
 }

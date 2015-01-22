@@ -20,7 +20,7 @@ import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
 
-@RequestMapping(value="/v1/priceTable")
+@RequestMapping(value="/private/v1/priceTable")
 @Controller
 public class PriceTableRest {
 	

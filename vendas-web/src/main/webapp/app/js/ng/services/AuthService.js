@@ -1,6 +1,6 @@
 'use strict';
 
-vendasApp.factory('AuthService', function(ContextService){
+vendasApp.factory('AuthService',['ContextService', 'Restangular',function(ContextService, Restangular){
 	
 	return {
 		
@@ -34,4 +34,4 @@ vendasApp.factory('AuthService', function(ContextService){
 			return false;
 		}
 	};
-});
+}]);

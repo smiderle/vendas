@@ -70,6 +70,11 @@ public interface UserService {
 	 * @return
 	 */
 	ServiceResponse<List<UserDTO>> findUsersByUserIDOrNameOrEmail(String filter,Integer organizationID, Integer offset);
-	
+
+	/**
+	 * Retorna o usuário com determinado ID
+	 * @return
+	 */
+	ServiceResponse<UserDTO> findUserByID( Integer userID );
 
 }

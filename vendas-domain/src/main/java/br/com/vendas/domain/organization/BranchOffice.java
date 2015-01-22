@@ -29,12 +29,14 @@ public class BranchOffice extends Domain{
 	}
 	
 	public BranchOffice(Integer branchOfficeID, Organization organization,
-			String realName, String fancyName) {
+			String realName, String fancyName, String actionOverdue, String actionCreditLimit) {
 		super();
 		this.branchOfficeID = branchOfficeID;
 		this.organization = organization;
 		this.realName = realName;
 		this.fancyName = fancyName;
+		this.actionOverdue = actionOverdue;
+		this.actionCreditLimit = actionCreditLimit;
 	}
 
 	private static final long serialVersionUID = 1L;

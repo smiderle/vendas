@@ -16,7 +16,7 @@
 						'branchID' : branchID
 				};
 
-				return Restangular.all("v1").all("goal").all("getGoalRegistered").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("goal").all("getGoalRegistered").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;
@@ -26,7 +26,7 @@
 			},
 			
 			save : function( targets, userID ){
-				return  Restangular.all("v1").all('goal').all('save').post( targets ,{},{'userID' : userID } );
+				return  Restangular.all("private").all("v1").all('goal').all('save').post( targets ,{},{'userID' : userID } );
 			},
 		};
 	}]);

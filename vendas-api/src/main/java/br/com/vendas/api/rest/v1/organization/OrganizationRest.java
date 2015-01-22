@@ -15,7 +15,7 @@ import br.com.vendas.services.organization.OrganizationService;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 
-@RequestMapping(value="/v1/organization")
+@RequestMapping(value="/private/v1/organization")
 @Controller
 public class OrganizationRest {
 	private static final Logger LOG = Logger.getLogger(OrganizationRest.class);

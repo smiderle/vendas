@@ -16,7 +16,7 @@ import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 
-@RequestMapping(value="/v1/chart")
+@RequestMapping(value="/private/v1/chart")
 @Controller
 public class ChartRest {
 	
@@ -33,9 +33,9 @@ public class ChartRest {
 	 * @return
 	 */
 	@RequestMapping(value="getChartGoalCurrentMonth", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getChartTargetsCurentMonth( Integer userID ) {
+	public @ResponseBody ApiResponse getChartTargetsCurentMonth(Integer organizationID, Integer branchID,  Integer userID ) {
 		
-		ServiceResponse<List<LineChart>> currentMonth = goalChartService.currentMonth( userID );
+		ServiceResponse<List<LineChart>> currentMonth = goalChartService.currentMonth( organizationID, branchID, userID );
 	
 		return ResponseBuilder.build( currentMonth );
 		
@@ -48,9 +48,9 @@ public class ChartRest {
 	 * @return
 	 */
 	@RequestMapping(value="getChartGoalPreviousMonth", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getChartTargetsPreviouesMonth( Integer userID ) {
+	public @ResponseBody ApiResponse getChartTargetsPreviouesMonth(Integer organizationID, Integer branchID,  Integer userID ) {
 		
-		ServiceResponse<List<LineChart>> currentMonth = goalChartService.previousMonth( userID );
+		ServiceResponse<List<LineChart>> currentMonth = goalChartService.previousMonth(organizationID, branchID,  userID );
 		
 		return ResponseBuilder.build( currentMonth );
 		
@@ -62,9 +62,9 @@ public class ChartRest {
 	 * @return
 	 */
 	@RequestMapping(value="getChartSalesPreviousMonth", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getChartSalesPreviouesMonth( Integer userID ) {
+	public @ResponseBody ApiResponse getChartSalesPreviouesMonth(Integer organizationID, Integer branchID, Integer userID ) {
 		
-		ServiceResponse<List<LineChart>> currentMonth = salesChartService.previousMonth( userID );
+		ServiceResponse<List<LineChart>> currentMonth = salesChartService.previousMonth(organizationID, branchID, userID );
 		
 		return ResponseBuilder.build( currentMonth );
 		
@@ -76,9 +76,9 @@ public class ChartRest {
 	 * @return
 	 */
 	@RequestMapping(value="getChartSalesCurrentMonth", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getChartSalesCurrentMonth( Integer userID ) {
+	public @ResponseBody ApiResponse getChartSalesCurrentMonth(Integer organizationID, Integer branchID, Integer userID ) {
 		
-		ServiceResponse<List<LineChart>> currentMonth = salesChartService.currentMonth( userID );
+		ServiceResponse<List<LineChart>> currentMonth = salesChartService.currentMonth( organizationID, branchID, userID );
 		
 		return ResponseBuilder.build( currentMonth );
 		
@@ -91,9 +91,9 @@ public class ChartRest {
 	 * @return
 	 */
 	@RequestMapping(value="getChartSalesCurrentMonthByBranch", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getChartSalesCurrentMonthByBranch( Integer branchID ) {
+	public @ResponseBody ApiResponse getChartSalesCurrentMonthByBranch( Integer organizationID, Integer branchID ) {
 		
-		ServiceResponse<List<LineChart>> currentMonth = salesChartService.currentMonthByBranch( branchID );
+		ServiceResponse<List<LineChart>> currentMonth = salesChartService.currentMonthByBranch( organizationID, branchID );
 		
 		return ResponseBuilder.build( currentMonth );
 		
@@ -105,9 +105,9 @@ public class ChartRest {
 	 * @return
 	 */
 	@RequestMapping(value="getChartSalesPreviousMonthByBranch", method = RequestMethod.GET)
-	public @ResponseBody ApiResponse getChartSalesPreviouesMonthByBranch( Integer branchID ) {
+	public @ResponseBody ApiResponse getChartSalesPreviouesMonthByBranch( Integer organizationID, Integer branchID ) {
 		
-		ServiceResponse<List<LineChart>> currentMonth = salesChartService.previousMonthByBranch( branchID );
+		ServiceResponse<List<LineChart>> currentMonth = salesChartService.previousMonthByBranch( organizationID, branchID );
 		
 		return ResponseBuilder.build( currentMonth );
 		

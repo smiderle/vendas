@@ -16,6 +16,30 @@ import javax.persistence.Table;
 @Table(name="PRODUTO")
 public class Product {
 	
+	public Product() {
+	}
+	
+	public Product(Integer organizationID, Integer branchID, String productID, ProductGroup group, String description, String reference,
+			String packaging, String barcode, Double stockAmount, Double salePrice, Boolean active, Date changeTime, Date registrationDate,
+			boolean excluded, String pictureUrl) {
+		super();
+		this.organizationID = organizationID;
+		this.branchID = branchID;
+		this.productID = productID;
+		this.group = group;
+		this.description = description;
+		this.reference = reference;
+		this.packaging = packaging;
+		this.barcode = barcode;
+		this.stockAmount = stockAmount;
+		this.salePrice = salePrice;
+		this.active = active;
+		this.changeTime = changeTime;
+		this.registrationDate = registrationDate;
+		this.excluded = excluded;
+		this.pictureUrl = pictureUrl;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")

@@ -40,7 +40,7 @@ public class GoalChartServiceImpl extends GenericChartService implements GoalCha
 	 * @param userID
 	 * @return
 	 */
-	public LineChart getGoal( Integer userID , Date date) {
+	public LineChart getGoal(Integer organizationID, Integer branchID, Integer userID , Date date) {
 		
 		LineChart meta = new LineChart();
 		
@@ -48,7 +48,7 @@ public class GoalChartServiceImpl extends GenericChartService implements GoalCha
 		calendar.setTime( date );
 		
 		int yearMonth = Integer.parseInt( new SimpleDateFormat("YYYYMM").format( date ) );
-		Goal targets = goalDAO.findGoalByUserAndMonth(userID, yearMonth);
+		Goal targets = goalDAO.findGoalByUserAndMonth(organizationID, branchID,userID, yearMonth);
 		
 		List<Object[]> valuesMeta = new ArrayList<>();
 		valuesMeta.add( new Object[] { 1, new BigDecimal( 0 ) } );
@@ -69,11 +69,11 @@ public class GoalChartServiceImpl extends GenericChartService implements GoalCha
 	}
 	
 	@Override
-	public ServiceResponse<List<LineChart>> currentMonth(Integer userID) {	
+	public ServiceResponse<List<LineChart>> currentMonth(Integer organizationID, Integer branchID, Integer userID) {	
 		List<LineChart> toReturn = new ArrayList<>();
 		
-		LineChart metaEstabelecida = getGoal( userID, new Date() );
-		LineChart metaAtingida = getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID( userID, new Date() );
+		LineChart metaEstabelecida = getGoal( organizationID, branchID, userID, new Date() );
+		LineChart metaAtingida = getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID(organizationID, branchID,  userID, new Date() );
 		
 		toReturn.add( metaAtingida );
 		toReturn.add( metaEstabelecida );
@@ -82,7 +82,7 @@ public class GoalChartServiceImpl extends GenericChartService implements GoalCha
 	}
 	
 	@Override
-	public ServiceResponse<List<LineChart>> previousMonth(Integer userID) {	
+	public ServiceResponse<List<LineChart>> previousMonth(Integer organizationID, Integer branchID, Integer userID) {	
 		List<LineChart> toReturn = new ArrayList<>();
 		
 		Calendar calendar = new GregorianCalendar();
@@ -90,8 +90,8 @@ public class GoalChartServiceImpl extends GenericChartService implements GoalCha
 		calendar.add( Calendar.MONTH, -1 );
 		
 		
-		LineChart metaEstabelecida = getGoal( userID, calendar.getTime() );
-		LineChart metaAtingida = getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID( userID, calendar.getTime() );
+		LineChart metaEstabelecida = getGoal( organizationID, branchID, userID, calendar.getTime() );
+		LineChart metaAtingida = getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID( organizationID, branchID,  userID, calendar.getTime() );
 		
 		toReturn.add( metaAtingida );
 		toReturn.add( metaEstabelecida );
@@ -101,11 +101,11 @@ public class GoalChartServiceImpl extends GenericChartService implements GoalCha
 		
 	
 	@Override
-	public LineChart getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID( Integer userID, Date date ) {
+	public LineChart getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID( Integer organizationID, Integer branchID, Integer userID, Date date ) {
 		LineChart lineChart = new LineChart();
 		lineChart.setKey("Atingido");
 		
-		List<Object[]> completarDatasQueFaltam = getTotalValueDailyBetweenMonthAndUserID(userID, date);
+		List<Object[]> completarDatasQueFaltam = getTotalValueDailyBetweenMonthAndUserID(organizationID, branchID, userID, date);
 		
 		BigDecimal total = new BigDecimal(0);
 		for (Object[] objects : completarDatasQueFaltam) {
@@ -120,23 +120,23 @@ public class GoalChartServiceImpl extends GenericChartService implements GoalCha
 	}
 	
 	@Override
-	public LineChart getLineChartTotalValueDailyBetweenMonthAndUserID( Integer userID, Date date ) {
+	public LineChart getLineChartTotalValueDailyBetweenMonthAndUserID(Integer organizationID, Integer branchID,  Integer userID, Date date ) {
 		LineChart lineChart = new LineChart();
 		lineChart.setKey("Atingido");
 		
-		List<Object[]> completarDatasQueFaltam = getTotalValueDailyBetweenMonthAndUserID(userID, date);
+		List<Object[]> completarDatasQueFaltam = getTotalValueDailyBetweenMonthAndUserID(organizationID, branchID,  userID, date);
 		
 		lineChart.setValues( completarDatasQueFaltam );
 		return lineChart;
 	}
 	
 	
-	public List<Object[]> getTotalValueDailyBetweenMonthAndUserID( Integer userID, Date date ) {
+	public List<Object[]> getTotalValueDailyBetweenMonthAndUserID(Integer organizationID, Integer branchID, Integer userID, Date date ) {
 				
 		Calendar dtInitial = DateUtil.initMonth( date );
 		Calendar dtFinal = DateUtil.finalMonth( date );
 
-		List<Object[]> valorTotalDiarioEntreDatasEUsuario = orderDAO.getTotalValueDailyBetweenDateAndUserID(userID, dtInitial.getTime() , dtFinal.getTime() );
+		List<Object[]> valorTotalDiarioEntreDatasEUsuario = orderDAO.getTotalValueDailyBetweenDateAndUserID(organizationID, branchID, userID, dtInitial.getTime() , dtFinal.getTime() );
 
 		return completarDatasQueFaltam( valorTotalDiarioEntreDatasEUsuario, 1, new GregorianCalendar().getActualMaximum( Calendar.DAY_OF_MONTH ) );
 		

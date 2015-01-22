@@ -13,14 +13,14 @@ public interface SalesChartService {
 	 * @param userID
 	 * @return
 	 */
-	ServiceResponse<List<LineChart>> currentMonth(Integer userID);
+	ServiceResponse<List<LineChart>> currentMonth(Integer organizationID, Integer branchID, Integer userID);
 	
 	/**
 	 * Retorna uma lista de coordenadas para o mes anterior
 	 * @param userID
 	 * @return
 	 */
-	ServiceResponse<List<LineChart>> previousMonth(Integer userID);
+	ServiceResponse<List<LineChart>> previousMonth(Integer organizationID, Integer branchID, Integer userID);
 	
 	
 	/**
@@ -28,7 +28,7 @@ public interface SalesChartService {
 	 * @param branchID
 	 * @return
 	 */
-	ServiceResponse<List<LineChart>> previousMonthByBranch(Integer branchID);
+	ServiceResponse<List<LineChart>> previousMonthByBranch(Integer organizationID, Integer branchID);
 	
 
 	/**
@@ -36,5 +36,5 @@ public interface SalesChartService {
 	 * @param branchID
 	 * @return
 	 */
-	ServiceResponse<List<LineChart>> currentMonthByBranch(Integer branchID);
+	ServiceResponse<List<LineChart>> currentMonthByBranch(Integer organizationID, Integer branchID);
 }

@@ -24,7 +24,7 @@
 						'limit' : limit
 				};
 
-				return Restangular.all("v1").all("orderPayment").all("getAllPendingByOrganizationID").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("orderPayment").all("getAllPendingByOrganizationID").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;			
@@ -42,7 +42,7 @@
 						'limit' : limit
 				};
 
-				return Restangular.all("v1").all("orderPayment").all("getPendingByFilter").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("orderPayment").all("getPendingByFilter").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;			
@@ -59,7 +59,7 @@
 						'orderID' : orderID
 				};
 
-				return Restangular.all("v1").all("orderPayment").all("getByID").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("orderPayment").all("getByID").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;		
@@ -84,7 +84,7 @@
 						'limit' : limit
 				};
 
-				return Restangular.all("v1").all("orderPayment").all("getByComplexFilter").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("orderPayment").all("getByComplexFilter").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;	
@@ -96,7 +96,7 @@
 			//getByComplexFilter Integer organizationID, Integer branchID, String customerID, Date issuanceDateGte, Date issuanceDateLte, Date expirationDateGte, Date expirationDateLte,  String statusPayment, Integer offset, Integer limit
 			
 			setPaid : function(orderPaymentID, userID){
-				return  Restangular.all("v1").all('orderPayment').all('setPaid').post(orderPaymentID, {}, { 'userID' : userID });
+				return  Restangular.all("private").all("v1").all('orderPayment').all('setPaid').post(orderPaymentID, {}, { 'userID' : userID });
 			},
 					
 			getPayment : function(){

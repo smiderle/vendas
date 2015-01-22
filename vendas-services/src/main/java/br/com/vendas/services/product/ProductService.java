@@ -33,5 +33,10 @@ public interface ProductService {
  	 * @return
  	 */
 	ServiceResponse<Product> saveOrUpdate(Integer userID, Product product) ;
+	
+	/**
+	 * Salva uma lista de produtos
+	 */
+	void saveOrUpdate(List<Product> products) ;
 
 }

@@ -75,4 +75,9 @@ public class PriceTableServiceImpl implements PriceTableService {
 		
 	}
 
+	@Override
+	public void save(List<PriceTable> priceTables) {
+		priceTableDAO.save( priceTables );
+	}
+
 }

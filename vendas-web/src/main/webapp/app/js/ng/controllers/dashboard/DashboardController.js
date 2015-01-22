@@ -24,9 +24,8 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 	 * Carrega as coordenadas de vendas do mes atual
 	 */
 	$scope.onTabSalesCurrentMonth = function(){
-		var cCurrent = $scope.loadChartSales = ChartService.getChartSalesCurrentMonth( userLogged.userID );
+		var cCurrent = $scope.loadChartSales = ChartService.getChartSalesCurrentMonth( organizationID,branch.branchOfficeID, userLogged.userID );
 		cCurrent.then( function( toReturn ){
-			console.log(toReturn.value);
 			$scope.salesData = toReturn.value;
 		});
 	};
@@ -35,7 +34,7 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 	 * Carega as coordenadas do mês anterior
 	 */
 	$scope.onTabSalesPreviousMonth = function() {					
-		var cCurrent = $scope.loadChartSales = ChartService.getChartSalesPreviousMonth( userLogged.userID );
+		var cCurrent = $scope.loadChartSales = ChartService.getChartSalesPreviousMonth( organizationID,branch.branchOfficeID, userLogged.userID );
 		cCurrent.then( function( toReturn ){
 			$scope.salesData = toReturn.value;
 		});
@@ -45,7 +44,7 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 	 * Carrega as coordernada das metas do mes atual
 	 */
 	$scope.onTabGoalCurrentMonth = function() {
-		var cCurrent = $scope.loadChartGoal = ChartService.getChartGoalCurrentMonth( userLogged.userID );
+		var cCurrent = $scope.loadChartGoal = ChartService.getChartGoalCurrentMonth( organizationID,branch.branchOfficeID, userLogged.userID );
 		cCurrent.then( function( toReturn ){
 			if(toReturn.code == '200'){
 				var atingido = toReturn.value[0];
@@ -69,7 +68,7 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 	 * Carrega as coordernadas do mes anterior
 	 */
 	$scope.onTabGoalPreviousMonth = function() {					
-		var cCurrent = $scope.loadChartGoal = ChartService.getChartGoalPreviousMonth( userLogged.userID );
+		var cCurrent = $scope.loadChartGoal = ChartService.getChartGoalPreviousMonth(organizationID,branch.branchOfficeID, userLogged.userID );
 		cCurrent.then( function( toReturn ){
 			if(toReturn.code == '200'){
 				var atingido = toReturn.value[0];
@@ -92,7 +91,7 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 	 * Carrega as coordenadas de vendas do mes atual
 	 */
 	$scope.onTabSalesBranchCurrentMonth = function(){
-		var cCurrent = $scope.loadChartBranchSales = ChartService.getChartSalesCurrentMonthByBranch( branch.branchOfficeID );
+		var cCurrent = $scope.loadChartBranchSales = ChartService.getChartSalesCurrentMonthByBranch( organizationID, branch.branchOfficeID );
 		cCurrent.then( function( toReturn ){
 			if(toReturn.code == '200'){
 				$scope.salesDataBranch = toReturn.value;
@@ -105,7 +104,7 @@ vendasApp.controller('DashboardController',['$scope','ContextService','ChartServ
 	 * Carega as coordenadas do mês anterior
 	 */
 	$scope.onTabSalesBranchPreviousMonth = function() {
-		var cCurrent = $scope.loadChartBranchSales = ChartService.getChartSalesPreviousMonthByBranch( branch.branchOfficeID );
+		var cCurrent = $scope.loadChartBranchSales = ChartService.getChartSalesPreviousMonthByBranch( organizationID, branch.branchOfficeID );
 		cCurrent.then( function( toReturn ){
 			if(toReturn.code == '200'){
 				$scope.salesDataBranch = toReturn.value;

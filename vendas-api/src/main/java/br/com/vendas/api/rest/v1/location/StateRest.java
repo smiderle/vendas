@@ -15,7 +15,7 @@ import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.HTTPStatusCode;
 
-@RequestMapping(value="/v1/states")
+@RequestMapping(value="/private/v1/states")
 @Controller
 public class StateRest {
 

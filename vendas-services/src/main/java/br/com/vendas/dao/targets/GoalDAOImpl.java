@@ -32,11 +32,13 @@ public class GoalDAOImpl  extends ResourceDAO<Goal> implements GoalDAO {
 	}
 
 	@Override
-	public Goal findGoalByUserAndMonth( Integer userID, Integer monthYear ) {
+	public Goal findGoalByUserAndMonth(Integer organizationID, Integer branchID, Integer userID, Integer monthYear ) {
 
 		Session session = getSession();		
 
 		Criteria criteria = session.createCriteria( Goal.class )
+				.add(Restrictions.eq( "organizationID", organizationID ))
+				.add(Restrictions.eq( "branchID", branchID ))
 				.add(Restrictions.eq( "userID", userID ))
 				.add(Restrictions.eq( "yearMonth", monthYear ));
 		return (Goal) criteria.uniqueResult();		

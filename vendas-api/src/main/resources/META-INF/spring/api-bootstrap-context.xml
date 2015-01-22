@@ -14,6 +14,7 @@
     <!--  This is a passthru context to the services-bootstrap- context and other bootstrap contexts as needed-->
     
     <import resource="classpath:/META-INF/spring/servlet-context.xml"/> 
-	<import resource="classpath:/META-INF/spring/services-bootstrap-context.xml"/>  
+	<import resource="classpath:/META-INF/spring/services-bootstrap-context.xml"/>
+	<import resource="classpath:/META-INF/spring/spring-oauth.xml"/>  
  	
 </beans>

@@ -24,6 +24,6 @@ public interface GoalService {
 	 * @param yearMonth
 	 * @return
 	 */
-	ServiceResponse<Goal> findTargetsByUserAndMonth( Integer userID, Integer yearMonth );
+	ServiceResponse<Goal> findTargetsByUserAndMonth( Integer organizationID, Integer branchID, Integer userID, Integer yearMonth );
 
 }

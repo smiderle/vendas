@@ -82,4 +82,9 @@ public class ProductServiceImpl implements ProductService {
 
 		return defaultLimit;
 	}
+
+	@Override
+	public void saveOrUpdate(List<Product> products) {
+		productDAO.save(products);
+	}
 }

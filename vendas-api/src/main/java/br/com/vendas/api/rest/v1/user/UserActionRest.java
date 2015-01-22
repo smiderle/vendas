@@ -17,7 +17,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value="/v1/userAction")
+@RequestMapping(value="/private/v1/userAction")
 @Controller
 public class UserActionRest {
 	

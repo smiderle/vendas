@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService{
 	public ServiceResponse<User> save(User user) {
 		user.setChangeTime(new GregorianCalendar());
 		ServiceResponse<User> toReturn = ServiceResponseFactory.create(userDAO.save(user));
-		userRoleService.saveDefaultRoles(toReturn.getValue());
+		//userRoleService.saveDefaultRoles(toReturn.getValue());
 		return toReturn;
 	}
 
@@ -181,6 +181,20 @@ public class UserServiceImpl implements UserService{
 			usersPojo.add(userPojo);
 		}
 		return ServiceResponseFactory.create(usersPojo);
+	}
+
+	@Override
+	public ServiceResponse<UserDTO> findUserByID(Integer userID) {
+		User user = userDAO.findUserByID(userID);
+	
+		UserDTO userPojo = null;
+		if(user != null){
+			//Hibernate.initialize(user.getMenusApplication());
+			//Hibernate.initialize(user.getUserBranches());
+			//Hibernate.initialize(user.getUserRoles());			
+			userPojo = new UserDTO(user,null ,null, null);
+		}		
+		return ServiceResponseFactory.create(userPojo);		
 	}
 
 }

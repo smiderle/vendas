@@ -20,7 +20,7 @@ import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
 
-@RequestMapping(value="/v1/productGroup")
+@RequestMapping(value="/private/v1/productGroup")
 @Controller
 public class ProductGroupRest {
 	

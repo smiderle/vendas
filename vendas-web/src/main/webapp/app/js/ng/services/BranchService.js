@@ -15,7 +15,7 @@ vendasApp.factory('BranchService',
 					'organizationID' : organizationID,
 			};
 
-			return Restangular.all("v1").all("branchOffice").all("getBranchesByOrganizationID").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("branchOffice").all("getBranchesByOrganizationID").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			
@@ -29,7 +29,7 @@ vendasApp.factory('BranchService',
 		 * @returns
 		 */
 		save : function(branchOffice, userID){
-			var branch = Restangular.all("v1").all('branchOffice').all('save').post(branchOffice, {},{'userID' : userID});
+			var branch = Restangular.all("private").all("v1").all('branchOffice').all('save').post(branchOffice, {},{'userID' : userID});
 			return branch;
         },
         
@@ -39,7 +39,7 @@ vendasApp.factory('BranchService',
 		 * @returns
 		 */
         update : function(branchOffice, userID){
-			var branch = Restangular.all("v1").all('branchOffice').all('update').post(branchOffice,{},{'userID' : userID});
+			var branch = Restangular.all("private").all("v1").all('branchOffice').all('update').post(branchOffice,{},{'userID' : userID});
 			return branch;
         },
         

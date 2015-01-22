@@ -48,7 +48,7 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 	}
 
 	@Override
-	public User findUserByEmail(String email) {		
+	public User findUserByEmail( String email ) {		
 		Session session = getSession();		
 		Criterion criterion = Restrictions.eq("email",email);
 
@@ -79,5 +79,14 @@ public class UserDAOImpl  extends ResourceDAO<User> implements UserDAO{
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return criteria.list();
+	}
+
+	@Override
+	public User findUserByID( Integer userID ) {
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(User.class)
+				.add(Restrictions.eq("userID", userID));
+				
+		return (User) criteria.uniqueResult();
 	}
 }

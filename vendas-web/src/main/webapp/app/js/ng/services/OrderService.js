@@ -15,7 +15,7 @@
 			 * Salva o pedido
 			 */
 			save : function(orderWrapper, userID){
-				return  Restangular.all("v1").all('order').all('save').post(orderWrapper ,{},{'userID' : userID} );
+				return  Restangular.all("private").all("v1").all('order').all('save').post(orderWrapper ,{},{'userID' : userID} );
 			},
 			
 			/**
@@ -30,7 +30,7 @@
 						'limit': limit
 				};
 				
-				return Restangular.all("v1").all("order").all("getAllByBranch").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("order").all("getAllByBranch").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;			
@@ -48,7 +48,7 @@
 						'limit': limit
 				};
 				
-				return Restangular.all("v1").all("order").all("getAllByUserAndBranch").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("order").all("getAllByUserAndBranch").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;			
@@ -62,7 +62,7 @@
 						'id' : id,				
 				};
 				
-				return Restangular.all("v1").all("order").all("getByID").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("order").all("getByID").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;			
@@ -79,7 +79,7 @@
 						'offset': offset
 				};
 				
-				return Restangular.all("v1").all("order").all("getByFilter").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("order").all("getByFilter").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;			
@@ -97,7 +97,7 @@
 						'offset': offset
 				};
 				
-				return Restangular.all("v1").all("order").all("getByFilterAndUserID").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("order").all("getByFilterAndUserID").getList(parameters).then(function(result){
 					var p = {};
 					p.value = result.value;
 					p.rowCount = result.rowCount;			

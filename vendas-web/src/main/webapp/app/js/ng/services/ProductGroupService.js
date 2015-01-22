@@ -9,7 +9,7 @@ vendasApp.factory('ProductGroupService',function(Restangular){
 		 * Salva ou atualiza o grupo de produtos
 		 */
 		save : function(productGroup, userID){
-			var productGroup_ = Restangular.all("v1").all('productGroup').all('save').post( productGroup ,{},{'userID' : userID} );
+			var productGroup_ = Restangular.all("private").all("v1").all('productGroup').all('save').post( productGroup ,{},{'userID' : userID} );
 			return productGroup_;
 		},
 
@@ -27,7 +27,7 @@ vendasApp.factory('ProductGroupService',function(Restangular){
 			};
 
 
-			return Restangular.all("v1").all("productGroup").all("getAllByBranch").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("productGroup").all("getAllByBranch").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			
@@ -49,7 +49,7 @@ vendasApp.factory('ProductGroupService',function(Restangular){
 			};
 
 
-			return Restangular.all("v1").all("productGroup").all("getAllByDescription").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("productGroup").all("getAllByDescription").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			

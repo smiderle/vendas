@@ -20,7 +20,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value="/v1/customer")
+@RequestMapping(value="/private/v1/customer")
 @Controller
 public class CustomerRest {
 

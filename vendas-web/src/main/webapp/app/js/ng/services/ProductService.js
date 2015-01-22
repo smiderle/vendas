@@ -14,7 +14,7 @@ vendasApp.factory('ProductService',
 		 * Salva ou atualiza o produto
 		 */
 		save : function(product, userID){
-			return  Restangular.all("v1").all('product').all('save').post(product,{},{'userID' : userID});
+			return  Restangular.all("private").all("v1").all('product').all('save').post(product,{},{'userID' : userID});
 		},
 
 		/**
@@ -30,7 +30,7 @@ vendasApp.factory('ProductService',
 			};
 
 
-			return Restangular.all("v1").all("product").all("getAllByBranch").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("product").all("getAllByBranch").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			
@@ -52,7 +52,7 @@ vendasApp.factory('ProductService',
 			};
 
 
-			return Restangular.all("v1").all("product").all("getAllByFilter").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("product").all("getAllByFilter").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			
@@ -64,14 +64,14 @@ vendasApp.factory('ProductService',
 		 * Salva ou atualiza o preço de promoção
 		 */
 		savePromotionPrice : function(product){
-			return  Restangular.all("v1").all('productPromotion').all('save').post(product);
+			return  Restangular.all("private").all("v1").all('productPromotion').all('save').post(product);
 		},
 		
 		/**
 		 * Salva ou atualiza o preço de promoção
 		 */
 		removePromotionPrice : function(product){
-			return  Restangular.all("v1").all('productPromotion').all('remove').post(product);
+			return  Restangular.all("private").all("v1").all('productPromotion').all('remove').post(product);
 		},
 		
 		
@@ -86,7 +86,7 @@ vendasApp.factory('ProductService',
 			};
 
 
-			return Restangular.all("v1").all("productPromotion").all("getAllByProductID").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("productPromotion").all("getAllByProductID").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			

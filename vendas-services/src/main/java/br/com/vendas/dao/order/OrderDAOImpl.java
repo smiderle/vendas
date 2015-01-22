@@ -99,16 +99,18 @@ public class OrderDAOImpl  extends ResourceDAO<Order> implements OrderDAO {
 	}
 
 	@Override
-	public List<Object[]> getTotalValueDailyBetweenDateAndUserID(Integer userID, Date dtIntial, Date dtFinal) {
+	public List<Object[]> getTotalValueDailyBetweenDateAndUserID(Integer organizationID, Integer branchID, Integer userID, Date dtIntial, Date dtFinal) {
 		/*SELECT 	('day', dthremissao) "day", sum(valorliquido) views
 		FROM pedido
 		where dthremissao > '2014-10-01'
 		group by 1
 		ORDER BY 1*/
 				
-		String hql = "select day(issuanceTime), sum(netValue) from Order where userID = :userID and issuanceTime > :dtInitial and  issuanceTime < :dtFinal group by 1 order by 1 ";
+		String hql = "select day(issuanceTime), sum(netValue) from Order where organizationID = :organizationID and branchID = :branchID and userID = :userID and issuanceTime > :dtInitial and  issuanceTime < :dtFinal group by 1 order by 1 ";
 		Session session = getSession();
 		Query query = session.createQuery(hql);
+		query.setParameter(	"organizationID", organizationID );
+		query.setParameter(	"branchID", branchID );
 		query.setParameter(	"userID", userID );
 		query.setParameter("dtInitial", dtIntial );
 		query.setParameter("dtFinal", dtFinal );
@@ -117,10 +119,11 @@ public class OrderDAOImpl  extends ResourceDAO<Order> implements OrderDAO {
 	}
 	
 	@Override
-	public List<Object[]> getTotalValueDailyBetweenDateAndBranchID(Integer branchID, Date dtIntial, Date dtFinal) {					
-		String hql = "select day(issuanceTime), sum(netValue) from Order where branchID = :branchID and issuanceTime > :dtInitial and  issuanceTime < :dtFinal group by 1 order by 1 ";
+	public List<Object[]> getTotalValueDailyBetweenDateAndBranchID(Integer organizationID, Integer branchID, Date dtIntial, Date dtFinal) {					
+		String hql = "select day(issuanceTime), sum(netValue) from Order where organizationID = :organizationID and branchID = :branchID and issuanceTime > :dtInitial and  issuanceTime < :dtFinal group by 1 order by 1 ";
 		Session session = getSession();
 		Query query = session.createQuery(hql);
+		query.setParameter(	"organizationID", organizationID );
 		query.setParameter(	"branchID", branchID );
 		query.setParameter("dtInitial", dtIntial );
 		query.setParameter("dtFinal", dtFinal );

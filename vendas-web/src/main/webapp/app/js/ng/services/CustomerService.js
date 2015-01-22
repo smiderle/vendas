@@ -13,7 +13,7 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, LocalSt
 		 * @returns
 		 */
 		save : function(customer, userID){
-			var newCustomer = Restangular.all('v1').all('customer').all('saveCustomer').post(customer,{},{'userID' : userID});
+			var newCustomer = Restangular.all("private").all('v1').all('customer').all('saveCustomer').post(customer,{},{'userID' : userID});
 			return newCustomer;
         },
 
@@ -33,7 +33,7 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, LocalSt
 					};
         	
         	
-        	return Restangular.all('v1').all("customer").all("getCustomersByOrganizationID").getList(parameters).then(function(result){
+        	return Restangular.all("private").all('v1').all("customer").all("getCustomersByOrganizationID").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			
@@ -55,7 +55,7 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, LocalSt
 			};
 
 
-			return Restangular.all("v1").all("customer").all("getAllByFilter").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("customer").all("getAllByFilter").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.code = result.code;
@@ -74,7 +74,7 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, LocalSt
 					'customerID': customerID
 			};
 
-			return Restangular.all("v1").all("customer").all("getAvaliableCreditLimit").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("customer").all("getAvaliableCreditLimit").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.code = result.code;
@@ -93,7 +93,7 @@ vendasApp.factory('CustomerService',function(Restangular,UtilityService, LocalSt
 					'customerID': customerID
 			};
 
-			return Restangular.all("v1").all("customer").all("hasExpiratePayment").getList(parameters).then(function(result){
+			return Restangular.all("private").all("v1").all("customer").all("hasExpiratePayment").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.code = result.code;

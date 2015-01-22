@@ -16,7 +16,7 @@
 						'branchID' : branchID
 				};
 
-				return Restangular.all("v1").all("report").all("getCurrentCountSalesByBranch").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("report").all("getCurrentCountSalesByBranch").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;

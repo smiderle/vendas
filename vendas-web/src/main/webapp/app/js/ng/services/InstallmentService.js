@@ -6,7 +6,7 @@ vendasApp.factory('InstallmentService',function(Restangular){
 	return {
 		
 		save : function( installment, userID ){
-			var installment_ = Restangular.all("v1").all('installment').all('save').post(installment,{},{'userID' : userID});
+			var installment_ = Restangular.all("private").all("v1").all('installment').all('save').post(installment,{},{'userID' : userID});
 			return installment_;
         },
 		
@@ -23,7 +23,7 @@ vendasApp.factory('InstallmentService',function(Restangular){
 					};
         	
         	
-        	return Restangular.all("v1").all("installment").all("findAllByBranche").getList(parameters).then(function(result){
+        	return Restangular.all("private").all("v1").all("installment").all("findAllByBranche").getList(parameters).then(function(result){
 				var p = {};
 				p.value = result.value;
 				p.rowCount = result.rowCount;			

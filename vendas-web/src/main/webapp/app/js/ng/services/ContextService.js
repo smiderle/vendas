@@ -61,6 +61,28 @@ vendasApp.factory('ContextService',
     	LocalStorageService.addToLocalStorageCrypt(Constants.LOCAL_STORAGE_LAST_BRANCH_SELECTED_KEY,branchLogged);
     };
     
+    
+    /**
+     * Salva o token no local Storage criptografado
+     */
+    function setAccessToken( accessToken ){
+    	$rootScope.accessToken = accessToken;
+    	LocalStorageService.addToLocalStorageCrypt( Constants.LOCAL_STORAGE_TOKEN, accessToken );
+    };
+    
+    /**
+	 * Retorna o token no objeto $rootScope.user, caso não o encontre, busca no localStorage
+	 */
+    function getAccessToken(){
+    	if($rootScope.accessToken){    		
+    		return $rootScope.accessToken;
+    	} else {    		
+    		var _accessToken = LocalStorageService.getFromLocalStorageDecrypt(Constants.LOCAL_STORAGE_TOKEN);
+    		$rootScope.accessToken = _accessToken;
+    		return $rootScope.accessToken;
+    	}
+    };
+    
 
 	
 	return {
@@ -68,6 +90,8 @@ vendasApp.factory('ContextService',
 		getUserLogged : getUserLogged,
 		setUserLogged: setUserLogged,
 		getBranchLogged: getBranchLogged,
-		setBranchLogged: setBranchLogged
+		setBranchLogged: setBranchLogged,
+		setAccessToken: setAccessToken,
+		getAccessToken: getAccessToken
 	};	
 }]);

@@ -9,13 +9,15 @@
 		
 		return {
 			
-			getChartGoalCurrentMonth : function( userID ){
+			getChartGoalCurrentMonth : function(organizationID,branchID, userID ){
 
 				var parameters = {
+						'organizationID': organizationID,
+						'branchID' : branchID,
 						'userID' : userID
 				};
 
-				return Restangular.all("v1").all("chart").all("getChartGoalCurrentMonth").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("chart").all("getChartGoalCurrentMonth").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;
@@ -24,13 +26,15 @@
 				});
 			},
 			
-			getChartGoalPreviousMonth : function( userID ){
+			getChartGoalPreviousMonth : function(organizationID,branchID,  userID ){
 
 				var parameters = {
+						'organizationID': organizationID,
+						'branchID' : branchID,
 						'userID' : userID
 				};
 
-				return Restangular.all("v1").all("chart").all("getChartGoalPreviousMonth").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("chart").all("getChartGoalPreviousMonth").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;
@@ -39,13 +43,15 @@
 				});
 			},
 			
-			getChartSalesPreviousMonth : function( userID ){
+			getChartSalesPreviousMonth : function( organizationID,branchID, userID ){
 
 				var parameters = {
+						'organizationID': organizationID,
+						'branchID' : branchID,
 						'userID' : userID
 				};
 
-				return Restangular.all("v1").all("chart").all("getChartSalesPreviousMonth").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("chart").all("getChartSalesPreviousMonth").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;
@@ -54,13 +60,15 @@
 				});
 			},
 			
-			getChartSalesCurrentMonth : function( userID ){
+			getChartSalesCurrentMonth : function( organizationID,branchID, userID ){
 
 				var parameters = {
+						'organizationID': organizationID,
+						'branchID' : branchID,
 						'userID' : userID
 				};
 
-				return Restangular.all("v1").all("chart").all("getChartSalesCurrentMonth").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("chart").all("getChartSalesCurrentMonth").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;
@@ -69,13 +77,14 @@
 				});
 			},
 			
-			getChartSalesCurrentMonthByBranch : function( branchID ){
+			getChartSalesCurrentMonthByBranch : function(organizationID, branchID ){
 
 				var parameters = {
+						'organizationID': organizationID,
 						'branchID' : branchID
 				};
 
-				return Restangular.all("v1").all("chart").all("getChartSalesCurrentMonthByBranch").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("chart").all("getChartSalesCurrentMonthByBranch").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;
@@ -84,13 +93,14 @@
 				});
 			},		
 			
-			getChartSalesPreviousMonthByBranch : function( branchID ){
+			getChartSalesPreviousMonthByBranch : function( organizationID, branchID ){
 
 				var parameters = {
+						'organizationID': organizationID,
 						'branchID' : branchID
 				};
 
-				return Restangular.all("v1").all("chart").all("getChartSalesPreviousMonthByBranch").getList( parameters ).then( function( result ){
+				return Restangular.all("private").all("v1").all("chart").all("getChartSalesPreviousMonthByBranch").getList( parameters ).then( function( result ){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;

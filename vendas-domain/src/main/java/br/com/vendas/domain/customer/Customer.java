@@ -18,6 +18,50 @@ import br.com.vendas.domain.order.Installment;
 @Table(name="CLIENTE")
 public class Customer {
 	
+	public Customer() {
+	}
+	
+	public Customer(Integer organizationID, Integer branchID, String customerID, String name, String nickName, Integer personType, String cpfCnpj,
+			String incricao, String commercialPhone, String homePhone, String cellPhone, String postalCode, String addressComplement,
+			String observation, Date registrationDate, Date changeTime, City city, String faxNumber, String street, String district, String number,
+			String email, Double defaultDiscount, Double creditLimit, Integer defaultSeller, boolean active, Date birth, boolean excluded,
+			String pictureUrl, Integer priceTable, Installment installment, Integer formPayment) {
+		
+		super();
+		this.organizationID = organizationID;
+		this.branchID = branchID;
+		this.customerID = customerID;
+		this.name = name;
+		this.nickName = nickName;
+		this.personType = personType;
+		this.cpfCnpj = cpfCnpj;
+		this.incricao = incricao;
+		this.commercialPhone = commercialPhone;
+		this.homePhone = homePhone;
+		this.cellPhone = cellPhone;
+		this.postalCode = postalCode;
+		this.addressComplement = addressComplement;
+		this.observation = observation;
+		this.registrationDate = registrationDate;
+		this.changeTime = changeTime;
+		this.city = city;
+		this.faxNumber = faxNumber;
+		this.street = street;
+		this.district = district;
+		this.number = number;
+		this.email = email;
+		this.defaultDiscount = defaultDiscount;
+		this.creditLimit = creditLimit;
+		this.defaultSeller = defaultSeller;
+		this.active = active;
+		this.birth = birth;
+		this.excluded = excluded;
+		this.pictureUrl = pictureUrl;
+		this.priceTable = priceTable;
+		this.installment = installment;
+		this.formPayment = formPayment;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")

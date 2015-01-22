@@ -77,8 +77,7 @@
 					
 					//Se for uma edição de usuario
 					if(userEdition && userEdition.userID){
-						$scope.isEdition = true;
-						$scope.userIsSeller = false;
+						$scope.isEdition = true;						
 						$scope.userIsAdministrator = false;
 						
 						$scope.selectedCity = userEdition.city;						
@@ -94,9 +93,7 @@
 							//Verifica  as permissões do usuario, e seta o objeto de escopo que controla os checkbox
 							if(userEdition.userRoles){
 								userEdition.userRoles.forEach(function(userRole){
-									if(userRole.role == 'ROLE_USER'){
-										$scope.userIsSeller = true;
-									} else if(userRole.role == 'ROLE_ADMIN'){
+									if(userRole.role == 'ROLE_ADMIN'){
 										$scope.userIsAdministrator = true;
 									}
 								});
@@ -310,10 +307,9 @@
 						user.menusApplication.push({"menuID": Constants.MENUID_DASHBOARD});
 					
 						user.userRoles = [];
-						if($scope.userIsSeller){
-							user.userRoles.push({'userID': user.userID,role: 'ROLE_USER'});
-						}
 						
+						user.userRoles.push({'userID': user.userID,role: 'ROLE_USER'});
+																		
 						if($scope.userIsAdministrator){
 							user.userRoles.push({'userID': user.userID,role: 'ROLE_ADMIN'});
 						}						

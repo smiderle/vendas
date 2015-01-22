@@ -14,7 +14,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value="/v1/report")
+@RequestMapping(value="/private/v1/report")
 @Controller
 public class ReportRest {
 	

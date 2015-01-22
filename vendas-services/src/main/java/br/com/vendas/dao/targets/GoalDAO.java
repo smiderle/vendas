@@ -24,6 +24,6 @@ public interface GoalDAO extends GenericDAO<Goal> {
 	 * @param yearMonth
 	 * @return
 	 */
-	Goal findGoalByUserAndMonth( Integer userID, Integer yearMonth );
+	Goal findGoalByUserAndMonth(Integer organizationID, Integer branchID, Integer userID, Integer yearMonth );
 
 }

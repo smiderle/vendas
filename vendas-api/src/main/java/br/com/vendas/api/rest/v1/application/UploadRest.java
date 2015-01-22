@@ -23,7 +23,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping("/v1/upload")
+@RequestMapping("/public/v1/upload")
 @Controller
 public class UploadRest {
 	

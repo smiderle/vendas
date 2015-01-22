@@ -30,4 +30,7 @@ public interface InstallmentService {
 	 * @throws RegistrationException
 	 */
 	ServiceResponse<Installment> saveOrUpdate(Integer userID, Installment installment) ;
+	
+	
+	void save(List<Installment> installments);
 }

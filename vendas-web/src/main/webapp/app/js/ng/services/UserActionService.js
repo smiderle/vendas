@@ -17,7 +17,7 @@
 						'offset': offset
 				};
 				
-				return Restangular.all("v1").all("userAction").all("getAllByUserID").getList(parameters).then(function(result){
+				return Restangular.all("private").all("v1").all("userAction").all("getAllByUserID").getList(parameters).then(function(result){
 					var p = {};
 					p.code = result.code;
 					p.value = result.value;

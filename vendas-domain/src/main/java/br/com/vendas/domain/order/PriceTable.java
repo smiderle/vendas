@@ -16,6 +16,23 @@ import javax.persistence.TemporalType;
 @Table(name="TABELA_PRECO")
 public class PriceTable {
 	
+	public PriceTable() {
+	}
+	
+	public PriceTable(Integer organizationID, Integer branchID, Integer priceTableID, String description, Double percentage, boolean increase,
+			boolean active, Date changeTime, boolean excluded) {
+		super();
+		this.organizationID = organizationID;
+		this.branchID = branchID;
+		this.priceTableID = priceTableID;
+		this.description = description;
+		this.percentage = percentage;
+		this.increase = increase;
+		this.active = active;
+		this.changeTime = changeTime;
+		this.excluded = excluded;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ID;

@@ -30,5 +30,8 @@ public interface PriceTableService {
 	 * @throws RegistrationException
 	 */
 	ServiceResponse<PriceTable> saveOrUpdate( Integer userID, PriceTable priceTable ) ;
+	
+	
+	void save(List<PriceTable> priceTables);
 
 }

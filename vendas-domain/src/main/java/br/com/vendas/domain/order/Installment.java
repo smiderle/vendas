@@ -15,6 +15,24 @@ import javax.persistence.TemporalType;
 @Table(name="PARCELAMENTO")
 public class Installment {
 	
+	public Installment() {
+	}
+	
+	public Installment(Integer organizationID, Integer branchID, Integer installmentID, String description, String installmentsDays, Double tax,
+			boolean active, Date changeTime, boolean excluded) {
+		super();
+		this.organizationID = organizationID;
+		this.branchID = branchID;
+		this.installmentID = installmentID;
+		this.description = description;
+		this.installmentsDays = installmentsDays;
+		this.tax = tax;
+		this.active = active;
+		this.changeTime = changeTime;
+		this.excluded = excluded;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ID;

@@ -54,4 +54,8 @@ public interface CustomerService {
 	 * @return
 	 */
 	ServiceResponse<Boolean> hasExpiratePayment(Integer customerID);
+	
+	
+	
+	void save( List<Customer> customers );
 }

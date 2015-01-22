@@ -19,7 +19,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping(value="/v1/branchOffice")
+@RequestMapping(value="/private/v1/branchOffice")
 @Controller
 public class BranchOfficeRest {
 	

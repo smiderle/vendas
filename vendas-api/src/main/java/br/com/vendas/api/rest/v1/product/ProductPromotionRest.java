@@ -19,7 +19,7 @@ import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
-@RequestMapping("/v1/productPromotion")
+@RequestMapping("/private/v1/productPromotion")
 @Controller
 public class ProductPromotionRest {
 

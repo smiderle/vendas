@@ -13,7 +13,7 @@ public interface GoalChartService {
 	 * @param dtInitial
 	 * @param dtFinal
 	 */
-	LineChart getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID( Integer userID, Date date ) ;
+	LineChart getLineChartTotalValueAccumulatedDailyBetweenMonthAndUserID(Integer organizationID, Integer branchID, Integer userID, Date date ) ;
 	
 	
 	/**
@@ -22,21 +22,21 @@ public interface GoalChartService {
 	 * @param date
 	 * @return
 	 */
-	LineChart getLineChartTotalValueDailyBetweenMonthAndUserID( Integer userID, Date date ) ;
+	LineChart getLineChartTotalValueDailyBetweenMonthAndUserID(Integer organizationID, Integer branchID,  Integer userID, Date date ) ;
 	
 	/**
 	 * Retorna uma lista de coordenadas para o mes atual com valores acumulativos, ou seja, sera somado o dia anterior ao dia atual
 	 * @param userID
 	 * @return
 	 */
-	ServiceResponse<List<LineChart>> currentMonth(Integer userID);
+	ServiceResponse<List<LineChart>> currentMonth(Integer organizationID, Integer branchID, Integer userID);
 	
 	/**
 	 * Retorna uma lista de coordenadas para o mes anterior com valores acumulativos, ou seja, sera somado o dia anterior ao dia atual
 	 * @param userID
 	 * @return
 	 */
-	ServiceResponse<List<LineChart>> previousMonth(Integer userID);
+	ServiceResponse<List<LineChart>> previousMonth(Integer organizationID, Integer branchID, Integer userID);
 	
 
 

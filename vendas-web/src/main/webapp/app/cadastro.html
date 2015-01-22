@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<head>
+    <title>Vendas Plus</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Covered+By+Your+Grace' rel='stylesheet' type='text/css'>  
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="public/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="public/assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="public/assets/plugins/flexslider/flexslider.css">
+    <link rel="stylesheet" href="public/assets/plugins/animate-css/animate.min.css">
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="public/assets/css/styles-4.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head> 
+
+<body data-spy="scroll">
+    <!-- ******HEADER****** --> 
+    <header id="top" class="header navbar-fixed-top">  
+        <div class="container">            
+            <h1 class="logo pull-left">
+                <a class="scrollto" href="#promo">
+                    <img id="logo-image" class="logo-image" src="public/assets/images/logo/logo.png" alt="Logo">
+                    <span class="logo-title">Vendas</span>
+                </a>
+            </h1><!--//logo-->              
+            <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><!--//nav-toggle-->
+                </div><!--//navbar-header-->            
+                
+            </nav><!--//main-nav-->           
+        </div>
+    </header><!--//header-->
+    
+    <br>
+    <br>
+         
+    <section id="promo" class="promo section offset-header has-pattern">
+        <div class="container">
+           
+                <div class="contact-form overview col-md-8 col-sm-12 col-xs-12">                    
+                    <div class="overview col-md-10 col-sm-12 col-xs-12">
+                        <div class="row text-center"><h2>Login</h2></div>
+                        <form class="form"  method="post" action="/vendas-web/j_spring_security_check" >                
+                            <div class="form-group name">
+                                <label class="sr-only" for="username">Usuário</label>
+                                <input id="username" type="text" name="j_username" class="form-control" placeholder="Usuário:">
+                            </div><!--//form-group-->
+                            <div class="form-group email">
+                                <label class="sr-only" for="password">Senha</label>
+                                <input id="password" type="password" name="j_password" class="form-control" placeholder="Senha:">
+                            </div><!--//form-group-->                            
+                            <button id="btnLogin" type="submit" class="btn btn-lg btn-sucess-theme col-md-12">Entrar</button>                                                                                   
+                            <button type="button" class="btn btn-lg btn-sucess-theme col-md-12">Experimente Grátis</button>
+                        </form><!--//form-->
+                    </div>
+                </div><!--//overview-->
+                
+                <!--// iPhone starts -->
+                <div class="phone iphone iphone-black col-md-4 col-sm-12 col-xs-12 " style="display:none">
+                    <div class="iphone-holder phone-holder">
+                        <div class="iphone-holder-inner">
+                            <div class="slider flexslider">
+                                <ul class="slides">
+                                    <li>
+                                        <img src="public/assets/images/iphone/iphone-slide-1.png"  alt="" />
+                                    </li>
+                                    <li>
+                                        <img src="public/assets/images/iphone/iphone-slide-2.png"  alt="" />
+                                    </li>
+                                    <li>
+                                        <img src="public/assets/images/iphone/iphone-slide-3.png"  alt="" />
+                                    </li>
+                                </ul><!--//slides-->
+                            </div><!--//flexslider-->   
+                        </div><!--//iphone-holder-inner-->                    
+                    </div><!--//iphone-holder-->                   
+                </div><!--//iphone-->  
+                <!--// iPhone ends -->
+                
+                <!--// Android starts -->                
+                <div class="phone android col-md-4 col-sm-12 col-xs-12" style="display:none">
+                    <div class="android-holder phone-holder">
+                        <div class="android-holder-inner">
+                            <div class="slider flexslider">
+                                <ul class="slides">
+                                    <li>
+                                        <img src="public/assets/images/android/android-slide-1.png"  alt="" />
+                                    </li>
+                                    <li>
+                                        <img src="public/assets/images/android/android-slide-2.png"  alt="" />
+                                    </li>
+                                    <li>
+                                        <img src="public/assets/images/android/android-slide-3.png"  alt="" />
+                                    </li>
+                                </ul><!--//slides-->
+                            </div><!--//flexslider-->   
+                        </div><!--//phone-holder-inner-->                    
+                    </div><!--//iphone-holder-->                   
+                </div><!--//iphone--> 
+                <!--// Android ends -->
+                
+                <!--// iPad starts -->
+                <div class="ipad ipad-black col-md-4 col-sm-12 col-xs-12 col-md-pull-1">
+                    <div class="ipad-holder">
+                        <div class="ipad-holder-inner">
+                            <div class="slider flexslider">
+                                <ul class="slides">
+                                    <li>
+                                        <img src="public/assets/images/ipad/ipad-slide-1.png"  alt="" />
+                                    </li>
+                                    <li>
+                                        <img src="public/assets/images/ipad/ipad-slide-2.png"  alt="" />
+                                    </li>
+                                    <li>
+                                        <img src="public/assets/images/ipad/ipad-slide-3.png"  alt="" />
+                                    </li>
+                                </ul><!--//slides-->
+                            </div><!--//flexslider-->   
+                        </div><!--//ipad-holder-inner-->                    
+                    </div><!--//ipad-holder-->                   
+                </div><!--//ipad--> 
+                <!--// iPad ends -->  
+                                  
+        </div><!--//container-->
+    </section><!--//promo--> 
+    <!-- ******FOOTER****** -->  
+    
+     
+    <!-- Javascript -->          
+    <script type="text/javascript" src="public/assets/plugins/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="public/assets/plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="public/assets/plugins/detectmobilebrowser.js"></script>      
+    <script type="text/javascript" src="public/assets/plugins/jquery.easing.1.3.js"></script>   
+    <script type="text/javascript" src="public/assets/plugins/bootstrap/js/bootstrap.min.js"></script>     
+    <script type="text/javascript" src="public/assets/plugins/jquery-inview/jquery.inview.min.js"></script>
+    <script type="text/javascript" src="public/assets/plugins/FitVids/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="public/assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>    
+    <script type="text/javascript" src="public/assets/plugins/jquery-placeholder/jquery.placeholder.js"></script>
+    <script type="text/javascript" src="public/assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="public/assets/js/main.js"></script>
+    <!--[if !IE]>--> 
+    <script type="text/javascript" src="public/assets/js/animations.js"></script> 
+    <!--<![endif]-->
+</body>
+</html> 
+
