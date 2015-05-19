@@ -46,7 +46,15 @@ public enum LimitQuery {
 	/**
 	 * Ações do usuário
 	 */
-	LIMIT_USER_ACTIONS(20);
+	LIMIT_USER_ACTIONS(20),
+	
+	/**
+	 * Limite de registros a serem sincronizados na carga inicial
+	 * 
+	 */
+	
+	LIMIT_SYNC_INIT_LOAD(250);
+	
 	
 	private final Integer limit;
 	

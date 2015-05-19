@@ -1,5 +1,6 @@
 package br.com.vendas.dao.product;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.vendas.dao.GenericDAO;
@@ -30,4 +31,11 @@ public interface ProductDAO extends GenericDAO<Product> {
 	 */
 	List<Product> findByDescriptionOrProductID(String description,String productID,String barcode, Integer organizationID,Integer branchID, Integer offset, Integer limit);
 
+	
+	/**
+	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.
+	 * @param date
+	 * @return
+	 */
+	List<Product> findAllByChangeGreaterThan( Date date,Integer organizationID, Integer offset, Integer limit );
 }

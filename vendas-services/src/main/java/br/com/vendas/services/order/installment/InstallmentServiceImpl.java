@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vendas.dao.order.installment.InstallmentDAO;
+import br.com.vendas.domain.LimitQuery;
 import br.com.vendas.domain.order.Installment;
 import br.com.vendas.domain.user.UserAction;
 import br.com.vendas.helper.UserActionHelper;
@@ -80,6 +81,11 @@ public class InstallmentServiceImpl implements InstallmentService{
 	@Override
 	public void save(List<Installment> installments) {
 		installmentDAO.save( installments );
+	}
+
+	@Override
+	public ServiceResponse<List<Installment>> findAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		return ServiceResponseFactory.create( installmentDAO.findAllByChangeGreaterThan(new Date(date), organizationID, offset, LimitQuery.LIMIT_SYNC_INIT_LOAD.value()));
 	}
 
 }

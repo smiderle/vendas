@@ -102,7 +102,7 @@
 		class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
 		<property name="tokenStore" ref="tokenStore" />
 		<property name="supportRefreshToken" value="true" />
-		<property name="accessTokenValiditySeconds" value="180"></property>
+		<property name="accessTokenValiditySeconds" value="10800"></property>
 		<property name="clientDetailsService" ref="clientDetails" />
 	</bean>
 	

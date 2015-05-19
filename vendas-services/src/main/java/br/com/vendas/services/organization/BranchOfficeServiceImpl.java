@@ -1,6 +1,6 @@
 package br.com.vendas.services.organization;
 
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vendas.dao.organization.BranchOfficeDAO;
-import br.com.vendas.domain.customer.Customer;
+import br.com.vendas.domain.LimitQuery;
 import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.organization.Organization;
 import br.com.vendas.domain.user.UserAction;
@@ -26,14 +26,14 @@ public class BranchOfficeServiceImpl implements BranchOfficeService{
 
 	@Inject
 	private BranchOfficeDAO branchOfficeDAO;
-	
+
 	@Inject
 	private UserActionService userActionService;
 
 	@Override
 	public ServiceResponse<List<BranchOffice>> findAllByOrganizationID(
 			Integer organizationID) {
-		List<BranchOffice> branchs = branchOfficeDAO.findAllByOrganizationID(organizationID);		
+		List<BranchOffice> branchs = branchOfficeDAO.findAllByOrganizationID(organizationID);
 		return ServiceResponseFactory.create(branchs);
 	}
 
@@ -51,21 +51,21 @@ public class BranchOfficeServiceImpl implements BranchOfficeService{
 		if(branchOfficeSaved.getRowCount() > 0){
 			throw new RegistrationException("81","O código "+ branchOfficeSaved.getValue().getBranchOfficeID() +" já esta cadastrado para a empresa " + branchOfficeSaved.getValue().getFancyName());
 		}
-		
+
 		saveBranchAction(userID, branchOffice);
-		
-		branchOffice.setChangeTime(new GregorianCalendar());
+
+		branchOffice.setChangeTime(new Date());
 		return ServiceResponseFactory.create(branchOfficeDAO.save(branchOffice));
 	}
-	
+
 	@Transactional(readOnly=false)
 	@Override
 	public ServiceResponse<BranchOffice> saveOrUpdate(Integer userID, BranchOffice branchOffice) {
-		
-		branchOffice.setChangeTime(new GregorianCalendar());
-		
+
+		branchOffice.setChangeTime(new Date());
+
 		saveBranchAction(userID, branchOffice);
-		
+
 		return ServiceResponseFactory.create(branchOfficeDAO.saveOrUpdate(branchOffice));
 	}
 
@@ -74,7 +74,7 @@ public class BranchOfficeServiceImpl implements BranchOfficeService{
 		Long maxID = branchOfficeDAO.findMaxBranchOfficeIDByOrganization(organization);
 		return ServiceResponseFactory.create(maxID+1);
 	}
-	
+
 	/**
 	 * Salva as alções do usuário para o cadastro ou edição da filial
 	 * @param userID
@@ -83,16 +83,21 @@ public class BranchOfficeServiceImpl implements BranchOfficeService{
 	private void saveBranchAction( Integer userID, BranchOffice branchOffice ){
 		if(userID != null){
 			UserAction userAction = null;
-			
+
 			if(branchOffice.getRegistrationDate() == null) {
-				userAction = UserActionHelper.createBranchSave(userID, branchOffice);			
+				userAction = UserActionHelper.createBranchSave(userID, branchOffice);
 			} else {
 				userAction = UserActionHelper.createBranchEdit(userID, branchOffice);
-				
+
 			}
-			
+
 			userActionService.save( userAction );
 		}
+	}
+
+	@Override
+	public ServiceResponse<List<BranchOffice>> findAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		return ServiceResponseFactory.create(branchOfficeDAO.findAllByChangeGreaterThan(new Date(date), organizationID, offset, LimitQuery.LIMIT_SYNC_INIT_LOAD.value()));
 	}
 
 }

@@ -1,6 +1,5 @@
 package br.com.vendas.pojo;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -85,7 +84,7 @@ public class UserDTO {
 	private String email;	
 	private String password;	
 	private String name;	
-	private Calendar changeTime;	
+	private Date changeTime;	
 	private Date registrationDate;	
 	private boolean active;	
 	private boolean portalAccess;
@@ -208,12 +207,16 @@ public class UserDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Calendar getChangeTime() {
+
+	
+	public Date getChangeTime() {
 		return changeTime;
 	}
-	public void setChangeTime(Calendar changeTime) {
+
+	public void setChangeTime(Date changeTime) {
 		this.changeTime = changeTime;
 	}
+
 	public Date getRegistrationDate() {
 		return registrationDate;
 	}

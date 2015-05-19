@@ -1,5 +1,6 @@
 package br.com.vendas.dao.product;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -54,6 +55,20 @@ public class ProductDAOImpl extends ResourceDAO<Product> implements ProductDAO {
 				.setFirstResult(offset)
 				.setMaxResults(limit)		
 				.addOrder(Order.asc("productID"));
+		return criteria.list();
+	}
+
+	@Override
+	public List<Product> findAllByChangeGreaterThan( Date date, Integer organizationID, Integer offset, Integer limit ) {
+		
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(Product.class)				
+				.add(Restrictions.eq("organizationID", organizationID))
+				.add(Restrictions.ge("changeTime", date))
+				.setFirstResult(offset)
+				.setMaxResults(limit)		
+				.addOrder(Order.asc("changeTime"));
+		
 		return criteria.list();
 	}
 

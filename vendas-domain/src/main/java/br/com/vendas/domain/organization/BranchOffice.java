@@ -1,6 +1,5 @@
 package br.com.vendas.domain.organization;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,10 +23,10 @@ import br.com.vendas.domain.location.City;
 @Table(name="filial")
 @IdClass(BranchOfficePK.class)
 public class BranchOffice extends Domain{
-	
-	public BranchOffice() {	
+
+	public BranchOffice() {
 	}
-	
+
 	public BranchOffice(Integer branchOfficeID, Organization organization,
 			String realName, String fancyName, String actionOverdue, String actionCreditLimit) {
 		super();
@@ -43,44 +42,44 @@ public class BranchOffice extends Domain{
 
 	@Id
 	private Integer branchOfficeID;
-	
+
 	/**
 	 * Empresa
 	 */
 	@Id
 	private Organization organization;
-	
-		
+
+
 	/**
 	 * Razão Social
 	 */
 	@Column(name="razaosocial")
 	private String realName;
-	
+
 	/**
 	 * Nome Fantasia
 	 */
 	@Column(name="nomefantasia")
 	private String fancyName;
-	
+
 	/**
 	 * Telefone
 	 */
 	@Column(name="fone")
 	private String phoneNumber;
-	
+
 	/**
 	 * Fax
-	 */	
+	 */
 	@Column(name="fax")
 	private String faxNumber;
-	
+
 	/**
 	 * Rua
 	 */
 	@Column(name="rua")
 	private String street;
-	
+
 	/**
 	 * Bairro
 	 */
@@ -92,88 +91,88 @@ public class BranchOffice extends Domain{
 	 */
 	@Column(name="numero")
 	private String number;
-	
+
 	/**
 	 * Cep
 	 */
 	@Column(name="cep")
 	private String postalCode;
-	
+
 	/**
 	 * Data e hora de alteração
 	 */
 	@Column(name="dthralteracao")
-	private Calendar changeTime;
-	
-	
+	private Date changeTime;
+
+
 	@Column(name="email")
 	private String email;
-	
+
 	@Column(name="website")
 	private String website;
-	
+
 	/**
 	 * Data de cadastro
 	 */
 	@Column(name="dthrcadastro", insertable=false)
 	private Date registrationDate;
-	
+
 	@Column(name="gerente")
 	private String manager;
-	
+
 	@Column(name="cnpj")
 	private String cnpj;
-	
+
 	@Column(name="complemento")
 	private String addressComplement;
-	
+
 	@ManyToOne
 	@JoinColumn(name="CIDADE")
 	private City city;
-	
-	
+
+
 	@Column(name="descmax")
 	private Double maximumDiscount;
-	
+
 	@Column(name="email_notificacoes")
 	private String emailNotification;
-	
+
 	/**
 	 * Mostrar quantidade em estoque do produto
 	 */
 	@Column(name="exibir_estoque")
 	private boolean showStockProduct;
-	
+
 	/**
 	 * Permite venda para produtos com estoque negativo
 	 */
 	@Column(name="estoque_negativo")
 	private boolean negativeStockProduct;
-	
+
 	/**
 	 * Vendedor pode cadastrar cliente.
 	 */
 	@Column(name="vendedor_cadastra_cliente")
 	private boolean sellerRegisterCustomer;
-	
+
 	/**
 	 * Enviar email para o cliente quando efetivar uma venda.
 	 */
 	@Column(name="enviar_email_cliente")
 	private boolean sendEmailCustomer;
-	
+
 	/**
 	 * Ação ao evetuar venda para clientes com titulos vencidos, inadimplentes
 	 */
 	@Column(name="acao_titulo_vencido")
 	private String actionOverdue;
-		
+
 	/**
 	 * Ação ao evetuar venda para clientes com titulos vencidos, inadimplentes
 	 */
 	@Column(name="acao_limite_credito")
 	private String actionCreditLimit;
-				
+
 	public Organization getOrganization() {
 		return organization;
 	}
@@ -253,8 +252,8 @@ public class BranchOffice extends Domain{
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
-	
-	
+
+
 
 	public Integer getBranchOfficeID() {
 		return branchOfficeID;
@@ -265,11 +264,13 @@ public class BranchOffice extends Domain{
 	}
 
 
-	public Calendar getChangeTime() {
+
+
+	public Date getChangeTime() {
 		return changeTime;
 	}
 
-	public void setChangeTime(Calendar changeTime) {
+	public void setChangeTime(Date changeTime) {
 		this.changeTime = changeTime;
 	}
 
@@ -329,7 +330,7 @@ public class BranchOffice extends Domain{
 		this.maximumDiscount = maximumDiscount;
 	}
 
-	
+
 	public boolean isShowStockProduct() {
 		return showStockProduct;
 	}
@@ -385,8 +386,8 @@ public class BranchOffice extends Domain{
 	public void setEmailNotification(String emailNotification) {
 		this.emailNotification = emailNotification;
 	}
-	
-	
-	
-	
+
+
+
+
 }

@@ -2,6 +2,7 @@ package br.com.vendas.services.order.pricetable;
 
 import java.util.List;
 
+import br.com.vendas.domain.customer.Customer;
 import br.com.vendas.domain.order.PriceTable;
 import br.com.vendas.exception.RegistrationException;
 import br.com.vendas.services.support.ServiceResponse;
@@ -33,5 +34,13 @@ public interface PriceTableService {
 	
 	
 	void save(List<PriceTable> priceTables);
+	
+
+	/**
+	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.
+	 * @param date
+	 * @return
+	 */
+	ServiceResponse<List<PriceTable>> findAllByChangeGreaterThan( Long date, Integer organizationID, Integer offset );
 
 }

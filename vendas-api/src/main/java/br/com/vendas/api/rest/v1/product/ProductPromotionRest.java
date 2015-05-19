@@ -45,7 +45,7 @@ public class ProductPromotionRest {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
-	
+
 	/**
 	 * Salva ou atualiza o preço de promoção
 	 * @param productPromotion
@@ -54,7 +54,7 @@ public class ProductPromotionRest {
 	@RequestMapping(value="save", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse save(@RequestBody ProductPromotion productPromotion) {
 		try {
-			ServiceResponse<ProductPromotion> payload =  productPromotionService.saveOrUpdate(productPromotion);			
+			ServiceResponse<ProductPromotion> payload =  productPromotionService.saveOrUpdate(productPromotion);
 			return ResponseBuilder.build(payload);
 		} catch (RegistrationException e) {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
@@ -63,8 +63,8 @@ public class ProductPromotionRest {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
-	
-	
+
+
 	/**
 	 * Salva ou atualiza o preço de promoção
 	 * @param productPromotion
@@ -73,10 +73,22 @@ public class ProductPromotionRest {
 	@RequestMapping(value="remove", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse remove(@RequestBody ProductPromotion productPromotion) {
 		try {
-			ServiceResponse<ProductPromotion> payload =  productPromotionService.remove(productPromotion);			
+			ServiceResponse<ProductPromotion> payload =  productPromotionService.remove(productPromotion);
 			return ResponseBuilder.build(payload);
 		} catch (RegistrationException e) {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+	@RequestMapping(value="getAllByChangeGreaterThan", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		try {
+			ServiceResponse<List<ProductPromotion>> payload =  productPromotionService.findAllByChangeGreaterThan(date, organizationID, offset);
+			LOG.debug("getAllByChangeGreaterThan - List<ProductPromotion> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));

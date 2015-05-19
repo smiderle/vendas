@@ -24,7 +24,8 @@ vendasApp
 						 */					
 						UserService.redirectNewUser(toReturn.email, toReturn.password).then(function( toReturn ){						
 								UtilityService.setCookie(Constants.COOKIE_USER_EMAIL ,$scope.fields.email);
-								$window.location.href = 'http://54.94.216.207/vendas-web';												
+								$window.location.href = 'http://127.0.0.1/vendas-web';
+								//$window.location.href = 'http://54.94.216.207/vendas-web';												
 						});
 					} else {
 						alert( toReturn.message );	

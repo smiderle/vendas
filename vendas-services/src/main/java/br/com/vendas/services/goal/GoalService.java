@@ -7,23 +7,31 @@ import br.com.vendas.pojo.UserTargetsDTO;
 import br.com.vendas.services.support.ServiceResponse;
 
 public interface GoalService {
-	
+
 	ServiceResponse<List<UserTargetsDTO>> saveUserTargets(Integer userID, List<UserTargetsDTO> targets );
-	
-	
+
+
 	/**
 	 * Retorna as metas cadastradas para o mes atual e os próximos 11 meses
 	 * @param targets
 	 * @return
 	 */
 	ServiceResponse<List<UserTargetsDTO>> findNextTargets( Integer organizationID, Integer branchID );
-	
+
 	/**
-	 * Retorna a meta estimada de determinado usuário e mes e ano 
+	 * Retorna a meta estimada de determinado usuário e mes e ano
 	 * @param userID
 	 * @param yearMonth
 	 * @return
 	 */
 	ServiceResponse<Goal> findTargetsByUserAndMonth( Integer organizationID, Integer branchID, Integer userID, Integer yearMonth );
+
+
+	/**
+	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.
+	 * @param date
+	 * @return
+	 */
+	ServiceResponse<List<Goal>> findAllByChangeGreaterThan( Long date,Integer organizationID, Integer offset );
 
 }

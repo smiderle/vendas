@@ -16,7 +16,7 @@ public interface ProductPromotionDAO extends GenericDAO<ProductPromotion> {
 	 * @return
 	 */
 	List<ProductPromotion> findAllByProductID(Integer productID, Date afterDate);
-	
+
 	/**
 	 * Retorna as promoções em um intervalo de datas. Com exceção da promoção com id passado por parametro
 	 * @param productID
@@ -26,5 +26,12 @@ public interface ProductPromotionDAO extends GenericDAO<ProductPromotion> {
 	 * @return
 	 */
 	List<ProductPromotion> findByByInitalDateAndFinalDate(Integer productID, Date finalDate, Date initalDate, Integer productPromotionID);
+
+	/**
+	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.
+	 * @param date
+	 * @return
+	 */
+	List<ProductPromotion> findAllByChangeGreaterThan( Date date,Integer organizationID, Integer offset, Integer limit );
 
 }

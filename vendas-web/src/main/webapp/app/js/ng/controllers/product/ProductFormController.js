@@ -197,6 +197,8 @@
 							promotion.initialDate = DateUtil.getTime(initialDate);
 							promotion.finalDate = DateUtil.getTime(finalDate);
 							promotion.productID = $scope.product.id;
+							promotion.organizationID = ContextService.getOrganizationID();
+							promotion.branchID = ContextService.getBranchLogged().branchOfficeID;
 							
 							var aPromotion = ProductService.savePromotionPrice(promotion);
 							aPromotion.then(function(toReturn){

@@ -11,6 +11,7 @@ public class ApiResponse implements Serializable {
 	private String status;
 	private String code;
 	private String message;
+	private Long hour;
 
 	private Object payload;
 
@@ -45,6 +46,12 @@ public class ApiResponse implements Serializable {
 	public void setStatus(final String status) {
 		this.status = status;
 	}
-	
-	
+
+	public Long getHour() {
+		return hour;
+	}
+
+	public void setHour(Long hour) {
+		this.hour = hour;
+	}	
 }

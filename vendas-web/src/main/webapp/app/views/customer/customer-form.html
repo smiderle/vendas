@@ -66,7 +66,7 @@
 														<label class="label">Código *</label>																					
 														<label class="input">	
 															<i class="icon-prepend fa fa-hand-o-right"></i>											
-															<input type="text" name="customerID" placeholder="Código" maxlength="9" ng-model="customer.customerID" class="form-control">
+															<input type="text" name="customerID" placeholder="Código" maxlength="9" ng-model="customer.id" ng-disabled="true" class="form-control" >
 														</label>
 													</section>
 												</div>
@@ -357,11 +357,7 @@
 
 		var $checkoutForm = $('#customer-form').validate({
 			// Rules for form validation
-			rules : {
-				customerID : {
-					required : true,
-				},
-				
+			rules : {				
 				name : {
 					required : true
 				},
@@ -373,11 +369,7 @@
 			},
 
 			// Messages for form validation
-			messages : {
-				customerID : {
-					required : 'Por favor, informe um código',
-					digits : 'Por favor, informe somente numeros'
-				},
+			messages : {				
 				
 				name : {
 					required : 'Por favor, informe um nome',

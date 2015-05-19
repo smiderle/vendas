@@ -1,5 +1,7 @@
 package br.com.vendas.support;
 
+import java.util.Date;
+
 import br.com.vendas.services.support.ServiceResponse;
 
 
@@ -12,6 +14,7 @@ public class ResponseBuilder {
 		apiResponse.setCode(HTTPStatusCode.SUCESS_200.getCode());
 		apiResponse.setStatus(ApiResponse.STATUS_SUCCESS);
 		apiResponse.setMessage(ApiResponse.STATUS_SUCCESS);
+		apiResponse.setHour(new Date().getTime());
 		return apiResponse;
 	}
 	
@@ -22,6 +25,7 @@ public class ResponseBuilder {
 		apiResponse.setStatus(HTTPStatusCode.SERVER_ERROR_500.getCode());
 		apiResponse.setCode(ApiResponse.STATUS_FAILURE);
 		apiResponse.setMessage(e.getMessage());
+		apiResponse.setHour(new Date().getTime());
 		return apiResponse;
 	}
 

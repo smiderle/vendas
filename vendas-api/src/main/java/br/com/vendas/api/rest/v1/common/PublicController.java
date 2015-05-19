@@ -41,56 +41,81 @@ import br.com.vendas.services.user.UserRoleService;
 import br.com.vendas.services.user.UserService;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.HTTPStatusCode;
+import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
 @RequestMapping(value="/public/v1/signin")
 @Controller
 public class PublicController {
-		
+
 	private final static Integer INITIAL_BRANCH_OFFICE_ID = 1;
 	@Inject
 	private OrganizationService organizationService;
-	
+
 	@Inject
 	private BranchOfficeService branchOfficeService;
-	
+
 	@Inject
 	private UserService userService;
-	
+
 	@Inject
 	private UserBranchOfficeService userBranchOfficeService;
-		
-	@Inject 
+
+	@Inject
 	private UserRoleService userRoleService;
-	
+
 	@Inject
 	private UserProfileService userProfileService;
-	
+
 	@Inject
 	private MenuApplicationService menuApplicationService;
-	
+
 	@Inject
 	private ProductService productService;
-	
-	@Inject	
+
+	@Inject
 	private CustomerService customerService;
-	
+
 	@Inject
 	private PriceTableService priceTableService;
-	
+
 	@Inject
 	private InstallmentService installmentService;
-	
+
 	private static final Logger LOG = Logger.getLogger(PublicController.class);
-	
+
+
 	@RequestMapping(value="generateNewUser", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse generateNewUser(String organizationName, String userName, String email, String password){
-		final ApiResponse apiResponse = new ApiResponse(); 
+
+
 		try {
-			
-			
+			ServiceResponse<UserDTO> payload =  userService.generateNewUser( organizationName, userName, email, password );
+
+			LOG.debug("generateNewUser Size: "+payload.getRowCount());
+
+			return ResponseBuilder.build( payload );
+
+		} catch (Exception e) {
+
+			LOG.error(e.getMessage(), e);
+
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+
+		}
+
+	}
+
+
+
+	@RequestMapping(value="generateNewUser2", method = RequestMethod.POST)
+	public @ResponseBody ApiResponse generateNewUser2(String organizationName, String userName, String email, String password){
+		final ApiResponse apiResponse = new ApiResponse();
+		try {
+
+
 			ServiceResponse<UserDTO> findUserByEmail = userService.findUserByEmail( email );
-			
+
 			if( findUserByEmail.getRowCount() > 0 ) {
 				String message = "Esse e-mail já esta cadastro em nosso sistema.";
 				apiResponse.setPayload(new VendasExceptionWapper(HTTPStatusCode.SERVER_ERROR_500.getCode(), message));
@@ -98,72 +123,72 @@ public class PublicController {
 				apiResponse.setCode("500");
 				return apiResponse;
 			}
-			
-			
+
+
 			LOG.debug("Criando novo Usuário para o sistema");
 			//Cria uma epresa
 			Organization newOrganization = organizationService.save(new Organization(organizationName)).getValue();
-			
+
 			//Cria uma filial
 			BranchOffice branchOffice = new BranchOffice(INITIAL_BRANCH_OFFICE_ID,newOrganization,organizationName,organizationName, "L", "L");
-			
+
 			BranchOffice newBranchOffice = branchOfficeService.save(null, branchOffice).getValue();
-			
+
 			//Cria um usuario
 			User user = new User(newOrganization.getOrganizationID(),email,password,userName,true,true);
-			user.setPictureUrl("https://s3-sa-east-1.amazonaws.com/vendas.pictures.product/23ab5f12-fd42-4f54-a17d-775e1d63eb0a");		
+			user.setPictureUrl("https://s3-sa-east-1.amazonaws.com/vendas.pictures.product/23ab5f12-fd42-4f54-a17d-775e1d63eb0a");
 			user.setSkype("skype");
 			user.setLinkFacebook("facebook");
 			user.setLinkGooglePlus("googlePluss");
 			user.setPhoneNumber("12345678");
-			user.setCellPhone("12346454");			
+			user.setCellPhone("12346454");
 
 			//Seta todos os menus para o usuario.
 			Set<MenuApplication> menusApplication = new HashSet<>(menuApplicationService.findAll().getValue());
 			user.setMenusApplication(menusApplication);
 			User newUser = userService.save(user).getValue();
-			
+
 			//Cria o usuario-filial
 			UserBranchOffice userBranchOffice = new UserBranchOffice(newBranchOffice,newUser.getUserID(), true);
 			userBranchOfficeService.save(userBranchOffice);
-			
-			
+
+
 			//Cria roles para o usuario
 			List<UserRole> userRoles= new ArrayList<UserRole>();
 			userRoles.add(new UserRole(newUser.getUserID(), Role.ROLE_USER));
 			userRoles.add(new UserRole(newUser.getUserID(), Role.ROLE_ADMIN));
 			//user.setUserRoles(userRoles);
-			
-			
+
+
 			userRoleService.save(userRoles);
-			
-			
+
+
 			//Cria o perfil do usuario
 			UserProfile userProfile = new UserProfile();
 			userProfile.setBirthDate(new Date());
 			userProfile.setPhoneNumber("1234567890");
 			userProfile.setUserID(newUser.getUserID());
 			userProfileService.save(userProfile);
-			
-			
+
+
 			//Cria alguns produtos
-			productService.saveOrUpdate( new ProductBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(), 
+			productService.saveOrUpdate( new ProductBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(),
 					userBranchOffice.getBranchOffice().getBranchOfficeID()));
-			
+
 			//Criar alguns clientes
-			customerService.save( new CustomerBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(), 
+			customerService.save( new CustomerBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(),
 					userBranchOffice.getBranchOffice().getBranchOfficeID()) );
-			
+
 			//Criar algumas tabelas de preços
-			priceTableService.save(new PriceTableBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(), 
+			priceTableService.save(new PriceTableBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(),
 					userBranchOffice.getBranchOffice().getBranchOfficeID()));
-			
+
 			//Criar alguns parcelamentos
-			installmentService.save(new InstallmentBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(), 
+			installmentService.save(new InstallmentBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(),
 					userBranchOffice.getBranchOffice().getBranchOfficeID()));
-			
-			
-			
+
+
+
 			apiResponse.setPayload(newUser);
 			apiResponse.setCode(HTTPStatusCode.SUCESS_200.getCode());
 		} catch (Exception e) {
@@ -173,5 +198,24 @@ public class PublicController {
 		}
 		return apiResponse;
 	}
+
+
+	/**
+	 * Retorna o usuario por email.
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value="getUserByEmailAndPassword", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getUserByEmailAndPassword(String email, String password){
+		try{
+			ServiceResponse<UserDTO> payload =  userService.findUserByEmailAndPassword(email, password);
+			LOG.debug("getUserByEmailAndPassword Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
 
 }

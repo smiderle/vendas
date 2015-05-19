@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.organization.BranchOffice;
+import br.com.vendas.domain.product.Product;
 import br.com.vendas.services.organization.BranchOfficeService;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
@@ -75,6 +76,19 @@ public class BranchOfficeRest {
 		} catch (Exception e) {
 			LOG.error(e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+	
+
+	@RequestMapping(value="getAllByChangeGreaterThan", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		try {
+			ServiceResponse<List<BranchOffice>> payload =  service.findAllByChangeGreaterThan(date, organizationID, offset);
+			LOG.debug("getAllByChangeGreaterThan - List<BranchOffice> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));			
 		}
 	}
 

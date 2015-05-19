@@ -17,11 +17,11 @@ public class ProductPromotionDAOImpl  extends ResourceDAO<ProductPromotion> impl
 
 	@Override
 	public List<ProductPromotion> findAllByProductID(Integer productID, Date afterDate) {
-		Session session = getSession();		
-		
+		Session session = getSession();
+
 		Criteria criteria = session.createCriteria(ProductPromotion.class)
-				.add(Restrictions.eq("excluded", false))				
-				.add(Restrictions.eq("productID", productID))			
+				.add(Restrictions.eq("excluded", false))
+				.add(Restrictions.eq("productID", productID))
 				.add(Restrictions.gt("finalDate", afterDate))
 				.addOrder(Order.asc("initialDate"));
 		return criteria.list();
@@ -30,44 +30,41 @@ public class ProductPromotionDAOImpl  extends ResourceDAO<ProductPromotion> impl
 	@Override
 	public List<ProductPromotion> findByByInitalDateAndFinalDate(Integer productID, Date finalDate, Date initialDate, Integer productPromotionID) {
 
-		
+
 		Session session = getSession();
-		
+
 		Criteria criteria = session.createCriteria(ProductPromotion.class)
 				.add(
 						Restrictions.or(
 								Restrictions.or(
-										Restrictions.between("initialDate", initialDate, finalDate), 
-										Restrictions.between("finalDate", initialDate, finalDate)), 
-								Restrictions.and(
-										Restrictions.le("initialDate", initialDate), 
-										Restrictions.ge("finalDate", finalDate))))
-						
-						/*Restrictions.or(
-								Restrictions.between("initialDate", initialDate, finalDate), 
-								Restrictions.between("finalDate", initialDate, finalDate))
-						)*/
-				.add(Restrictions.eq("excluded", false))
-				.add(Restrictions.ne("ID", productPromotionID))
-				.add(Restrictions.eq("productID", productID));
-		
+										Restrictions.between("initialDate", initialDate, finalDate),
+										Restrictions.between("finalDate", initialDate, finalDate)),
+										Restrictions.and(
+												Restrictions.le("initialDate", initialDate),
+												Restrictions.ge("finalDate", finalDate))))
+
+												.add(Restrictions.eq("excluded", false))
+												.add(Restrictions.ne("ID", productPromotionID))
+												.add(Restrictions.eq("productID", productID));
+
 		return criteria.list();
-	
-		
-		
-		/*
-		
+	}
+
+
+	@Override
+	public List<ProductPromotion> findAllByChangeGreaterThan( Date date, Integer organizationID, Integer offset, Integer limit ) {
+
 		Session session = getSession();
-		
+
+
 		Criteria criteria = session.createCriteria(ProductPromotion.class)
-				.add(
-						Restrictions.or(
-								Restrictions.and(Restrictions.gt("initialDate", initialDate), Restrictions.le("initialDate", finalDate)), 
-								Restrictions.and(Restrictions.gt("finalDate", initialDate), Restrictions.le("finalDate", finalDate))))
-				.add(Restrictions.eq("excluded", false))
-				.add(Restrictions.eq("productID", productID));
-		
+				.add(Restrictions.eq("organizationID", organizationID))
+				.add(Restrictions.ge("changeTime", date))
+				.setFirstResult(offset)
+				.setMaxResults(limit)
+				.addOrder(Order.asc("changeTime"));
+
 		return criteria.list();
-	*/}
+	}
 
 }

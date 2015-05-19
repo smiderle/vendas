@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vendas.dao.product.promotion.ProductPromotionDAO;
+import br.com.vendas.domain.LimitQuery;
 import br.com.vendas.domain.product.ProductPromotion;
 import br.com.vendas.exception.ApplicationException;
 import br.com.vendas.exception.RegistrationException;
@@ -31,14 +32,14 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
 		//Retorna dois meses.
 		GregorianCalendar date = new GregorianCalendar();
 		date.add(Calendar.MONTH,-2);
-		
+
 		return ServiceResponseFactory.create(productPromotionDAO.findAllByProductID(productID, date.getTime()));
 	}
-	
+
 	@Transactional(readOnly=false)
 	@Override
 	public ServiceResponse<ProductPromotion> saveOrUpdate(ProductPromotion productPromotion) throws ApplicationException {
-		
+
 		productPromotion.setChangeTime(new Date());
 		//Se for um novo produto, faz a validação
 		/*if(productPromotion.getID() == null) {
@@ -47,27 +48,27 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
 		validatePromotionDate(productPromotion);
 		return ServiceResponseFactory.create(productPromotionDAO.saveOrUpdate(productPromotion));
 	}
-	
+
 
 	/**
-	 * Valida se não existe uma promoção (Com excelçao da própria promoção) cadastrada para o intervalo de data. 
+	 * Valida se não existe uma promoção (Com excelçao da própria promoção) cadastrada para o intervalo de data.
 	 * @param productPromotion
 	 * @throws RegistrationException
 	 */
 	private void validatePromotionDate(ProductPromotion productPromotion) throws RegistrationException {
 		Integer id = productPromotion.getID() != null ? productPromotion.getID() : 0;
-		
+
 		List<ProductPromotion> products = productPromotionDAO.findByByInitalDateAndFinalDate(productPromotion.getProductID(), productPromotion.getFinalDate(),productPromotion.getInitialDate(), id);
-		
+
 		if(products != null && products.size() > 0) {
 			throw new RegistrationException("Já existe uma promoção cadastrada para o período informado");
 		}
-		
+
 		if(productPromotion.getFinalDate().before(productPromotion.getInitialDate())){
 			throw new RegistrationException("A data do final da promoção não pode ser antes do inicio da promoção");
 		}
 
-		
+
 		if(productPromotion.getFinalDate().before(new Date()) && !DateUtils.isSameDay(productPromotion.getFinalDate(), new Date())){
 			throw new RegistrationException("A data do final da promoção deve ser maior ou igual a data de hoje");
 		}
@@ -78,6 +79,11 @@ public class ProductPromotionServiceImpl implements ProductPromotionService {
 	public ServiceResponse<ProductPromotion> remove(ProductPromotion productPromotion) throws ApplicationException {
 		productPromotion.setChangeTime(new Date());
 		return ServiceResponseFactory.create(productPromotionDAO.saveOrUpdate(productPromotion));
+	}
+
+	@Override
+	public ServiceResponse<List<ProductPromotion>> findAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		return ServiceResponseFactory.create(productPromotionDAO.findAllByChangeGreaterThan(new Date(date), organizationID, offset, LimitQuery.LIMIT_SYNC_INIT_LOAD.value()));
 	}
 
 }

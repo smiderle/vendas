@@ -1,5 +1,6 @@
 package br.com.vendas.dao.customer;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -65,6 +66,20 @@ public class CustomerDAOImpl extends ResourceDAO<Customer> implements CustomerDA
 				.add(Restrictions.eq("id", id));
 
 		return (Customer) criteria.uniqueResult();
+	}
+
+	@Override
+	public List<Customer> findAllByChangeGreaterThan(Date date, Integer organizationID, Integer offset, Integer limit) {
+		
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(Customer.class)				
+				.add(Restrictions.eq("organizationID", organizationID))
+				.add(Restrictions.ge("changeTime", date))
+				.setFirstResult(offset)
+				.setMaxResults(limit)		
+				.addOrder(Order.asc("changeTime"));
+		
+		return criteria.list();
 	}
 
 }

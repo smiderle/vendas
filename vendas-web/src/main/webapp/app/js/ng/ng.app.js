@@ -46,7 +46,7 @@ vendasApp.factory('OauthInterceptor',['$rootScope', '$q', '$injector','$location
         }, function (response) {
            if ( response.status === 401 ) {        	   
         	   var deferred = $q.defer();
-        	   window.location = 'http://54.94.216.207/vendas-web/j_spring_security_logout';
+        	   window.location = 'http://127.0.0.1/vendas-web/j_spring_security_logout';
         	   deferred.reject();
             }     
            return $q.reject(response); 

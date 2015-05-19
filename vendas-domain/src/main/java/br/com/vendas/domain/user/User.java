@@ -1,6 +1,5 @@
 package br.com.vendas.domain.user;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,12 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
@@ -33,16 +28,16 @@ import br.com.vendas.domain.application.MenuApplication;
 import br.com.vendas.domain.location.City;
 
 @Entity
-@Table(name="USUARIO", uniqueConstraints={		
+@Table(name="USUARIO", uniqueConstraints={
 		@UniqueConstraint(columnNames={"EMAIL"}, name="UK_USUARIO_EMAIL")})
 
 public class User extends Domain{
 
 	private static final long serialVersionUID = 1L;
-	
-	public User() {		
+
+	public User() {
 	}
-	
+
 	public User(Integer organizationID, String email, String password,
 			String name, boolean active, boolean portalAccess) {
 		super();
@@ -51,113 +46,111 @@ public class User extends Domain{
 		this.password = password;
 		this.name = name;
 		this.active = active;
-		this.portalAccess = portalAccess;		
+		this.portalAccess = portalAccess;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="IDUSUARIO")
 	private Integer userID;
-	
+
 	@Column(name="IDEMPRESA")
 	private Integer organizationID;
-	
+
 	@NaturalId
 	@Column(name="EMAIL")
 	private String email;
-	
+
 	@Column(name="SENHA")
 	private String password;
-	
+
 	@Column(name="NOME", length=50)
-	private String name;		
-	
+	private String name;
+
 	/**
 	 * Data e hora de alteração
 	 */
 	@Column(name="DTHRALTERACAO")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar changeTime;
-	
-	
+	private Date changeTime;
+
+
 	@Column(name="DTHRCADASTRO", insertable=false)
 	private Date registrationDate;
-	
-	
+
+
 	@Column(name="ATIVO")
 	private boolean active;
-	
+
 	/**
 	 * Define se o usuario tem acesso ao portal.
 	 */
 	@Column(name="ACESSO_PORTAL")
 	private boolean portalAccess;
-	
+
 	@OrderBy("order")
 	@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.MERGE)
-    @JoinTable(name="usuario_menu", joinColumns={@JoinColumn(name="idusuario")}
-                                        , inverseJoinColumns={@JoinColumn(name="idmenu")})  
+	@JoinTable(name="usuario_menu", joinColumns={@JoinColumn(name="idusuario")}	, inverseJoinColumns={@JoinColumn(name="idmenu")})
 	private Set<MenuApplication> menusApplication = new LinkedHashSet<>(0);
-		
+
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<UserBranchOffice> userBranches;
-	
+
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private Set<UserRole> userRoles;
-	
+
 	@Column(name="dtnascimento")
 	private Date birthDate;
-	
+
 	@Column(name="fone")
 	private String phoneNumber;
-		
+
 	@Column(name="celular")
 	private String cellPhone;
-	
+
 	@Column(name="urlfoto")
 	private String pictureUrl;
-	
+
 	@Column(name="facebook")
 	private String linkFacebook;
-	
+
 	@Column(name="googleplus")
 	private String linkGooglePlus;
-	
+
 	@Column(name="skype")
 	private String skype;
-	
+
 	@Column(name="rua")
 	private String street;
-	
+
 	@Column(name="bairro")
 	private String district;
-	
+
 	/**
 	 * Numero
 	 */
 	@Column(name="NUMERO")
 	private String number;
 
-	
+
 	@Column(name="cep")
 	private String postalCode;
-	
+
 	@ManyToOne
 	@JoinColumn(name="CIDADE")
 	private City city;
-	
+
 	@Column(name="CPFCNPJ")
 	private String cpfCnpj;
-	
+
 	/**
 	 * RG ou Inscrição Estadual
 	 */
 	@Column(name="inscriestad")
 	private String inscricao;
-	
+
 	@Column(name="contato")
 	private String contactName;
-	
+
 	@Column(name="observacao")
 	private String observation;
 
@@ -201,11 +194,13 @@ public class User extends Domain{
 		this.name = name;
 	}
 
-	public Calendar getChangeTime() {
+
+
+	public Date getChangeTime() {
 		return changeTime;
 	}
 
-	public void setChangeTime(Calendar changeTime) {
+	public void setChangeTime(Date changeTime) {
 		this.changeTime = changeTime;
 	}
 
@@ -216,7 +211,7 @@ public class User extends Domain{
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
-	
+
 	public boolean isActive() {
 		return active;
 	}
@@ -233,7 +228,7 @@ public class User extends Domain{
 		this.portalAccess = portalAccess;
 	}
 
-	
+
 	public Set<MenuApplication> getMenusApplication() {
 		return menusApplication;
 	}
@@ -298,7 +293,7 @@ public class User extends Domain{
 		this.linkGooglePlus = linkGooglePlus;
 	}
 
-	
+
 
 	public String getSkype() {
 		return skype;
@@ -308,8 +303,8 @@ public class User extends Domain{
 		this.skype = skype;
 	}
 
-	
-	
+
+
 
 	public String getStreet() {
 		return street;
@@ -333,7 +328,7 @@ public class User extends Domain{
 
 	public void setNumber(String number) {
 		this.number = number;
-	}	
+	}
 
 	public String getPostalCode() {
 		return postalCode;
@@ -401,23 +396,28 @@ public class User extends Domain{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		User other = (User) obj;
 		if (userID == null) {
-			if (other.userID != null)
+			if (other.userID != null) {
 				return false;
-		} else if (!userID.equals(other.userID))
+			}
+		} else if (!userID.equals(other.userID)) {
 			return false;
+		}
 		return true;
 	}
 
-	
-	
-	
-	
+
+
+
+
 }

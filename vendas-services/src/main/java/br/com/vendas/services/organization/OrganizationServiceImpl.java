@@ -1,5 +1,6 @@
 package br.com.vendas.services.organization;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,8 +16,8 @@ import br.com.vendas.services.support.ServiceResponseFactory;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-public class OrganizationServiceImpl implements OrganizationService{
-	
+public class OrganizationServiceImpl implements OrganizationService {
+
 	@Inject
 	private OrganizationDAO organizationDAO;
 
@@ -29,6 +30,13 @@ public class OrganizationServiceImpl implements OrganizationService{
 
 	@Override
 	public ServiceResponse<List<Organization>> findAll() {
-		  return ServiceResponseFactory.create(organizationDAO.findAll());
+		return ServiceResponseFactory.create(organizationDAO.findAll());
+	}
+
+	@Override
+	public ServiceResponse<Organization> getByOrganizationId(Long date, Integer organizationID) {
+
+		return ServiceResponseFactory.create( organizationDAO.findByOrganizationId( new Date(date), organizationID) );
+
 	}
 }

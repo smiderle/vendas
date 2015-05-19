@@ -18,33 +18,30 @@ import br.com.vendas.services.user.UserService;
 
 
 public class CustomUserAuthenticationProvider implements AuthenticationProvider {
-	
+
 	@Inject
-	private UserService userService;	
-	
+	private UserService userService;
+
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		
-		System.out.println("Usuário "+  authentication.getPrincipal().toString());
-		System.out.println("Senha "+  authentication.getCredentials() );
-		
-		ServiceResponse<UserDTO> findUserByID = userService.findUserByEmail( authentication.getPrincipal().toString() );
+
+		ServiceResponse<UserDTO> findUserByID = userService.findUserBasicByEmail( authentication.getPrincipal().toString() );
 		UserDTO user = findUserByID.getValue();
-		
+
 		if( user != null && authentication.getCredentials() != null && user.getEmail().equals( authentication.getCredentials() ) ) {
-			
+
 			List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 			UserAuthenticate auth=new UserAuthenticate(authentication.getPrincipal(), authentication.getCredentials(),grantedAuthorities);
-			
-			return auth;		
+
+			return auth;
 		} else {
-				throw new BadCredentialsException("Usuário ou senha inválidos.");
+			throw new BadCredentialsException("Usuário ou senha inválidos.");
 		}
 	}
 
 	@Override
 	public boolean supports(Class<? extends Object> authentication) {
-		
+
 		return true;
 	}
 

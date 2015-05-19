@@ -14,17 +14,23 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="PRODUTO_PROMOCAO")
 public class ProductPromotion {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ID;
-	
+
+	@Column(name="IDEMPRESA")
+	private Integer organizationID;
+
+	@Column(name="IDFILIAL")
+	private Integer branchID;
+
 	@Column(name="IDPRODUTO")
 	private Integer productID;
-	
+
 	@Column(name="PRECO_PROMOCAO")
 	private Double promotionPrice;
-	
+
 	@Column(name="DATA_INICIAL")
 	@Temporal(TemporalType.DATE)
 	private Date initialDate;
@@ -32,10 +38,10 @@ public class ProductPromotion {
 	@Column(name="DATA_FINAL")
 	@Temporal(TemporalType.DATE)
 	private Date finalDate;
-	
+
 	@Column(name="EXCLUIDA")
 	private boolean excluded;
-	
+
 	@Column(name="DTHRALTERACAO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date changeTime;
@@ -96,5 +102,22 @@ public class ProductPromotion {
 		this.changeTime = changeTime;
 	}
 
-	
+	public Integer getOrganizationID() {
+		return organizationID;
+	}
+
+	public void setOrganizationID(Integer organizationID) {
+		this.organizationID = organizationID;
+	}
+
+	public Integer getBranchID() {
+		return branchID;
+	}
+
+	public void setBranchID(Integer branchID) {
+		this.branchID = branchID;
+	}
+
+
+
 }

@@ -19,6 +19,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.vendas.domain.customer.Customer;
 
@@ -26,10 +27,10 @@ import br.com.vendas.domain.customer.Customer;
 @Entity
 @Table(name="PEDIDO")
 public class Order implements Serializable {
-	
+
 	public static final int PEDIDO = 1;
 	public static final int ORCAMENTO = 2;
-	
+
 	/**
 	 * 
 	 */
@@ -39,45 +40,45 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
 	private Long ID;
-	
+
 	@Column(name="IDEMPRESA")
 	private Integer organizationID;
-	
+
 	@Column(name="IDFILIAL")
 	private Integer branchID;
-	
+
 	@ManyToOne
 	@JoinColumn(name="IDCLIENTE")
 	private Customer customer;
-	
+
 	/*@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="IDVENDEDOR")
 	private User user;*/
-	
+
 	@Column(name="IDVENDEDOR")
 	private Integer userID;
-	
-	
+
+
 	@ManyToOne
 	@JoinColumn(name="IDPARCELAMENTO")
 	private Installment installment;
-	
+
 	@Column(name="VALORBRUTO")
 	private Double grossValue;
-	
+
 	@Column(name="VALORLIQUIDO")
 	private Double netValue;
-	
+
 	@Column(name="DESCONTOTOTAL")
 	private Double totalDiscount;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DTHRALTERACAO")
 	private Date changeTime;
-		
-	@Column(name="OBSERVACAO")	
+
+	@Column(name="OBSERVACAO")
 	private String observation;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DTHREMISSAO")
 	private Date issuanceTime;
@@ -85,25 +86,29 @@ public class Order implements Serializable {
 	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="IDPEDIDO")*/
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.LAZY)
-	private Set<OrderItem> ordersItens = new HashSet<>(0);	
-	
+	private Set<OrderItem> ordersItens = new HashSet<>(0);
+
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "order", fetch = FetchType.LAZY)
 	@OrderBy("sequence")
 	private Set<OrderPayment> ordersPayments = new HashSet<>(0);
-	
+
 	@Column(name="FORMAPAGAMENTO")
 	private Integer formPayment;
-	
+
 	@Column(name="EXCLUIDO")
 	private boolean excluded;
-	
+
 	/**
 	 * 1 - Pedido
 	 * 2 - Orçamento
 	 */
 	@Column(name="TIPO")
 	private Integer type;
-	
+
+	@Transient
+	private Long idMobile;
+
+
 	public Long getID() {
 		return ID;
 	}
@@ -136,7 +141,7 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-	
+
 	public Installment getInstallment() {
 		return installment;
 	}
@@ -192,8 +197,8 @@ public class Order implements Serializable {
 	public void setIssuanceTime(Date issuanceTime) {
 		this.issuanceTime = issuanceTime;
 	}
-	
-	
+
+
 	public Set<OrderItem> getOrdersItens() {
 		return ordersItens;
 	}
@@ -241,4 +246,15 @@ public class Order implements Serializable {
 	public void setType(Integer type) {
 		this.type = type;
 	}
+
+	public Long getIdMobile() {
+		return idMobile;
+	}
+
+	public void setIdMobile(Long idMobile) {
+		this.idMobile = idMobile;
+	}
+
+
+
 }

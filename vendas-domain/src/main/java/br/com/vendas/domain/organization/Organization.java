@@ -1,5 +1,7 @@
 package br.com.vendas.domain.organization;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,19 +19,19 @@ import br.com.vendas.domain.Domain;
 @Entity
 @Table(name="empresa")
 public class Organization extends Domain {
-		
+
 	private static final long serialVersionUID = -1759848649572554649L;
 
-	public Organization() {	
+	public Organization() {
 	}
-	
+
 	public Organization(Integer organizationID) {
 		super();
 		this.organizationID = organizationID;
 	}
-	
-	
-	
+
+
+
 	public Organization(String name) {
 		super();
 		this.name = name;
@@ -39,9 +41,16 @@ public class Organization extends Domain {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="idempresa")
 	private Integer organizationID;
-	
+
 	@Column(name="nome")
 	private String name;
+
+
+	/**
+	 * Data e hora de alteração
+	 */
+	@Column(name="dthralteracao")
+	private Date changeTime;
 
 	public Integer getOrganizationID() {
 		return organizationID;
@@ -59,6 +68,12 @@ public class Organization extends Domain {
 		this.name = name;
 	}
 
-	
-	
+	public Date getChangeTime() {
+		return changeTime;
+	}
+
+	public void setChangeTime(Date changeTime) {
+		this.changeTime = changeTime;
+	}
+
 }

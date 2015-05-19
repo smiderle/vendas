@@ -3,6 +3,7 @@ package br.com.vendas.services.order.installment;
 import java.util.List;
 
 import br.com.vendas.domain.order.Installment;
+import br.com.vendas.domain.order.PriceTable;
 import br.com.vendas.exception.RegistrationException;
 import br.com.vendas.services.support.ServiceResponse;
 
@@ -33,4 +34,12 @@ public interface InstallmentService {
 	
 	
 	void save(List<Installment> installments);
+
+
+	/**
+	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.
+	 * @param date
+	 * @return
+	 */
+	ServiceResponse<List<Installment>> findAllByChangeGreaterThan( Long date, Integer organizationID, Integer offset );
 }

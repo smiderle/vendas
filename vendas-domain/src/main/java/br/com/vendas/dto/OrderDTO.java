@@ -11,11 +11,12 @@ import br.com.vendas.domain.order.OrderItem;
 import br.com.vendas.domain.order.OrderPayment;
 
 public class OrderDTO {
-	
-	
+
+
 	public OrderDTO(Order order, Installment installment, Set<OrderItem> ordersItens, Set<OrderPayment> ordersPayments) {
 		if(order != null){
 			setID(order.getID());
+			setIdMobile(order.getIdMobile());
 			setOrganizationID(order.getOrganizationID());
 			setBranchID(order.getBranchID());
 			setUserID(order.getUserID());
@@ -31,41 +32,43 @@ public class OrderDTO {
 			setCustomer(order.getCustomer());
 			setType(order.getType());
 			setFormPayment(order.getFormPayment());
-		}		
+		}
 	}
-	
-	
-	private Long ID;	
-	
-	private Integer organizationID;	
-	
+
+
+	private Long ID;
+
+	private Integer organizationID;
+
 	private Integer branchID;
-	
+
 	private Customer customer;
-		
+
 	private Integer userID;
-		
+
 	private Installment installment;
-		
+
 	private Double grossValue;
-	
+
 	private Double netValue;
-	
+
 	private Double totalDiscount;
-	
+
 	private Date changeTime;
-		
+
 	private String observation;
-	
+
 	private Date issuanceTime;
-	
+
 	private Integer type;
-	
+
 	private Integer formPayment;
 
-	private Set<OrderItem> ordersItens = new HashSet<>(0);	
-	
+	private Set<OrderItem> ordersItens = new HashSet<>(0);
+
 	private Set<OrderPayment> ordersPayments = new HashSet<>(0);
+
+	private Long idMobile;
 
 	public Long getID() {
 		return ID;
@@ -195,7 +198,15 @@ public class OrderDTO {
 		this.formPayment = formPayment;
 	}
 
-	
-	
+	public Long getIdMobile() {
+		return idMobile;
+	}
+
+	public void setIdMobile(Long idMobile) {
+		this.idMobile = idMobile;
+	}
+
+
+
 
 }

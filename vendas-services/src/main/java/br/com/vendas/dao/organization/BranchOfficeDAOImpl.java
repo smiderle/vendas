@@ -1,7 +1,9 @@
 package br.com.vendas.dao.organization;
 
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.AggregateProjection;
 import org.hibernate.criterion.Criterion;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import br.com.vendas.dao.ResourceDAO;
 import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.organization.Organization;
+import br.com.vendas.domain.product.Product;
 
 @Repository
 public class BranchOfficeDAOImpl extends ResourceDAO<BranchOffice> implements BranchOfficeDAO{
@@ -47,6 +50,21 @@ public class BranchOfficeDAOImpl extends ResourceDAO<BranchOffice> implements Br
 				.setProjection(projection)
 				.uniqueResult();
 		return maxID != null ? maxID : 0;
+	}
+	
+
+	@Override
+	public List<BranchOffice> findAllByChangeGreaterThan( Date date, Integer organizationID, Integer offset, Integer limit ) {
+		
+		Session session = getSession();
+		Criteria criteria = session.createCriteria(BranchOffice.class)				
+				.add(Restrictions.eq("organization.organizationID", organizationID))
+				.add(Restrictions.ge("changeTime", date))
+				.setFirstResult(offset)
+				.setMaxResults(limit)		
+				.addOrder(Order.asc("changeTime"));
+		
+		return criteria.list();
 	}
 
 }

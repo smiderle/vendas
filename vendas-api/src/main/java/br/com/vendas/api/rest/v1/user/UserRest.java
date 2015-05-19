@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.vendas.domain.product.Product;
 import br.com.vendas.domain.user.User;
 import br.com.vendas.exception.ApplicationException;
 import br.com.vendas.exception.ParseJsonException;
@@ -164,5 +165,18 @@ public class UserRest {
 			LOG.error(e.getMessage(), e);				
 		}
 	}
+	
+	@RequestMapping(value="getAllByChangeGreaterThan", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		try {
+			ServiceResponse<List<UserDTO>> payload =  service.findAllByChangeGreaterThan(date, organizationID, offset);
+			LOG.debug("getAllByChangeGreaterThan - List<UserDTO> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+		}
+	}
 
 }
+

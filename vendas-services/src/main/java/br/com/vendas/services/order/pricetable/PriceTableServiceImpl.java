@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vendas.dao.order.pricetable.PriceTableDAO;
+import br.com.vendas.domain.LimitQuery;
 import br.com.vendas.domain.order.PriceTable;
 import br.com.vendas.domain.product.Product;
 import br.com.vendas.domain.user.UserAction;
@@ -78,6 +79,11 @@ public class PriceTableServiceImpl implements PriceTableService {
 	@Override
 	public void save(List<PriceTable> priceTables) {
 		priceTableDAO.save( priceTables );
+	}
+
+	@Override
+	public ServiceResponse<List<PriceTable>> findAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		return ServiceResponseFactory.create(priceTableDAO.findAllByChangeGreaterThan(new Date(date), organizationID, offset, LimitQuery.LIMIT_SYNC_INIT_LOAD.value()));
 	}
 
 }

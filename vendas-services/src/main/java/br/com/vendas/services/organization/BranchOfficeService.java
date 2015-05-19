@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.organization.Organization;
+import br.com.vendas.domain.product.Product;
 import br.com.vendas.exception.RegistrationException;
 import br.com.vendas.services.support.ServiceResponse;
 
@@ -45,5 +46,14 @@ public interface BranchOfficeService {
 	 */
 	ServiceResponse<BranchOffice> saveOrUpdate(Integer userID, BranchOffice branchOffice);
 
+	
+	
+
+	/**
+	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.
+	 * @param date
+	 * @return
+	 */
+	ServiceResponse<List<BranchOffice>> findAllByChangeGreaterThan( Long date,Integer organizationID, Integer offset );
 
 }

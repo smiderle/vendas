@@ -1,9 +1,11 @@
 package br.com.vendas.dao.customer;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.vendas.dao.GenericDAO;
 import br.com.vendas.domain.customer.Customer;
+import br.com.vendas.domain.product.Product;
 
 public interface CustomerDAO extends GenericDAO<Customer> {
 	
@@ -32,4 +34,11 @@ public interface CustomerDAO extends GenericDAO<Customer> {
 	 */
 	Customer findByID(Integer id);
 
+
+	/**
+	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.
+	 * @param date
+	 * @return
+	 */
+	List<Customer> findAllByChangeGreaterThan( Date date,Integer organizationID, Integer offset, Integer limit );
 }

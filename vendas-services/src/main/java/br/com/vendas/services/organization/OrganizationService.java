@@ -6,13 +6,17 @@ import br.com.vendas.domain.organization.Organization;
 import br.com.vendas.services.support.ServiceResponse;
 
 public interface OrganizationService {
-	
+
 	/**
 	 * Salva a empresa.
 	 */
 	ServiceResponse<Organization> save(Organization organization);
-	
+
 	ServiceResponse<List<Organization>> findAll();
-	
-	
+
+	ServiceResponse<Organization> getByOrganizationId(Long date, Integer organizationID);
+
+
+
+
 }

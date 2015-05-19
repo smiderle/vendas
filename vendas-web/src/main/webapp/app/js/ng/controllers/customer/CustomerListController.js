@@ -157,7 +157,7 @@ vendasApp.controller('CustomerListController',
 				
 				customerRows.push([
 					              '<label class="checkbox"><input type="radio" name="checkbox-inline" value="'+customer.id+'"><i></i></label>',
-					              '<label class="'+classRow+'">'+customer.customerID+'</label>',
+					              '<label class="'+classRow+'">'+customer.id+'</label>',
 					              '<label class="'+classRow+'">'+customer.name+'</label>',
 					              '<label class="'+classRow+'">'+customer.cpfCnpj != null ? customer.cpfCnpj : ' ' +'</label>',
 					              '<label class="'+classRow+'">'+customer.cellPhone != null ? customer.cellPhone  : ' ' +'</label>',

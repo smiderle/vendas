@@ -11,14 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="PRODUTO")
 public class Product {
-	
+
 	public Product() {
 	}
-	
+
 	public Product(Integer organizationID, Integer branchID, String productID, ProductGroup group, String description, String reference,
 			String packaging, String barcode, Double stockAmount, Double salePrice, Boolean active, Date changeTime, Date registrationDate,
 			boolean excluded, String pictureUrl) {
@@ -44,53 +45,56 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ID")
 	private Integer ID;
-	
+
 	@Column(name="IDEMPRESA")
 	private Integer organizationID;
-	
+
 	@Column(name="IDFILIAL")
 	private Integer branchID;
-	
+
 	@Column(name="CODIGO_PRODUTO")
 	private String productID;
-		
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="IDGRUPO")
 	private ProductGroup group;
-	
+
 	@Column(name="DESCRICAO")
 	private String description;
-	
+
 	@Column(name="REFERENCIA")
 	private String reference;
-	
+
 	@Column(name="embalagem")
 	private String packaging;
-	
+
 	@Column(name="CODBAR")
 	private String barcode;
-	
+
 	@Column(name="QUANTIDADE_ESTOQUE")
 	private Double stockAmount;
-		
+
 	@Column(name="PRECO_VENDA")
 	private Double salePrice;
-	
+
 	@Column(name="ATIVO")
 	private Boolean active;
-	
+
 	@Column(name="DTHRALTERACAO")
 	private Date changeTime;
-	
-	
+
+
 	@Column(name="DTHRCADASTRO", insertable=false)
 	private Date registrationDate;
-	
+
 	@Column(name="EXCLUIDO")
 	private boolean excluded;
-	
+
 	@Column(name="url_imagem")
 	private String pictureUrl;
+
+	@Transient
+	private Integer idMobile;
 
 	public Integer getID() {
 		return ID;
@@ -220,5 +224,14 @@ public class Product {
 	public void setSalePrice(Double salePrice) {
 		this.salePrice = salePrice;
 	}
-	
+
+	public Integer getIdMobile() {
+		return idMobile;
+	}
+
+	public void setIdMobile(Integer idMobile) {
+		this.idMobile = idMobile;
+	}
+
+
 }

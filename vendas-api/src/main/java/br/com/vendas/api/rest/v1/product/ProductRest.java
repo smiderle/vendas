@@ -13,21 +13,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.product.Product;
+import br.com.vendas.helper.ObjectMapperHelper;
 import br.com.vendas.services.product.ProductService;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 @RequestMapping("/private/v1/product")
 @Controller
 public class ProductRest {
-	
+
 	private static final Logger LOG = Logger.getLogger(ProductRest.class);
-	
-	@Inject	
+
+	@Inject
 	private ProductService productService;
-	
+
 	/**
 	 * Retorna todos os 100 proximos produtos de determinada filial.
 	 * @param organizationID
@@ -41,10 +44,10 @@ public class ProductRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
-	
+
 	/**
 	 * Retorna todos os 100 proximos produtos de determinada filial que iniciam com a descrição, ou código.
 	 * @param organizationID
@@ -58,10 +61,10 @@ public class ProductRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
-	
+
 	/**
 	 * Salva ou atualiza um produto.
 	 * @param organizationID
@@ -75,7 +78,40 @@ public class ProductRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
-	}	
+	}
+
+
+	@RequestMapping(value="getAllByChangeGreaterThan", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		try {
+			ServiceResponse<List<Product>> payload =  productService.findAllByChangeGreaterThan(date, organizationID, offset);
+			LOG.debug("getAllByChangeGreaterThan - List<Product> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+
+	/**
+	 * Salva ou atualiza um produto.
+	 * @param organizationID
+	 * @return
+	 */
+	@RequestMapping(value="saveList", method = RequestMethod.POST )
+	public @ResponseBody ApiResponse saveList( @RequestBody String products) {
+		try {
+
+			List<Product> listProduct = ObjectMapperHelper.readValue(products, new TypeReference<List<Product>>() {});
+			ServiceResponse<List<Product>> payload = productService.save(listProduct);
+			LOG.debug("saveList - List<Product> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
 }

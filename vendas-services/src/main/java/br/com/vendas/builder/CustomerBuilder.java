@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.com.vendas.core.util.PictureUtil;
 import br.com.vendas.domain.customer.Customer;
 
 public class CustomerBuilder {
-	
-	private final String URL_FOTO = "https://s3-sa-east-1.amazonaws.com/vendas.pictures.product/23ab5f12-fd42-4f54-a17d-775e1d63eb0a"; 
-	
+
+
 	public List<Customer> create(Integer organizationID, Integer branchID){
-		Customer customer = new Customer(organizationID, branchID, "1", "GETULIO VARGAS", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);		
-		Customer customer2 = new Customer(organizationID, branchID, "2", "GETULIO VARGAS", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer3 = new Customer(organizationID, branchID, "3", "JUCELINO KUBICHEK", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer4 = new Customer(organizationID, branchID, "4", "DEODORO DA FONSECA", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer5 = new Customer(organizationID, branchID, "5", "FLORIANO PEIXOTO", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer6 = new Customer(organizationID, branchID, "6", "PRUDENTE DE MORAIS", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer7 = new Customer(organizationID, branchID, "7", "CAMPOS SALES", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer8 = new Customer(organizationID, branchID, "8", "RODRIGUES ALVES", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer9 = new Customer(organizationID, branchID, "9", "AFONSO PENA", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		Customer customer10 = new Customer(organizationID, branchID, "10", "NILO PEÇANHA", "GETULIO", 1, "11111111111", "55555555", "11111111", "22222222", "11111111", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, URL_FOTO, null, null, null);
-		
-		
-		
+		Customer customer = new Customer(organizationID, branchID, "1", "GETULIO VARGAS", "GETULIO", 1, "80127475532", "85856521", "(44) 3265-7478", "(44) 3265-7478", "(44) 3265-7478", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO , null, null, null);
+		Customer customer2 = new Customer(organizationID, branchID, "2", "GETULIO VARGAS", "GETULIO", 1, "18715804127", "84565412", "(41) 4454-4569", "(41) 4454-4569", "(41) 4454-4569", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer3 = new Customer(organizationID, branchID, "3", "JUCELINO KUBICHEK", "GETULIO", 1, "88829645230", "23457712", "(46) 3225-4566", "(46) 3225-4566", "(46) 3225-4566", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer4 = new Customer(organizationID, branchID, "4", "DEODORO DA FONSECA", "GETULIO", 1, "53429593905", "549321565", "(45) 3525-6478", "(45) 3525-6478", "(45) 3525-6478", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer5 = new Customer(organizationID, branchID, "5", "FLORIANO PEIXOTO", "GETULIO", 1, "82331521530", "32641211", "(46) 3562-1236", "(46) 3562-1236", "(46) 3562-1236", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer6 = new Customer(organizationID, branchID, "6", "PRUDENTE DE MORAIS", "GETULIO", 1, "45084427145", "38792512", "(46) 3224-4545", "(46) 3224-4545", "(46) 3224-4545", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer7 = new Customer(organizationID, branchID, "7", "CAMPOS SALES", "GETULIO", 1, "72742535900", "1113657462", "(41) 2311-1232", "(41) 2311-1232", "(41) 2311-1232", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer8 = new Customer(organizationID, branchID, "8", "RODRIGUES ALVES", "GETULIO", 1, "62132577480", "336523511", "(65) 3245-3254", "(65) 3245-3254", "(65) 3245-3254", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer9 = new Customer(organizationID, branchID, "9", "AFONSO PENA", "GETULIO", 1, "76688113546", "22585521", "(63) 3425-6545", "(63) 3425-6545", "(63) 3425-6545", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+		Customer customer10 = new Customer(organizationID, branchID, "10", "NILO PEÇANHA", "GETULIO", 1, "42719761648", "336989556", "(25) 3125-2525", "(25) 3125-2525", "(25) 3125-2525", "88888888", "COMPLEMENTO", "ALGUMA OBSERVAÇÃO", new Date(), new Date(), null, "11111111", "NOME DA RUA", "BAIRRO", "80", "email@gmail.com", 0.0, 100000.0, null, true, new Date(), false, PictureUtil.URL_USUARIO_SEM_FOTO, null, null, null);
+
+
+
 		List<Customer> customers = new ArrayList<>();
 		customers.add( customer );
 		customers.add( customer2);
@@ -34,7 +34,7 @@ public class CustomerBuilder {
 		customers.add( customer7 );
 		customers.add( customer8 );
 		customers.add( customer9 );
-		customers.add( customer10 );		
-		return customers;		
+		customers.add( customer10 );
+		return customers;
 	}
 }

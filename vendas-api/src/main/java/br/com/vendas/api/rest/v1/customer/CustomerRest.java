@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.customer.Customer;
+import br.com.vendas.helper.ObjectMapperHelper;
 import br.com.vendas.services.customer.CustomerService;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 @RequestMapping(value="/private/v1/customer")
 @Controller
@@ -38,7 +41,7 @@ public class CustomerRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
 
@@ -50,13 +53,13 @@ public class CustomerRest {
 	 */
 	@RequestMapping(value="saveCustomer", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse saveCustomer(@RequestHeader(value="userID") Integer userID, @RequestBody Customer customer){
-		try{			
-			ServiceResponse<Customer> payload =  customerService.save(userID, customer);			
+		try{
+			ServiceResponse<Customer> payload =  customerService.save(userID, customer);
 			LOG.debug("List<Customer> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
 
@@ -69,7 +72,7 @@ public class CustomerRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
 
@@ -82,10 +85,10 @@ public class CustomerRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
-	
+
 	/**
 	 * Tem algum pagamento vencido
 	 * @param customerID
@@ -99,7 +102,39 @@ public class CustomerRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+	@RequestMapping(value="getAllByChangeGreaterThan", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse getAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
+		try {
+			ServiceResponse<List<Customer>> payload =  customerService.findAllByChangeGreaterThan(date, organizationID, offset);
+			LOG.debug("getAllByChangeGreaterThan - List<Customer> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+
+	/**
+	 * Salva ou atualiza um produto.
+	 * @param organizationID
+	 * @return
+	 */
+	@RequestMapping(value="saveList", method = RequestMethod.POST )
+	public @ResponseBody ApiResponse saveList( @RequestBody String customers) {
+		try {
+
+			List<Customer> listCustomer = ObjectMapperHelper.readValue(customers, new TypeReference<List<Customer>>() {});
+			ServiceResponse<List<Customer>> payload = customerService.save(listCustomer);
+			LOG.debug("saveList - List<Customer> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
 
