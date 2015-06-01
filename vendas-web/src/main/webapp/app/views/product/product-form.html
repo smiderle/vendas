@@ -60,9 +60,9 @@
 											<fieldset class="padding-10">
 												<div class="row">
 													<section class="col col-2">
-														<label class="label">Código *</label>																					
+														<label class="label">Código</label>																					
 														<label class="input">												
-															<input type="text" name="prudoctID" placeholder="Código" maxlength="9" ng-model="product.productID" class="form-control">
+															<input type="text" name="prudoctID" placeholder="Código" maxlength="9" ng-model="product.id" ng-disabled="true" class="form-control">
 														</label>
 													</section>
 												</div>
@@ -245,10 +245,7 @@
 
 		var $checkoutForm = $('#productForm').validate({
 			// Rules for form validation
-			rules : {
-				prudoctID : {
-					required : true,
-				},
+			rules : {			
 				
 				description : {
 					required : true
@@ -272,11 +269,7 @@
 			},
 
 			// Messages for form validation
-			messages : {
-				prudoctID : {
-					required : 'Por favor, informe um código',
-					digits : 'Por favor, informe somente numeros'
-				},
+			messages : {				
 				
 				description : {
 					required : 'Por favor, informe uma descrição',

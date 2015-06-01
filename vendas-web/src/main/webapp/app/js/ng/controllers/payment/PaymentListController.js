@@ -179,7 +179,7 @@
 					                /*paymentsSize + index + 1,
 					                payment.id, */
 					                payment.order.id,
-					                payment.order.customer.customerID +' - '+ payment.order.customer.name,
+					                payment.order.customer.id +' - '+ payment.order.customer.name,
 					                moment(payment.expirationDate).format('L'),
 					                payment.documentNumber,
 					                payment.observation,

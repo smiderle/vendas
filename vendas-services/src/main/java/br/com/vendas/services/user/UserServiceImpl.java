@@ -1,7 +1,9 @@
 package br.com.vendas.services.user;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +22,7 @@ import br.com.vendas.builder.ProductBuilder;
 import br.com.vendas.dao.user.UserDAO;
 import br.com.vendas.dao.user.UserRoleDAO;
 import br.com.vendas.domain.LimitQuery;
+import br.com.vendas.domain.application.License;
 import br.com.vendas.domain.application.MenuApplication;
 import br.com.vendas.domain.organization.BranchOffice;
 import br.com.vendas.domain.organization.Organization;
@@ -29,10 +32,12 @@ import br.com.vendas.domain.user.UserAction;
 import br.com.vendas.domain.user.UserBranchOffice;
 import br.com.vendas.domain.user.UserProfile;
 import br.com.vendas.domain.user.UserRole;
+import br.com.vendas.enumeration.VersionType;
 import br.com.vendas.exception.RegistrationException;
 import br.com.vendas.exception.VendasException;
 import br.com.vendas.helper.UserActionHelper;
 import br.com.vendas.pojo.UserDTO;
+import br.com.vendas.services.application.LicenseService;
 import br.com.vendas.services.application.MenuApplicationService;
 import br.com.vendas.services.customer.CustomerService;
 import br.com.vendas.services.order.installment.InstallmentService;
@@ -53,7 +58,9 @@ import br.com.vendas.services.support.ServiceResponseFactory;
 
 @Service
 @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
+
+	public static final int DIAS_DEMONSTRACAO = 20;
 
 
 
@@ -98,6 +105,9 @@ public class UserServiceImpl implements UserService{
 
 	@Inject
 	private InstallmentService installmentService;
+
+	@Inject
+	private LicenseService licenseService;
 
 
 
@@ -300,7 +310,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional(readOnly=false)
-	public ServiceResponse<UserDTO> generateNewUser(String organizationName, String userName, String email, String password) throws VendasException {
+	public ServiceResponse<UserDTO> generateNewUser(String organizationName, String userName, String email, String password, String serial) throws VendasException {
 
 
 		ServiceResponse<UserDTO> findUserByEmail = findUserByEmail( email );
@@ -360,6 +370,22 @@ public class UserServiceImpl implements UserService{
 		userProfile.setPhoneNumber("1234567890");
 		userProfile.setUserID(newUser.getUserID());
 		userProfileService.save(userProfile);
+
+
+		License license = new License();
+		license.setChangeTime( new Date() );
+		license.setRegistrationDate( new Date() );
+		license.setSerial(serial);
+		license.setUser(newUser);
+		license.setVersionType(VersionType.DEMONSTRACAO);
+
+		licenseService.save(license);
+
+
+		Calendar calendar = new GregorianCalendar();
+		calendar.add( Calendar.DAY_OF_MONTH, DIAS_DEMONSTRACAO );
+
+		license.setExpirationDate( calendar.getTime() );
 
 
 		//Cria alguns produtos

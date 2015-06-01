@@ -103,7 +103,7 @@ public interface UserService {
 	 */
 	ServiceResponse<UserDTO> findUserBasicByEmail(String email);
 
-	ServiceResponse<UserDTO> generateNewUser(String organizationName, String userName, String email, String password) throws RegistrationException, VendasException ;
+	ServiceResponse<UserDTO> generateNewUser(String organizationName, String userName, String email, String password, String serial) throws RegistrationException, VendasException ;
 
 
 

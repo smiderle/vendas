@@ -6,8 +6,8 @@ import br.com.vendas.services.support.ServiceResponse;
 
 
 public class ResponseBuilder {
-	
-	
+
+
 	public static <T> ApiResponse build(ServiceResponse<T> serviceResponse){
 		ApiResponse apiResponse = new ApiResponse();
 		apiResponse.setPayload(serviceResponse);
@@ -17,8 +17,18 @@ public class ResponseBuilder {
 		apiResponse.setHour(new Date().getTime());
 		return apiResponse;
 	}
-	
-	
+
+	public static <T> ApiResponse build( T object){
+		ApiResponse apiResponse = new ApiResponse();
+		apiResponse.setPayload( object );
+		apiResponse.setCode(HTTPStatusCode.SUCESS_200.getCode());
+		apiResponse.setStatus(ApiResponse.STATUS_SUCCESS);
+		apiResponse.setMessage(ApiResponse.STATUS_SUCCESS);
+		apiResponse.setHour(new Date().getTime());
+		return apiResponse;
+	}
+
+
 	public static ApiResponse build(VendasExceptionWapper e){
 		ApiResponse apiResponse = new ApiResponse();
 		apiResponse.setPayload(e);

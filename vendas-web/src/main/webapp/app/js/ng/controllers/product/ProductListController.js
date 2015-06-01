@@ -162,7 +162,7 @@
 					productRows.push([
 					              '<label class="checkbox"><input type="radio" name="checkbox-inline" value="'+product.id+'"><i></i></label>',
 					              '<label class="'+classRow+'">'+ (productsSize + index +1 ) +'</label>',
-					              '<label class="'+classRow+'">'+product.productID+'</label>',
+					              '<label class="'+classRow+'">'+product.id+'</label>',
 					              '<strong><label class="'+classRow+'">'+product.description+'</label></strong>',
 					              '<label class="'+classRow+'">'+product.packaging != null ? product.packaging : '' +'</label>',
 					              '<label class="'+classRow+'">'+parseFloat(product.stockAmount).toFixed(2).replace('.', ',')+'</label>',

@@ -1,5 +1,6 @@
 package br.com.vendas.services.product;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -96,12 +97,36 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly=false)
 	public ServiceResponse<List<Product>> save(List<Product> products) {
-		for (Product product : products) {
-			product.setID(null);
-			product.setChangeTime(new Date());
+
+		List<Product> productsSaved = new ArrayList<>();
+
+		for ( Product product : products ) {
+
+
+			product.setChangeTime( new Date() );
+
+			Product produto = null;
+
+			/*
+			 * Se o idMobile for o mesmo código do id, é porque foi cadastrado no mobile.
+			 */
+			if( product.getID().equals( product.getIdMobile() ) ){
+
+				product.setID( null );
+
+
+			}
+
+			produto = productDAO.saveOrUpdate( product );
+
+
+
+
+			productsSaved.add(produto);
+
 		}
 
-		List<Product> productsSaved = productDAO.save(products);
+		//List<Product> productsSaved = productDAO.save(products);
 
 		return ServiceResponseFactory.create( productsSaved );
 

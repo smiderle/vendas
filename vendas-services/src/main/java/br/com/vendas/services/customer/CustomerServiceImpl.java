@@ -1,6 +1,7 @@
 package br.com.vendas.services.customer;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -129,19 +130,32 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 	@Override
+	@Transactional(readOnly=false)
 	public ServiceResponse<List<Customer>> save(List<Customer> customers) {
+
+		List<Customer> customersSaved = new ArrayList<>();
 
 		for (Customer customer : customers) {
 
 			if(customer.getPictureUrl() == null){
+
 				customer.setPictureUrl( PictureUtil.URL_USUARIO_SEM_FOTO );
+
 			}
-			customer.setID(null);
+
+			if(customer.getID() != null &&  customer.getID().equals( customer.getIdMobile() ) ){
+
+				customer.setID(null);
+
+			}
+
 			customer.setChangeTime(new Date());
+
+			Customer customerSaved = customerDAO.saveOrUpdate(customer );
+
+			customersSaved.add( customerSaved );
+
 		}
-
-		List<Customer> customersSaved = customerDAO.save( customers );
-
 
 
 		return ServiceResponseFactory.create(customersSaved);
