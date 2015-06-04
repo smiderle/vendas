@@ -334,7 +334,7 @@ public class UserServiceImpl implements UserService {
 
 		//Cria um usuario
 		User user = new User(newOrganization.getOrganizationID(),email,password,userName,true,true);
-		user.setPictureUrl("https://s3-sa-east-1.amazonaws.com/vendas.pictures.product/23ab5f12-fd42-4f54-a17d-775e1d63eb0a");
+		user.setPictureUrl("https://s3-sa-east-1.amazonaws.com/vendas.pictures.default/30b29b76-0ae7-11e5-a6c0-1697f925ec7b-user.jpg");
 		user.setSkype("skype");
 		user.setLinkFacebook("facebook");
 		user.setLinkGooglePlus("googlePluss");
