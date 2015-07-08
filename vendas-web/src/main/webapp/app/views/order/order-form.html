@@ -545,65 +545,6 @@
 	</div>
 </section>
 
-
-
-
-
-				<div class="modal fade" id="dialogCreditLimit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-									&times;
-								</button>
-								<h3 class="modal-title text-primary" id="myModalLabel">Cliente sem limite de crédito</h3>
-							</div>
-							<div class="modal-body">
-				
-								<div class="row">
-									<div class="col-md-12">
-										
-										<div ng-show="avaliableCreditLimit < order.netValue">
-											<p>O cliente não possui limite de crédito suficiente. </p>
-											<ul>
-												<li>Limite de crédito disponivel R$ {{formatFloat(avaliableCreditLimit, true)}}</li>
-												<li>Valor da venda R$ {{formatFloat(order.netValue)}}</li>
-											</ul>
-										</div>
-										
-										<div ng-show="hasExpiratePayment">
-											<p>O cliente possui parcelas vencidas. </p>
-										</div>
-										
-										<h3 ng-class="{'text-success' : authorizationResponse.authorized , 'text-danger' : !authorizationResponse.authorized}" ng-show="authorizationLabel && !showProgressBar"> <i ng-class="{'fa-check' : authorizationResponse.authorized, 'fa-ban' : !authorizationResponse.authorized }" class="fa fadeInLeft animated"></i> {{authorizationLabel}}</h3>										
-										
-										<div class="form-group" ng-show="showJustificationText && !authorizationResponse.authorized">
-											<textarea class="form-control" placeholder="Digite alguma informação para solicitar liberação" ng-model="authorizationInfo" rows="5" required></textarea>
-										</div>
-										
-										<p ng-show="showProgressBar">Aguarde até que o administrador autorize a venda.</p>
-										<div class="progress progress-lg progress-striped active" ng-show="showProgressBar">
-											<div class="progress-bar bg-color-purple" role="progressbar" style="width: 100%"></div>
-										</div>										
-									</div>																		
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal" ng-hide="authorizationResponse.authorized">
-									Fechar
-								</button>
-								<button type="button" class="btn btn-primary" ng-show="showJustificationText && !authorizationResponse.authorized" ng-click="solicitAuthorization()">
-									Solicitar liberação
-								</button>
-								<button type="button" class="btn btn-success" ng-show="authorizationResponse.authorized" ng-click="save()">
-									Concluir Venda
-								</button>
-							</div>
-						</div><!-- /.modal-content -->
-					</div><!-- /.modal-dialog -->
-				</div><!-- /.modal -->
-
-
 		<script src="js/plugin/datatables/jquery.dataTables.min.js"></script>
 		<script src="js/plugin/datatables/dataTables.colVis.min.js"></script>
 		<script src="js/plugin/datatables/dataTables.tableTools.min.js"></script>

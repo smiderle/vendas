@@ -8,8 +8,8 @@
 	
 
 	vendasApp.controller('UserProfileController',
-			['$scope','$location', 'UserService' ,'BranchService', 'ContextService','UtilityService','Constants', 'MessageService','UserActionService','GoalService','ChartService','AuthService',
-			 function UserProfileController($scope,$location, UserService,BranchService, ContextService, UtilityService,Constants, MessageService, UserActionService, GoalService, ChartService, AuthService) {
+			['$scope','$location', 'UserService' ,'BranchService', 'ContextService','UtilityService','Constants', 'UserActionService','GoalService','ChartService','AuthService',
+			 function UserProfileController($scope,$location, UserService,BranchService, ContextService, UtilityService,Constants, UserActionService, GoalService, ChartService, AuthService) {
 
 				var branch = ContextService.getBranchLogged();
 				
@@ -203,8 +203,7 @@
 				 * Redireciona para a pagina de mensagens
 				 */
 				$scope.userMessage = function() {
-					MessageService.setUserSelected($scope.userSelected);
-					$location.path('/mensagem/mensagens');
+					
 				};
 				
 				/**

@@ -1,6 +1,6 @@
 'use strict';
 
-vendasApp.directive('menuComponent',[ 'ContextService', 'MessageService','$timeout' , function (ContextService, MessageService, $timeout) {
+vendasApp.directive('menuComponent',[ 'ContextService','$timeout' , function (ContextService, $timeout) {
     return  {
     	restrict : 'E',
     		
@@ -45,21 +45,6 @@ vendasApp.directive('menuComponent',[ 'ContextService', 'MessageService','$timeo
 					
 				});
 				menuHtml +='</navigation>';
-				
-				//É setado um tempo para garantir, que ira chamar/retornar o serviço depois que carregar o menu
-				$timeout(function(){
-					var cMessages = MessageService.getMessagesUnreadCount(user.userID);
-					cMessages.then(function(toReturn){
-						if(toReturn.code === '200' && toReturn.value > 0){
-							
-							
-							$('#iconMenuNewMessage').remove();
-							//Adiciona o icone de nova mensage no lado do meu Mensagens
-							$('#menu_18 a').append('<span id="iconMenuNewMessage" class="badge bg-color-green bounceIn animated pull-right inbox-badge"><i class="fa fa-md fa-envelope-o"></i></span>');
-						}
-					});
-				}, 100);
-				
 				
 				
 				return menuHtml;

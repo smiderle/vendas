@@ -5,8 +5,8 @@
 /***************************************************************************/
 
 vendasApp.controller('OrderFormController',
-		['$scope','$rootScope','$route','$location','OrderService','UtilityService','ContextService','PriceTableService','CustomerService','CalcUtil','FormsPaymentService','InstallmentService','socket',
-		 function OrderFormController($scope,$rootScope,$route,$location,OrderService, UtilityService, ContextService, PriceTableService, CustomerService, CalcUtil, FormsPaymentService, InstallmentService, socket) {
+		['$scope','$rootScope','$route','$location','OrderService','UtilityService','ContextService','PriceTableService','CustomerService','CalcUtil','FormsPaymentService','InstallmentService',
+		 function OrderFormController($scope,$rootScope,$route,$location,OrderService, UtilityService, ContextService, PriceTableService, CustomerService, CalcUtil, FormsPaymentService, InstallmentService) {
 			
 			var userLogged = ContextService.getUserLogged();
 			
@@ -91,9 +91,6 @@ vendasApp.controller('OrderFormController',
 			 * Utilizados pela directiva validator
 			 */			
 			$scope.maximunDiscount = $scope.branch.maximumDiscount;
-			
-			$scope.tokenAuthorization = undefined;
-									
 
 			$scope.init = function(){
 				
@@ -327,8 +324,7 @@ vendasApp.controller('OrderFormController',
 			/**
 			 * Salva o Pedido/Orçamento
 			 */
-			$scope.save = function(){
-				$('#dialogCreditLimit').modal('hide');
+			$scope.save = function(){				
 				save();
 			};
 			
@@ -670,120 +666,10 @@ vendasApp.controller('OrderFormController',
 	            });
 			}
 			
-			
-			/**
-			 * 
-			 * Solicita a autoriação para vender  para cliente sem limite de crédito
-			 */
-			$scope.solicitAuthorization = function(){
-				
-				$scope.showJustificationText = false;
-				$scope.showProgressBar = true;
-
-				/*setTimeout(function (){
-					$scope.$apply(function() {
-						$scope.waitingAuthorization = false;
-						$scope.acceptAuthorization = true;
-					});
-				}, 5000);*/
-				
-				$scope.tokenAuthorization = Math.floor( ( Math.random() * 100000000 ) + 1 );
-				
-				var authorizationType = '';
-				
-				if($scope.avaliableCreditLimit < $scope.order.netValue){
-					authorizationType += 'Cliente sem limite de crédito suficiente. ';
-				}
-				
-				if($scope.hasExpiratePayment){
-					authorizationType += 'Cliente com parcelas vencidas';
-				}
-				
-				
-				
-				
-				
-				socket.emit('authorization request',  
-						{
-							roomName: $scope.organizationID,
-							token: $scope.tokenAuthorization,
-							user: {
-								userID : ContextService.getUserLogged().userID,
-								name : ContextService.getUserLogged().name,
-							},
-							details: {
-								authorizationInfo : $scope.authorizationInfo, 
-								customer : $scope.order.customer,
-								netValue : $scope.order.netValue,
-								formPaymentSelected : $scope.formPaymentSelected,
-								installment : $scope.order.installment,
-								avaliableCreditLimit : $scope.avaliableCreditLimit,
-								authorizationType: authorizationType
-							}
-						}
-				 );
-				
-				socket.on('authorization response', function(authorizationResponse){
-					$scope.$apply(function() {
-						$scope.authorizationResponse = authorizationResponse;
-						$scope.showJustificationText = false;
-						$scope.showProgressBar = false;
-						
-						if(authorizationResponse.authorized){
-							$scope.authorizationLabel = 'Venda autorizada pelo usuário '+ authorizationResponse.admin.name; 
-						} else {
-							$scope.authorizationLabel = 'Venda não foi autorizada pelo usuário '+authorizationResponse.admin.name;
-						}
-						 
-					});
-				});
-			};
-			
-			/**
-			 * Controles dos componentes do dialog de bloqueio/liberação
-			 */
-			$scope.showJustificationText = false;
-			$scope.showBtnSolicitAuthorization = false;
-			//$scope.showFinalizeButton;
-			
-			
 			/**
 			 * Valida se o pedido, se estiver tudo ok, executa o callback
 			 */
 			function orderValidate(callback){
-				
-				if($scope.hasExpiratePayment){
-					//$scope.authorizationLabel = 'O cliente possui parcelas vencidas.';
-				}
-				
-				
-				if($scope.branch.actionCreditLimit === 'B' || $scope.branch.actionCreditLimit === 'L') {
-					if($scope.branch.actionCreditLimit === 'L'){
-				        $scope.$apply(function(){
-				        	$scope.showJustificationText = true;
-				        	$scope.showBtnSolicitAuthorization = true;
-				        });						
-					}
-					
-					if($scope.avaliableCreditLimit < $scope.order.netValue){
-						$('#dialogCreditLimit').modal();
-						return;
-					}
-				}
-				
-				if($scope.branch.actionOverdue === 'B' || $scope.branch.actionOverdue === 'L') {	
-					if($scope.branch.actionOverdue === 'L'){
-
-				        $scope.$apply(function(){
-				        	$scope.showJustificationText = true;
-				        });
-					}
-					
-					if($scope.hasExpiratePayment){
-						$('#dialogCreditLimit').modal();
-						return;
-					}
-				}
 				
 				callback();
 			}
@@ -826,9 +712,7 @@ vendasApp.controller('OrderFormController',
 			$scope.$on('vendasApp:clearDialog', function (event) {
 				event.stopPropagation();
 				$scope.showJustificationText = true;
-				$scope.showProgressBar = false;
-				$scope.authorizationResponse = undefined;
-				$scope.authorizationLabel = undefined;
+				
 				
 			});
 		}]);
