@@ -32,7 +32,8 @@ vendasApp.factory('VendasWebRestangular', function(Restangular) {
  */
 vendasApp.factory('RestangularNode', function(Restangular) {
 	return Restangular.withConfig(function(RestangularConfigurer) {
-		RestangularConfigurer.setBaseUrl('http://54.94.216.207:3000/vendas-api');
+		//RestangularConfigurer.setBaseUrl('http://54.94.216.207:3000/vendas-api');
+		RestangularConfigurer.setBaseUrl('http://127.0.0.1:3000/vendas-api');
 	});
 });
 
@@ -41,17 +42,24 @@ vendasApp.factory('RestangularNode', function(Restangular) {
  */
 vendasApp.factory('OauthInterceptor',['$rootScope', '$q', '$injector','$location', function( $rootScope, $q, $injector, $location ){
 	return function( promise ) {
-        return promise.then(function(response) {
-            return response;
-        }, function (response) {
-           if ( response.status === 401 ) {        	   
-        	   var deferred = $q.defer();
-        	   window.location = 'http://127.0.0.1/vendas-web/j_spring_security_logout';
-        	   deferred.reject();
-            }     
-           return $q.reject(response); 
-        });
-    };
+		return promise.then(function(response) {
+			return response;
+		}, function (response) {
+			if ( response.status === 401 ) {        	   
+				var deferred = $q.defer();
+				window.location = 'http://127.0.0.1/vendas-web/j_spring_security_logout';        	   
+				//window.location = 'http://54.94.216.207/vendas-web/j_spring_security_logout';
+				deferred.reject();
+			} else if( response.status === 400 ){
+				var deferred = $q.defer();
+				window.location = 'http://127.0.0.1/vendas-web/app/login.html?error=400';
+				alert(response.data.message);
+				deferred.reject();
+
+			}    
+			return $q.reject(response); 
+		});
+	};
 }]);
 
 vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProvider', function( $routeProvider,RestangularProvider,$provide,$httpProvider ) {
@@ -77,22 +85,22 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		} else {
 			return response;
 		}
-		
-		
+
+
 	});
-		
+
 	// Iterceptor para tokens oauth 
-    $httpProvider.responseInterceptors.push('OauthInterceptor');
-	
+	$httpProvider.responseInterceptors.push('OauthInterceptor');
+
 	$routeProvider
 	.when('/', {
 		redirectTo: '/dashboard'
 	})
-	
+
 	.when("/accessdenied",{
 		templateUrl : 'views/accessdenied.html'
 	})
-		
+
 	.when("/dashboard",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -103,7 +111,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'DashboardController'
 	})
-	
+
 
 	.when("/user/user-form",{
 		templateUrl : function($routeParams) {
@@ -125,7 +133,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'UserListController'		
 	})	
-	
+
 	.when("/branch/branch-list",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -146,10 +154,10 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'BranchFormController'		
 	})
-	
-	
-	
-	
+
+
+
+
 	.when("/pedido/lista-parcelamento",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -160,8 +168,8 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'InstallmentListController'		
 	})
-	
-	
+
+
 	.when("/pedido/cadastro-parcelamento",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -172,7 +180,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'InstallmentFormController'		
 	})	
-	
+
 	.when("/pedido/lista-tabela-de-preco",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -183,7 +191,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'PriceTableListController'		
 	})
-	
+
 	.when("/pedido/cadastro-tabela-de-preco",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -194,7 +202,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'PriceTableFormController'		
 	})
-	
+
 	.when("/produto/grupo/lista-categoria-produto",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -205,7 +213,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'ProductGroupListController'		
 	})
-	
+
 	.when("/produto/grupo/cadastro-categoria-produto",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -216,7 +224,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'ProductGroupFormController'		
 	})
-	
+
 	.when("/produto/lista-produto",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -227,7 +235,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'ProductListController'		
 	})
-	
+
 	.when("/produto/cadastro-produto",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -238,7 +246,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'ProductFormController'		
 	})
-	
+
 	.when("/cliente/cadastro-cliente",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -249,7 +257,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'CustomerFormController'		
 	})
-	
+
 	.when("/cliente/lista-cliente",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -260,7 +268,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'CustomerListController'		
 	})
-	
+
 	.when("/pedido/cadastro-pedido",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -271,7 +279,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'OrderFormController'		
 	})
-	
+
 	.when("/pedido/lista-pedido",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -282,7 +290,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'OrderListController'		
 	})
-	
+
 	.when("/pedido/detalhes-pedido",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -293,7 +301,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'OrderDetailsController'		
 	})
-	
+
 	.when("/financeiro/lista-contas-receber",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -304,7 +312,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'PaymentListController'		
 	})
-	
+
 	.when("/financeiro/detalhes-contas-receber",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -315,18 +323,8 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'PaymentDetailsController'		
 	})
-	
-	.when("/mensagem/mensagens",{
-		templateUrl : function($routeParams) {
-			if(false){
-				return  'views/accessdenied.html';
-			} else {
-				return  'views/message/message.html';
-			}
-		},
-		controller : 'MessageController'		
-	})
-	
+
+
 	.when("/usuarios",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -337,7 +335,7 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'UserProfileController'		
 	})
-	
+
 	.when("/metas/cadastro-metas",{
 		templateUrl : function($routeParams) {
 			if(false){
@@ -348,11 +346,11 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
 		},
 		controller : 'GoalFormController'		
 	})
-	
+
 	.when("/error404",{
 		templateUrl : 'views/misc/error404.html'	
 	})
-	
+
 	.otherwise({
 		redirectTo: '/error404'
 	});
@@ -375,14 +373,29 @@ vendasApp.config(['$routeProvider','RestangularProvider', '$provide', '$httpProv
  * Intercepta todas as requests para inserir o token no header.
  */
 vendasApp.run(['$rootScope', 'settings','$injector','OauthClientService', function($rootScope, settings, $injector, OauthClientService) {
-	$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {				
-        if ( OauthClientService.getAccessToken() ) headersGetter()['Authorization'] = "Bearer "+ OauthClientService.getAccessToken();
-        if (data) {
-            return angular.toJson(data);
-        }
-    };
-	
-	
+	$injector.get("$http").defaults.transformRequest = function(data, headersGetter,a, b, c) {
+		
+		
+		var index = window.location.href.indexOf('login');
+		var index2 = window.location.href.indexOf('index');
+		
+		if( OauthClientService.tokenInvalido() && window.location.href.indexOf('login') == -1 ) {
+			
+			window.location = 'http://127.0.0.1/vendas-web/app/login.html?error=400';
+			
+		} else {
+		
+			if ( OauthClientService.getAccessToken() ) headersGetter()['Authorization'] = "Bearer "+ OauthClientService.getAccessToken().value;
+			if (data) {
+				return angular.toJson(data);
+			}
+			
+		}
+		
+		
+	};
+
+
 	settings.currentLang = settings.languages[0]; // en
 
 	$rootScope.hasRole = function(role) {

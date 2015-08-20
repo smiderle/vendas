@@ -468,16 +468,19 @@
 		// Rules for form validation
 			rules : {
 				fname : {
-					required : true
+					required : true,
+					maxlength : 200
+					
 				},					
 				email : {
 					required : true,
-					email : true
+					email : true,
+					maxlength : 80
 				},					
 				password : {
 					required : true,
 					minlength : 3,
-					maxlength : 20
+					maxlength : 10
 				},
 				passwordConfirm : {
 					required : true,
@@ -490,22 +493,27 @@
 			// Messages for form validation
 			messages : {
 				fname : {
-					required : 'Por favor, informe um nome'
+					required : 'Informe um nome',
+					maxlength : 'Informe entre 0 e 200 caracteres'
 				},					
 				email : {
-					required : 'Por favor informe um e-mail.',
-					email : 'Por favor informe um e-mail válido.'
+					required : 'Informe um e-mail.',
+					email : 'Informe um e-mail válido.',
+					maxlength : 'Informe entre 0 e 80 caracteres'
 				},				
 				address : {
-					required : 'Por favor, informe um email'
+					required : 'Informe um email'
 				},							
 				password : {
-					required : 'Por favor, informe uma senha',
-					minlength: 'Informe uma senha de pelo menos 3 digitos'
+					required : 'Informe uma senha',
+					minlength: 'Informe entre 3 e 10 caracteres',
+					maxlength: 'Informe entre 3 e 10 caracteres',
 				},
 				passwordConfirm : {
-					required : 'Por favor, iforme iforme o email mais uma vez',
-					equalTo : 'Por favor, informe uma senha igual a anterior'
+					required : 'Iforme iforme o email mais uma vez',
+					equalTo : 'Informe uma senha igual a anterior',
+					minlength: 'Informe entre 3 e 10 caracteres',
+					maxlength: 'Informe entre 3 e 10 caracteres',
 				},
 			},
 

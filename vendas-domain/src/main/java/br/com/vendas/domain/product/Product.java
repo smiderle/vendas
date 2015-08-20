@@ -21,7 +21,7 @@ public class Product {
 	}
 
 	public Product(Integer organizationID, Integer branchID, String productID, ProductGroup group, String description, String reference,
-			String packaging, String barcode, Double stockAmount, Double salePrice, Boolean active, Date changeTime, Date registrationDate,
+			String packaging, String barcode, Double salePrice, Double stockAmount,  Boolean active, Date changeTime, Date registrationDate,
 			boolean excluded, String pictureUrl) {
 		super();
 		this.organizationID = organizationID;

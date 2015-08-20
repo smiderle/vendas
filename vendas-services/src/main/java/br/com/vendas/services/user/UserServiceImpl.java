@@ -397,8 +397,8 @@ public class UserServiceImpl implements UserService {
 				userBranchOffice.getBranchOffice().getBranchOfficeID()) );
 
 		//Criar algumas tabelas de preços
-		priceTableService.save(new PriceTableBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(),
-				userBranchOffice.getBranchOffice().getBranchOfficeID()));
+		priceTableService.save(new PriceTableBuilder().create( userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(),
+				userBranchOffice.getBranchOffice().getBranchOfficeID() ));
 
 		//Criar alguns parcelamentos
 		installmentService.save(new InstallmentBuilder().create(userBranchOffice.getBranchOffice().getOrganization().getOrganizationID(),

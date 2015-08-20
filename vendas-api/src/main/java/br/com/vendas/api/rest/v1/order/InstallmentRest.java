@@ -13,23 +13,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.vendas.domain.order.Installment;
-import br.com.vendas.domain.order.PriceTable;
+import br.com.vendas.helper.ObjectMapperHelper;
 import br.com.vendas.services.order.installment.InstallmentService;
 import br.com.vendas.services.support.ServiceResponse;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
 import br.com.vendas.support.VendasExceptionWapper;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 @RequestMapping(value="/private/v1/installment")
 @Controller
 public class InstallmentRest {
-	
+
 	private static final Logger LOG = Logger.getLogger(InstallmentRest.class);
-	
+
 	@Inject
 	private InstallmentService installmentService;
-	
-	
+
+
 
 	@RequestMapping(value="findAllByBranche", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getAll(Integer organizationID, Integer branchID){
@@ -40,9 +42,9 @@ public class InstallmentRest {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
-		}		
+		}
 	}
-	
+
 	@RequestMapping(value="save", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse save(@RequestHeader(value="userID") Integer userID, @RequestBody Installment installment){
 		try {
@@ -52,9 +54,9 @@ public class InstallmentRest {
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
-		}		
+		}
 	}
-	
+
 	@RequestMapping(value="getAllByChangeGreaterThan", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getAllByChangeGreaterThan(Long date, Integer organizationID, Integer offset) {
 		try {
@@ -63,7 +65,27 @@ public class InstallmentRest {
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			return ResponseBuilder.build(new VendasExceptionWapper(e));			
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+
+	/**
+	 * Salva ou atualiza um produto.
+	 * @param organizationID
+	 * @return
+	 */
+	@RequestMapping(value="saveList", method = RequestMethod.POST )
+	public @ResponseBody ApiResponse saveList( @RequestBody String installments) {
+		try {
+
+			List<Installment> listCustomer = ObjectMapperHelper.readValue(installments, new TypeReference<List<Installment>>() {});
+			ServiceResponse<List<Installment>> payload = installmentService.saveList(listCustomer);
+			LOG.debug("saveList - List<Installment> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
 

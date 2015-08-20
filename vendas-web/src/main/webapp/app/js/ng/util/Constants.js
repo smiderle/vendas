@@ -10,9 +10,14 @@ vendasApp.factory('Constants',function(){
 		URL_UPLOAD_PRODUCT : 'http://127.0.0.1/vendas-api/public/v1/upload/uploadProductPicture',
 		URL_UPLOAD_CUSTOMER : 'http://127.0.0.1/vendas-api/public/v1/upload/uploadCustomerPicture',
 		URL_UPLOAD_USER : 'http://127.0.0.1/vendas-api/public/v1/upload/uploadUserPicture',
+		//URL_UPLOAD_PRODUCT : 'http://54.94.216.207/vendas-api/public/v1/upload/uploadProductPicture',
+		//URL_UPLOAD_CUSTOMER : 'http://54.94.216.207/vendas-api/public/v1/upload/uploadCustomerPicture',
+		//URL_UPLOAD_USER : 'http://54.94.216.207/vendas-api/public/v1/upload/uploadUserPicture',
+
+		
 		URL_DEFAULT_NO_PICTURE : 'https://s3-sa-east-1.amazonaws.com/vendas.pictures.product/23ab5f12-fd42-4f54-a17d-775e1d63eb0a',
 		
-		
+				
 		MENUID_DASHBOARD : 1,
 		//Produto
 		MENUID_PRODUCT : 5,

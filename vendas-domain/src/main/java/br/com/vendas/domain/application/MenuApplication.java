@@ -21,41 +21,44 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="MENU_APLICACAO")
 public class MenuApplication extends Domain{
-	
+
 	private static final long serialVersionUID = 8930646934576454374L;
 
-	public MenuApplication() {	
+	public MenuApplication() {
 	}
-	
-	public MenuApplication(Integer menuID) {	
+
+	public MenuApplication(Integer menuID) {
 		this.menuID = menuID;
 	}
 
 	@Id
 	@Column(name="IDMENU")
 	private Integer menuID;
-	
+
 	@Column
 	private String icon;
-	
+
 	@Column(nullable=false)
 	private String label;
-		
+
 	@Column(name="ordem", nullable=false)
 	private Integer order;
-	
+
 	@Column
 	private String url;
-	
-	
+
+
 	@Column(name="submenu")
 	private Boolean isSubmenu;
-	
-	@ManyToOne(fetch=FetchType.EAGER)	
+
+	@Column(name="ativo")
+	private Boolean ativo;
+
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="MENUPAI", nullable=true)
 	@JsonIgnore
 	private MenuApplication parentMenu;
-	
+
 	@OrderBy("order")
 	@OneToMany(fetch=FetchType.EAGER,cascade =CascadeType.ALL, mappedBy="parentMenu")
 	private Set<MenuApplication> childrenMenu = new LinkedHashSet<MenuApplication>();
@@ -84,7 +87,7 @@ public class MenuApplication extends Domain{
 		this.label = label;
 	}
 
-	
+
 
 	public Integer getOrder() {
 		return order;
@@ -112,7 +115,7 @@ public class MenuApplication extends Domain{
 		this.parentMenu = parentMenu;
 	}
 
-	
+
 
 	public Boolean getIsSubmenu() {
 		return isSubmenu;
@@ -138,6 +141,16 @@ public class MenuApplication extends Domain{
 		this.isSubmenu = isSubmenu;
 	}
 
+
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -148,22 +161,27 @@ public class MenuApplication extends Domain{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MenuApplication other = (MenuApplication) obj;
 		if (menuID == null) {
-			if (other.menuID != null)
+			if (other.menuID != null) {
 				return false;
-		} else if (!menuID.equals(other.menuID))
+			}
+		} else if (!menuID.equals(other.menuID)) {
 			return false;
+		}
 		return true;
 	}
-	
 
-	
-	
+
+
+
 }

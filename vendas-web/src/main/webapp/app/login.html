@@ -56,7 +56,124 @@
 		<link rel="apple-touch-startup-image" href="img/splash/iphone.png" media="screen and (max-device-width: 320px)">
 
 	</head>
-	<body class="animated fadeInDown">
+	<body class="animated fadeInDown" data-ng-controller="LoginController" data-ng-init="init()">
+	
+	
+	<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script>
+			if (!window.jQuery) {
+				document.write('<script src="js/libs/jquery-2.0.2.min.js"><\/script>');
+			}
+		</script>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script>
+			if (!window.jQuery.ui) {
+				document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+			}
+		</script>
+
+		<!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
+		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+
+		<!-- BOOTSTRAP JS -->
+		<script src="js/bootstrap/bootstrap.min.js"></script>
+
+		<!-- CUSTOM NOTIFICATION -->
+		<script src="js/notification/SmartNotification.min.js"></script>
+
+		<!-- JARVIS WIDGETS -->
+		<script src="js/smartwidgets/jarvis.widget.min.js"></script>
+
+		<!-- EASY PIE CHARTS -->
+		<script src="js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+
+		<!-- SPARKLINES -->
+		<script src="js/plugin/sparkline/jquery.sparkline.min.js"></script>
+
+		<!-- JQUERY VALIDATE -->
+		<script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>
+
+		<!-- JQUERY MASKED INPUT -->
+		<script src="js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+
+		<!-- JQUERY SELECT2 INPUT -->
+		<script src="js/plugin/select2/select2.min.js"></script>
+
+		<!-- JQUERY UI + Bootstrap Slider -->
+		<script src="js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+
+		<!-- browser msie issue fix -->
+		<script src="js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+
+		<!-- FastClick: For mobile devices: you can disable this in app.js -->
+		<script src="js/plugin/fastclick/fastclick.min.js"></script>
+		
+		<!-- Tradução do Calendario  -->
+		<script src="js/plugin/jquery-datepicker/datepicker-pt-BR.js"></script>
+
+		<!--[if IE 8]>
+			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+		<![endif]-->
+
+		<!-- AngularJS -->
+		<script src="js/libs/angular/angular.js"></script>
+	  	<script src="js/libs/angular/angular-route.js"></script>
+	  	<script src="js/libs/angular/angular-animate.js"></script>
+	  	<script src="js/libs/angular/ui-bootstrap-custom-tpls-0.11.0.js"></script>
+	  	<!-- REST Angular  -->
+	  	<script src="js/libs/angular/restangular.js"></script>
+	  	<script src="js/libs/lodash/lodash.compat.min.js"></script>
+	  	<!-- Alguns plugins para o angular  -->
+		<script src="js/libs/angular/angucomplete-alt.min.js"></script>
+		
+		<script src="js/libs/moment/moment-with-locales.js"></script>
+		
+		<script src="js/libs/moment/angular-moment.min.js"></script>
+		
+		<script src="js/libs/angular-busy/angular-busy.min.js"></script>
+		
+		<script src="js/libs/d3/d3.js"></script>
+		<script src="js/libs/d3/nv.d3.js"></script>
+		<script src="js/libs/angular-nvd3/angularjs-nvd3-directives.min.js"></script>
+			
+		
+		<!-- Demo purpose only 
+		ANGULAR: Handled via "ribbon" directive
+		<script src="js/demo.js"></script>-->
+
+		<!-- MAIN APP JS FILE -->
+		<script src="js/app.js"></script>
+		<script src="js/global.js"></script>
+
+		<!-- MAIN ANGULAR JS FILE -->
+	  	<script src="js/ng/ng.app.js"></script>
+	  	<script src="js/ng/ng.controllers.js"></script>
+	  	<script src="js/ng/ng.directives.js"></script>
+	  	
+	  	<!-- Controllers -->
+	  	<script src="js/ng/controllers/AppController.js"></script>
+
+	
+	<script src="js/ng/controllers/LoginController.js"></script>
+	
+	
+	<!-- Services -->	
+		<script src="js/ng/services/OauthClientService.js"></script>
+	  	<script src="js/ng/services/ContextService.js"></script>	  	
+	  	<script src="js/ng/services/UserService.js"></script>
+	  	<script src="js/ng/services/UtilityService.js"></script>
+	  	<script src="js/ng/services/LocalStorageService.js"></script>
+	  	
+	  	<!-- Constantes utilizadas no sistema  -->
+	  	<script src="js/ng/util/Constants.js"></script>
+	  	<script src="js/ng/util/Utility.js"></script>
+	
+	<script src="js/ng/plunker.js"></script> 
+	
+	
+	
 		<!-- possible classes: minified, no-right-panel, fixed-ribbon, fixed-header, fixed-width-->
 		<header id="header">
 			<!--<span id="logo"></span>-->
@@ -107,7 +224,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
 						<div class="well no-padding">
-							<form id="login-form" class="smart-form client-form"   method="post" action="/vendas-web/j_spring_security_check" >
+							<form id="login-form" class="smart-form client-form">
 								<header>
 									Login
 								</header>
@@ -117,7 +234,7 @@
 									<section>
 										<label class="label">E-mail</label>
 										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input type="email" name="j_username" id="username">
+											<input type="email" name="j_username" id="username" ng-model="email">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b></label>
 									</section>
 
@@ -133,7 +250,7 @@
 
 								</fieldset>
 								<footer>
-									<button id="btnLogin" type="submit" class="btn btn-primary">
+									<button id="btnLogin" type="submit" class="btn btn-primary" ng-click="login()">
 										Entrar
 									</button>
 								</footer>
@@ -147,100 +264,6 @@
 			</div>
 
 		</div>
-
-		<!--================================================== -->	
-
-		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
-		<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
-
-		<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script>
-			if (!window.jQuery) {
-				document.write('<script src="js/libs/jquery-2.0.2.min.js"><\/script>');
-			}
-		</script>
-
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<script>
-			if (!window.jQuery.ui) {
-				document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-			}
-		</script>
-
-		<!-- BOOTSTRAP JS -->
-		<script src="js/bootstrap/bootstrap.min.js"></script>
-
-		<!-- JQUERY VALIDATE -->
-		<script src="js/plugin/jquery-validate/jquery.validate.min.js"></script>
-
-		<!-- JQUERY MASKED INPUT -->
-		<script src="js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-		
-				
-		<!--[if IE 8]>
-			
-			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
-			
-		<![endif]-->
-
-		<script type="text/javascript">
-
-
-		$('#btnLogin').click(function(){
-			var username = $('#username').val();
-			setCookie('usernamevendaslim',username);			
-		});
-
-		
-		/*
-		*Seta cookie
-		*/		
-		function setCookie(cname, cvalue){
-			//Define que o cookie expirara daqui 50 segundos.
-			var d = new Date();
-		    d.setTime(d.getTime() + (50*1000));		    
-		    var expires = "expires=" + d.toGMTString();
-		    
-		    document.cookie = cname+"="+cvalue+"; "+expires;
-		}
-		
-	
-
-			$(function() {
-				// Validation
-				$("#login-form").validate({
-					// Rules for form validation
-					rules : {
-						email : {
-							required : true,
-							email : true
-						},
-						password : {
-							required : true,
-							minlength : 3,
-							maxlength : 20
-						}
-					},
-
-					// Messages for form validation
-					messages : {
-						email : {
-							required : 'Please enter your email address',
-							email : 'Please enter a VALID email address'
-						},
-						password : {
-							required : 'Please enter your password'
-						}
-					},
-
-					// Do not change code below
-					errorPlacement : function(error, element) {
-						error.insertAfter(element.parent());
-					}
-				});
-			});
-		</script>
 
 	</body>
 </html>

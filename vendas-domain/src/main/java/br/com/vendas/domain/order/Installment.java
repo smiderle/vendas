@@ -10,14 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="PARCELAMENTO")
 public class Installment {
-	
+
 	public Installment() {
 	}
-	
+
 	public Installment(Integer organizationID, Integer branchID, Integer installmentID, String description, String installmentsDays, Double tax,
 			boolean active, Date changeTime, boolean excluded) {
 		super();
@@ -36,36 +37,47 @@ public class Installment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ID;
-	
+
 	@Column(name="IDEMPRESA")
 	private Integer organizationID;
-	
+
 	@Column(name="IDFILIAL")
 	private Integer branchID;
-	
+
 	@Column(name="idparcelamento")
 	private Integer installmentID;
 
 	@Column(name="DESCRICAO", length=40)
 	private String description;
-	
+
 	@Column(name="parcelas")
 	private String installmentsDays;
-	
+
 	@Column(name="TAXA")
 	private Double tax;
-	
+
 	@Column(name="ATIVO", nullable=false)
 	private boolean active;
-	
+
 	@Column(name="DTHRALTERACAO")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date changeTime;
-	
+
 
 	@Column(name="EXCLUIDA")
 	private boolean excluded;
 
+	@Transient
+	private Integer idMobile;
+
+
+	public Integer getIdMobile() {
+		return idMobile;
+	}
+
+	public void setIdMobile(Integer idMobile) {
+		this.idMobile = idMobile;
+	}
 
 	public Integer getID() {
 		return ID;
@@ -166,5 +178,5 @@ public class Installment {
 		this.excluded = excluded;
 	}
 
-	
+
 }

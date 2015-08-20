@@ -21,6 +21,10 @@ vendasApp.factory('LocalStorageService',function(Utility){
 	var clear=  function(){
 		localStorage.clear();
 	};
+	
+	var removeItem = function(key){		
+		localStorage.removeItem(key);		
+	};
 
 
 	return {
@@ -28,6 +32,7 @@ vendasApp.factory('LocalStorageService',function(Utility){
 		addToLocalStorageCrypt: addToLocalStorageCrypt,
 		getFromLocalStorage: getFromLocalStorage,
 		getFromLocalStorageDecrypt: getFromLocalStorageDecrypt,
-		clear : clear
+		clear : clear,
+		removeItem: removeItem
 	};	
 });

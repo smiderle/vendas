@@ -46,9 +46,9 @@
 									<li class="active">
 										<a href="#tabMainData" data-toggle="tab"><i class="fa fa-fw fa-lg fa-user"></i>Principal</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="#tabPromotionAccess" data-toggle="tab"><i class="fa fa-fw fa-lg fa-reorder"></i>Promoção</a>
-									</li>																								
+									</li>		 -->																						
 									
 								</ul>
 								<div id="tabContentProduct" class="tab-content padding-10">
@@ -90,17 +90,17 @@
 												</label>
 											</section>
 										</div>
-										<div class="row">
+										<!-- <div class="row">
 											<section class="col col-6">
 												<label class="label">Categoria</label>
 												<label class="input">
-													<!-- <input type="text" name="city" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Cidade" ng-model="branchOffice.city.name" list="list" ng-change="findCities()"> -->
+													<input type="text" name="city" ng-class="{'ui-autocomplete-loading': loadingPostalCode}" placeholder="Cidade" ng-model="branchOffice.city.name" list="list" ng-change="findCities()">
 													<input type="text" id="txtProductGroup" name="productGroup" ng-change="onChangeGroups()" ng-model="selectedGroup" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
 															placeholder="Categoria" typeahead="c as c.description for c in groups | filter:$viewValue | limitTo:10" typeahead-min-length='1' 
 															typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">													
 												</label>												
 											</section>
-										</div>
+										</div> -->
 										<div class="row">
 											<section class="col col-6">
 												<label class="label">Embalagem</label>												
@@ -248,7 +248,8 @@
 			rules : {			
 				
 				description : {
-					required : true
+					required : true,
+					maxlength: 10
 				},
 				
 				promotionPrice : {
@@ -262,8 +263,23 @@
 				
 				stockAmount : {
 					required : true,
-					//number : true
+					max: 999999999,
+					number : true
 				},
+				
+				packaging : {					
+					maxlength: 10
+				},
+				
+				reference: {					
+					maxlength: 60
+				},
+				
+				
+				barcode: {					
+					maxlength: 30
+				},
+				
 				
 				
 			},
@@ -272,22 +288,37 @@
 			messages : {				
 				
 				description : {
-					required : 'Por favor, informe uma descrição',
+					required : 'Informe uma descrição',
+					maxlength: 'Informe até 100 caracteres'
 				},
 							
 				promotionPrice : {
-					number : 'Por favor, informe um numero válido. Ex: 10,50'
+					number : 'Informe um numero válido. Ex: 10,50'
 				},
 				
 				salePrice : {
-					required : 'Por favor, informe um preço válido',
-					number :  'Por favor, informe um numero válido. Ex: 10,50'
+					required : 'Informe um preço válido',
+					number :  'Informe um numero válido. Ex: 10,50'
 				},
 				
 				stockAmount : {
-					required : 'Por favor, informe umaa quantidade de estoque válida',
-					number : 'Por favor, informe um numero válido. Ex: 10,50'
-				},				
+					required : 'Informe uma quantidade de estoque válida',
+					number : 'Informe um numero válido. Ex: 10,50',
+					max: 'Informe um valor entre 0 e 999999999'
+				},		
+				
+				packaging : {					
+					maxlength: 'Informe até 10 caracteres'
+				},
+				
+				reference: {					
+					maxlength: 'Informe até 60 caracteres'
+				},
+				
+				barcode: {					
+					maxlength: 'Informe até 30 caracteres'
+				},
+				
 				
 			},
 

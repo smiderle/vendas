@@ -67,9 +67,9 @@ vendasApp.factory('ContextService',
      */
     function setAccessToken( accessToken ){
     	$rootScope.accessToken = accessToken;
-    	LocalStorageService.addToLocalStorageCrypt( Constants.LOCAL_STORAGE_TOKEN, accessToken );
+    	LocalStorageService.addToLocalStorage( Constants.LOCAL_STORAGE_TOKEN, accessToken );
     };
-    
+        
     /**
 	 * Retorna o token no objeto $rootScope.user, caso não o encontre, busca no localStorage
 	 */
@@ -77,11 +77,13 @@ vendasApp.factory('ContextService',
     	if($rootScope.accessToken){    		
     		return $rootScope.accessToken;
     	} else {    		
-    		var _accessToken = LocalStorageService.getFromLocalStorageDecrypt(Constants.LOCAL_STORAGE_TOKEN);
+    		var _accessToken = LocalStorageService.getFromLocalStorage(Constants.LOCAL_STORAGE_TOKEN);
     		$rootScope.accessToken = _accessToken;
     		return $rootScope.accessToken;
     	}
     };
+    
+    
     
 
 	

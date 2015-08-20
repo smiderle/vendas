@@ -170,14 +170,14 @@
 											</section>
 										</div>
 										
-										<div class="row">
+										<!-- <div class="row">
 											<section class="col col-2">
 												<label class="label">Data de Nascimento</label>
 												<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
 													<input type="text" name="birth" id="birth" placeholder="Data de Nascimento"  ng-model="customer.birth">
 												</label>
 											</section>
-										</div>
+										</div> -->
 										
 										<section>
 											<label class="textarea"> 
@@ -212,7 +212,7 @@
 											<section class="col col-2">
 												<label class="label">Cidade</label>												
 												<label class="input">
-													<input type="text" id="txtCity" name="city" ng-change="onChangeCities()" ng-model="selectedCity" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
+													<input type="text" id="txtCity" name="city"  disabled="disabled"  class="form-control"  ng-change="onChangeCities()" ng-model="selectedCity" ng-class="{'ui-autocomplete-loading': loadingPostalCode}"
 															placeholder="Cidade" typeahead="c as c.name for c in cities | filter:$viewValue | limitTo:10" typeahead-min-length='1' 
 															typeahead-on-select='onSelectPart($item, $model, $label)' typeahead-template-url="customTemplate.html">													
 												</label>
@@ -359,13 +359,70 @@
 			// Rules for form validation
 			rules : {				
 				name : {
-					required : true
+					required : true,
+					maxlength : 200
 				},
 				
 				creditLimit : {
 					number : true
-				}	
+				},
 				
+				nickName : {					
+					maxlength : 100
+				},
+				
+				email : {					
+					maxlength : 40
+				},
+				
+				cpfCnpj : {					
+					maxlength : 15
+				},
+				
+				incricao: {					
+					maxlength : 15
+				},
+				
+				commercialPhone : {					
+					maxlength : 20
+				},
+				
+				homePhone  : {					
+					maxlength : 20
+				},
+				
+				cellPhone : {					
+					maxlength : 20
+				},
+				
+				comment : {					
+					maxlength : 500
+				},
+				
+				postalCode : {					
+					maxlength : 10
+				},
+				
+				district : {					
+					maxlength : 60
+				},
+				
+				
+				street : {					
+					maxlength : 60
+				},
+				
+				number : {					
+					maxlength : 8
+				},
+				
+				addressComplement  : {
+					maxlength : 60					
+				},
+				
+				creditLimit : {
+					max: 999999999
+				}
 			},
 
 			// Messages for form validation
@@ -373,13 +430,70 @@
 				
 				name : {
 					required : 'Por favor, informe um nome',
+					maxlength : 'Informe entre 0 e 200 caracteres'
 				},
 				
 				creditLimit : {					
 					number : 'Por favor, informe somente numeros, por exemplo 10.5'
 				},
 				
+				nickName : {					
+					maxlength : 'Informe entre 0 e 100 caracteres'
+				},
 				
+				email : {					
+					maxlength : 'Informe entre 0 e 40 caracteres'
+				},
+				
+				cpfCnpj : {					
+					maxlength : 'Informe entre 0 e 15 caracteres'
+				},
+				
+				incricao: {					
+					maxlength : 'Informe entre 0 e 15 caracteres'
+				},
+				
+				commercialPhone : {					
+					maxlength : 'Informe entre 0 e 20 caracteres'
+				},
+				
+				homePhone  : {
+					maxlength : 'Informe entre 0 e 20 caracteres'
+				},
+				
+				cellPhone : {					
+					maxlength : 'Informe entre 0 e 20 caracteres'
+				},
+				
+				comment : {					
+					maxlength : 'Informe entre 0 e 500 caracteres'
+				},
+				
+				postalCode : {					
+					maxlength : 'Informe entre 0 e 10 caracteres'
+				},
+				
+				district : {					
+					maxlength : 'Informe entre 0 e 60 caracteres'
+				},
+				
+				
+				street : {					
+					maxlength : 'Informe entre 0 e 60 caracteres'					
+				},
+				
+				number : {
+					maxlength : 'Informe entre 0 e 8 caracteres'					
+				},
+				
+				addressComplement  : {
+					maxlength : 'Informe entre 0 e 60 caracteres'					
+				},
+				
+				
+				creditLimit : {
+					max: 'Informe um valor entre 0 e 999999999'
+				}
 				
 			},
 

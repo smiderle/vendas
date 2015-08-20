@@ -56,6 +56,14 @@ vendasApp
 		$location.path("/");
 	};
 	
+	$scope.logout = function(){
+		
+		LocalStorageService.removeItem(Constants.LOCAL_STORAGE_USER_LOGGED_KEY);
+		LocalStorageService.removeItem(Constants.LOCAL_STORAGE_TOKEN);
+		window.location = 'http://127.0.0.1/vendas-web/app/login.html';
+		
+	};
+	
 	/**
 	 * Atualiza $scope.userBranches com as empresas do usuário.
 	 * É invocado quando o usuário faz alguma alteração no cadastro da empresa, então é emitido um evento
