@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/byjg-cep/byjg-cep.iml" filepath="$PROJECT_DIR$/byjg-cep/byjg-cep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vendas-parent/vendas-api/vendas-api.iml" filepath="$PROJECT_DIR$/vendas-parent/vendas-api/vendas-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vendas-parent/vendas-aws/vendas-aws.iml" filepath="$PROJECT_DIR$/vendas-parent/vendas-aws/vendas-aws.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vendas-parent/vendas-core/vendas-core.iml" filepath="$PROJECT_DIR$/vendas-parent/vendas-core/vendas-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vendas-parent/vendas-domain/vendas-domain.iml" filepath="$PROJECT_DIR$/vendas-parent/vendas-domain/vendas-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vendas-parent/vendas-parent.iml" filepath="$PROJECT_DIR$/vendas-parent/vendas-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vendas-parent/vendas-services/vendas-services.iml" filepath="$PROJECT_DIR$/vendas-parent/vendas-services/vendas-services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vendas-parent/vendas-web/vendas-web.iml" filepath="$PROJECT_DIR$/vendas-parent/vendas-web/vendas-web.iml" />
+    </modules>
+  </component>
+</project>

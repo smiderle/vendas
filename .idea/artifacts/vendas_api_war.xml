@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="vendas-api:war">
+    <output-path>$PROJECT_DIR$/vendas-parent/vendas-api/target</output-path>
+    <root id="archive" name="vendas-api-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="vendas-api:war exploded" />
+    </root>
+  </artifact>
+</component>
