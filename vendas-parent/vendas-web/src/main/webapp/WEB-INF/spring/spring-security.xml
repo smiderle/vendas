@@ -32,7 +32,7 @@
  
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<!-- Banco de dados Amazon  -->
-		<property name="url" value="jdbc:postgresql://vendaslimdb.cwbn3zqeyilz.sa-east-1.rds.amazonaws.com/VENDASLIMDB" />
+		<property name="url" value="jdbc:postgresql://vendasup.c9glyiox5sbx.sa-east-1.rds.amazonaws.com/VENDASUP" />
 		<property name="username" value="root" />
 		<property name="password" value="lada8580" />
 		
