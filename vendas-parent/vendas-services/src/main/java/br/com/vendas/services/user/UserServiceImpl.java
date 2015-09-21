@@ -10,7 +10,10 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import br.com.vendas.services.email.EmailAsyncController;
+import br.com.vendas.services.email.EmailBean;
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,6 +111,10 @@ public class UserServiceImpl implements UserService {
 
 	@Inject
 	private LicenseService licenseService;
+
+
+	@Autowired
+	private EmailAsyncController emailAsyncController;
 
 
 
@@ -317,7 +324,7 @@ public class UserServiceImpl implements UserService {
 
 		if( findUserByEmail.getRowCount() > 0 ) {
 
-			String message = "Esse e-mail já esta cadastro em nosso sistema.";
+			String message = "Esse e-mail já esta cadastro.";
 
 			throw new VendasException( message );
 		}
@@ -405,6 +412,8 @@ public class UserServiceImpl implements UserService {
 				userBranchOffice.getBranchOffice().getBranchOfficeID()));
 
 		UserDTO userPojo = new UserDTO(newUser, null, null, null);
+
+		emailAsyncController.sendWelcome( email,email,email, password   );
 
 		return ServiceResponseFactory.create(userPojo);
 

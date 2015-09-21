@@ -36,6 +36,8 @@ public interface InstallmentService {
 
 	ServiceResponse<List<Installment>> saveList(List<Installment> customers);
 
+	ServiceResponse<List<Installment>> updateList(List<Installment> customers);
+
 
 	/**
 	 * Retorna todos os registros com data de alteração maior que a data passada por parametro.

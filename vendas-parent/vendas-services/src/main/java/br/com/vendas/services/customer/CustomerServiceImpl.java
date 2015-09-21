@@ -139,21 +139,44 @@ public class CustomerServiceImpl implements CustomerService {
 
 			if(customer.getPictureUrl() == null){
 
-				customer.setPictureUrl( PictureUtil.URL_USUARIO_SEM_FOTO );
+				customer.setPictureUrl(PictureUtil.URL_USUARIO_SEM_FOTO);
 
 			}
 
-			if(customer.getID() != null &&  customer.getID().equals( customer.getIdMobile() ) ){
-
-				customer.setID(null);
-
-			}
+			customer.setID(null);
 
 			customer.setChangeTime(new Date());
 
 			Customer customerSaved = customerDAO.saveOrUpdate(customer );
 
 			customersSaved.add( customerSaved );
+
+		}
+
+
+		return ServiceResponseFactory.create(customersSaved);
+	}
+
+
+	@Override
+	@Transactional(readOnly = false)
+	public ServiceResponse<List<Customer>> update(List<Customer> customers) {
+
+		List<Customer> customersSaved = new ArrayList<>();
+
+		for (Customer customer : customers) {
+
+			if (customer.getPictureUrl() == null) {
+
+				customer.setPictureUrl(PictureUtil.URL_USUARIO_SEM_FOTO);
+
+			}
+
+			customer.setChangeTime(new Date());
+
+			Customer customerSaved = customerDAO.saveOrUpdate(customer);
+
+			customersSaved.add(customerSaved);
 
 		}
 

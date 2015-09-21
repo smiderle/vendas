@@ -22,7 +22,7 @@ public class Customer {
 	public Customer() {
 	}
 
-	public Customer(Integer organizationID, Integer branchID, String customerID, String name, String nickName, Integer personType, String cpfCnpj,
+	public Customer(Integer organizationID, Integer branchID,String name, String nickName, Integer personType, String cpfCnpj,
 			String incricao, String commercialPhone, String homePhone, String cellPhone, String postalCode, String addressComplement,
 			String observation, Date registrationDate, Date changeTime, City city, String faxNumber, String street, String district, String number,
 			String email, Double defaultDiscount, Double creditLimit, Integer defaultSeller, boolean active, Date birth, boolean excluded,
@@ -31,7 +31,6 @@ public class Customer {
 		super();
 		this.organizationID = organizationID;
 		this.branchID = branchID;
-		this.customerID = customerID;
 		this.name = name;
 		this.nickName = nickName;
 		this.personType = personType;
@@ -74,8 +73,6 @@ public class Customer {
 	@Column(name="IDFILIAL")
 	private Integer branchID;
 
-	@Column(name="CODIGO_CLIENTE")
-	private String customerID;
 
 	@Column(name="NOME")
 	private String name;
@@ -224,13 +221,6 @@ public class Customer {
 		this.branchID = branchID;
 	}
 
-	public String getCustomerID() {
-		return customerID;
-	}
-
-	public void setCustomerID(String customerID) {
-		this.customerID = customerID;
-	}
 
 	public String getName() {
 		return name;
@@ -474,6 +464,5 @@ public class Customer {
 	public void setIdMobile(Integer idMobile) {
 		this.idMobile = idMobile;
 	}
-
 
 }

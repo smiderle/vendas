@@ -121,8 +121,6 @@ public class CustomerRest {
 
 	/**
 	 * Salva ou atualiza um produto.
-	 * @param organizationID
-	 * @return
 	 */
 	@RequestMapping(value="saveList", method = RequestMethod.POST )
 	public @ResponseBody ApiResponse saveList( @RequestBody String customers) {
@@ -131,6 +129,24 @@ public class CustomerRest {
 			List<Customer> listCustomer = ObjectMapperHelper.readValue(customers, new TypeReference<List<Customer>>() {});
 			ServiceResponse<List<Customer>> payload = customerService.save(listCustomer);
 			LOG.debug("saveList - List<Customer> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+
+	/**
+	 * Atualiza um produto.
+	 */
+	@RequestMapping(value="updateList", method = RequestMethod.POST )
+	public @ResponseBody ApiResponse updateList( @RequestBody String customers) {
+		try {
+
+			List<Customer> listCustomer = ObjectMapperHelper.readValue(customers, new TypeReference<List<Customer>>() {});
+			ServiceResponse<List<Customer>> payload = customerService.update(listCustomer);
+			LOG.debug("updateList - List<Customer> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

@@ -71,9 +71,7 @@ public class InstallmentRest {
 
 
 	/**
-	 * Salva ou atualiza um produto.
-	 * @param organizationID
-	 * @return
+	 * Salva um produto.
 	 */
 	@RequestMapping(value="saveList", method = RequestMethod.POST )
 	public @ResponseBody ApiResponse saveList( @RequestBody String installments) {
@@ -89,5 +87,22 @@ public class InstallmentRest {
 		}
 	}
 
+
+	/**
+	 * Salva ou atualiza um produto.
+	 */
+	@RequestMapping(value="updateList", method = RequestMethod.POST )
+	public @ResponseBody ApiResponse updateList( @RequestBody String installments) {
+		try {
+
+			List<Installment> listCustomer = ObjectMapperHelper.readValue(installments, new TypeReference<List<Installment>>() {});
+			ServiceResponse<List<Installment>> payload = installmentService.updateList(listCustomer);
+			LOG.debug("updateList - List<Installment> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
 
 }

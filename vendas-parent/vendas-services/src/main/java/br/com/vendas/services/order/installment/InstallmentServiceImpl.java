@@ -61,7 +61,6 @@ public class InstallmentServiceImpl implements InstallmentService{
 	/**
 	 * Salva as alções do usuário para o cadastro ou edição de um novo cliente
 	 * @param userID
-	 * @param customer
 	 */
 	private void saveInstallmentAction( Integer userID, Installment installment ){
 		UserAction userAction = null;
@@ -75,7 +74,7 @@ public class InstallmentServiceImpl implements InstallmentService{
 
 		}
 
-		userActionService.save( userAction );
+		userActionService.save(userAction);
 
 	}
 
@@ -98,13 +97,7 @@ public class InstallmentServiceImpl implements InstallmentService{
 
 		for (Installment installment : installments) {
 
-
-			if(installment.getID() != null &&  installment.getID().equals( installment.getIdMobile() ) ){
-
-				installment.setID(null);
-
-			}
-
+			installment.setID(null);
 			installment.setChangeTime( new Date() );
 
 			Installment customerSaved = installmentDAO.saveOrUpdate( installment );
@@ -113,6 +106,25 @@ public class InstallmentServiceImpl implements InstallmentService{
 
 		}
 
+		return ServiceResponseFactory.create(customersSaved);
+	}
+
+
+	@Override
+	@Transactional(readOnly=false)
+	public ServiceResponse<List<Installment>> updateList(List<Installment> installments) {
+
+		List<Installment> customersSaved = new ArrayList<>();
+
+		for (Installment installment : installments) {
+
+			installment.setChangeTime( new Date() );
+
+			Installment customerSaved = installmentDAO.saveOrUpdate( installment );
+
+			customersSaved.add( customerSaved );
+
+		}
 
 		return ServiceResponseFactory.create(customersSaved);
 	}

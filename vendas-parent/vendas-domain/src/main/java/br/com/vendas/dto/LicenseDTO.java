@@ -3,7 +3,9 @@ package br.com.vendas.dto;
 import java.util.Date;
 
 import br.com.vendas.pojo.UserDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LicenseDTO {
 
 	private Integer id;

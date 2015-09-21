@@ -66,4 +66,6 @@ public interface CustomerService {
 	 * @return
 	 */
 	ServiceResponse<List<Customer>> findAllByChangeGreaterThan( Long date,Integer organizationID, Integer offset );
+
+	ServiceResponse<List<Customer>> update(List<Customer> customers);
 }

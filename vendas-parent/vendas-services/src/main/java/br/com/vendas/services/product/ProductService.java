@@ -55,4 +55,6 @@ public interface ProductService {
 	 */
 	ServiceResponse<List<Product>> save(List<Product> products) ;
 
+	ServiceResponse<List<Product>> update(List<Product> products) ;
+
 }

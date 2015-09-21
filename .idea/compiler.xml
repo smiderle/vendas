@@ -17,12 +17,12 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
-      <profile default="false" name="Annotation profile for vendas-services" enabled="true">
+      <profile default="false" name="Annotation profile for vendas-web" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="vendas-services" />
+        <module name="vendas-web" />
       </profile>
       <profile default="false" name="Annotation profile for vendas-aws" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
@@ -38,19 +38,12 @@
         <processorPath useClasspath="true" />
         <module name="vendas-domain" />
       </profile>
-      <profile default="false" name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="byjg-cep" />
-      </profile>
-      <profile default="false" name="Annotation profile for vendas-web" enabled="true">
+      <profile default="false" name="Annotation profile for vendas-api" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="vendas-web" />
+        <module name="vendas-api" />
       </profile>
       <profile default="false" name="Annotation profile for vendas-core" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
@@ -59,12 +52,19 @@
         <processorPath useClasspath="true" />
         <module name="vendas-core" />
       </profile>
-      <profile default="false" name="Annotation profile for vendas-api" enabled="true">
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="byjg-cep" />
+      </profile>
+      <profile default="false" name="Annotation profile for vendas-services" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="vendas-api" />
+        <module name="vendas-services" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

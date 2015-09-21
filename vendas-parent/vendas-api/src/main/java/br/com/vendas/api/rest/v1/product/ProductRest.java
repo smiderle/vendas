@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,7 +68,6 @@ public class ProductRest {
 
 	/**
 	 * Salva ou atualiza um produto.
-	 * @param organizationID
 	 * @return
 	 */
 	@RequestMapping(value="save", method = RequestMethod.POST)
@@ -97,8 +97,7 @@ public class ProductRest {
 
 
 	/**
-	 * Salva ou atualiza um produto.
-	 * @param organizationID
+	 * Salva um produto.
 	 * @return
 	 */
 	@RequestMapping(value="saveList", method = RequestMethod.POST )
@@ -108,6 +107,25 @@ public class ProductRest {
 			List<Product> listProduct = ObjectMapperHelper.readValue(products, new TypeReference<List<Product>>() {});
 			ServiceResponse<List<Product>> payload = productService.save(listProduct);
 			LOG.debug("saveList - List<Product> Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+
+	/**
+	 * Atualiza um produto.
+
+	 */
+	@RequestMapping(value="updateList", method = RequestMethod.POST )
+	public @ResponseBody ApiResponse updateList( @RequestBody String products) {
+		try {
+
+			List<Product> listProduct = ObjectMapperHelper.readValue(products, new TypeReference<List<Product>>() {});
+			ServiceResponse<List<Product>> payload = productService.update(listProduct);
+			LOG.debug("updateList - List<Product> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

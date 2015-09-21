@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.vendas.core.util.PictureUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
 	/**
 	 * Salva as alções do usuário para o cadastro ou edição de um produto
 	 * @param userID
-	 * @param customer
 	 */
 	private void saveProductAction( Integer userID, Product product) {
 		UserAction userAction = null;
@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
 
 		}
 
-		userActionService.save( userAction );
+		userActionService.save(userAction);
 
 	}
 
@@ -103,30 +103,45 @@ public class ProductServiceImpl implements ProductService {
 		for ( Product product : products ) {
 
 
-			product.setChangeTime( new Date() );
 
-			Product produto = null;
+			if(product.getPictureUrl() == null){
 
-			/*
-			 * Se o idMobile for o mesmo código do id, é porque foi cadastrado no mobile.
-			 */
-			if( product.getID().equals( product.getIdMobile() ) ){
-
-				product.setID( null );
-
+				product.setPictureUrl(PictureUtil.URL_PRODUTO_SEM_FOTO);
 
 			}
 
-			produto = productDAO.saveOrUpdate( product );
+			product.setChangeTime( new Date() );
 
+			product.setID( null );
 
-
+			Product produto = productDAO.saveOrUpdate( product );
 
 			productsSaved.add(produto);
 
 		}
 
-		//List<Product> productsSaved = productDAO.save(products);
+
+		return ServiceResponseFactory.create( productsSaved );
+
+	}
+
+
+
+	@Override
+	@Transactional(readOnly=false)
+	public ServiceResponse<List<Product>> update(List<Product> products) {
+
+		List<Product> productsSaved = new ArrayList<>();
+
+		for ( Product product : products ) {
+
+			product.setChangeTime( new Date() );
+
+			Product produto = productDAO.saveOrUpdate( product );
+
+			productsSaved.add(produto);
+
+		}
 
 		return ServiceResponseFactory.create( productsSaved );
 
