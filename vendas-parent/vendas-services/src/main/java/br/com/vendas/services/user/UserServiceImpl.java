@@ -10,6 +10,8 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import br.com.vendas.domain.CadastroConfirmacao;
+import br.com.vendas.services.CadastroConfirmacaoService;
 import br.com.vendas.services.email.EmailAsyncController;
 import br.com.vendas.services.email.EmailBean;
 import org.hibernate.Hibernate;
@@ -115,6 +117,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private EmailAsyncController emailAsyncController;
+
+	@Inject
+	private CadastroConfirmacaoService cadastroConfirmacaoService;
 
 
 
@@ -226,7 +231,7 @@ public class UserServiceImpl implements UserService {
 			userID = Integer.parseInt(filter);
 		} catch(NumberFormatException  e){}
 
-		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID,userID, offset, LimitQuery.LIMIT_USER.value());
+		List<User> users = userDAO.findUsersByUserIDOrNameOrEmail(filter, organizationID, userID, offset, LimitQuery.LIMIT_USER.value());
 		List<UserDTO> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			UserDTO userPojo = new UserDTO(user, null, null, null);
@@ -238,7 +243,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ServiceResponse<List<UserDTO>> findOtherUsersByOrganizationID(Integer organizationID, Integer userID, Integer offset) {
-		List<User> users = userDAO.findOtherUsersByOrganizationID(organizationID, userID,offset, LimitQuery.LIMIT_USER.value());
+		List<User> users = userDAO.findOtherUsersByOrganizationID(organizationID, userID, offset, LimitQuery.LIMIT_USER.value());
 		List<UserDTO> usersPojo = new ArrayList<>();
 		for (User user : users) {
 			/*Hibernate.initialize(user.getMenusApplication());
@@ -299,7 +304,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ServiceResponse<UserDTO> findUserByEmailAndPassword(String email, String password) throws VendasException {
 
-		User user = userDAO.findUserByEmailAndPassword( email, password );
+		User user = userDAO.findUserByEmailAndPassword(email, password);
 
 		UserDTO userPojo = null;
 
@@ -341,7 +346,7 @@ public class UserServiceImpl implements UserService {
 
 		//Cria um usuario
 		User user = new User(newOrganization.getOrganizationID(),email,password,userName,true,true);
-		user.setPictureUrl("https://s3-sa-east-1.amazonaws.com/vendas.pictures.default/30b29b76-0ae7-11e5-a6c0-1697f925ec7b-user.jpg");
+		user.setPictureUrl("https://s3-sa-east-1.amazonaws.com/vendasup.pictures.user/vendasup_user.jpg");
 		user.setSkype("skype");
 		user.setLinkFacebook("facebook");
 		user.setLinkGooglePlus("googlePluss");
@@ -419,5 +424,45 @@ public class UserServiceImpl implements UserService {
 
 
 	}
+
+
+	@Override
+	@Transactional(readOnly=false)
+	public ServiceResponse<Boolean>  gerarConfirmacaoCadastro( String email ) throws VendasException {
+
+		ServiceResponse<UserDTO> findUserByEmail = findUserByEmail( email );
+
+		if( findUserByEmail.getRowCount() > 0 ) {
+
+			String message = "Esse e-mail já esta cadastro.";
+
+			throw new VendasException( message );
+		}
+
+		CadastroConfirmacao cadastroConfirmacao = new CadastroConfirmacao();
+
+		int chave = (int) (Math.random() * 10000);
+
+
+		cadastroConfirmacao.setChave(String.valueOf(chave));
+		cadastroConfirmacao.setEmail(email);
+		cadastroConfirmacao.setAtivado(false);
+
+		cadastroConfirmacaoService.save( cadastroConfirmacao );
+
+		return ServiceResponseFactory.create(true);
+
+
+	}
+
+	@Override
+	@Transactional(readOnly=false)
+	public ServiceResponse<Boolean> validarCodigo(String email, String codigo) throws VendasException {
+
+		cadastroConfirmacaoService.cadastroConfirmacao(email, codigo);
+
+		return ServiceResponseFactory.create(true);
+	}
+
 
 }

@@ -1,5 +1,6 @@
 package br.com.vendas.api.rest.v1.common;
 
+import br.com.vendas.services.email.EmailAsyncController;
 import br.com.vendas.services.email.EmailBean;
 import br.com.vendas.support.ApiResponse;
 import br.com.vendas.support.ResponseBuilder;
@@ -22,44 +23,21 @@ public class EmailController {
 
 
 	@Autowired
-	private EmailBean emailBean;
+	private EmailAsyncController emailBean;
 
-
-	@RequestMapping(value="sendEmail", method = RequestMethod.GET)
-	public void sendEmail(String email, String password){
-		emailBean.sendEmail("ladairsmiderle@gmail.com", "ladairsmiderle@gmail.com", "Titulo", "Bom dia. Estou encaminhando esse email como teste.");
-		System.out.println("Concluido ");
-
-	}
 
     @RequestMapping(value="contact", method = RequestMethod.GET)
 	public void contact( String name, String email, String message) {
 
-        String mensagem = "Nome do contato: " + name +"\n";
-        mensagem += "Email de contato: "+ email + "\n";
-        mensagem += "Mensagem: "+ message;
-
-        emailBean.sendEmail("ladairsmiderle@gmail.com", "ladairsmiderle@gmail.com", "Contato VendasUP", mensagem);
+        emailBean.contato("ladairsmiderle@gmail.com", name, email, message);
 
     }
 
 
     @RequestMapping(value = "contactPost", method = RequestMethod.POST)
-    public @ResponseBody ApiResponse contactPost(String name, String email, String message) {
+    public void contactPost(String name, String email, String message) {
 
-        try {
-
-            String mensagem = "Nome do contato: " + name + "\n";
-            mensagem += "Email de contato: " + email + "\n";
-            mensagem += "Mensagem: " + message;
-
-            emailBean.sendEmail("ladairsmiderle@gmail.com", "ladairsmiderle@gmail.com", "Contato VendasUP", mensagem);
-
-            return ResponseBuilder.build(new Integer(1));
-        } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
-            return ResponseBuilder.build(new VendasExceptionWapper(e));
-        }
+        emailBean.contato("ladairsmiderle@gmail.com", name, email, message);
 
 
     }

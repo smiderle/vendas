@@ -66,4 +66,32 @@ public class PublicController {
 	}
 
 
+
+	@RequestMapping(value="gerarConfirmacaoCadastro", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse gerarConfirmacaoCadastro( String email ) {
+		try{
+			ServiceResponse<Boolean> payload =  userService.gerarConfirmacaoCadastro(email);
+			LOG.debug("gerarConfirmacaoCadastro Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+	@RequestMapping(value="validaCodigo", method = RequestMethod.GET)
+	public @ResponseBody ApiResponse validaCodigo( String email, String codigo ) {
+		try{
+			ServiceResponse<Boolean> payload =  userService.validarCodigo(email, codigo);
+			LOG.debug("validaCodigo Size: "+payload.getRowCount());
+			return ResponseBuilder.build(payload);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+
+
+
 }

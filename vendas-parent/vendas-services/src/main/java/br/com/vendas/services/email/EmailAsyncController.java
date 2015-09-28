@@ -23,15 +23,48 @@ public class EmailAsyncController {
 
         try {
 
-            String text = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("welcome.html"));
+            String text = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("welcome.html"), "UTF-8");
 
             text = text.replace( "{email}", usuario ).replace("{password}",senha);
 
-            emailBean.bemVindo(to, from, text);
+            emailBean.sendEmail(to, "Bem Vindo!", text);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
+    @Async
+    public void sendConfirmacaoCadastro( String to, String chave){
+
+        try {
+
+            String text = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("confirmacao.html"), "UTF-8");
+
+            text = text.replace("{codigo}", chave);
+
+            emailBean.sendEmail(to, "Confirmação do Cadastro", text);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Async
+    public void contato( String to, String nome, String email, String message){
+
+
+        String mensagem = "Nome do contato: " + nome + "\n";
+        mensagem += "Email de contato: " + email + "\n";
+        mensagem += "Mensagem: " + message;
+
+
+        emailBean.sendEmail(to, "Confirmação do Cadastro", mensagem);
+
+
+    }
+
 }

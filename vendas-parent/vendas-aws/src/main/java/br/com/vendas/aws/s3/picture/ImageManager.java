@@ -12,7 +12,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 public class ImageManager {
-
 	private static final String BASE_URL = "https://s3-sa-east-1.amazonaws.com/";
 	
 	public String upload(String bucketName,InputStream stream, String contentType, Long contentLength) throws IOException {

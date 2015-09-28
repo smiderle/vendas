@@ -106,5 +106,10 @@ public interface UserService {
 	ServiceResponse<UserDTO> generateNewUser(String organizationName, String userName, String email, String password, String serial) throws RegistrationException, VendasException ;
 
 
+	ServiceResponse<Boolean> gerarConfirmacaoCadastro( String email ) throws VendasException;
+
+	ServiceResponse<Boolean> validarCodigo( String email, String codigo ) throws VendasException;
+
+
 
 }
