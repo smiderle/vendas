@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="vendas-web:war">
+    <output-path>$PROJECT_DIR$/vendas-parent/vendas-web/target</output-path>
+    <root id="archive" name="vendas-web-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="vendas-web:war exploded" />
+    </root>
+  </artifact>
+</component>

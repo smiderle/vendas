@@ -48,6 +48,15 @@
 		
 
 	</properties>
+
+	<modules>
+		<module>vendas-aws</module>
+		<module>vendas-core</module>
+		<module>vendas-domain</module>
+		<module>vendas-services</module>
+		<module>vendas-api</module>
+		<module>vendas-web</module>
+	</modules>
 	
 
 	<build>
@@ -86,12 +95,12 @@
 		</dependency>		
 		
 		
-		
+		<!--
 		 <dependency>
 			<groupId>br.com.vendas</groupId>
 			<artifactId>vendas-core</artifactId>	    
 	    	<version>${project.version}</version>
-	    </dependency>
+	    </dependency>-->
 	</dependencies>
 
 </project>
