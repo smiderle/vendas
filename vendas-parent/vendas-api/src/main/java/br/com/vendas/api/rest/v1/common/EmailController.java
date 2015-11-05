@@ -29,7 +29,7 @@ public class EmailController {
     @RequestMapping(value="contact", method = RequestMethod.GET)
 	public void contact( String name, String email, String message) {
 
-        emailBean.contato("ladairsmiderle@gmail.com", name, email, message);
+        emailBean.contato( name, email, message);
 
     }
 
@@ -37,7 +37,7 @@ public class EmailController {
     @RequestMapping(value = "contactPost", method = RequestMethod.POST)
     public void contactPost(String name, String email, String message) {
 
-        emailBean.contato("ladairsmiderle@gmail.com", name, email, message);
+        emailBean.contato( name, email, message);
 
 
     }

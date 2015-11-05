@@ -27,7 +27,7 @@ public class EmailAsyncController {
 
             text = text.replace( "{email}", usuario ).replace("{password}",senha);
 
-            emailBean.sendEmail(to, "Bem Vindo!", text);
+            emailBean.naoResponda(to, "Bem Vindo!", text);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class EmailAsyncController {
 
             text = text.replace("{codigo}", chave);
 
-            emailBean.sendEmail(to, "Confirmação do Cadastro", text);
+            emailBean.naoResponda(to, "Confirmação do Cadastro", text);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class EmailAsyncController {
 
 
     @Async
-    public void contato( String to, String nome, String email, String message){
+    public void contato( String nome, String email, String message){
 
 
         String mensagem = "Nome do contato: " + nome + "\n";
@@ -62,9 +62,10 @@ public class EmailAsyncController {
         mensagem += "Mensagem: " + message;
 
 
-        emailBean.sendEmail(to, "Confirmação do Cadastro", mensagem);
+        emailBean.contato("contato@vendasup.com.br", "Contato", mensagem);
 
 
     }
+
 
 }
