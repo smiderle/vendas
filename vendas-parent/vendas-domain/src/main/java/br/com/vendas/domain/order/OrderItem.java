@@ -1,6 +1,7 @@
 package br.com.vendas.domain.order;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -20,152 +21,159 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.vendas.domain.product.Product;
 
 @Entity
-@Table(name="PEDIDOITEM")
-public class OrderItem implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8795675300876421269L;
+@Table(name = "PEDIDOITEM")
+public class OrderItem implements Serializable, Comparable<OrderItem> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
-	private Long ID;
-	
-	@Column(name="IDEMPRESA")
-	private Integer organizationID;
-	
-	@Column(name="IDFILIAL")
-	private Integer branchID;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8795675300876421269L;
 
-	
-	@Column(name="SEQUENCIA")	
-	private Integer sequence;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long ID;
 
-	@ManyToOne
+    @Column(name = "IDEMPRESA")
+    private Integer organizationID;
+
+    @Column(name = "IDFILIAL")
+    private Integer branchID;
+
+
+    @Column(name = "SEQUENCIA")
+    private Integer sequence;
+
+    @ManyToOne
     @JoinColumn(name = "IDPEDIDO")
-	@JsonIgnore
-	private Order order;	
-	
-	@ManyToOne
-	@JoinColumn(name="IDPRODUTO")
-	private Product product;
-	
-	@Column(name="QUANTIDADE")
-	private Double quantity;
-	
-	@Column(name="PRECOVENDA")
-	private Double salePrice;
-	
-	@Column(name="DESCONTO")
-	private Double discount;
-	
-	@Column(name="OBSERVACAO")
-	private String observation;
-	
-	@ManyToOne
-	@JoinColumn(name="TABPRECO")
-	private PriceTable priceTable;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DTHRALTERACAO")
-	private Date changeTime;
+    @JsonIgnore
+    private Order order;
 
-	public Long getID() {
-		return ID;
-	}
+    @ManyToOne
+    @JoinColumn(name = "IDPRODUTO")
+    private Product product;
 
-	public void setID(Long iD) {
-		ID = iD;
-	}
+    @Column(name = "QUANTIDADE")
+    private Double quantity;
 
-	public Integer getOrganizationID() {
-		return organizationID;
-	}
+    @Column(name = "PRECOVENDA")
+    private Double salePrice;
 
-	public void setOrganizationID(Integer organizationID) {
-		this.organizationID = organizationID;
-	}
+    @Column(name = "DESCONTO")
+    private Double discount;
 
-	public Integer getBranchID() {
-		return branchID;
-	}
+    @Column(name = "OBSERVACAO")
+    private String observation;
 
-	public void setBranchID(Integer branchID) {
-		this.branchID = branchID;
-	}
+    @ManyToOne
+    @JoinColumn(name = "TABPRECO")
+    private PriceTable priceTable;
 
-	
-	public Integer getSequence() {
-		return sequence;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DTHRALTERACAO")
+    private Date changeTime;
 
-	public void setSequence(Integer sequence) {
-		this.sequence = sequence;
-	}
+    public Long getID() {
+        return ID;
+    }
 
-	public Double getQuantity() {
-		return quantity;
-	}
+    public void setID(Long iD) {
+        ID = iD;
+    }
 
-	public void setQuantity(Double quantity) {
-		this.quantity = quantity;
-	}
+    public Integer getOrganizationID() {
+        return organizationID;
+    }
 
-	public Double getSalePrice() {
-		return salePrice;
-	}
+    public void setOrganizationID(Integer organizationID) {
+        this.organizationID = organizationID;
+    }
 
-	public void setSalePrice(Double salePrice) {
-		this.salePrice = salePrice;
-	}
+    public Integer getBranchID() {
+        return branchID;
+    }
 
-	public Double getDiscount() {
-		return discount;
-	}
+    public void setBranchID(Integer branchID) {
+        this.branchID = branchID;
+    }
 
-	public void setDiscount(Double discount) {
-		this.discount = discount;
-	}
 
-	public Product getProduct() {
-		return product;
-	}
+    public Integer getSequence() {
+        return sequence;
+    }
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
 
-	public String getObservation() {
-		return observation;
-	}
+    public Double getQuantity() {
+        return quantity;
+    }
 
-	public void setObservation(String observation) {
-		this.observation = observation;
-	}
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
 
-	public Order getOrder() {
-		return order;
-	}
+    public Double getSalePrice() {
+        return salePrice;
+    }
 
-	public void setOrder(Order order) {
-		this.order = order;
-	}
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
+    }
 
-	public PriceTable getPriceTable() {
-		return priceTable;
-	}
+    public Double getDiscount() {
+        return discount;
+    }
 
-	public void setPriceTable(PriceTable priceTable) {
-		this.priceTable = priceTable;
-	}
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 
-	public Date getChangeTime() {
-		return changeTime;
-	}
+    public Product getProduct() {
+        return product;
+    }
 
-	public void setChangeTime(Date changeTime) {
-		this.changeTime = changeTime;
-	}
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public PriceTable getPriceTable() {
+        return priceTable;
+    }
+
+    public void setPriceTable(PriceTable priceTable) {
+        this.priceTable = priceTable;
+    }
+
+    public Date getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(Date changeTime) {
+        this.changeTime = changeTime;
+    }
+
+    @Override
+    public int compareTo(OrderItem orderItem) {
+
+        return getSequence().compareTo(orderItem.getSequence());
+
+    }
 }

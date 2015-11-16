@@ -18,153 +18,159 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-@Table(name="PEDIDOPGTO")
-public class OrderPayment implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7550716822062484831L;
+@Table(name = "PEDIDOPGTO")
+public class OrderPayment implements Serializable, Comparable<OrderPayment> {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID")
-	private Long ID;
-	
-	@Column(name="IDEMPRESA")
-	private Integer organizationID;
-	
-	@Column(name="IDFILIAL")
-	private Integer branchID;
-	
-	@ManyToOne
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7550716822062484831L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long ID;
+
+    @Column(name = "IDEMPRESA")
+    private Integer organizationID;
+
+    @Column(name = "IDFILIAL")
+    private Integer branchID;
+
+    @ManyToOne
     @JoinColumn(name = "IDPEDIDO")
-	@JsonIgnore
-	private Order order;	
+    @JsonIgnore
+    private Order order;
 
-	@Column(name="SEQUENCIA")	
-	private Integer sequence;
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name="DTVENCIMENTO")
-	private Date expirationDate;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DTPAGAMENTO")
-	private Date paymentDate;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DTHRALTERACAO")
-	private Date changeTime;
-	
-	@Column(name="VALORPARCELA")	
-	private Double installmentValue;
-	
-	@Column(name="OBSERVACAO")
-	private String observation;
-	
-	@Column(name="NUMERODOC")
-	private String documentNumber;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DTHRCADASTRO", insertable=false)
-	private Date registrationDate;
+    @Column(name = "SEQUENCIA")
+    private Integer sequence;
 
-	public Long getID() {
-		return ID;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DTVENCIMENTO")
+    private Date expirationDate;
 
-	public void setID(Long iD) {
-		ID = iD;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DTPAGAMENTO")
+    private Date paymentDate;
 
-	public Integer getOrganizationID() {
-		return organizationID;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DTHRALTERACAO")
+    private Date changeTime;
 
-	public void setOrganizationID(Integer organizationID) {
-		this.organizationID = organizationID;
-	}
+    @Column(name = "VALORPARCELA")
+    private Double installmentValue;
 
-	public Integer getBranchID() {
-		return branchID;
-	}
+    @Column(name = "OBSERVACAO")
+    private String observation;
 
-	public void setBranchID(Integer branchID) {
-		this.branchID = branchID;
-	}
+    @Column(name = "NUMERODOC")
+    private String documentNumber;
 
-	public Order getOrder() {
-		return order;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DTHRCADASTRO", insertable = false)
+    private Date registrationDate;
 
-	public void setOrder(Order order) {
-		this.order = order;
-	}
+    public Long getID() {
+        return ID;
+    }
 
-	public Integer getSequence() {
-		return sequence;
-	}
+    public void setID(Long iD) {
+        ID = iD;
+    }
 
-	public void setSequence(Integer sequence) {
-		this.sequence = sequence;
-	}
+    public Integer getOrganizationID() {
+        return organizationID;
+    }
 
-	public Date getExpirationDate() {
-		return expirationDate;
-	}
+    public void setOrganizationID(Integer organizationID) {
+        this.organizationID = organizationID;
+    }
 
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
+    public Integer getBranchID() {
+        return branchID;
+    }
 
-	public Date getPaymentDate() {
-		return paymentDate;
-	}
+    public void setBranchID(Integer branchID) {
+        this.branchID = branchID;
+    }
 
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
-	}
+    public Order getOrder() {
+        return order;
+    }
 
-	public Double getInstallmentValue() {
-		return installmentValue;
-	}
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
-	public void setInstallmentValue(Double installmentValue) {
-		this.installmentValue = installmentValue;
-	}
+    public Integer getSequence() {
+        return sequence;
+    }
 
-	public Date getChangeTime() {
-		return changeTime;
-	}
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
 
-	public void setChangeTime(Date changeTime) {
-		this.changeTime = changeTime;
-	}
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
 
-	public String getObservation() {
-		return observation;
-	}
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 
-	public void setObservation(String observation) {
-		this.observation = observation;
-	}
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
 
-	public String getDocumentNumber() {
-		return documentNumber;
-	}
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
 
-	public void setDocumentNumber(String documentNumber) {
-		this.documentNumber = documentNumber;
-	}
+    public Double getInstallmentValue() {
+        return installmentValue;
+    }
 
-	public Date getRegistrationDate() {
-		return registrationDate;
-	}
+    public void setInstallmentValue(Double installmentValue) {
+        this.installmentValue = installmentValue;
+    }
 
-	public void setRegistrationDate(Date registrationDate) {
-		this.registrationDate = registrationDate;
-	}
-	
-	
+    public Date getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(Date changeTime) {
+        this.changeTime = changeTime;
+    }
+
+    public String getObservation() {
+        return observation;
+    }
+
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
+
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
+
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+
+    @Override
+    public int compareTo(OrderPayment orderPayment) {
+
+        return getSequence().compareTo(orderPayment.getSequence());
+
+    }
 }
