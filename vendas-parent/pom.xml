@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.vendas</groupId>
 	<artifactId>vendas-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -40,8 +40,9 @@
 		<springockito.version>1.0.5</springockito.version>
 		<commons.pool.version>1.6</commons.pool.version>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
-		<jackson.version>2.1.1</jackson.version>     
-		
+		<jackson.version>2.1.1</jackson.version>
+		<itextpdf.version>5.0.6</itextpdf.version>
+
 		<pmd.version>4.2.4</pmd.version>			
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 		<amazonaws.version>1.8.11</amazonaws.version>

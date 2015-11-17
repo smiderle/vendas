@@ -4,13 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.vendas.services.email.EmailAsyncController;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.vendas.domain.order.Order;
 import br.com.vendas.domain.wrapper.OrderWrapper;
@@ -35,6 +33,9 @@ public class OrderRest {
 	@Inject
 	private OrderService orderService;
 
+	@Autowired
+	private EmailAsyncController emailAsyncController;
+
 	@RequestMapping(value="save", method = RequestMethod.POST)
 	public @ResponseBody ApiResponse save( @RequestHeader(value="userID") Integer userID, @RequestBody String orderWrapper ) {
 		try {
@@ -55,9 +56,11 @@ public class OrderRest {
 
 
 		try {
-			List<Order> listOrders = ObjectMapperHelper.readValue(orders, new TypeReference<List<Order>>() {});
+			List<Order> listOrders = ObjectMapperHelper.readValue(orders, new TypeReference<List<Order>>() {
+			});
 
-			ServiceResponse<List<OrderDTO>> payload = orderService.save(userID,listOrders);
+
+			ServiceResponse<List<OrderDTO>> payload = orderService.save(userID, listOrders);
 
 
 			LOG.debug("save Size: "+payload.getRowCount());
@@ -129,7 +132,7 @@ public class OrderRest {
 	@RequestMapping(value="getByFilterAndUserID", method = RequestMethod.GET)
 	public @ResponseBody ApiResponse getByFilterAndUserID(String filter, Integer organizationID, Integer branchID, Integer userID, Integer offset, Integer limit) {
 		try {
-			ServiceResponse<List<OrderDTO>> payload =  orderService.findByIDOrCustomerIDAndUserID(organizationID, branchID,userID , filter, offset, limit);
+			ServiceResponse<List<OrderDTO>> payload =  orderService.findByIDOrCustomerIDAndUserID(organizationID, branchID, userID, filter, offset, limit);
 			LOG.debug("getByFilterAndUserID - List<OrderDTO> Size: "+payload.getRowCount());
 			return ResponseBuilder.build(payload);
 		} catch (Exception e) {
@@ -137,5 +140,21 @@ public class OrderRest {
 			return ResponseBuilder.build(new VendasExceptionWapper(e));
 		}
 	}
+
+
+	@RequestMapping(value="sendEmail/{emailTo}/", method = RequestMethod.POST)
+	public @ResponseBody ApiResponse sendEmail( @PathVariable String emailTo, @RequestBody String orderWrapper ) {
+		try {
+
+			Order order = new ObjectMapperHelper().readValue(orderWrapper, Order.class);
+			emailAsyncController.sendPedidoEmail(emailTo, order);
+			return ResponseBuilder.build(true);
+		} catch (VendasException e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseBuilder.build(new VendasExceptionWapper(e));
+		}
+	}
+
+
 
 }
